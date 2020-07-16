@@ -121,7 +121,7 @@ export class DocViewerComponent implements OnDestroy {
         }
       }
 
-      this.titleService.setTitle(title ? `Angular 日本語ドキュメンテーション - ${title}` : 'Angular 日本語ドキュメンテーション');
+      this.titleService.setTitle(title ? `Angular - ${title}` : 'Angular');
     };
   }
 
