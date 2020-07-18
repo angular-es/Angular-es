@@ -1,4 +1,12 @@
+[build]
+  base = "./"
+  functions=""
+  command = "./build.sh"
+  publish = "/.tmp/aio/dist"
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
+[dev]
+  command = "./build.sh"
+  publish = ".tmp/aio/dist"
