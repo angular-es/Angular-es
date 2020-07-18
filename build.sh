@@ -7,7 +7,7 @@ cd ..
 rsync -ar --delete origin/ .tmp/ 
 
 # overrides files from ja directory
-rsync -ar aio-ja/ .tmp/aio
+rsync -ar aio-es/ .tmp/aio
 
 # build angular.io
 cd .tmp
@@ -18,7 +18,7 @@ yarn build
 cd ../../
 
 # Copy robots.txt
-cp -rf aio-ja/src/robots.txt .tmp/aio/dist/
+cp -rf aio-es/src/robots.txt .tmp/aio/dist/
 
 # Modify sitemap
 sed -i -e "s/angular.io/angular.jp/g" .tmp/aio/dist/generated/sitemap.xml
