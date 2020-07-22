@@ -1,2 +1,2 @@
 Angular en Español
-Repo
+Repo de basado en @angular-ja un agradecimiento especial a @L

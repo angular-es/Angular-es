@@ -1,9 +1,14 @@
 {
-  "name": "angular-ja",
-  "version": "0.0.1",
+  "name": "angular-es",
+  "version": "0.0.2",
   "main": "index.js",
-  "repository": "https://github.com/angular/angular-ja",
-  "author": "Suguru Inatomi <suguru.inatomi@gmail.com>",
+  "description": "A package to share with spanish spoken official docs and make comunity around Angular",
+  "repository": "https://github.com/ng-es/angular-es",
+
+  "author": "Antonio Cárdenas <antonioalx66@gmail.com>",
+  "contributors" :[
+    "Suguru Inatomi <suguru.inatomi@gmail.com>" 
+  ],
   "license": "MIT",
   "private": true,
   "scripts": {
