@@ -95,7 +95,7 @@ _ルートモジュール_のみがこの`bootstrap`プロパティをセット�
 
 ### NgModules vs. JavaScript モジュール
 
-NgModule &mdash; `@NgModule` で装飾されたクラス &mdash; はAngularの基礎的な機能です。
+NgModule &mdash; `@NgModule` で装飾されたクラス &mdash; はAngularのbase的な機能です。
 
 JavaScriptもオブジェクトのコレクションを管理するためのモジュールシステムを持っています。
 それは NgModule システムとはまったく異なり、関係のないものです。
@@ -242,7 +242,7 @@ TypeScriptは、**デコレータ**を使うことでメタデータを付与し
 
 * `templateUrl`: [上](guide/architecture#templates)で示した、このコンポーネントのHTMLテンプレートのモジュール相対アドレスです。
 
-* `providers`: このコンポーネントが必要とするサービスに対する**依存性の注入のプロバイダー**の配列。
+* `providers`: このコンポーネントが必要とするサービスに対する**Inyección de dependenciaのプロバイダー**の配列。
 これはAngularにこのコンポーネントのコンストラクタが`HeroService`を必要としていることを指示する方法なので、
 これは表示すべきヒーローのリストを取得することができます。
 
@@ -393,7 +393,7 @@ _サービス_はアプリケーションに必要な値、関数、または機
 Angularはサービスの定義をもちません。
 サービスのベースクラスも、登録する場所もありません。
 
-しかしサービスはAngularアプリケーションの基礎となるものです。
+しかしサービスはAngularアプリケーションのbaseとなるものです。
 コンポーネントはサービスの大きな消費者です。
 
 次はブラウザコンソールにログを出力するサービスクラスの例です。
@@ -420,19 +420,19 @@ Angularはサービスの定義をもちません。
 Angularはこれらの原則を*強制*しません。
 もし3000行もある"全部入りの(kitchen sink)"コンポーネントを書いたとしても不満を言いません。
 
-Angularはアプリケーションロジックをサービスに組み込むことを容易にし、またそれらのサービスを*依存性の注入*によって
+Angularはアプリケーションロジックをサービスに組み込むことを容易にし、またそれらのサービスを*Inyección de dependencia*によって
 コンポーネントで使用できるようにして、その原則に*従う*ように助けます。
 
 <hr/>
 
 {@a dependency-injection}
-## 依存性の注入
+## Inyección de dependencia
 
 <img src="generated/images/guide/architecture/dependency-injection.png" alt="Service" class="left">
 
-_依存性の注入_ はそのクラスが必要とする依存を完全な形を持ったインスタンスを提供する方法のひとつです。
+_Inyección de dependencia_ はそのクラスが必要とする依存を完全な形を持ったインスタンスを提供する方法のひとつです。
 ほとんどの依存はサービスです。
-Angularは必要とするサービスを持った状態の新しいコンポーネントを提供するために依存性の注入を使用します。
+Angularは必要とするサービスを持った状態の新しいコンポーネントを提供するためにInyección de dependenciaを使用します。
 
 <br class="clear">
 
@@ -448,7 +448,7 @@ Angularがコンポーネントを作るとき、最初にそのコンポーネ�
 もし必要とされたサービスインスタンスがコンテナ内にない場合、インジェクタはAngularにそのサービスを返す前に
 インスタンスを作成してコンテナに追加します。
 リクエストされたすべてのサービスが解決されて返されると、Angularはそれらサービスを引数としてコンポーネントのコンストラクタを呼ぶことができます。
-これが*依存性の注入*です。
+これが*Inyección de dependencia*です。
 
 `HeroService`の注入の処理は次のようになります。
 
@@ -476,9 +476,9 @@ Angularがコンポーネントを作るとき、最初にそのコンポーネ�
 <!-- We've vastly oversimplified dependency injection for this overview.
 The full story is in the [dependency injection](guide/dependency-injection) page. -->
 
-依存性の注入について覚えるべきポイント:
+Inyección de dependenciaについて覚えるべきポイント:
 
-* 依存性の注入はAngularフレームワークに配線されていて、至る所で使用されています。
+* Inyección de dependenciaはAngularフレームワークに配線されていて、至る所で使用されています。
 
 * *インジェクタ*はメインのメカニズムです。
   * インジェクタは作成されたサービスインスタンスのコンテナを保持しています。
@@ -493,7 +493,7 @@ The full story is in the [dependency injection](guide/dependency-injection) page
 {@a wrap-up}
 ## まとめ
 
-Angularアプリケーションの8つの主要な構成要素の基礎を学びました:
+Angularアプリケーションの8つの主要な構成要素のbaseを学びました:
 
 * [モジュール](guide/architecture#modules)
 * [コンポーネント](guide/architecture#components)
@@ -502,16 +502,16 @@ Angularアプリケーションの8つの主要な構成要素の基礎を学び
 * [データバインディング](guide/architecture#data-binding)
 * [ディレクティブ](guide/architecture#directives)
 * [サービス](guide/architecture#services)
-* [依存性の注入](guide/architecture#dependency-injection)
+* [Inyección de dependencia](guide/architecture#dependency-injection)
 
-Angularアプリケーションではこれらがすべての基礎となり、先に進むのに十分なものです。
+Angularアプリケーションではこれらがすべてのbaseとなり、先に進むのに十分なものです。
 しかし、これはあなたが知るべきことすべてではありません。
 
 ここに少し、重要なAngularの機能とサービスについてのリストがアルファベット順であります。
 ほとんどのものはこのドキュメントの中で網羅されています。(または近いうちに網羅されます。)
 
-> [**アニメーション**](guide/animations): アニメーション技術やCSSの深い知識がなくともコンポーネントの挙動に
-アニメーションをつけられるAngularのアニメーションライブラリ。
+> [**animación**](guide/animations): animación技術やCSSの深い知識がなくともコンポーネントの挙動に
+animaciónをつけられるAngularのanimaciónライブラリ。
 
 > **変更検知**: 変更検知のドキュメントでは、コンポーネントのプロパティの値が変更されたこと
 いつスクリーンを更新するか、**zones**を利用してどのように非同期の動作をインターセプトして変更検知の戦略を実行するのかを

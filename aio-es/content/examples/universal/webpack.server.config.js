@@ -20,7 +20,7 @@ module.exports = {
     new webpack.ContextReplacementPlugin(
       /(.+)?angular(\\|\/)core(.+)?/,
       path.join(__dirname, 'src'), // srcのロケーション
-      {} // ルートのマッピング
+      {} // Raízマッピング
     ),
     new webpack.ContextReplacementPlugin(
       /(.+)?express(\\|\/)(.+)?/,

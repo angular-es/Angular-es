@@ -327,7 +327,7 @@
 
 <table class="is-full-width is-fixed-layout">
 <tbody><tr>
-<th>依存性の注入の設定</th>
+<th>Inyección de dependenciaの設定</th>
 <th></th>
 </tr>
 <tr>
@@ -358,11 +358,11 @@
 </td>
 </tr><tr>
 <td><code><br>&lt;<b>router-outlet</b>&gt;&lt;/<b>router-outlet</b>&gt;<br>&lt;<b>router-outlet</b> name="aux"&gt;&lt;/<b>router-outlet</b>&gt;<br></code></td>
-<td><p>アクティブなルートのコンポーネントをロードする場所をマークします。</p>
+<td><p>アクティブなRaízコンポーネントをロードする場所をマークします。</p>
 </td>
 </tr><tr>
 <td><code><br>&lt;a routerLink="/path"&gt;<br>&lt;a <b>[routerLink]</b>="[ '/path', routeParam ]"&gt;<br>&lt;a <b>[routerLink]</b>="[ '/path', { matrixParam: 'value' } ]"&gt;<br>&lt;a <b>[routerLink]</b>="[ '/path' ]" [queryParams]="{ page: 1 }"&gt;<br>&lt;a <b>[routerLink]</b>="[ '/path' ]" fragment="anchor"&gt;<br></code></td>
-<td><p>ルートパス、必須もしくはオプショナルのパラメータ、クエリパラメータおよびフラグメントで構成されるルートの設定に基づいて、別のビューへのリンクを作成します。 rootとなるルートに移動するには、<code>/</code>接頭辞を使用します。 子ルートの場合は、<code>./</code>接頭辞を使用します。 兄弟または親の場合は、<code>../</code>接頭辞を使用します。</p>
+<td><p>ルートパス、必須もしくはオプショナルのパラメータ、クエリパラメータおよびフラグメントで構成されるRaíz設定に基づいて、別のビューへのリンクを作成します。 rootとなるルートに移動するには、<code>/</code>接頭辞を使用します。 子Raíz場合は、<code>./</code>接頭辞を使用します。 兄弟または親の場合は、<code>../</code>接頭辞を使用します。</p>
 </td>
 </tr><tr>
 <td><code>&lt;a [routerLink]="[ '/path' ]" routerLinkActive="active"&gt;</code></td>

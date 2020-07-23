@@ -3,15 +3,15 @@
 Angularは、効率的で洗練されたシングルページアプリケーションを作成するためのアプリケーション設計フレームワークおよび開発プラットフォームです。
 
 これらのAngularドキュメントは、最初のアプリケーションから複雑なエンタープライズアプリの最適化まで、Angularのプラットフォームとフレームワークの学習と使用に役立ちます。
-チュートリアルとガイドには、プロジェクトを加速するためのダウンロード可能なサンプルが含まれています。
+Tutorialとガイドには、プロジェクトを加速するためのダウンロード可能なサンプルが含まれています。
 
 
 <div class="card-container">
   <a href="guide/setup-local" class="docs-card"
     title="Angular Local Environment Setup">
       <section>はじめよう</section>
-      <p>Angular CLIを使用して、開発用のローカル環境をセットアップします。</p>
-      <p class="card-footer">ローカルセットアップ</p>
+      <p>Angular CLIを使用して、開発用のローカル環境をprepararします。</p>
+      <p class="card-footer">ローカルpreparar</p>
   </a>
   <a href="guide/architecture" class="docs-card" title="Angular Concepts">
       <section>学習と探検</section>
@@ -20,13 +20,13 @@ Angularは、効率的で洗練されたシングルページアプリケーシ�
   </a>
   <a href="start" class="docs-card" title="Angular Getting Started">
       <section>見学してみよう</section>
-      <p>セットアップなしで、既成の小さなAngularアプリを調べ、動かしてみましょう。</p>
+      <p>prepararなしで、既成の小さなAngularアプリを調べ、動かしてみましょう。</p>
       <p class="card-footer">いますぐ試す</p> 
   </a>
   <a href="tutorial" class="docs-card" title="Create an app">
       <section>Hello World</section>
-      <p>完全なチュートリアルを実行して、最初のアプリを作成します。</p>
-      <p class="card-footer">Tour of Heroesチュートリアル</p>
+      <p>完全なTutorialを実行して、最初のアプリを作成します。</p>
+      <p class="card-footer">Tour of HeroesTutorial</p>
   </a>
 
 
@@ -38,7 +38,7 @@ Angularは、効率的で洗練されたシングルページアプリケーシ�
 
 これらのドキュメントは、あなたがすでに[HTML](https://developer.mozilla.org/docs/Learn/HTML/Introduction_to_HTML "Learn HTML")、[CSS](https://developer.mozilla.org/docs/Learn/CSS/First_steps "Learn CSS")、 [JavaScript](https://developer.mozilla.org/ja/docs/Web/JavaScript/A_re-introduction_to_JavaScript "Learn JavaScript") 、
 そして [クラス](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Classes "ES2015 Classes") や [モジュール](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/import "ES2015 Modules") のような [最新の標準](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Language_Resources "Latest JavaScript standards") からのツールのいくつかに慣れていることを前提としています。
-コードサンプルは [TypeScript](https://www.typescriptlang.org/ "TypeScript") を使って書かれています。ほとんどのAngularコードは、依存性の注入に [型](https://www.typescriptlang.org/docs/handbook/classes.html "TypeScript Types") を使用し、メタデータに [デコレーター](https://www.typescriptlang.org/docs/handbook/decorators.html "Decorators") を使用して、
+コードサンプルは [TypeScript](https://www.typescriptlang.org/ "TypeScript") を使って書かれています。ほとんどのAngularコードは、Inyección de dependenciaに [型](https://www.typescriptlang.org/docs/handbook/classes.html "TypeScript Types") を使用し、メタデータに [デコレーター](https://www.typescriptlang.org/docs/handbook/decorators.html "Decorators") を使用して、
 最新のJavaScriptだけで記述できます。
 
 

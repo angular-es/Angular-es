@@ -63,10 +63,10 @@ Angularのパッケージの完全な一覧は、[API reference](http://angular.
 
 パッケージ名                                                                            | 説明
 ----------------------------------------   | --------------------------------------------------
-[**@angular/animations**](api/animations)                                               | Angularのアニメーションライブラリを使用すると、ページやリストのトランジションといったアニメーション効果を簡単に定義して適用できます。詳しくは [Animations guide](guide/animations) を見てください。.
+[**@angular/animations**](api/animations)                                               | Angularのanimaciónライブラリを使用すると、ページやリストのトランジションといったanimación効果を簡単に定義して適用できます。詳しくは [Animations guide](guide/animations) を見てください。.
 [**@angular/common**](api/common)                                                       | 一般的に必要なサービスやパイプ、ディレクティブがAngularチームによって提供されています。 [`HttpClientModule`](api/common/http/HttpClientModule) もここの [`@angular/common/http`](api/common/http) というサブフォルダにあります。詳しくは [HttpClient guide](guide/http) を見てください。
 **@angular/compiler**                                                                   | Angularのテンプレートのコンパイラです。テンプレートを解釈し、アプリケーションが実行・表示可能なコードに変換します。 通常はコンパイラに直接触れないでください。そうではなくブラウザ上でJITコンパイルするときに `platform-browser-dynamic` を通して間接的に使用します。詳しくは [Ahead-of-time Compilation guide](guide/aot-compiler)を見てください。
-[**@angular/core**](api/core)                                                           | すべてのアプリケーションに必要とされるフレームワークの重要なランタイム部分です。すべてのメタデータデコレーター、`Component` 、 `Directive `、依存性の注入、コンポーネントのライフサイクルフックを含みます。
+[**@angular/core**](api/core)                                                           | すべてのアプリケーションに必要とされるフレームワークの重要なランタイム部分です。すべてのメタデータデコレーター、`Component` 、 `Directive `、Inyección de dependencia、コンポーネントのライフサイクルフックを含みます。
 [**@angular/forms**](api/forms)                                                         | [テンプレート駆動のフォーム](guide/forms)と[リアクティブフォーム](guide/reactive-forms)の両方をサポートします。アプリケーションに最適なフォームアプローチの選択についての情報は [Introduction to forms](guide/forms-overview) を見てください。
 [**@angular/<br />platform&#8209;browser**](api/platform-browser)                       | DOMとブラウザに関連したすべて、特にDOMへのレンダリングを手助けする部分です。このパッケージは[AOT](guide/aot-compiler)で事前コンパイルしたプロダクションビルド用のアプリケーションをブートストラップするための `bootstrapModuleFactory()` メソッドも含んでいます。
 [**@angular/<br />platform&#8209;browser&#8209;dynamic**](api/platform-browser-dynamic) | [JITコンパイラ](guide/aot-compiler)を使用してクライアント上でアプリケーションをコンパイル、実行するための[providers](api/core/Provider)とメソッドを含んでいます。
@@ -98,7 +98,7 @@ Package name                                      | Description
 
 ## DevDependencies
 
-`package.json` の `devDependencies` 部分に列挙されたパッケージはローカルマシン上でアプリケーションを開発するのを手助けするものです。本番向けアプリケーションと一緒にこれらのパッケージをデプロイしないでください。
+`package.json` の `devDependencies` 部分に列挙されたパッケージはローカルマシン上でアプリケーションを開発するのを手助けするものです。本番向けアプリケーションと一緒にこれらのパッケージをDesplegarしないでください。
 
 新しく `devDependency` に追加するには、次のいずれかのコマンドを利用してください。
 
@@ -133,4 +133,4 @@ Package name                                      | Description
  Angular CLIがパッケージをどう扱うかについての情報は次のガイドを見てください。
  
  * [ビルドとサーブ](guide/build)ではパッケージを組み合わせて開発ビルドを作成する方法を説明します。
- * [デプロイ](guide/deployment)ではパッケージを組み合わせて本番ビルドを作成する方法を説明します。
+ * [Desplegar](guide/deployment)ではパッケージを組み合わせて本番ビルドを作成する方法を説明します。

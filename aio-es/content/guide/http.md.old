@@ -10,7 +10,7 @@
 
 <div class="alert is-helpful">
 
-サンプルアプリはデータサーバーを必要としません。
+Aplicación de muestraはデータサーバーを必要としません。
 _HttpClient_モジュールの`HttpBackend`を置き換える
 [Angular _in-memory-web-api_](https://github.com/angular/in-memory-web-api/blob/master/README.md)
 に依存しています。
@@ -20,7 +20,7 @@ _HttpClient_モジュールの`HttpBackend`を置き換える
 
 </div>
 
-## セットアップ
+## preparar
 
 `HttpClient`を使う前に、Angularの`HttpClientModule`をインポートする必要があります。
 ほとんどのアプリはルート`AppModule`で行います。
@@ -85,7 +85,7 @@ _HttpClient_モジュールの`HttpBackend`を置き換える
 このコンポーネントは、データアクセスの細分化ですぐに乱雑になります。
 コンポーネントの理解が難しくなり、テストが難しくなり、データアクセスロジックを再利用したり標準化することができなくなります。
 
-そのため、このサービスのような単純なケースでも、データアクセスを別のサービスにカプセル化し、コンポーネント内のそのサービスに委任することによって、データの表示とデータアクセスを分離することがベストプラクティスです。
+そのため、このサービスのような単純なケースでも、データアクセスを別のサービスにカプセル化し、コンポーネント内のそのサービスに委任することによって、Mostrar datosとデータアクセスを分離することがベストプラクティスです。
 
 
 </div>
@@ -340,7 +340,7 @@ RxJS自体はこのガイドの範囲外です。 あなたはウェブ上で多
 
 `HttpClient`は、サーバーからデータを取得するだけでなく、PUT、POST、DELETEなどの他のHTTPメソッドを使用してサーバーにデータを送信するという、変更リクエストをサポートします。
 
-このガイドのサンプルアプリケーションには、ヒーローを取得してユーザーが追加、削除、および更新できるようにする、ツアー・オブ・ヒーローの簡略版が含まれています。
+このガイドのAplicación de muestraケーションには、ヒーローを取得してユーザーが追加、削除、および更新できるようにする、ツアー・オブ・ヒーローの簡略版が含まれています。
 
 
 次のセクションでは、サンプルのHeroesServiceメソッドの抜粋を示します。
@@ -517,7 +517,7 @@ export abstract class HttpHandler {
 
 #### インターセプターを提供する
 
-`NoopInterceptor`は、Angularの[依存性の注入（DI）](guide/dependency-injection)システムによって管理されるサービスです。
+`NoopInterceptor`は、Angularの[Inyección de dependencia（DI）](guide/dependency-injection)システムによって管理されるサービスです。
 他のサービスと同様に、アプリケーションが使用する前にインターセプタークラスを提供する必要があります。
 
 インターセプターは`HttpClient`サービスの（オプショナルな）依存関係であるため、
@@ -654,7 +654,7 @@ TypeScriptは、`HttpRequest`の読み取り専用プロパティにセットで
 
 アプリケーションでは、インターセプターを使用して外に出ていくリクエストにデフォルトのヘッダーを設定することがよくあります。
 
-サンプルアプリケーションには、承認トークンを生成する`AuthService`があります。
+Aplicación de muestraケーションには、承認トークンを生成する`AuthService`があります。
 トークンを取得するためにそのサービスを注入する`AuthInterceptor`があり、そのトークンをもつ承認ヘッダーをすべての外部リクエストに追加します。
 
 
@@ -942,14 +942,14 @@ RxJSの`Subject`として定義されていて、マルチキャストする`Obs
 
 <div class="alert is-helpful">
 
-このガイドのサンプルアプリケーションには、アップロードされたファイルを受け入れるサーバーがありません。
+このガイドのAplicación de muestraケーションには、アップロードされたファイルを受け入れるサーバーがありません。
 `app/http-interceptors/upload-interceptor.ts`の`UploadInterceptor`は、アップロードリクエストにインターセプトし、シミュレートされたイベントのObservableを返して省略します。
 
 
 
 </div>
 
-## セキュリティ: XSRFプロテクション {@a security-xsrf-protection}
+## Seguridad: XSRFプロテクション {@a security-xsrf-protection}
 
 [XSRF(Cross-Site Request Forgery)](https://en.wikipedia.org/wiki/Cross-site_request_forgery)は、攻撃者が認証されたユーザーにそうとは知らずにあなたのWebサイト上のアクションを実行させる攻撃手法です。
 `HttpClient`は、XSRF攻撃を防ぐための[共通メカニズム](https://en.wikipedia.org/wiki/Cross-site_request_forgery#Cookie-to-Header_Token)をサポートしています。
@@ -962,7 +962,7 @@ HTTPリクエストを実行するとき、インターセプターはデフォ�
 これを利用するには、サーバーがページ読み込みまたは最初のGETリクエストのいずれかで、`XSRF-TOKEN`というJavaScriptで読み取れるセッションクッキーにトークンを設定する必要があります。
 その後のリクエストでは、サーバーはクッキーが`X-XSRF-TOKEN` HTTPヘッダーと一致することを検証でき、したがって、ドメイン上で実行されているコードだけがリクエストを送信できたと確認できます。
 トークンは、各ユーザーごとに一意でなければならず、サーバーによって検証可能でなければなりません。これにより、クライアントは独自のトークンを作成することができなくなります。
-セキュリティを強化するために、サイトの認証クッキーのダイジェストをソルトを用いてトークンに設定します。
+Seguridadを強化するために、サイトの認証クッキーのダイジェストをソルトを用いてトークンに設定します。
 
 複数のAngularアプリケーションが同じドメインまたはサブドメインを共有する環境での衝突を防ぐために、各アプリケーションに固有のクッキー名を付けましょう。
 
@@ -1008,7 +1008,7 @@ Angular HTTPテストライブラリは、アプリケーションがコード�
 
 </div>
 
-### セットアップ
+### preparar
 
 `HttpClient`への呼び出しをテストするには、`HttpClientTestingModule`とモックコントローラ`HttpTestingController`をテストに必要な他のシンボルと共にインポートしてください。
 

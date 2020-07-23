@@ -1,10 +1,10 @@
-# アプリ内ナビゲーション
+# Navegación en la aplicación
 
 [パート1](start "Get started with a basic Angular app")を終えると、オンラインストアアプリケーションは基本的な製品カタログを持っています。
 アプリには可変状態やナビゲーションはありません。
 URLは1つあり、そのURLには常に"My Store"ページが製品のリストとその説明とともに表示されます。
 
-このガイドでは、Angular [ルーティング](guide/glossary#router "Router definition")を使用してユーザーにアプリ内ナビゲーションを提供する方法を示します。シングルページアプリでは、新しいページを読み込む代わりに、ユーザーがアプリケーションのどこにいるかに基づいて、さまざまなコンポーネントとデータをユーザーに表示します。
+このガイドでは、Angular [ルーティング](guide/glossary#router "Router definition")を使用してユーザーにNavegación en la aplicaciónを提供する方法を示します。シングルページアプリでは、新しいページを読み込む代わりに、ユーザーがアプリケーションのどこにいるかに基づいて、さまざまなコンポーネントとデータをユーザーに表示します。
 
 [ルーター](guide/glossary#router "Router definition")を使用すると、製品の詳細を個別の[ビュー](guide/glossary#view "View definition")に表示できます。それぞれに独自のURLがあります。ルーティングを使用すると、ユーザーが次のようなタスクを実行するときに、あるビューから次のビュー（同じページ内）に移動できます。
 
@@ -42,7 +42,7 @@ URLは1つあり、そのURLには常に"My Store"ページが製品のリスト
 
 1. 製品名をクリックしてルーターをテストします。 このアプリには、現在"product-details works!"と常に表示されている製品詳細コンポーネントが表示されます。
 
-    プレビューウィンドウのURLが変わることに注意してください。 最後のセグメントは `products/#`で、`#`にはあなたがクリックしたルートの数字です。
+    プレビューウィンドウのURLが変わることに注意してください。 最後のセグメントは `products/#`で、`#`にはあなたがクリックしたRaíz数字です。
 
     <div class="lightbox">
       <img src="generated/images/guide/start/product-details-works.png" alt="Product details view with updated URL">
@@ -71,7 +71,7 @@ URLは1つあり、そのURLには常に"My Store"ページが製品のリスト
         `ActivatedRoute`は、Angular Routerがロードする各ルーティングコンポーネントごとに固有です。
         ルーティング、そのパラメータ、およびそのルーティングに関連する追加データに関する情報が含まれています。
 
-        `ActivatedRoute` を注入することで、サービスを使用するようにコンポーネントを設定しています。[データの管理](start/start-data "Try it: Managing Data") ページでサービスの詳細を説明しています。
+        `ActivatedRoute` を注入することで、サービスを使用するようにコンポーネントを設定しています。[Gestión de datos](start/start-data "Try it: Managing Data") ページでサービスの詳細を説明しています。
 
 
 1. `ngOnInit()`メソッドで、ルーティングパラメータをサブスクライブし、`productId`に基づいて製品を取得します。
@@ -96,12 +96,12 @@ URLは1つあり、そのURLには常に"My Store"ページが製品のリスト
 
 <div class="alert is-helpful">
 
-Angularルーターについての詳細は[ルーティングと画面遷移](guide/router "ルーティングと画面遷移ガイド")をご覧ください。
+Angularルーターについての詳細は[Enrutamiento y transición de pantalla](guide/router "Enrutamiento y transición de pantallaガイド")をご覧ください。
 
 </div>
 
 
-## 次のステップ
+## Próximos pasos
 
 おめでとうございます！ あなたはオンラインストアにルーティングを統合しました。
 
@@ -109,5 +109,5 @@ Angularルーターについての詳細は[ルーティングと画面遷移](g
 * ユーザーはリストから製品名をクリックして、別のURL（ルーティング）を使用して新しいビューに詳細を表示できます。
 
 Angularの探索を続けるには、次のいずれかのオプションを選択してください。
-* ["データの管理"セクションに進む](start/start-data "Try it: Managing Data")ことで、ショッピングデータ機能を追加します。 サービスを使用してカートデータを管理し、HTTPを使用して出荷価格の外部データを取得します。
-* [先に"デプロイ"セクションに進む](start/start-deployment "Try it: Deployment")ことで、ローカル開発に移動するか、アプリをFirebaseまたは独自のサーバーにデプロイします。
+* ["Gestión de datos"セクションに進む](start/start-data "Try it: Managing Data")ことで、ショッピングデータ機能を追加します。 サービスを使用してカートデータを管理し、HTTPを使用して出荷価格の外部データを取得します。
+* [先に"Desplegar"セクションに進む](start/start-deployment "Try it: Deployment")ことで、ローカル開発に移動するか、アプリをFirebaseまたは独自のサーバーにDesplegarします。

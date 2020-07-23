@@ -1,17 +1,17 @@
 {@a top}
 # テスト
 
-このガイドでは、Angularアプリケーションでのユニットテスト、インテグレーションテストのヒントとテクニックについて説明します。
+このガイドでは、Angularアプリケーションでのユニットテスト、インテグレーションテストのヒントとTécnicaについて説明します。
 
-このガイドでは、[_ツアー・オブ・ヒーロー_チュートリアル](tutorial)によく似たサンプルの[Angular CLI](cli)で作られたアプリケーションのテストを紹介します。
-このガイド内のサンプルアプリケーションとすべてのテストは検証と実験に使用できます:
+このガイドでは、[_ツアー・オブ・ヒーロー_Tutorial](tutorial)によく似たサンプルの[Angular CLI](cli)で作られたアプリケーションのテストを紹介します。
+このガイド内のAplicación de muestraケーションとすべてのテストは検証と実験に使用できます:
 
-- <live-example embedded-style>サンプルアプリケーション</live-example>
+- <live-example embedded-style>Aplicación de muestraケーション</live-example>
 - <live-example stackblitz="specs">テスト</live-example>
 
 <hr>
 
-## セットアップ
+## preparar
 
 Angular CLIは[Jasmineテストフレームワーク](https://jasmine.github.io/) を使用してAngularアプリケーションのテストを行うために必要なものすべてをダウンロードしてインストールします。
 
@@ -85,13 +85,13 @@ CLIは`AppComponent`のテストとして`app.component.spec.ts`という名前�
 </div>
 
 `app.component.ts`と`app.component.spec.ts`ファイルは同じフォルダ内に置きます。
-ルートのファイル名(`app.component`の部分)は双方のファイルで同じにします。
+Raízファイル名(`app.component`の部分)は双方のファイルで同じにします。
 
 あなた自身のプロジェクトの_すべての種類_のテストファイルにおいてこれら2つの慣習を採用してください。
 
 {@a ci}
 
-## 継続的インテグレーションのセットアップ
+## 継続的インテグレーションのpreparar
 
 プロジェクトのバグをなくす最善の方法の1つはテストスイートを通すことですが、いつもテストを実行するというのは簡単に忘れます。
 継続的インテグレーション(CI)サーバーを使用すると、プロジェクトのリポジトリーでコミットおよびプルリクエストをするたびにテストを実行できるように設定できます。
@@ -316,15 +316,15 @@ _注入_することは簡単なことです。
 
 </div>
 
-これらの標準的なテストテクニックはサービスのユニットテストを隔離して行うための素晴らしい方法です。
+これらの標準的なテストTécnicaはサービスのユニットテストを隔離して行うための素晴らしい方法です。
 
-しかし、Angularの依存性の注入を使用してアプリケーションクラスにサービスを注入している場合は、
+しかし、AngularのInyección de dependenciaを使用してアプリケーションクラスにサービスを注入している場合は、
 ほとんどこのパターンを使用して反映したテストが必要になります。
 Angularのテスティングユーティリティを使用することで注入されたサービスの動作を簡単に調査することができます。
 
 #### _TestBed_を使用してサービスのテストをする
 
-あなたのアプリケーションはサービスを作成するためにAngularの[依存性の注入(DI)](guide/dependency-injection)
+あなたのアプリケーションはサービスを作成するためにAngularの[Inyección de dependencia(DI)](guide/dependency-injection)
 に頼っています。
 あるサービスが依存するサービスをもつとき、DIはその依存するサービスを探すか作成します。
 さらにその依存するサービス自身が依存性をもつ場合、DIは同じように探すか作成します。
@@ -370,7 +370,7 @@ the large scale use that would have an immense amount of breaking changes.
   path="testing/src/app/demo/demo.testbed.spec.ts"
   region="value-service-inject-it"></code-example>
 
-もしくは、セットアップ部分でサービスを注入したい場合は、`beforeEach()`内で行ってください。
+もしくは、preparar部分でサービスを注入したい場合は、`beforeEach()`内で行ってください。
 
 <code-example
   path="testing/src/app/demo/demo.testbed.spec.ts"
@@ -419,7 +419,7 @@ the large scale use that would have an immense amount of breaking changes.
   path="testing/src/app/demo/demo.spec.ts"
   region="no-before-each-test"></code-example>
 
-必要なセットアップ変数を抽出するために
+必要なpreparar変数を抽出するために
 どのように[_分割代入_](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/Destructuring_assignment)
 をテストで使用するかに注目してみてください。
 
@@ -514,7 +514,7 @@ Angularの`TestBed`は次のセクションで見るような、この種類の�
   region="Lightswitch"
   header="app/demo/demo.spec.ts (Lightswitch tests)"></code-example>
 
-次は、_ツアー・オブ・ヒーロー_チュートリアルの`DashboardHeroComponent`です。
+次は、_ツアー・オブ・ヒーロー_Tutorialの`DashboardHeroComponent`です。
 
 <code-example
   path="testing/src/app/dashboard/dashboard-hero.component.ts"
@@ -625,12 +625,12 @@ Please refer to the [async](#async) section for more details.
 
 </div>
 
-#### セットアップを減らす
+#### prepararを減らす
 
 このファイルの最後の3行だけが実際にコンポーネントをテストしている部分で、
 そこでしていることは、Angularがコンポーネントを作成できることのアサートです。
 
-ファイルの残りの部分は、より高度なテストを見込んだ定型的なセットアップコードで、構成要素が相当なものに発展した場合に必要と_なるでしょう_。
+ファイルの残りの部分は、より高度なテストを見込んだ定型的なprepararコードで、構成要素が相当なものに発展した場合に必要と_なるでしょう_。
 
 以下では、これらの高度なテスト機能について学びます。
 現時点では、より管理しやすいサイズにするために、このテストファイルを大幅に減らすことができます:
@@ -702,7 +702,7 @@ Please refer to the [async](#async) section for more details.
 
 このコンポーネントが発展するにつれて、より多くのテストを追加することになるでしょう。
 個々のテストで`TestBed`の構成を複製するのではなく、
-セットアップをJasmineの`beforeEach()`といくつかのサポート変数に引き出すようにリファクタリングしましょう。
+prepararをJasmineの`beforeEach()`といくつかのサポート変数に引き出すようにリファクタリングしましょう。
 
 <code-example
   path="testing/src/app/banner/banner-initial.component.spec.ts"
@@ -1149,7 +1149,7 @@ Jasmineのマッチャーの第2引数(たとえば、 `'expected name'`)は、�
 
 コンポーネントをテストするときは、サービスの公開APIだけが重要です。
 一般に、テスト自体はリモートサーバー呼び出しをすべきではありません。
-そのような呼び出しはエミュレートする必要があります。次の`app/twain/twain.component.spec.ts`のセットアップは、これを行うための1つの方法を示しています:
+そのような呼び出しはエミュレートする必要があります。次の`app/twain/twain.component.spec.ts`のprepararは、これを行うための1つの方法を示しています:
 
 <code-example
   path="testing/src/app/twain/twain.component.spec.ts"
@@ -1196,7 +1196,7 @@ Angularが`ngOnInit`を呼び出す最初の変更検知サイクルの_直後_�
 
 #### _fakeAsync()_を使用した非同期テスト
 
-`fakeAsync()`機能を使うためには、 `zone.js/dist/zone-testing`をテストセットアップファイルでインポートする必要があります。
+`fakeAsync()`機能を使うためには、 `zone.js/dist/zone-testing`をテストprepararファイルでインポートする必要があります。
 Angular CLIで作成されたプロジェクトであれば、 `zone-testing` はすでに `src/test.ts` でインポートされています。
 
 次のテストは、サービスが`ErrorObservable`を返すときに期待される動作を確認します。
@@ -1399,7 +1399,7 @@ PromiseかObservableのどちらかを返すファクトリー関数を受け取
 
 #### _async()_を使用した非同期テスト
 
-`async()`機能を使うためには、 `zone.js/dist/zone-testing`をテストセットアップファイルでインポートする必要があります。
+`async()`機能を使うためには、 `zone.js/dist/zone-testing`をテストprepararファイルでインポートする必要があります。
 Angular CLIで作成されたプロジェクトであれば、 `zone-testing` はすでに `src/test.ts` でインポートされています。
 
 `fakeAsync()`ユーティリティ関数にはいくつかの制限があります。
@@ -1451,7 +1451,7 @@ JavaScriptエンジンのタスクキューが空になったときに解決す�
 
 `async()`関数と
 `fakeAsync()`関数はAngular非同期テストを大幅に簡素化しますが、
-伝統的なテクニックに立ち戻って、
+伝統的なTécnicaに立ち戻って、
 [`done`コールバック](https://jasmine.github.io/2.0/introduction.html#section-Asynchronous_Support)
 を受け取る関数を`it`に渡すことができます。
 
@@ -1656,14 +1656,14 @@ RxJSマーブルテストは、このガイドの範囲を超えて、豊富な�
 
 #### _DashboardHeroComponent_ スタンドアロンテスト
 
-スペックファイルのセットアップは次のとおりです。
+スペックファイルのprepararは次のとおりです。
 
 <code-example
   path="testing/src/app/dashboard/dashboard-hero.component.spec.ts"
   region="setup"
   header="app/dashboard/dashboard-hero.component.spec.ts (setup)"></code-example>
 
-セットアップコードがどのようにコンポーネントの`hero`プロパティにテストヒーロー
+prepararコードがどのようにコンポーネントの`hero`プロパティにテストヒーロー
 (`expectedHero`)を割り当てるのか、
 `DashboardComponent`が自身のリピーター内でプロパティバインディングを介してそれを設定する方法をエミュレートするかに注目してください。
 
@@ -1792,7 +1792,7 @@ _クリックトリガー_プロセスを次のような`click()`関数などの
 レイアウトHTML、追加のバインディング、
 複数のサービスを注入するコンストラクターを持っていて、
 それらのサービスとすぐにやりとりし始めるとき、
-多くのセットアップが必要になる可能性があります。
+多くのprepararが必要になる可能性があります。
 
 これらの気が狂いそうなものを無効にするための努力を想像してみてください。
 ちょうどこのような_テストホスト_でうまくいくことができる点を検証することです。
@@ -1813,7 +1813,7 @@ _クリックトリガー_プロセスを次のような`click()`関数などの
 その後、
 テストでは`DashboardHeroComponent.selected`イベントが期待されるヒーローを発行したことを検証するために`selectedHero`を簡単にチェックすることができます。
 
-_テストホスト_のテストのセットアップは、スタンドアロンテストのセットアップと似ています:
+_テストホスト_のテストのprepararは、スタンドアロンテストのprepararと似ています:
 
 <code-example path="testing/src/app/dashboard/dashboard-hero.component.spec.ts" region="test-host-setup" header="app/dashboard/dashboard-hero.component.spec.ts (test host setup)"></code-example>
 
@@ -1976,7 +1976,7 @@ Observableより取得した`id`が既存のヒーローを参照していると
 
 `id`が見つからない場合、コンポーネントは`HeroListComponent`にルーティングし直す必要があります。
 
-テストスイートのセットアップは、実際にナビゲートせずにルーターをスパイしている[上記](#routing-component)と同じルータースパイを提供しました。
+テストスイートのprepararは、実際にナビゲートせずにルーターをスパイしている[上記](#routing-component)と同じルータースパイを提供しました。
 
 次のテストでは、コンポーネントが`HeroListComponent`にナビゲートしようとします。
 
@@ -2033,14 +2033,14 @@ Angularコンパイラは`AppComponent`テンプレート内の`<app-banner>`、
 
 これはリンクについての簡単な質問に答えるだけに対して過大な労力です。
 
-このセクションでは、セットアップを最小限に抑えるための2つのテクニックについて説明します。
+このセクションでは、prepararを最小限に抑えるための2つのTécnicaについて説明します。
 主要なコンポーネントのテストに集中するために、これらを単独または組み合わせて使用​​してください。
 
 {@a stub-component}
 
 ##### 不必要なコンポーネントをスタブする
 
-最初のテクニックでは、
+最初のTécnicaでは、
 テストでほとんど役割を果たさないコンポーネントとディレクティブのスタブバージョンを作成して宣言します。
 
 <code-example
@@ -2088,9 +2088,9 @@ Angularコンパイラは`AppComponent`テンプレート内の`<app-banner>`、
 
 スタブコンポーネントはもう必要ありません。
 
-#### 両方のテクニックを使用する
+#### 両方のTécnicaを使用する
 
-これらのテクニックは、
+これらのTécnicaは、
 コンポーネントの視覚的な外見を、テストの対象となるコンポーネントのテンプレート内の要素だけに縮小するので、
 _浅いコンポーネントテスト_と呼ばれます。
 
@@ -2106,7 +2106,7 @@ _この_例のスタブは空ですが、
 テンプレートとクラスを取り除くことができます。
 
 実際には、
-この例のように同じセットアップ内で2つのテクニックを組み合わせます。
+この例のように同じpreparar内で2つのTécnicaを組み合わせます。
 
 <code-example
   path="testing/src/app/app.component.spec.ts"
@@ -2124,7 +2124,7 @@ Angularコンパイラは、`<app-banner>`要素の`BannerComponentStub`を作�
 
 実際の`RouterLinkDirective`はかなり複雑で、
 他のコンポーネントや`RouterModule`のディレクティブと絡み合っています。
-テストでモックして使用するには、頑張ったセットアップが必要です。
+テストでモックして使用するには、頑張ったprepararが必要です。
 
 このサンプルコードの`RouterLinkDirectiveStub`は、
 実際のディレクティブを、
@@ -2157,7 +2157,7 @@ Angularコンパイラは、`<app-banner>`要素の`BannerComponentStub`を作�
 
 #### _By.directive_ と注入したディレクティブ
 
-もう少しセットアップすると、最初のデータバインディングがトリガーされ、ナビゲーションリンクへの参照が取得されます:
+もう少しprepararすると、最初のデータバインディングがトリガーされ、ナビゲーションリンクへの参照が取得されます:
 
 <code-example
   path="testing/src/app/app.component.spec.ts"
@@ -2346,10 +2346,10 @@ Error: ViewDestroyedError: Attempt to use a destroyed view
 
 </div>
 
-典型的な方法は、セットアップロジックを2つの別々の`beforeEach()`関数に分割することです。
+典型的な方法は、prepararロジックを2つの別々の`beforeEach()`関数に分割することです。
 
 1. コンポーネントをコンパイルする非同期的な`beforeEach()`
-1. 残りのセットアップを実行する同期的な`beforeEach()`
+1. 残りのprepararを実行する同期的な`beforeEach()`
 
 このパターンにしたがうには、`async()`ヘルパーを他のテストシンボルと一緒にインポートします。
 
@@ -2366,7 +2366,7 @@ Error: ViewDestroyedError: Attempt to use a destroyed view
   region="async-before-each"
   header="app/banner/banner-external.component.spec.ts (async beforeEach)"></code-example>
 
-`async()`ヘルパー関数は、セットアップを行うパラメーターなしの関数を受け取ります。
+`async()`ヘルパー関数は、prepararを行うパラメーターなしの関数を受け取ります。
 
 `TestBed.configureTestingModule()`メソッドは`TestBed`クラスを返します。
 これにより、`compileComponents()`などの他の`TestBed`の静的メソッドの呼び出しをチェーンすることができます。
@@ -2403,13 +2403,13 @@ Error: ViewDestroyedError: Attempt to use a destroyed view
 
 テストランナーは、2番めの`beforeEach`の呼び出し前に、最初の非同期の`beforeEach`の完了を待つことができます。
 
-#### セットアップを統合する
+#### prepararを統合する
 
 2つの`beforeEach()`関数を1つの非同期の`beforeEach()`に統合することができます。
 
 `compileComponents()`メソッドはPromiseを返します。
 なので、同期的コードを`then(...)`コールバックに移動することによって、
-コンパイル_後_に同期的なセットアップタスクを実行できます。
+コンパイル_後_に同期的なprepararタスクを実行できます。
 
 <code-example
   path="testing/src/app/banner/banner-external.component.spec.ts"
@@ -2429,7 +2429,7 @@ CLIによって生成されたコンポーネントテストファイルは、
 
 {@a import-module}
 
-### モジュールのインポートを使用してセットアップする
+### モジュールのインポートを使用してprepararする
 
 これまでのコンポーネントテストでは、次のようにいくつかの`declarations`でテストモジュールを構成しました:
 
@@ -2477,7 +2477,7 @@ CLIによって生成されたコンポーネントテストファイルは、
 多くのアプリケーションのコンポーネントは`FormsModule`と`TitleCasePipe`を必要とするため、
 開発者は頻繁に要求されるこれらのコンポーネントを組み合わせるために`SharedModule`を作成しました。
 
-テスト構成では、この代替のセットアップのような`SharedModule`も使用できます:
+テスト構成では、この代替のprepararのような`SharedModule`も使用できます:
 
 <code-example
   path="testing/src/app/hero/hero-detail.component.spec.ts"
@@ -2549,7 +2549,7 @@ Angularは最初からずっと本物の`HeroDetailService`のインスタンス
 `HeroDetailService`自身がサーバーへリクエストする場合はどうなりますか？
 
 `TestBed.overrideComponent`メソッドは、コンポーネントの`providers`を、
-次のセットアップの変更で示すように、管理しやすい_テストダブル_に置き換えることができます:
+次のprepararの変更で示すように、管理しやすい_テストダブル_に置き換えることができます:
 
 <code-example path="testing/src/app/hero/hero-detail.component.spec.ts" region="setup-override" header="app/hero/hero-detail.component.spec.ts (Override setup)"></code-example>
 
@@ -2632,7 +2632,7 @@ Angularは最初からずっと本物の`HeroDetailService`のインスタンス
 _属性ディレクティブ_は、要素、コンポーネントまたは別のディレクティブの動作を変更します。
 その名前は、ディレクティブが適用されるホストエレメントの属性として反映されます。
 
-サンプルアプリケーションの`HighlightDirective`は、
+Aplicación de muestraケーションの`HighlightDirective`は、
 データバインドされた色またはデフォルトの色(ライトグレー)のいずれかに基づいて要素の背景色を設定します。
 また、要素のカスタムプロパティ(`customProperty`)を、
 それが可能であることを示す以外の理由なしに`true`に設定します。
@@ -2675,7 +2675,7 @@ _クラスのみ_のテストは役に立ちますが、
 
 <code-example path="testing/src/app/shared/highlight.directive.spec.ts" region="selected-tests" header="app/shared/highlight.directive.spec.ts (selected tests)"></code-example>
 
-いくつか注目に値するテクニックがあります:
+いくつか注目に値するTécnicaがあります:
 
 - `By.directive`述部は、_要素の型が不明な場合_にこのディレクティブをもつ要素を取得するための優れた方法です。
 
@@ -2775,7 +2775,7 @@ Angular テスティングユーティリティには、`TestBed`、`ComponentFi
 
     <td>
 
-    特別な_asyncテストゾーン_内でテスト（`it`）またはセットアップ（`beforeEach`）関数の本体を実行します。
+    特別な_asyncテストゾーン_内でテスト（`it`）またはpreparar（`beforeEach`）関数の本体を実行します。
     [上記の説明](#async)を参照してください。
 
     </td>
@@ -2904,7 +2904,7 @@ Angular テスティングユーティリティには、`TestBed`、`ComponentFi
 `TestBed`クラスは、主要なAngularテストユーティリティの1つです。
 そのAPIは巨大で、
 あなたがそれを調べるまで少しの時間で圧倒されるかもしれません。
-完全なAPIを吸収しようとする前に、まずこのガイドの最初の部分を読んで基礎を理解してください。
+完全なAPIを吸収しようとする前に、まずこのガイドの最初の部分を読んでbaseを理解してください。
 
 `configureTestingModule`に渡されるモジュール定義は、
 `@NgModule`メタデータプロパティのサブセットです。

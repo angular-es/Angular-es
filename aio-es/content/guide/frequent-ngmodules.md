@@ -1,4 +1,4 @@
-# よく使用されるモジュール
+# Módulos de uso común
 
 Angularアプリケーションにはルートモジュールとして機能するモジュールが少なくとも1つ必要です。
 アプリケーションに機能を追加するときはモジュールとして追加することができます。
@@ -91,7 +91,7 @@ export class AppModule { }
 
 1番上にあるインポートの列はJavaScriptのインポート文で、
 `@NgModule`内の`imports`配列はAngular固有のものです。
-違いについての詳細は[JavaScriptモジュールとNgModule](guide/ngmodule-vs-jsmodule)を参照してください。
+違いについての詳細は[Módulo JavaScript y NgModule](guide/ngmodule-vs-jsmodule)を参照してください。
 
 
 ## `BrowserModule` と `CommonModule`
@@ -118,9 +118,9 @@ Angularは`CommonModule`を代わりに使用するように指示するエラ�
 <hr />
 
 
-## NgModuleについてのさらに詳しい情報
+## Sobre NgModuleのさらに詳しい情報
 
-NgModuleについてのさらに詳しい情報については次の記事を参照してください:
+Sobre NgModuleのさらに詳しい情報については次の記事を参照してください:
 * [ブートストラップ](guide/bootstrapping)
 * [NgModule](guide/ngmodules)
-* [JavaScriptモジュールとNgModule](guide/ngmodule-vs-jsmodule)
+* [Módulo JavaScript y NgModule](guide/ngmodule-vs-jsmodule)

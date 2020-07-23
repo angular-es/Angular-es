@@ -2,7 +2,7 @@
 
 プロバイダーは依存性がある値を取り出す方法を[Dependency Injection](/guide/dependency-injection)システムへ指示します。ほとんどの場合、これらの依存性はあなたが作成して提供するサービスによるものです。
 
-この記事で説明されているプロバイダーを含む最終的なサンプルアプリケーションについては、
+この記事で説明されているプロバイダーを含む最終的なAplicación de muestraケーションについては、
 <live-example></live-example>を参照してください。
 
 ## サービスを提供する
@@ -76,10 +76,10 @@ Angularルーターがモジュールを遅延ロードすると、新しいイ�
 
 <hr>
 
-## NgModuleについてのさらに詳しい情報
+## Sobre NgModuleのさらに詳しい情報
 
 あなたはこちらにも興味があるかもしれません:
-* [シングルトンサービス](guide/singleton-services)では、このページで取り上げられている概念を詳しく説明しています。
+* [Servicio Singleton](guide/singleton-services)では、このページで取り上げられている概念を詳しく説明しています。
 * [モジュールの遅延ロード](guide/lazy-loading-ngmodules)
 * [Tree-shakable プロバイダー](guide/dependency-injection-providers#tree-shakable-providers)
 * [NgModule FAQ](guide/ngmodule-faq)

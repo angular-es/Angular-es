@@ -39,7 +39,7 @@ HTMLの `<title>`は、ドキュメントの`<head>`の中にあり、ボディ�
 * `getTitle() : string`&mdash;現在のHTMLドキュメントのタイトルを取得します。
 * `setTitle( newTitle : string )`&mdash;現在のHTMLドキュメントのタイトルを設定します。
 
-`Title`サービスをルートの`AppComponent`に入れ、それを呼び出すバインド可能な`setTitle`関数を公開することができます。
+`Title`サービスをRaíz`AppComponent`に入れ、それを呼び出すバインド可能な`setTitle`関数を公開することができます。
 
 
 <code-example path="set-document-title/src/app/app.component.ts" region="class" header="src/app/app.component.ts (class)"></code-example>

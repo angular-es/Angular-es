@@ -21,9 +21,9 @@ origin/aio/
 │   ├── guide # ガイドドキュメントのリソース
 │   ├── images # ドキュメンテーション中の画像
 │   ├── marketing # リンク集やイベント情報など、Angular紹介用のリソース
-│   ├── start # 入門チュートリアルのリソース
+│   ├── start # 入門Tutorialのリソース
 │   ├── navigation.json # サイトの各種ナビゲーションの管理ファイル
-│   └── tutorial # Tour of Heroes チュートリアルのリソース
+│   └── tutorial # Tour of Heroes Tutorialのリソース
 ├── src # angular.ioアプリケーションのソースコード
 ...
 ```
@@ -45,7 +45,7 @@ origin/aio/
 未翻訳のドキュメントをあらたに翻訳するには、原文ファイルを `xxx.en.md` として `origin` から `aio-ja` へコピーし、その原文に対する翻訳を `xxx.md` として作成します。
 その2つのファイルを追加するプルリクエストを提出してください。
 
-### ローカル環境のセットアップ
+### ローカル環境のpreparar
 
 #### 1. リポジトリのクローン
 

@@ -1,4 +1,4 @@
-# 依存関係プロバイダー
+# Proveedor de dependencia
 
 依存関係[プロバイダー](guide/glossary#provider)は、[DI トークン](guide/glossary#di-token)を使用してインジェクターを構成します。
 DI トークンは、依存関係の値の
@@ -159,7 +159,7 @@ TypeScript では、インターフェースはデザイン時のアーティフ
 type パラメーターはオプションですが、依存関係の型を開発者とツールに伝えます。
 トークンの説明は、別の開発者への助けになります。
 
-`InjectionToken` オブジェクトを使用して依存関係プロバイダーを登録します:
+`InjectionToken` オブジェクトを使用してProveedor de dependenciaを登録します:
 
 <code-example path="dependency-injection/src/app/providers.component.ts" region="providers-9"></code-example>
 
@@ -170,7 +170,7 @@ type パラメーターはオプションですが、依存関係の型を開発
 
 <div class="alert is-helpful">
 
-`AppConfig` インターフェースは、依存性の注入では何の役割も果たしませんが、
+`AppConfig` インターフェースは、Inyección de dependenciaでは何の役割も果たしませんが、
 クラス内の構成オブジェクトの入力をサポートします。
 
 </div>
@@ -197,7 +197,7 @@ type パラメーターはオプションですが、依存関係の型を開発
 この許可は、別のユーザーでログインするときのように、
 単一のアプリケーションセッションの過程で変更される可能性があります。
 
-`UserService` を `HeroService` に直接注入したくないとしましょう。セキュリティに敏感な情報でそのサービスを複雑にしたくないからです。
+`UserService` を `HeroService` に直接注入したくないとしましょう。Seguridadに敏感な情報でそのサービスを複雑にしたくないからです。
 `HeroService` は、ユーザー情報に直接アクセスして、誰が許可され、
 誰が許可されないかを判断することはできません。
 

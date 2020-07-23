@@ -21,7 +21,7 @@ Angularアプリケーションの基本となる構成要素は *NgModule* で�
 
 <div class="alert is-helpful">
 
-  重要なAngularの用語や使用法の基本的な定義については、 [Angular 用語集](guide/glossary) を参照してください。
+  重要なAngularの用語や使用法の基本的な定義については、 [Angular Glosario](guide/glossary) を参照してください。
 
 </div>
 
@@ -84,7 +84,7 @@ Angularは一般的な変換用に事前定義されたパイプを提供し、�
 {@a dependency-injection}
 
 
-## サービスと依存性の注入
+## サービスとInyección de dependencia
 
 データやロジックが特定のビューに関連付けられておらず、かつコンポーネント間で共有したい場合は、 *サービス* クラスを作成します。 サービスクラスの定義は直前に`@Injectable()`デコレーターがあります。デコレーターは、他のプロバイダーを依存性としてクラスに *注入* するためのメタデータを提供します。
 
@@ -92,7 +92,7 @@ Angularは一般的な変換用に事前定義されたパイプを提供し、�
 
 <div class="alert is-helpful">
 
-  詳細な議論については、[サービスとDIの紹介](guide/architecture-services)を参照してください。
+  詳細な議論については、[Introducción de servicios y DI](guide/architecture-services)を参照してください。
 
 </div>
 
@@ -124,7 +124,7 @@ Angularの`Router` NgModuleは、アプリケーションのさまざまなア�
 
 ## 次へ進む
 
-Angularアプリケーションの主要な構成要素についての基礎を学びました。次の図は、これらの基本パーツがどのように関連しているかを示しています。
+Angularアプリケーションの主要な構成要素についてのbaseを学びました。次の図は、これらの基本パーツがどのように関連しているかを示しています。
 
 <div class="lightbox">
   <img src="generated/images/guide/architecture/overview2.png" alt="概要">
@@ -137,7 +137,7 @@ Angularアプリケーションの主要な構成要素についての基礎を�
 
 これらのテーマのそれぞれについては、次のページで詳しく説明します。
 
-* [モジュールの紹介](guide/architecture-modules)
+* [Introducción del módulo](guide/architecture-modules)
 
 * [コンポーネントの紹介](guide/architecture-components)
 
@@ -151,12 +151,12 @@ Angularアプリケーションの主要な構成要素についての基礎を�
 
   * [パイプ](guide/architecture-components#pipes)
 
-* [サービスと依存性の注入の紹介](guide/architecture-services)
+* [サービスとInyección de dependenciaの紹介](guide/architecture-services)
 
 <div class="alert is-helpful">
 
    これらのページで参照されているコードは、<live-example></live-example>として利用できます。
 </div>
 
-これらの基本的な構成要素に精通していれば、ドキュメンテーションでもっと詳しく調べることができます。Angularアプリケーションの作成とデプロイに役立つツールやテクニックの詳細については、[次のステップ: ツールとテクニック](guide/architecture-next-steps)を参照してください。
+これらの基本的な構成要素に精通していれば、ドキュメンテーションでもっと詳しく調べることができます。Angularアプリケーションの作成とDesplegarに役立つツールやTécnicaの詳細については、[Próximos pasos: ツールとTécnica](guide/architecture-next-steps)を参照してください。
 </div>

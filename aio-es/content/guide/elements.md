@@ -129,9 +129,9 @@ Custom Elements をサポートしているブラウザにおいて、Custom Ele
 
 Angular の Custom Elements を使用すれば、自動的にインフラストラクチャとフレームワークのすべてが提供されるようになり、処理がよりシンプルで、よりわかりやすくなります。&mdash; つまり、必要なイベントハンドリングを定義するだけでよくなります（アプリケーションで使用しない場合は、コンポーネントをコンパイルから除外する必要があります）。
 
-サンプルアプリ（下記）のポップアップ・サービスでは、自動的にロードすることも、Custom Elements に変換することも可能です。
+Aplicación de muestra（下記）のポップアップ・サービスでは、自動的にロードすることも、Custom Elements に変換することも可能です。
 
-- `popup.component.ts` は、シンプルな pop-up 要素をアニメーションとスタイルとともに定義しています。
+- `popup.component.ts` は、シンプルな pop-up 要素をanimaciónとスタイルとともに定義しています。
 - `popup.service.ts` は、動的コンポーネントまたは Custom Elements として PopupComponent を実行する2つの異なる方法を提供する注入可能なサービスを作成しています。動的読み込みの手法のために、どれだけ多くの設定が必要となるかご注意ください。
 - `app.module.ts` は、PopupComponent をモジュールの `entryComponents` のリストに追加します。そうすることで、PopupComponent をコンパイルから除外し、スタートアップ時の警告やエラーを防ぐようにしています。
 - `app.component.ts` は、アプリのルートコンポーネントを定義しています。このコンポーネントは、PopupService を使用して、実行時に pop-up を DOM に追加します。アプリが起動すると、ルートコンポーネントのコンストラクターは PopupComponent を Custom Elements に変換します。

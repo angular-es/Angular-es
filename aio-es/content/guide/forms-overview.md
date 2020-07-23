@@ -1,4 +1,4 @@
-# Angularのフォームのイントロダクション
+# AngularのフォームのIntroducción
 
 ユーザー入力をフォームで処理することは、多くの一般的なアプリケーションで不可欠なものです。アプリケーションはフォームを使用して、ユーザーがログインしたり、プロフィールを更新したり、機密情報を入力したり、その他の多くのデータ入力タスクを実行できるようにします。
 
@@ -61,7 +61,7 @@ The two approaches share underlying building blocks, but differ in how you creat
 
 ### Common form foundation classes
 
-リアクティブとテンプレート駆動の両方のフォームは、基礎となる構成要素を共有しています。
+リアクティブとテンプレート駆動の両方のフォームは、baseとなる構成要素を共有しています。
 
 * `FormControl`は個々のフォームコントロールの値とバリデーションステータスを監視します。
 
@@ -73,7 +73,7 @@ The two approaches share underlying building blocks, but differ in how you creat
 
 {@a setup-the-form-model}
 
-### リアクティブフォームでのセットアップ
+### リアクティブフォームでのpreparar
 
 With reactive forms, you define the form model directly in the component class.
 The `[formControl]` directive links the explicitly created `FormControl` instance to a specific form element in the view, using an internal value accessor.
@@ -91,7 +91,7 @@ Figure 1 shows how, in reactive forms, the form model is the source of truth; it
   <img src="generated/images/guide/forms-overview/key-diff-reactive-forms.png" alt="Reactive forms key differences">
 </div>
 
-### テンプレート駆動フォームでのセットアップ
+### テンプレート駆動フォームでのpreparar
 
 In template-driven forms, the form model is implicit, rather than explicit. The directive `NgModel` creates and manages a `FormControl` instance for a given form element.
 
@@ -275,7 +275,7 @@ The next example performs the following steps to verify the model-to-view data f
 1. input要素の値がコンポーネントインスタンスの`favoriteColor`プロパティの値と一致することをアサートします。
 
 
-## 次のステップ
+## Próximos pasos
 
 リアクティブフォームの詳細については次のガイドを参照してください:
 

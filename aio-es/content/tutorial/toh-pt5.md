@@ -1,4 +1,4 @@
-# ルーティングを使ったアプリ内ナビゲーションの追加
+# ルーティングを使ったNavegación en la aplicaciónの追加
 
 Tour of Heroes アプリケーションには新しい要求があります：
 
@@ -22,7 +22,7 @@ Tour of Heroes アプリケーションには新しい要求があります：
 ## `AppRoutingModule`を追加する
 
 Angularのベストプラクティスは、
-ルートの`AppModule`からインポートされるルーティング専用のトップレベルモジュールで、
+Raíz`AppModule`からインポートされるルーティング専用のトップレベルモジュールで、
 ルーターをロードして管理することです。
 
 慣例では、そのモジュールのクラス名は`AppRoutingModule`とし、`src/app`フォルダの`app-routing.module.ts`に書きます。
@@ -86,7 +86,7 @@ URLが`localhost:4200/heroes`のようなものである場合に`HeroesComponen
 
 <div class="alert is-helpful">
 
-  アプリケーションのルートのレベルでルーターを設定しているので、このメソッドは`forRoot()`と呼ばれています。
+  アプリケーションのRaízレベルでルーターを設定しているので、このメソッドは`forRoot()`と呼ばれています。
   この`forRoot()`メソッドは、ルーティングに必要なサービス・プロバイダーとディレクティブを提供し、
   ブラウザの現在のURLを元に最初の遷移を行います。
 
@@ -136,7 +136,7 @@ URLが`/`で終わっています。
 
 ## ナビゲーションのリンクを追加する (`routerLink`)
 
-理想的には、ルートのURLをアドレスバーに貼り付けるのではなく、
+理想的には、RaízURLをアドレスバーに貼り付けるのではなく、
 ユーザーがリンクをクリックして遷移できるようにする必要があります。
 
 `<nav>`要素を追加して、その中に、クリックされると`HeroesComponent`へ遷移するトリガーになるアンカー要素を追加します。
@@ -374,7 +374,7 @@ CLIは、`DashboardComponent`のためのファイルを生成し、`AppModule`�
 </code-example>
 
 [`ActivatedRoute`](api/router/ActivatedRoute)は、この`HeroDetailComponent`のインスタンスへのルートに関する情報を保持します。
-このコンポーネントは、URLから抽出されたルートのパラメータに関心があります。
+このコンポーネントは、URLから抽出されたRaízパラメータに関心があります。
 "id"パラメータは、表示するヒーローの`id`です。
 
 [`HeroService`](tutorial/toh-pt4)は、リモートサーバーからヒーローのデータを取得し、

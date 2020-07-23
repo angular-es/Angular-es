@@ -1,4 +1,4 @@
-# JavaScriptモジュールとNgModule
+# Módulo JavaScript y NgModule
 
 JavaScriptとAngularにはコードを整理するためのモジュールという仕組みがあります。
 両者は別々の方法でモジュールを管理しますが、Angularアプリケーションは両方に依存しています。
@@ -68,5 +68,5 @@ NgModuleはプロバイダーを`@NgModule.providers`リストに追加するこ
 
 NgModule についてのさらに詳しい情報については次の記事を参照してください:
 * [ブートストラップ](guide/bootstrapping)
-* [よく使用されるモジュール](guide/frequent-ngmodules)
+* [Módulos de uso común](guide/frequent-ngmodules)
 * [プロバイダー](guide/providers)

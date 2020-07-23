@@ -41,7 +41,7 @@
 ブートストラッププロセス(アプリケーションの起動)中にAngularによってDOMにロードされます。
 他のエントリーコンポーネントは、ルーターなどの他の手段によって動的にロードされます。
 
-ルートの`AppComponent`が`@NgModule.bootstrap`に型でリストされているため、Angularはそれを動的にロードします。
+Raíz`AppComponent`が`@NgModule.bootstrap`に型でリストされているため、Angularはそれを動的にロードします。
 
 <div class="alert is-helpful">
 

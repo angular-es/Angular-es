@@ -1,4 +1,4 @@
-# 用語集
+# Glosario
 
 Angularには独自の用語があります。
 ほとんどのAngularの用語は、
@@ -65,7 +65,7 @@ _バインディング_
 Angular内では、通常、DOMオブジェクトのプロパティと
 データオブジェクトのプロパティを調整する[データバインディング](guide/glossary#data-binding)を指します。
 
-また、"トークン"または"キー" と依存性の[プロバイダー](guide/glossary#provider)との間を結びつける、[依存性の注入](guide/glossary#dependency-injection)を指すこともあります。
+また、"トークン"または"キー" と依存性の[プロバイダー](guide/glossary#provider)との間を結びつける、[Inyección de dependencia](guide/glossary#dependency-injection)を指すこともあります。
 
 ## Bootstrap
 _ブートストラップ_
@@ -122,8 +122,8 @@ _クラスフィールドデコレーター_
 
 ## CLI
 
-[Angular CLI](https://cli.angular.io/)はプロジェクトの作成やファイルの追加、そしてテスト、バンドル、デプロイなど、さまざまな進行中の開発タスクを実行する `コマンドラインインターフェース`です。
-[Angular CLI](https://cli.angular.io/)は、Angularの開発サイクルを管理するためのコマンドラインツールです。これを使用して、[ワークスペース](guide/glossary#workspace)または[プロジェクト](guide/glossary#project)の初期ファイルシステムのスキャフォールドを作成し、さまざまな要素の初期の汎用的なコードを追加および変更する[schematics](guide/glossary#schematic)を実行します。このツールは、ビルド、テスト、バンドル、およびデプロイを含む開発サイクルのすべての段階をサポートします。
+[Angular CLI](https://cli.angular.io/)はプロジェクトの作成やファイルの追加、そしてテスト、バンドル、Desplegarなど、さまざまな進行中の開発タスクを実行する `コマンドラインインターフェース`です。
+[Angular CLI](https://cli.angular.io/)は、Angularの開発サイクルを管理するためのコマンドラインツールです。これを使用して、[ワークスペース](guide/glossary#workspace)または[プロジェクト](guide/glossary#project)の初期ファイルシステムのスキャフォールドを作成し、さまざまな要素の初期の汎用的なコードを追加および変更する[schematics](guide/glossary#schematic)を実行します。このツールは、ビルド、テスト、バンドル、およびDesplegarを含む開発サイクルのすべての段階をサポートします。
 
 * 新しいプロジェクトにCLIを使用するには、[入門ガイド](guide/quickstart)を参照してください。 
 * CLIの全機能の詳細については、[Angular CLI ドキュメント](https://github.com/angular/angular-cli/wiki)を参照してください。
@@ -211,21 +211,21 @@ Angularは、メタデータをクラスやプロパティに付与して、そ�
 
 
 ## Dependency injection
-_依存性の注入_
+_Inyección de dependencia_
 
-依存性の注入は、アプリケーションの部品に求められた部品を作って送り届けるためのデザインパターンでありメカニズムです。
+Inyección de dependenciaは、アプリケーションの部品に求められた部品を作って送り届けるためのデザインパターンでありメカニズムです。
 
 Angularでは、依存関係は通常はサービスですが、文字列や関数などの値でもあります。
 アプリケーションの[インジェクター](guide/glossary#injector)（ブートストラップ中に自動的に作成される）は、必要に応じて、サービスまたは値の設定された[プロバイダー](guide/glossary#provider)を使用して依存関係をインスタンス化します。
 
-詳しく知るには[依存性の注入](guide/dependency-injection)ガイドを参照してください。
+詳しく知るには[Inyección de dependencia](guide/dependency-injection)ガイドを参照してください。
 
 {@a di-token}
 
 ## DI token
 _DIトークン_
 
-[依存性の注入](guide/glossary#di) システムで使用する依存関係[プロバイダ](guide/glossary#provider)に関連付けられたルックアップ用のトークン。
+[Inyección de dependencia](guide/glossary#di) システムで使用する依存関係[プロバイダ](guide/glossary#provider)に関連付けられたルックアップ用のトークン。
 
 
 {@a directive}
@@ -256,7 +256,7 @@ _ドメイン固有言語_
 
 特別な目的のライブラリまたはAPI。[ドメイン固有言語](https://ja.wikipedia.org/wiki/%E3%83%89%E3%83%A1%E3%82%A4%E3%83%B3%E5%9B%BA%E6%9C%89%E8%A8%80%E8%AA%9E)を参照してください。
 
-Angularは、[アニメーション](guide/animations)、[フォーム](guide/forms)、[ルーティング、ナビゲーション](guide/router).などのngModuleで定義されたAngularアプリケーションに関連するいくつかのドメインに対して、ドメイン固有の言語でTypeScriptを拡張します。
+Angularは、[animación](guide/animations)、[フォーム](guide/forms)、[ルーティング、ナビゲーション](guide/router).などのngModuleで定義されたAngularアプリケーションに関連するいくつかのドメインに対して、ドメイン固有の言語でTypeScriptを拡張します。
 
 {@a dynamic-components}
 
@@ -313,7 +313,7 @@ Angularでは、[NgModule](guide/glossary#ngmodule)を使用して同じ結果�
 
 ## Injectable
 
-[依存性の注入](guide/glossary#di)メカニズムを使用して依存性を提供するAngularクラスまたはその他の定義。注入可能なクラスは`@Injectable`[デコレータ](guide/glossary#decorator)によってマークされます。
+[Inyección de dependencia](guide/glossary#di)メカニズムを使用して依存性を提供するAngularクラスまたはその他の定義。注入可能なクラスは`@Injectable`[デコレータ](guide/glossary#decorator)によってマークされます。
 
 [サービス](guide/glossary#service)とそのサービスに依存する[コンポーネント](guide/glossary#component)の両方をinjectableとしてマークする必要があります。定数値などの他の項目もinjectableになります。
 
@@ -322,7 +322,7 @@ Angularでは、[NgModule](guide/glossary#ngmodule)を使用して同じ結果�
 ## Injector
 _インジェクター_
 
-Angularの[依存性の注入システム](guide/glossary#dependency-injection)におけるオブジェクトで、
+Angularの[Inyección de dependenciaシステム](guide/glossary#dependency-injection)におけるオブジェクトで、
 指定された"依存性"をキャッシュから見つけるか、
 登録された[プロバイダー](guide/glossary#provider)を使用して生成できます。
 インジェクターはブートストラッププロセスの一部として自動的にNgModule用に作成され、コンポーネント階層を介して継承されます。
@@ -333,7 +333,7 @@ Angularの[依存性の注入システム](guide/glossary#dependency-injection)�
 
 * 同じ依存関係の異なる実装を提供できる異なるプロバイダーでインジェクターを設定できます。
 
-[依存性の注入ガイド](guide/hierarchical-dependency-injection)のインジェクター階層の詳細をご覧ください。
+[Inyección de dependenciaガイド](guide/hierarchical-dependency-injection)のインジェクター階層の詳細をご覧ください。
 
 
 ## Input
@@ -523,7 +523,7 @@ _プロバイダー_
 
 Angularは、Angularが定義するサービスのために、すべてのインジェクターに独自のプロバイダーを登録します。あなたのアプリが必要とするサービスのためにあなた自身のプロバイダーを登録することができます。
 
-[サービス](guide/glossary#service)、[依存性の注入](guide/glossary#di)も参照してください。
+[サービス](guide/glossary#service)、[Inyección de dependencia](guide/glossary#di)も参照してください。
 
 
 {@a Q}
@@ -612,7 +612,7 @@ _サービス_
 Angularでは、サービスは、アプリケーション全体で再利用できる非UIロジックとコードをカプセル化する[@Injectable](guide/glossary#injectable)デコレーターをもつクラスです。
 Angularは、モジュール性と再利用性を高めるためにコンポーネントをサービスと区別します。
 
-`@Injectable`メタデータは、[依存性の注入](guide/glossary#di)メカニズムによってサービスクラスを使えるようにします。injectableクラスは[プロバイダ](guide/glossary#provider)によってインスタンス化され、モジュールは、コンポーネントまたはそれを必要とするその他のサービスの必要に応じて、特定のタイプのサービスを提供できるプロバイダーのリストを保持します。
+`@Injectable`メタデータは、[Inyección de dependencia](guide/glossary#di)メカニズムによってサービスクラスを使えるようにします。injectableクラスは[プロバイダ](guide/glossary#provider)によってインスタンス化され、モジュールは、コンポーネントまたはそれを必要とするその他のサービスの必要に応じて、特定のタイプのサービスを提供できるプロバイダーのリストを保持します。
 
 詳細は[サービスの概要](guide/architecture-services)を参照してください。
 
@@ -693,7 +693,7 @@ a [data binding](guide/glossary#data-binding).
 ## Token
 _トークン_
 
-効率的なテーブル参照に使用される不透明な識別子。Angularでは、[DIトークン](guide/glossary#di-token)を使用して[依存性の注入](guide/glossary#di)システムの中で依存関係の[プロバイダ](guide/glossary#provider)を検索します。
+効率的なテーブル参照に使用される不透明な識別子。Angularでは、[DIトークン](guide/glossary#di-token)を使用して[Inyección de dependencia](guide/glossary#di)システムの中で依存関係の[プロバイダ](guide/glossary#provider)を検索します。
 
 {@a transpile}
 

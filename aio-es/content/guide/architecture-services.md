@@ -1,4 +1,4 @@
-# サービスと依存性の注入のイントロダクション
+# サービスとInyección de dependenciaのIntroducción
 
 *サービス*は、アプリが必要とするあらゆる値、関数、機能を含む幅広いカテゴリーです。
 サービスは通常、目的が明確な小規模のクラスです。
@@ -21,7 +21,7 @@ Angular はサービスとコンポーネントを区別してモジュール性
 アプリの適応性を高めることもできます。
 
 Angularはこれらの原則を*強制*しません。Angularはアプリケーションロジックをサービスに組み込むことを容易にし、
-*依存性の注入*でコンポーネントからこれらのサービスを利用できるようにすることで、
+*Inyección de dependencia*でコンポーネントからこれらのサービスを利用できるようにすることで、
 これらの原則に*倣う*のに役立ちます。
 
 ## サービスの例
@@ -34,7 +34,7 @@ Angularはこれらの原則を*強制*しません。Angularはアプリケー�
 
 <code-example path="architecture/src/app/hero.service.ts" header="src/app/hero.service.ts (class)" region="class"></code-example>
 
-## 依存性の注入 (DI)
+## Inyección de dependencia (DI)
 
 <img src="generated/images/guide/architecture/dependency-injection.png" alt="サービス" class="left">
 
@@ -82,7 +82,7 @@ Angular はコンポーネントがサービスに依存していることを検
 サービスのメタデータ(`@Injectable()` デコレーター内) または
 `@NgModule()` や `@Component()` メタデータにプロバイダーを登録します。
 
-* デフォルトでは Angular CLI コマンド [ng generate service](cli/generate) はプロバイダーのメタデータを `@Injectable()` デコレーターに含めることによって、あなたのサービスのためにプロバイダーをルートインジェクターに登録します。このチュートリアルでは、この方法を使用して HeroService クラス定義のプロバイダーを登録します。
+* デフォルトでは Angular CLI コマンド [ng generate service](cli/generate) はプロバイダーのメタデータを `@Injectable()` デコレーターに含めることによって、あなたのサービスのためにプロバイダーをルートインジェクターに登録します。このTutorialでは、この方法を使用して HeroService クラス定義のプロバイダーを登録します。
 
    ``` js
    @Injectable({
@@ -113,4 +113,4 @@ Angular はコンポーネントがサービスに依存していることを検
 
    <code-example path="architecture/src/app/hero-list.component.ts" header="src/app/hero-list.component.ts (component providers)" region="providers"></code-example>
 
-詳細は、[依存性の注入](guide/dependency-injection)セクションを参照してください.
+詳細は、[Inyección de dependencia](guide/dependency-injection)セクションを参照してください.

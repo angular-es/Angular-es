@@ -56,7 +56,7 @@ Angular の `upgrade/static` モジュールを使って *順次移行* を
 * [Rule of 1](https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md#single-responsibility)
   にはひとつのコンポーネントにつきひとつのファイルがあるべきだと述べられています。
   これはコンポーネントを指し示したり見つけたりしやすくするだけでなく、
-  プログラミング言語やフレームワーク間の移行をひとつずつ行うことを可能にします。このサンプルアプリケーションでは
+  プログラミング言語やフレームワーク間の移行をひとつずつ行うことを可能にします。このAplicación de muestraケーションでは
   各コントローラーやコンポーネント、サービス、フィルターが個々のソースファイルに書かれています。
 
 * [Folders-by-Feature Structure](https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md#folders-by-feature-structure)
@@ -207,11 +207,11 @@ AngularJS のコードは AngularJS フレームワークの中で動きます�
 
 これにより、ひとつのフレームワークで管理されるコンポーネントとサービスがもう一方の
 フレームワークのものと相互運用することができます。これは3つの主要な領域で発生します。
-依存性の注入と DOM、変更検知です。 
+Inyección de dependenciaと DOM、変更検知です。 
 
-#### 依存性の注入
+#### Inyección de dependencia
 
-依存性の注入は AngularJS と Angular 両方で重要な部分ですが、
+Inyección de dependenciaは AngularJS と Angular 両方で重要な部分ですが、
 実際の動作には2つのフレームワークの間でいくつかの
 重要な違いがあります。
 
@@ -226,7 +226,7 @@ AngularJS のコードは AngularJS フレームワークの中で動きます�
   </tr>
   <tr>
     <td>
-      依存性の注入のトークンは常に文字列
+      Inyección de dependenciaのトークンは常に文字列
     </td>
     <td>
 
@@ -244,24 +244,24 @@ AngularJS のコードは AngularJS フレームワークの中で動きます�
     </td>
     <td>
 
-      ルートのインジェクタと個々のコンポーネントへの追加のインジェクタからなる [依存性のツリー階層](guide/hierarchical-dependency-injection)
+      Raízインジェクタと個々のコンポーネントへの追加のインジェクタからなる [依存性のツリー階層](guide/hierarchical-dependency-injection)
       がある。
 
     </td>
   </tr>
 </table>
 
-これらの違いがあるものの、依存性の注入を相互運用することはできます。
+これらの違いがあるものの、Inyección de dependenciaを相互運用することはできます。
 `upgrade/static` によって違いを解消し、
 すべてをシームレスに動作させられます。
 
 * AngularJS のサービスを *アップグレード* することにより、Angular のコードでつかえるようになります。
   個々のサービスの同じシングルトンインスタンスがフレームワーク間で共有されます。
-  Angular ではこれらのサービスは常に *ルートのインジェクター* として扱われ、すべての
+  Angular ではこれらのサービスは常に *Raízインジェクター* として扱われ、すべての
   コンポーネントから利用できます。
 
 * Angular サービスを *ダウングレード* することにより、AngularJS のコードで使えるようになります。
-  Angular のルートのインジェクターからのサービスのみダウングレードできます。
+  Angular のRaízインジェクターからのサービスのみダウングレードできます。
   同じシングルトンインスタンスがフレームワーク間で共有されます。
   ダウングレードされたサービスを登録する際は、AngularJS で使うための
   *文字列のトークン* を指定しなければなりません。
@@ -285,7 +285,7 @@ AngularJS と Angular のコンポーネントやディレクティブの集ま�
 よって所有されている場合、Angular はその要素が存在しないものとして扱います。逆も同様です。
 
 通常、ハイブリッドのアプリケーションは AngularJS のアプリケーションとして動作を開始し、
-AngularJS が index.html のようなルートのテンプレートを処理します。
+AngularJS が index.html のようなRaízテンプレートを処理します。
 AngularJS のテンプレートのどこかで Angular のコンポーネントが使われた時に
 Angular が出てきます。そのコンポーネントのテンプレートは Angular によって
 管理されることになり、Angular のコンポーネントやディレクティブを
@@ -399,7 +399,7 @@ Angular と AngularJS の部分をそれぞれブートストラップしなけ�
 Angular の部分を先にブートストラップし、次に `UpgradeModule` を使って AngularJS の部分をブートストラップします。
 
 AngularJS のアプリケーションでは AngularJS のアプリケーションを
-ブートストラップするためのルートの AngularJS モジュールが存在します。
+ブートストラップするためのRaíz AngularJS モジュールが存在します。
 
 <code-example path="upgrade-module/src/app/ajs-bootstrap/app.module.ts" region="ng1module" header="app.module.ts">
 </code-example>
@@ -441,13 +441,13 @@ AngularJS のアプリケーションをハイブリッドに置き換え始め�
 をインポートします。また、サービスやコンポーネントをアップグレードしたりダウングレードするためのプロバイダーをエクスポートを
 する `UpgradeModule` も `@angular/upgrade/static` からインポートします。
 
-`AppModule` のコンストラクターでは `UpgradeModule` のインスタンスを得るために依存性の注入が行われ、
+`AppModule` のコンストラクターでは `UpgradeModule` のインスタンスを得るためにInyección de dependenciaが行われ、
 `AppModule.ngDoBootstrap` メソッドが AngularJS アプリケーションをブートストラップするために使われます。
 `upgrade.bootstrap` メソッドは [angular.bootstrap](https://docs.angularjs.org/api/ng/function/angular.bootstrap) と完全に同じ引数をとります。
 
 <div class="alert is-helpful">
 
-AngularJS はアプリケーションのルートのテンプレートを管理するため、
+AngularJS はアプリケーションのRaízテンプレートを管理するため、
 `@NgModule` デコレーターに `bootstrap` の宣言を追加しないことに注意してください。
 
 </div>
@@ -805,7 +805,7 @@ AnugularJS のアプリケーションではサービス名を、たとえば "h
 <div class="alert is-helpful">
 
 この例ではサービスクラスをアップグレードしました。
-TypeScript の型注釈を依存性の注入をする時に使うことができます。依存関係の
+TypeScript の型注釈をInyección de dependenciaをする時に使うことができます。依存関係の
 扱いに影響はあたえずに、静的な型チェックの恩恵を得ることができます。
 これは必須ではありませんが、どの AngularJS のサービス、ファクトリー、
 プロバイダーであってもアップグレードできます。
@@ -845,7 +845,7 @@ AngularJS での依存関係の名前は任意です。
 
 アプリケーションを構築する時、必要なリソースが必要な時に読み込まれて欲しいことかと思います。アセットやコードにかかわらず、必要な時まで読み込みを待つことはアプリケーションを効率的にするために必要なことです。このことは異なるフレームワークをひとつのアプリケーションで動かしている場合に特にいえることです。
 
-[遅延読み込み](guide/glossary#lazy-loading)はアセットやコードのようなリソースを必要になるまで読み込みを遅らせるテクニックです。これは特に異なるフレームワークをひとつのアプリケーションで動かしているような場合に、起動時間を減らし、効率性をあげることができます。
+[遅延読み込み](guide/glossary#lazy-loading)はアセットやコードのようなリソースを必要になるまで読み込みを遅らせるTécnicaです。これは特に異なるフレームワークをひとつのアプリケーションで動かしているような場合に、起動時間を減らし、効率性をあげることができます。
 
 ハイブリッド方式で大きなアプリケーションを AngularJS から Angular へ移行する場合、一番共通して使われている機能から先に移行し、あまり共通して使われていない機能は必要な場合にのみ使いたいかと思います。そのようにすることで、アプリケーションが移行中であってもシームレスなユーザー体験を提供することに役立つでしょう。
 
@@ -855,7 +855,7 @@ AngularJS での依存関係の名前は任意です。
 
 バンドルのサイズとパフォーマンスの問題を段階的に減らすことができます。AngularJS を別のバンドルに分離させることで [遅延読み込み](guide/glossary#lazy-loading)を使い、読み込みやブートストラップ、AngularJS のレンダリングを必要な時にだけ行うことができます。この戦略では最初に読み込まれるバンドルのサイズを減らし、両方のフレームワークの読み込みが与える影響を減らすことができ、アプリケーションを可能な限り効率的に動かすことができます。
 
-次のステップにより行うことができます。
+Próximos pasosにより行うことができます。
 
 * AngularJS のバンドルにコールバック関数を設定します。
 * AngularJS のアプリケーションをブートストラップし、遅延読み込みをするためのサービスを作成します。
@@ -876,11 +876,11 @@ AngularJS でグローバルのリスナーの削除などが必要に応じて�
 <code-example path="upgrade-lazy-load-ajs/src/app/angularjs-app/index.ts" header="angularjs-app">
 </code-example>
 
-AngularJS のアプリケーションにはコンテンツをレンダリングする必要があるルートのみが設定されました。アプリケーションの残りのルートは Angular のルーターによって制御されます。AngularJS のアプリケーションをブートストラップするための `bootstrap` メソッドがバンドルが読み込まれたあとに、Angular アプリケーションで呼ばれます。
+AngularJS のアプリケーションにはコンテンツをレンダリングする必要があるRaízみが設定されました。アプリケーションの残りのルートは Angular のルーターによって制御されます。AngularJS のアプリケーションをブートストラップするための `bootstrap` メソッドがバンドルが読み込まれたあとに、Angular アプリケーションで呼ばれます。
 
 <div class="alert is-important">
 
-**備考** AngularJS が読み込まれ、ブートストラップされたあとも、ルートの設定を紐づけるリスナーはルートの変更を監視し続けます。AngularJS が表示されていない時はリスナーが停止するように、 [$routeProvider](https://docs.angularjs.org/api/ngRoute/provider/$routeProvider) で空のテンプレートをレンダリングする `otherwise` オプションを設定します。これにより、他のすべてのルートは Angular によって制御されます。
+**備考** AngularJS が読み込まれ、ブートストラップされたあとも、Raíz設定を紐づけるリスナーはRaíz変更を監視し続けます。AngularJS が表示されていない時はリスナーが停止するように、 [$routeProvider](https://docs.angularjs.org/api/ngRoute/provider/$routeProvider) で空のテンプレートをレンダリングする `otherwise` オプションを設定します。これにより、他のすべてのルートは Angular によって制御されます。
 
 </div>
 
@@ -891,18 +891,18 @@ Angular のアプリケーションでは、AngularJS のコンテンツのプ�
 <code-example path="upgrade-lazy-load-ajs/src/app/angular-js/angular-js.component.ts" header="src/app/angular-js/angular-js.component.ts">
 </code-example>
 
-Angular のルーターが AngularJS のルートにマッチした場合、`AngularJSComponent` がレンダリングされ、コンテンツが AngularJS の [`ng-view`](https://docs.angularjs.org/api/ngRoute/directive/ngView) ディレクティブの中でレンダリングされます。ユーザーがルートの外に遷移した時は AngularJS の `$rootScope` が削除されます。
+Angular のルーターが AngularJS のルートにマッチした場合、`AngularJSComponent` がレンダリングされ、コンテンツが AngularJS の [`ng-view`](https://docs.angularjs.org/api/ngRoute/directive/ngView) ディレクティブの中でレンダリングされます。ユーザーがRaíz外に遷移した時は AngularJS の `$rootScope` が削除されます。
 
 ### AngularJS のルート用にカスタムマッチャーを設定する
 
-Angular のルーターを設定するために、AngularJS の URL のためのルートを定義しなければいけません。それらの URL にマッチさせるために、`matcher` プロパティを使ってルートの設定をします。`matcher` によって URL のパスへカスタムのパターンマッチングを使うことができます。Angular のルーターは静的で可変なルートを最初にマッチしようとします。マッチするものが見つからなかった場合はルートの設定で定義されたカスタムマッチャーを参照します。カスタムマッチャーでもマッチしなかった場合は 404 などのようなページに行きます。
+Angular のルーターを設定するために、AngularJS の URL のためのルートを定義しなければいけません。それらの URL にマッチさせるために、`matcher` プロパティを使ってRaíz設定をします。`matcher` によって URL のパスへカスタムのパターンマッチングを使うことができます。Angular のルーターは静的で可変なルートを最初にマッチしようとします。マッチするものが見つからなかった場合はRaíz設定で定義されたカスタムマッチャーを参照します。カスタムマッチャーでもマッチしなかった場合は 404 などのようなページに行きます。
 
-次の例では AngularJS のルートのためにカスタムマッチャーの関数を定義します。
+次の例では AngularJS のRaízためにカスタムマッチャーの関数を定義します。
 
 <code-example path="upgrade-lazy-load-ajs/src/app/app-routing.module.ts" header="src/app/app-routing.module.ts" region="matcher">
 </code-example>
 
-次のコードでは `matcher` プロパティとカスタムマッチャー、 `component` プロパティを `AngularJSComponent` で使い、ルートの設定にルートのオブジェクトを追加しています。
+次のコードでは `matcher` プロパティとカスタムマッチャー、 `component` プロパティを `AngularJSComponent` で使い、Raíz設定にRaízオブジェクトを追加しています。
 
 <code-example path="upgrade-lazy-load-ajs/src/app/app-routing.module.ts" header="src/app/app-routing.module.ts">
 </code-example>
@@ -989,11 +989,11 @@ AOT コンパイラも `index.html` にあるそれらのファイルを読み�
 Angular のアプリケーションの AOT の恩恵をすべて得るために必要なことは以上です！
 -->
 
-## PhoneCat のアップグレードのチュートリアル
+## PhoneCat のアップグレードのTutorial
 
 この章では、`ngUpgrade` を使ってアプリケーションのアップグレードを準備する方法を学びます。
 サンプルのアプリは私たちの多くが Angular の冒険を開始したであろう、
-[AngularJS のチュートリアル](https://docs.angularjs.org/tutorial)の
+[AngularJS のTutorial](https://docs.angularjs.org/tutorial)の
 [Angular PhoneCat](https://github.com/angular/angular-phonecat) です。
 これから、このアプリケーションを Angular の勇敢な新しい世界へ連れてくる方法を見ていきます。
 
@@ -1001,7 +1001,7 @@ Angular のアプリケーションの AOT の恩恵をすべて得るために�
 適用する方法を見ていきます。アプリケーションを Angular に合わせ、
 TypeScript で書き始めます。
 
-チュートリアルに沿って進めるために、
+Tutorialに沿って進めるために、
 [angular-phonecat](https://github.com/angular/angular-phonecat) リポジトリを
 クローンし、各手順を適用しながら進めてください。
 
@@ -1286,7 +1286,7 @@ AngularJS ではコントローラーはコンストラクターを持ちます�
 
 コントローラーの関数で行われていたことは、クラスののコンストラクター関数で
 行われるようになります。静的プロパティの `$inject` を使って、
-クラスへ依存性の注入のアノテーションがつけられます。
+クラスへInyección de dependenciaのアノテーションがつけられます。
 これは実行時に `PhoneListController.$inject` プロパティになります。
 
 そのクラスはさらに3つのメンバーを宣言します。電話の配列、現在の並び替えのキー、
@@ -1322,14 +1322,14 @@ Angular に同梱されている  [ngUpgrade](#upgrading-with-ngupgrade) を使�
 
 <div class="alert is-important">
 
-このプロジェクトにはいくつかアニメーションがあります。
+このプロジェクトにはいくつかanimaciónがあります。
 このガイドではそれらをアップグレードしません。
 それに関しては [Angular animations](guide/animations) を参照してください。
 
 </div>
 
 SystemJS モジュールローダーと共に、Angular をプロジェクトにインストールしてください。
-[アップグレードのセットアップ手順](guide/upgrade-setup) の手順を行ったあとの結果を参照し、
+[アップグレードのpreparar手順](guide/upgrade-setup) の手順を行ったあとの結果を参照し、
 設定をそこから持ってきます。
 
 * Angular とその他の依存ライブラリを `package.json` に追加してください。
@@ -1347,7 +1347,7 @@ SystemJS モジュールローダーと共に、Angular をプロジェクトに
 `node_modules` とプロジェクトのルートからからファイルをロードする必要があります。
 
 `app/index.html` ファイルをプロジェクトのルートディレクトリに移動してください。
-それから、`package.json` にある開発サーバーのルートのパスを `app` の代わりに、
+それから、`package.json` にある開発サーバーのRaízパスを `app` の代わりに、
 プロジェクトのルートに変更します。
 
 <code-example format="">
@@ -1369,7 +1369,7 @@ SystemJS の設定を `<head>` セクションの最後に追加しましょう�
 <code-example path="upgrade-phonecat-2-hybrid/index.html" region="angular" header="index.html">
 </code-example>
 
-さらに、[アップグレードのセットアップ](guide/upgrade-setup)の過程でインストールした、
+さらに、[アップグレードのpreparar](guide/upgrade-setup)の過程でインストールした、
  `systemjs.config.js` ファイルにいくつか修正が必要です。
 
 SystemJS を通してロードする際、`<base>` URL を使う代わりに、
@@ -1383,7 +1383,7 @@ SystemJS を通してロードする際、`<base>` URL を使う代わりに、
 
 ### _AppModule_ を作る
 
-`AppModule` という、ルートの `NgModule` クラスを作ります。AngularJS のモジュールをもつ、
+`AppModule` という、Raíz `NgModule` クラスを作ります。AngularJS のモジュールをもつ、
 `app.module.ts` という名前のファイルがすでにあります。それを `app.module.ajs.ts` という名前に変更し、
 `index.html` 中の対応するスクリプト名を変更します。
 ファイルのコンテンツは変わりません。
@@ -1476,8 +1476,8 @@ ngResource を使ったサービスを `@Injectable` としてデコレートさ
 <code-example path="upgrade-phonecat-2-hybrid/app/core/phone/phone.service.ts" region="classdef" header="app/core/phone/phone.service.ts (skeleton)"></code-example>
 
 `@Injectable` デコレーターは Angular がその依存関係を把握できるように、
-依存性の注入のメタデータをクラスに付け足します。
-[依存性の注入ガイド](guide/dependency-injection)に記載されているように、
+Inyección de dependenciaのメタデータをクラスに付け足します。
+[Inyección de dependenciaガイド](guide/dependency-injection)に記載されているように、
 これはクラスが他に Angular のデコレーターを持っていないけれど、
 それらの依存性が注入される必要がある際に使うマーカーデコレーターです。
 
@@ -1684,7 +1684,7 @@ Angular の規約に従い、ファイルを `checkmark.pipe.ts` にリネーム
 ### ハイブリッドアプリケーションを事前コンパイルする
 
 ハイブリッドのアプリケーションで AOT を使うために、他の Angular のアプリケーションと同様、
-[事前コンパイラの章 ](guide/aot-compiler) にあるようなセットアップが必要です。
+[事前コンパイラの章 ](guide/aot-compiler) にあるようなprepararが必要です。
 
 それから、AOT コンパイラで生成された `AppComponentFactory` をブートストラップするように、
 `main-aot.ts` を変更します。
@@ -1729,7 +1729,7 @@ Angular ではアプリケーションのコンポーネントツリーの先頭
 </code-example>
 
 `<router-outlet>` のみ含んだ、簡素なテンプレートを持っています。
-このコンポーネントはアクティブなルートのコンテンツのみレンダリングし、他には何もしません。
+このコンポーネントはアクティブなRaízコンテンツのみレンダリングし、他には何もしません。
 
 そのセレクターはアプリケーションが起動した時にホストの Web ページにある `<phonecat-app>` エレメントに、
 このルートコンポーネントを繋ぐよう Angular に指示します。
@@ -1757,8 +1757,8 @@ Angular のルーターの設定の詳細に関しては [ルーティングの�
  `#!/phones` のような "ハッシュ" URL によるルーティングが可能となります。
 
 `AppModule` をアップデートしてこの `AppRoutingModule` をインポートし、
-ルートの `AppComponent` をブートストラップのコンポーネントとして宣言しましょう。
-それにより、Angular はアプリケーションを _ルートの_ `AppComponent` と共にブートストラップし、
+Raíz `AppComponent` をブートストラップのコンポーネントとして宣言しましょう。
+それにより、Angular はアプリケーションを _Raíz_ `AppComponent` と共にブートストラップし、
 ホストの Web ページにそのビューを挿入します。
 
 また、`app.module.ts` にある `ngDoBootstrap()` から AngularJS のモジュールのブートストラップと

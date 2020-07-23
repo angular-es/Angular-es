@@ -48,7 +48,7 @@ CLIの `ng new` コマンドは、デフォルトの `package.json` を作成し
 
 ### Angularパッケージ
 
-**@angular/animations**: Angularのアニメーションライブラリは、ページ遷移やリスト遷移などのアニメーション効果を簡単に定義・適用することができます。
+**@angular/animations**: Angularのanimaciónライブラリは、ページ遷移やリスト遷移などのanimación効果を簡単に定義・適用することができます。
 詳細は [Animations guide](guide/animations) を参照してください。
 
 **@angular/common**: Angularチームが提供する service/pipe/directive。
@@ -100,7 +100,7 @@ Zone.jsは、JavaScriptの標準仕様を決定している[TC39](http://www.ecm
 
 `package.json`の*devDependencies*セクションにリストされているパッケージは、ローカルマシン上でのアプリケーション開発に役立ちます。
 
-プロダクションアプリケーションでは、これらをデプロイしないでください。
+プロダクションアプリケーションでは、これらをDesplegarしないでください。
 
 **[@angular/cli](https://github.com/angular/angular-cli/)**: Angular CLIツール。
 

@@ -1,8 +1,8 @@
-# シングルトンサービス
+# Servicio Singleton
 
 シングルトンサービスは、そのインスタンスがアプリケーションにひとつだけ存在するサービスです。
 
-この記事で説明されている、アプリ全体でシングルトンなサービスを使用したサンプルアプリケーションについては、
+この記事で説明されている、アプリ全体でシングルトンなサービスを使用したAplicación de muestraケーションについては、
 すべてのドキュメント化されたNgModuleの機能を紹介している<live-example name="ngmodules"></live-example>を参照してください。
 
 ## シングルトンサービスを提供する
@@ -23,7 +23,7 @@ Angular 6.0からは、シングルトンサービスを作成する推奨の方
 <code-example path="providers/src/app/user.service.0.ts"  header="src/app/user.service.ts"></code-example>
 
 サービスのさらに詳しい情報については
-[Tour of Heroesチュートリアル](tutorial)の[サービス](tutorial/toh-pt4)の章を参照してください。
+[Tour of HeroesTutorial](tutorial)の[サービス](tutorial/toh-pt4)の章を参照してください。
 
 ### NgModule の `providers` 配列
 
@@ -84,7 +84,7 @@ Angularのバージョン6.0未満で作成されたアプリケーションで�
 <div class="alert is-helpful">
 
 **注:** providersとdeclarationsの両方をもつモジュールがある場合、
-それらを分離するテクニックとして
+それらを分離するTécnicaとして
 これを使うことが _可能_ で、レガシーアプリケーションでこのパターンが見られるかもしれません。
 しかしAngular 6.0以降では,サービス提供のベストプラクティスは
 `@Injectable()` `providedIn` プロパティです。
@@ -109,7 +109,7 @@ Angularは`@NgModule.providers`にリストされている項目を追加する�
 あなたが明示的に`AppModule`プロバイダーに追加したプロバイダーが、
 インポートされたモジュールのプロバイダーよりも優先されることを保証します。
 
-サンプルアプリでは `GreetingModule` をインポートし、その`forRoot()`メソッドを一度だけ`AppModule`で使用しています。複数のインスタンスを避けるためにこのように登録します。
+Aplicación de muestraでは `GreetingModule` をインポートし、その`forRoot()`メソッドを一度だけ`AppModule`で使用しています。複数のインスタンスを避けるためにこのように登録します。
 
 `GreetingModule` に greeting の`UserService`の設定を行う
 `forRoot()`メソッドを追加することもできます。
@@ -173,7 +173,7 @@ Angularは、
 
 <hr />
 
-## NgModuleについてのさらに詳しい情報
+## Sobre NgModuleのさらに詳しい情報
 
 あなたはこちらにも興味があるかもしれません:
 * [モジュールの共有](guide/sharing-ngmodules)ではこのページで取り上げられている概念を詳しく説明します。

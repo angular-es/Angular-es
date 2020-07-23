@@ -1,6 +1,6 @@
-# Angular の依存性の注入
+# Angular のInyección de dependencia
 
-依存性の注入 (DI) は、重要なアプリケーションデザインパターンです。
+Inyección de dependencia (DI) は、重要なアプリケーションデザインパターンです。
 Angular には独自の DI フレームワークがあります。これは通常、
 Angular アプリケーションの設計で効率性とモジュール性を向上させるために使用されます。
 
@@ -11,7 +11,7 @@ Angular では、DI フレームワークはそのクラスがインスタンス
 
 <div class="alert is-helpful">
 
- このガイドに付属のサンプルアプリケーションの <live-example></live-example> を実行できます。
+ このガイドに付属のAplicación de muestraケーションの <live-example></live-example> を実行できます。
 
 </div>
 
@@ -190,7 +190,7 @@ Angular は定期的に入れ子になったインジェクターを作ります
 
 ## 依存関係のあるコンポーネントのテスト
 
-依存性の注入を使用してクラスを設計すると、クラスのテストが容易になります。
+Inyección de dependenciaを使用してクラスを設計すると、クラスのテストが容易になります。
 依存関係をコンストラクターのパラメータとしてリストするだけで、アプリケーション部分を効果的にテストすることができます。
 
 たとえば、テスト用に操作できるモックサービスを使用して新しい `HeroListComponent` 
@@ -248,7 +248,7 @@ Angular は、*クラスに何らかのデコレーターがある場合にの�
 
 {@a injection-token}
 
-### 依存性の注入トークン
+### Inyección de dependenciaトークン
 
 プロバイダーを使用してインジェクターを設定するときは、そのプロバイダーを [DI トークン](guide/glossary#di-token)と関連付けます。
 インジェクターは、依存関係を要求されたときに参照する内部*トークンプロバイダー*マップを維持します。
@@ -295,20 +295,20 @@ null に設定します。
 
 `@Inject()` と `@Optional()` は*パラメータデコレーター*です。それらは、依存関係を必要とするクラスのコンストラクターに依存関係パラメータを注釈することによって、DI フレームワークが依存関係を提供する方法を変更します。
 
-パラメータデコレーターの詳細については、[階層的な依存性の注入](guide/hierarchical-dependency-injection)をご覧ください。
+パラメータデコレーターの詳細については、[階層的なInyección de dependencia](guide/hierarchical-dependency-injection)をご覧ください。
 
 </div>
 
 ## まとめ
 
-このページで Angular の依存性の注入の基本を学びました。
+このページで Angular のInyección de dependenciaの基本を学びました。
 さまざまな種類のプロバイダーを登録できます。
 また、コンストラクターにパラメータを追加することで、注入されるオブジェクト(サービスなど)を
 要求する方法を知っています。
 
 次のページで、Angular の DI システムの機能と高度な特徴について詳しく説明します。
 
-* 入れ子になったインジェクターについて詳しくは、[階層的な依存性の注入](guide/hierarchical-dependency-injection)を参照してください
+* 入れ子になったインジェクターについて詳しくは、[階層的なInyección de dependencia](guide/hierarchical-dependency-injection)を参照してください
 
 * [DI トークンとプロバイダー](guide/dependency-injection-providers)についてもっと学びましょう
 

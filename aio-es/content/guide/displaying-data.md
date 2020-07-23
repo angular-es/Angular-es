@@ -1,4 +1,4 @@
-# ビューへのデータの表示
+# ビューへのMostrar datos
 
 Angular [コンポーネント](guide/glossary#component) は、アプリケーションのデータ構造を形成します。
 コンポーネントに関連付けられた HTML [テンプレート](guide/glossary#template)は、Web ページのコンテキストでそのデータを表示する手段を提供します。

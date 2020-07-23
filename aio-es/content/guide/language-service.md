@@ -74,7 +74,7 @@ devDependencies {
 }
 </code-example>
 
-2. プロジェクトルートのターミナルで、この`devDependencies`を`npm`か`yarn`でインストールします：
+2. プロジェクトRaízターミナルで、この`devDependencies`を`npm`か`yarn`でインストールします：
 
 ```sh
 npm install

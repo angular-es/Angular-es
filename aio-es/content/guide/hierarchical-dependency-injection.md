@@ -347,7 +347,7 @@ class Person {
 
 Angularのテンプレートの根本的な論理構造を理解すると、
 サービスを設定し、
-その可視性を制御するための基礎が学べます。
+その可視性を制御するためのbaseが学べます。
 
 次の例のように、コンポーネントはテンプレートで使用されます:
 
@@ -442,7 +442,7 @@ Angularのテンプレートの根本的な論理構造を理解すると、
 
 ### アプリケーション構造の例
 
-サンプルアプリでは、`🌺`(赤いハイビスカス)
+Aplicación de muestraでは、`🌺`(赤いハイビスカス)
 が値の`emoji`をもつ`FlowerService`が`root`で提供されます。
 
 <code-example path="providers-viewproviders/src/app/flower.service.ts" header="providers-viewproviders/src/app/flower.service.ts" region="flowerservice">
@@ -555,7 +555,7 @@ Emoji from FlowerService: 🌺
 `<app-child>`自身の`ElementInjector`を調べるだけで済みます。
 インジェクターツリー全体で検索を続ける必要はありません。
 
-次のステップでは、`ChildComponent`テンプレートにバインディングを追加します。
+Próximos pasosでは、`ChildComponent`テンプレートにバインディングを追加します。
 
 <code-example path="providers-viewproviders/src/app/child/child.component.html" header="providers-viewproviders/src/app/child.component.html" region="flower-binding">
 
@@ -615,7 +615,7 @@ Emoji from FlowerService: 🌻
 </div>
 
 
-サンプルアプリでは、`viewProviders`を説明するために
+Aplicación de muestraでは、`viewProviders`を説明するために
 `AnimalService`という2つ目のサービスを取り上げます。
 
 最初に、クジラの`emoji`🐳プロパティをもつ`AnimalService`を作成します :
@@ -880,7 +880,7 @@ Emoji from FlowerService: 🌺
 
 <div class="alert is-helpful">
 
-**Note:** サンプルアプリは`@Optional()`を使用しているため、
+**Note:** Aplicación de muestraは`@Optional()`を使用しているため、
 アプリはエラーをスローしませんが、原則は同じです。
 
 </div>
@@ -1053,12 +1053,12 @@ export class ChildComponent {
 たとえば、ガイドサンプルには悪役のリストを表示する`VillainsListComponent`というものがあり、
 それは悪役たちを`VillainsService`から取得します。
 
-`VillainsService`をルートの`AppModule`
+`VillainsService`をRaíz`AppModule`
 (あなたが`HeroesService`を登録した場所)に提供した場合、
 これは_ヒーロー_のワークフローを含め、
 `VillainsService`をアプリケーションのすべての場所で利用可能になります。後で`VillainsService`を修正した場合、
 どこかのヒーローコンポーネントの中で何かしらを壊す可能性があります。
-ルートの`AppModule`にサービスを提供することはその危険性を生み出します。
+Raíz`AppModule`にサービスを提供することはその危険性を生み出します。
 
 代わりに、`VillainsListComponent`の`providers`メタデータで`VillainsService`を次のように提供することができます:
 
@@ -1144,7 +1144,7 @@ _編集中の納税申告書_は、ゲッターとセッターで実装されて
 
 <div class="alert is-helpful">
 
-シナリオのコードの残りの部分は、ドキュメントの他の部分で学ぶことができる他のAngularの機能とテクニックに依存しています。
+シナリオのコードの残りの部分は、ドキュメントの他の部分で学ぶことができる他のAngularの機能とTécnicaに依存しています。
 <live-example></live-example>から確認し、ダウンロードすることができます。
 
 </div>
@@ -1185,6 +1185,6 @@ _編集中の納税申告書_は、ゲッターとセッターで実装されて
 
 <hr />
 
-## 依存性の注入の詳細について
+## Inyección de dependenciaの詳細について
 
-Angularの依存性の注入の詳細については、DIプロバイダー[DI プロバイダー](guide/dependency-injection-providers)および[DI イン・アクション](guide/dependency-injection-in-action)ガイドを参照してください。
+AngularのInyección de dependenciaの詳細については、DIプロバイダー[DI プロバイダー](guide/dependency-injection-providers)および[DI イン・アクション](guide/dependency-injection-in-action)ガイドを参照してください。

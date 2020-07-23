@@ -1,7 +1,7 @@
 # Angularワークスペースの設定
 
 Angular [ワークスペース](guide/glossary#workspace) のルート階層にある `angular.json` というファイルは、Angular CLIによって提供されるビルドおよび開発ツールに対して、ワークスペース全体およびプロジェクト固有のデフォルトの設定を提供します。
-設定の中で与えられたパスの値は、ルートのワークスペースフォルダと関連しています。
+設定の中で与えられたパスの値は、Raízワークスペースフォルダと関連しています。
 
 ## 全体的なJSONの構成
 
@@ -233,7 +233,7 @@ Angular は、Architect ツールと `ng run` コマンドで使用するデフ�
 
 * `glob`: `input` をベースディレクトリとして使用する [node-glob](https://github.com/isaacs/node-glob/blob/master/README.md) 。
 * `input`: ワークスペースのルートからの相対パス。
-* `output`: `outDir` からの相対パス（デフォルトは`dist/`*project-name*）。 セキュリティへの影響のため、CLIはプロジェクトの出力パスの外側にファイルを書き込むことはありません。
+* `output`: `outDir` からの相対パス（デフォルトは`dist/`*project-name*）。 Seguridadへの影響のため、CLIはプロジェクトの出力パスの外側にファイルを書き込むことはありません。
 * `ignore`: 除外するglobsのリスト。
 
 たとえば、デフォルトのアセットのパスは、次のオブジェクトを使用してより詳細に表すことができます。

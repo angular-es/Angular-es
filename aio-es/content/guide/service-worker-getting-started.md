@@ -5,7 +5,7 @@
 
 #### 前提条件
 
-[Angular Service Worker イントロダクション](guide/service-worker-intro)への基本的な理解があること
+[Angular Service Worker Introducción](guide/service-worker-intro)への基本的な理解があること
 
 
 ## アプリケーションにService Workerを追加する
@@ -40,7 +40,7 @@ CLIプロジェクトはAngular Service Workerを使用するように設定さ�
 
 ## Service Workerを動かす: ツアー
 
-このセクションでは、サンプルアプリケーションを使用して、Service Workerを実際に動かします。
+このセクションでは、Aplicación de muestraケーションを使用して、Service Workerを実際に動かします。
 
 ### `http-server`を供給する
 
@@ -115,7 +115,7 @@ networkタブを見ると、Service Workerがアクティブであることを�
 ### アプリケーションを変更する
 
 Service Workerがアプリケーションをキャッシュする方法を見てきました。
-次のステップは、アップデートの仕組みを理解することです。
+Próximos pasosは、アップデートの仕組みを理解することです。
 
 1. シークレットウィンドウでテストする場合は、2つ目のタブを空白で開きます。これにより、テスト中にシークレットとキャッシュの状態が維持されます。
 

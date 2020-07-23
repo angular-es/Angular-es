@@ -26,7 +26,7 @@ Angular は国際化の次の側面を単純化します。
 * アプリの多言語バージョンを作成する。
 
 {@a setting-up-cli}
-## Angular CLI を使用したローカライズのセットアップ
+## Angular CLI を使用したローカライズのpreparar
 
 Angular CLI を使用してローカライズを設定する最初の手順は、`@angular/localize` パッケージをプロジェクトに追加することです。
 これにより、プロジェクト内にパッケージがインストールされ、Angular のローカライズ機能を利用するためにプロジェクトが初期化されます。 
@@ -86,7 +86,7 @@ CLDR と Angular が使用するロケール識別子は [BCP47](http://www.rfc-
 ## i18n パイプ {@a i18n-pipes}
 
 Angular のパイプは国際化に役立ちます。`DatePipe`、`CurrencyPipe`、`DecimalPipe`、
-および `PercentPipe` は `LOCALE_ID` 依存性の注入トークンに基づいたローカルデータを使用してデータをフォーマットします。
+および `PercentPipe` は `LOCALE_ID` Inyección de dependenciaトークンに基づいたローカルデータを使用してデータをフォーマットします。
 
 デフォルトでは、Angular は `en-US` のロケールデータのみを含みます。
 CLI には自動的にロケールデータが含まれ、`ng serve` および `ng build` でパラメーター `--i18nLocale` またはオプション `i18nLocale` を使用すると、
@@ -452,7 +452,7 @@ ng xi18n  --format=xmb
 ## 原文を翻訳する
 
 デフォルトでは、`ng xi18n` コマンドは、プロジェクトの `src` フォルダに `messages.xlf` という名前の翻訳ソースファイルを生成します。
-次のステップは、このソースファイルの表示文字列を言語固有の翻訳ファイルに翻訳することです。
+Próximos pasosは、このソースファイルの表示文字列を言語固有の翻訳ファイルに翻訳することです。
 このガイドの例では、フランス語の翻訳ファイルを作成します。
 
 {@a localization-folder}
@@ -596,7 +596,7 @@ ICU 式は別々に抽出されるため、抽出ツールはこれを
 {@a app-pre-translation}
 ### アプリとその翻訳ファイル
 
-サンプルアプリとその翻訳ファイルは次のとおりです。
+Aplicación de muestraとその翻訳ファイルは次のとおりです。
 
 <code-tabs>
   <code-pane header="src/app/app.component.html" path="i18n/src/app/app.component.html">
@@ -775,6 +775,6 @@ Angular コンパイラによって生成される警告のレベルを設定で
 }
 </code-example>
 
-### 複数のロケール用にデプロイする
+### 複数のロケール用にDesplegarする
 
-複数の言語でアプリケーションを生成するためのスクリプトの作成方法、およびさまざまなサブディレクトリからそれらを提供するように Apache2 を設定する方法の詳細については、[Philippe Martin によるこのチュートリアル](https://dev.to/angular/deploying-an-i18n-angular-app-with-angular-cli-2fb9)を読んでください。
+複数の言語でアプリケーションを生成するためのスクリプトの作成方法、およびさまざまなサブディレクトリからそれらを提供するように Apache2 を設定する方法の詳細については、[Philippe Martin によるこのTutorial](https://dev.to/angular/deploying-an-i18n-angular-app-with-angular-cli-2fb9)を読んでください。

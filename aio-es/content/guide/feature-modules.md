@@ -2,7 +2,7 @@
 
 フィーチャーモジュールはコードを整理する目的で用いられるNgModuleです。
 
-この記事で説明されているフィーチャーモジュールを含む最終的なサンプルアプリケーションについては、
+この記事で説明されているフィーチャーモジュールを含む最終的なAplicación de muestraケーションについては、
 <live-example></live-example>を参照してください。
 
 <hr>
@@ -108,9 +108,9 @@ CLIがフィーチャーモジュールのために`CustomerDashboardComponent`�
 
 <hr />
 
-## NgModuleについてのさらに詳しい情報
+## Sobre NgModuleのさらに詳しい情報
 
 あなたは次の記事に興味があるかもしれません:
 * [Angularルーターによるモジュールの遅延ロード](guide/lazy-loading-ngmodules).
 * [プロバイダー](guide/providers).
-* [フィーチャーモジュールの種類](guide/module-types).
+* [Tipo de módulo de funciones](guide/module-types).

@@ -1,6 +1,6 @@
 # サーバーからデータの取得
 
-このチュートリアルではAngularの`HttpClient`を使用して、
+このTutorialではAngularの`HttpClient`を使用して、
 次のデータ永続の機能を追加します。
 
 * `HeroService`はHTTPリクエストを介してヒーローデータを取得します。
@@ -17,7 +17,7 @@
 
 `HttpClient` はHTTPを通してリモートサーバーと通信するための仕組みです。
 
-2つのステップでアプリのどこでも `HttpClient`を利用できるようにします。まず、インポートしてルートの `AppModule`に追加します：
+2つのステップでアプリのどこでも `HttpClient`を利用できるようにします。まず、インポートしてRaíz `AppModule`に追加します：
 
 <code-example path="toh-pt6/src/app/app.module.ts" region="import-http-client" header="src/app/app.module.ts (HttpClientModule import)">
 </code-example>
@@ -30,7 +30,7 @@
 
 ## データサーバーをシミュレートする
 
-本チュートリアルでは [In-memory Web API](https://github.com/angular/in-memory-web-api "インメモリWebAPI")モジュール
+本Tutorialでは [In-memory Web API](https://github.com/angular/in-memory-web-api "インメモリWebAPI")モジュール
 を利用してリモートデータサーバーとの通信を再現します。
 
 このモジュールをインストールすると、アプリは*インメモリWeb API*がリクエストをインターセプトして、そのリクエストを
@@ -43,8 +43,8 @@
 
 **重要** インメモリWeb APIモジュールはAngularのHTTPとは関係がありません。
 
-`HttpClient`を学ぶためにこのチュートリアルを読んでいるのであれば、このステップを[読み飛ばして](#import-heroes)ください。
-本チュートリアルとともにコーディングしている場合は、ここでインメモリWeb APIを追加しましょう。
+`HttpClient`を学ぶためにこのTutorialを読んでいるのであれば、このステップを[読み飛ばして](#import-heroes)ください。
+本Tutorialとともにコーディングしている場合は、ここでインメモリWeb APIを追加しましょう。
 
 </div>
 
@@ -80,7 +80,7 @@
 <code-example path="toh-pt6/src/app/in-memory-data.service.ts" region="init" header="src/app/in-memory-data.service.ts"></code-example>
 
 `in-memory-data.service.ts`ファイルは` mock-heroes.ts`の機能を引き継ぎます。
-ただし、このチュートリアルのいくつかのステップで必要になるため、まだ `mock-heroes.ts`を削除しないでください。
+ただし、このTutorialのいくつかのステップで必要になるため、まだ `mock-heroes.ts`を削除しないでください。
 
 サーバーが準備されたら、インメモリWeb APIを外せば、アプリのリクエストはサーバーに送信されます。
 
@@ -399,7 +399,7 @@ _削除されるべきヒーロー_をリストから即座に削除します。
 
 このテンプレートは`HeroesComponent`のテンプレートの`*ngFor`にとても似ています。
 
-これが機能するための次のステップは、 `<app-hero-search>`に一致するセレクターをもつコンポーネントを追加することです。
+これが機能するためのPróximos pasosは、 `<app-hero-search>`に一致するセレクターをもつコンポーネントを追加することです。
 
 
 ### `HeroSearchComponent` を作成する
@@ -617,7 +617,7 @@ CLIは`HeroSearchComponent`ファイルを作成し、`AppModule`のdeclarations
 * インメモリWeb APIを設定しました。
 * Observableをどのように扱うかを学びました。
 
-これで"Tour of Heroes"のチュートリアルは終了です。
-基礎ガイドのセクションで、さらにAngularでの開発について学べるようになりました。
+これで"Tour of Heroes"のTutorialは終了です。
+baseガイドのセクションで、さらにAngularでの開発について学べるようになりました。
 [Architecture](guide/architecture "Architecture")ガイドから始めましょう。
 

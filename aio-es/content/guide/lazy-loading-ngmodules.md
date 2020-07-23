@@ -50,14 +50,14 @@ For step-by-step instructions on lazy loading modules, continue with the followi
 
 ## Step-by-step setup
 
-遅延ロードするフィーチャーモジュールをセットアップするための主なステップが2つあります:
+遅延ロードするフィーチャーモジュールをprepararするための主なステップが2つあります:
 
 1. CLIで `--route` フラグを使ってフィーチャーモジュールを作成する
 1. ルート(route)を設定する
 
-### アプリケーションをセットアップする
+### アプリケーションをprepararする
 
-まだアプリケーションを作成していない場合、次のステップにしたがってCLIを使用してアプリケーションを作成してください。
+まだアプリケーションを作成していない場合、Próximos pasosにしたがってCLIを使用してアプリケーションを作成してください。
 すでに作成している場合は[ルート(route)を設定する](#config-routes)に進んでください。
 次のコマンドを実行してください。
 ここでの`customer-app`はアプリケーション名です。
@@ -68,7 +68,7 @@ ng new customer-app --routing
 
 これにより、`customer-app`というアプリケーションが作成され、さらに`--routing`フラグによって
 `app-routing.module.ts`というファイルが生成されます。
-このファイルはフィーチャーモジュールの遅延ロードをセットアップするために必要なファイルの1つです。
+このファイルはフィーチャーモジュールの遅延ロードをprepararするために必要なファイルの1つです。
 コマンド`cd customer-app`を実行してプロジェクトに移動してください。
 
 <div class="alert is-helpful">
@@ -118,7 +118,7 @@ ng generate module orders --route orders --module app.module
   region="routes-customers-orders">
 </code-example>
 
-### UIをセットアップする
+### UIをprepararする
 
 アドレスバーにURLを入力することもできますが、ナビゲーションUIのほうがユーザーにとって簡単でより一般的です。
 `app.component.html`のデフォルトのプレースホルダーマークアップをカスタムナビゲーションに置き換えて、
@@ -213,7 +213,7 @@ CLIは、フィーチャールーティングモジュールにも`RouterModule.
 
 `forRoot()`メソッドはRouterのための*グローバルな*インジェクター設定を管理します。
 `forChild()`メソッドはインジェクター設定を持ちません。それは`RouterOutlet`や`RouterLink`のようなディレクティブを使います。
-詳しくは、 [シングルトンサービス](guide/singleton-services) ガイドの中の [`forRoot()` パターン](guide/singleton-services#forRoot) セクションを参照してください。
+詳しくは、 [Servicio Singleton](guide/singleton-services) ガイドの中の [`forRoot()` パターン](guide/singleton-services#forRoot) セクションを参照してください。
 
 {@a preloading}
 
@@ -321,6 +321,6 @@ For more information with a working example, see the [routing tutorial section o
 あなたはこちらにも興味があるかもしれません:
 * [ルーティングとナビゲーション](guide/router)
 * [プロバイダー](guide/providers)
-* [フィーチャーモジュールの種類](guide/module-types)
+* [Tipo de módulo de funciones](guide/module-types)
 * [Route-level code-splitting in Angular](https://web.dev/route-level-code-splitting-in-angular/)
 * [Route preloading strategies in Angular](https://web.dev/route-preloading-in-angular/)

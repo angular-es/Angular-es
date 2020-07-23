@@ -266,7 +266,7 @@ const heroForm = new FormGroup({
 ## 非同期バリデーション
 このセクションでは、非同期バリデータを作成する方法を示します。[カスタムバリデータ](guide/form-validation#custom-validators)の作成に関するいくつかの基本的な知識を前提としています。
 
-### 基礎
+### base
 同期バリデータに `ValidatorFn` と `Validator` のインターフェースがあるように、非同期バリデータにも `AsyncValidatorFn` と `AsyncValidator` という独自の対があります。
 
 これらは非常によく似ています。唯一の違いは:

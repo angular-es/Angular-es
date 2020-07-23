@@ -1,6 +1,6 @@
-# 試してみよう: データの管理
+# Intentemos: Gestión de datos
 
-[アプリ内ナビゲーション](start/start-routing "Try it: In-app Navigation") の最後に、オンラインストアアプリケーションには、製品リストと製品詳細の2つのビューをもつ製品カタログがあります。
+[Navegación en la aplicación](start/start-routing "Try it: In-app Navigation") の最後に、オンラインストアアプリケーションには、製品リストと製品詳細の2つのビューをもつ製品カタログがあります。
 ユーザーはリストから製品名をクリックして、別のURLあるいはrouteを使用して新しいビューに詳細を表示できます。
 
 このページでは、ショッピングカートを3段階で作成します。
@@ -12,7 +12,7 @@
 {@a services}
 ## サービス
 
-サービスはAngularアプリケーションの不可欠な部分です。 Angularでは、サービスはAngularの [依存性の注入システム](guide/glossary#dependency-injection-di "dependency injection definition") を使用してアプリケーションの任意の部分で使用できるクラスのインスタンスです。
+サービスはAngularアプリケーションの不可欠な部分です。 Angularでは、サービスはAngularの [Inyección de dependenciaシステム](guide/glossary#dependency-injection-di "dependency injection definition") を使用してアプリケーションの任意の部分で使用できるクラスのインスタンスです。
 
 サービスは、アプリケーションの各部分の間でデータを共有する場所です。 オンラインストアの場合、カートサービスはカートデータとメソッドを保存する場所です。
 
@@ -29,7 +29,7 @@
 
 <div class="alert is-helpful">
 
-このチュートリアルの後半の[ユーザー入力にフォームを使おう](start/start-forms "Try it: Forms for user input")では、ユーザーがチェックアウトするビューからこのカートサービスにアクセスする方法を説明しています。
+このTutorialの後半の[ユーザー入力にフォームを使おう](start/start-forms "Try it: Forms for user input")では、ユーザーがチェックアウトするビューからこのカートサービスにアクセスする方法を説明しています。
 
 </div>
 
@@ -43,12 +43,12 @@
     <div class="alert is-helpful>
 
         StackBlitzジェネレーターは、デフォルトで`app.module.ts`でカートサービスを提供する場合があります。これは、バンドル最適化手法である `@Injectable()` デコレータと `{ providedIn： 'root' }`ステートメントを使用する例とは異なります。
-        サービスの詳細については、[サービスと依存性の注入の概要](guide/architecture-services "Concepts > Intro to Services and DI") を参照してください。
+        サービスの詳細については、[サービスとInyección de dependenciaの概要](guide/architecture-services "Concepts > Intro to Services and DI") を参照してください。
 
     </div>
 
     1. StackBlitzは、上記のように `{ providedIn: 'root' }` ステートメントなしで `@Injectable()`デコレーターを生成する場合があります。代わりに、ジェネレーターはデフォルトで `app.module.ts`にカートサービスを提供します。
-    このチュートリアルでは、どちらの方法でも機能します。 `@Injectable()` の `{ providedIn: 'root' }` 構文は、[tree shaking](/guide/dependency-injection-providers#tree-shakable-providers) を可能にしますが、これはこのガイドの範囲外です。
+    このTutorialでは、どちらの方法でも機能します。 `@Injectable()` の `{ providedIn: 'root' }` 構文は、[tree shaking](/guide/dependency-injection-providers#tree-shakable-providers) を可能にしますが、これはこのガイドの範囲外です。
 
 1. `CartService` クラスで、商品の配列をカートに格納するためのプロパティ `items` を定義します。
 
@@ -230,7 +230,7 @@ StackBlitzのヒント：プレビューが更新されるたびに、カート�
 
 <div class="alert is-helpful">
 
-サービスの詳細については、 [サービスと依存性の注入のイントロダクション](guide/architecture-services "Concepts > Intro to Services and DI") を参照してください。
+サービスの詳細については、 [サービスとInyección de dependenciaのIntroducción](guide/architecture-services "Concepts > Intro to Services and DI") を参照してください。
 
 </div>
 
@@ -276,7 +276,7 @@ Angularの `HttpClientModule` は、アプリケーション全体で `HttpClien
 
 ### カートサービスで `HttpClient` を使う
 
-`AppModule` が `HttpClientModule` をインポートしたので、次のステップは`HttpClient`サービスをサービスにインジェクトし、アプリがデータを取得して外部のAPIやリソースとやり取りできるようにすることです。
+`AppModule` が `HttpClientModule` をインポートしたので、Próximos pasosは`HttpClient`サービスをサービスにインジェクトし、アプリがデータを取得して外部のAPIやリソースとやり取りできるようにすることです。
 
 1. `cart.service.ts` を開きます。
 
@@ -294,7 +294,7 @@ Angularの `HttpClientModule` は、アプリケーション全体で `HttpClien
 ### `get()` メソッドを定義する
 
 複数のコンポーネントが同じサービスを利用することができます。
-このチュートリアルの後半で、shippingコンポーネントはcartサービスを使用して `shipping.json` ファイルからHTTP経由で配送データを取得します。
+このTutorialの後半で、shippingコンポーネントはcartサービスを使用して `shipping.json` ファイルからHTTP経由で配送データを取得します。
 最初に、`get()`メソッドを定義します。
 
 1. `cart.service.ts` で作業を続けます。
@@ -367,10 +367,10 @@ Angularの`HttpClient`の詳細については、 [クライアント・サー�
     </div>
 
 
-## 次のステップ
+## Próximos pasos
 
 おめでとうございます！ 商品カタログとショッピングカートを含むオンラインストアアプリケーションがあります。 配送料金を調べて表示することもできます。
 
 Angularの探索を続けるには、次のいずれかのオプションを選択してください:
 * ショッピングカートページとチェックアウトフォームを追加してアプリを完成させるには、 ["フォーム"セクションに進んで](start/start-forms "Try it: Forms for User Input") ください。 チェックアウトの一環としてユーザー情報を収集するためのフォームを作成します。
-* ["デプロイ" セクションに進んで](start/start-deployment "Try it: Deployment") ローカル開発に移行するか、アプリをFirebaseまたは独自のサーバーにデプロイします。
+* ["Desplegar" セクションに進んで](start/start-deployment "Try it: Deployment") ローカル開発に移行するか、アプリをFirebaseまたは独自のサーバーにDesplegarします。

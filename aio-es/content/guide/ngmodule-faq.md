@@ -87,7 +87,7 @@ NgModuleは機能の密なブロックにアプリケーションを整理する
 このモジュールのコンポーネントが_共有モジュール_、
 _フィーチャーモジュール_のコンポーネント、ディレクティブやパイプを組み込むときにそれをインポートしてください。
 
-[BrowserModule](guide/ngmodule-faq#q-browser-vs-common-module)はルートの`AppModule`でのみインポートしてください。
+[BrowserModule](guide/ngmodule-faq#q-browser-vs-common-module)はRaíz`AppModule`でのみインポートしてください。
 
 <hr/>
 
@@ -194,11 +194,11 @@ NgModuleは自身がもつ宣言、選択したインポートしたクラス、
 
 アプリケーションはアプリケーション全体の`Router`サービスを設定するために`RouterModule.forRoot()`に`Routes`オブジェクトを渡します。
 `RouterModule.forRoot()`は[ModuleWithProviders](api/core/ModuleWithProviders)を返します。
-ルートの`AppModule`の`imports`配列にその結果を追加します。
+Raíz`AppModule`の`imports`配列にその結果を追加します。
 
 `forRoot()`の結果はルートアプリケーションモジュールである`AppModule`でだけ実行してインポートしてください。
 他のモジュール、特に遅延ロードされるモジュールでインポートしないでください。
-詳細については[シングルトンサービス](guide/singleton-services) の [`forRoot()` パターン](guide/singleton-services#the-forroot-pattern) セクションを参照してください。
+詳細については[Servicio Singleton](guide/singleton-services) の [`forRoot()` パターン](guide/singleton-services#the-forroot-pattern) セクションを参照してください。
 
 サービスについては、`forRoot()`を使用するかわりにサービスの`@Injectable()`デコレーターに`providedIn: 'root'`を指定してください。
 これはサービスを自動的にアプリケーション全体で有効にし、この結果としてデフォルトでシングルトンになります。
@@ -232,7 +232,7 @@ NgModuleのインポートによる拡張性はNgModuleシステムの第一の�
 
 しかしながらこれは、フィーチャーモジュールで宣言したコンポーネントだけにモジュールのサービスを見せたい場合は、
 歓迎されないサプライズとなるでしょう。
-もし`HeroModule`が`HeroService`を提供していて、ルートの`AppModule`が`HeroModule`をインポートする場合、
+もし`HeroModule`が`HeroService`を提供していて、Raíz`AppModule`が`HeroModule`をインポートする場合、
 `HeroModule`内で宣言したクラスだけでなく、
 `HeroService`の_型_を知っている任意のクラスでそのサービスを注入できます。
 
@@ -274,7 +274,7 @@ Angularがそのトークンのサービスを注入するとき、
 NgModule Aがトークン'X'のサービスを提供していて、こちらもトークン'X'のサービスを提供するNgModule Bをインポートしている場合、
 NgModule Aのサービス定義が"勝ち"ます。
 
-ルートの`AppModule`が提供するサービスはインポートしたNgModuleが提供するサービスよりも優先されます。
+Raíz`AppModule`が提供するサービスはインポートしたNgModuleが提供するサービスよりも優先されます。
 `AppModule`が常に勝ちます。
 
 <hr/>
@@ -334,11 +334,11 @@ Angularはアプリケーションのルートインジェクターに提供さ�
 {@a q-root-component-or-module}
 
 
-## ルートの`AppModule`とルートの`AppComponent`のどちらにアプリケーション全体のプロバイダーを追加すべきですか?
+## Raíz`AppModule`とRaíz`AppComponent`のどちらにアプリケーション全体のプロバイダーを追加すべきですか?
 
 アプリケーション全体のプロバイダーはその`@Injectable()`デコレーター(サービスの場合は)に`providedIn: 'root'`を指定することか、`InjectionToken`構文(トークンが提供された場合)で定義してください。この方法で自動的に作成されたプロバイダーはアプリケーション全体で有効になり、どのモジュール内にも追加する必要はありません。
 
-プロバイダーをこの方法で設定できない場合は(おそらくは妥当なデフォルト値をもたない)、アプリケーション全体のプロバイダーをルートの`AppModule`内に登録してください。`AppComponent`内ではありません。
+プロバイダーをこの方法で設定できない場合は(おそらくは妥当なデフォルト値をもたない)、アプリケーション全体のプロバイダーをRaíz`AppModule`内に登録してください。`AppComponent`内ではありません。
 
 遅延ロードするモジュールとそのコンポーネントは`AppModule`のサービスを注入できます。
 `AppComponent`のサービスを注入することはできません。
@@ -386,8 +386,8 @@ Angularはアプリケーションのルートインジェクターにすべて�
 個々のコンポーネントの新しいインスタンスは各自キャッシュされたサービスのインスタンスを取得します。
 エディタがそのサービスで行う変更は、アプリケーション内の他のインスタンスには影響を及ぼしません。
 
-[常にルートの`AppModule`に_アプリケーション全体_のサービスを登録してください](guide/ngmodule-faq#q-root-component-or-module)、
-ルートの`AppComponent`ではありません。
+[常にRaíz`AppModule`に_アプリケーション全体_のサービスを登録してください](guide/ngmodule-faq#q-root-component-or-module)、
+Raíz`AppComponent`ではありません。
 
 <hr/>
 
@@ -440,7 +440,7 @@ NgModuleが起動時にロードされるのか、遅延ロードされるのか
 
 なぜAngularは事前ロードしたNgModule同様に、遅延ロードしたプロバイダーをアプリケーションのルートインジェクターに追加しないのでしょうか?
 
-その答えは、Angularの依存性の注入システムの基本的な特性にもとづいています。
+その答えは、AngularのInyección de dependenciaシステムの基本的な特性にもとづいています。
 インジェクターは_それがはじめて使用されるまで_プロバイダーを追加できます。
 インジェクターが一度サービスを作成して配送しはじめたら、そのプロバイダーのリストは固定されます。新しいプロバイダーは許容されません。
 
@@ -459,7 +459,7 @@ Angularは、遅延ロードしたモジュールのプロバイダーをどこ�
 
 ## NgModule、またはサービスが以前にロードされたかどうかをどのように確認できますか?
 
-いくつかのNgModuleとそれらのサービスはルートの`AppModule`から一度だけロードする必要があります。
+いくつかのNgModuleとそれらのサービスはRaíz`AppModule`から一度だけロードする必要があります。
 遅延ロードするモジュールによってもう一度そのモジュールをインポートすることは、[誤ったふるまい](guide/ngmodule-faq#q-why-bad)を引き起こすことがあり、
 それはみつけて診断することが難しいでしょう。
 
@@ -486,7 +486,7 @@ Angularは、遅延ロードしたモジュールのプロバイダーをどこ�
 AngularはそのあとコンポーネントのHTML表現を作成して、選択した要素のDOMの中に挿入します。
 それらはエントリーコンポーネントではありません。
 
-ブートストラップしたルートの`AppComponent`は_エントリーコンポーネント_です。
+ブートストラップしたRaíz`AppComponent`は_エントリーコンポーネント_です。
 実際は、そのセレクターは`index.html`内の要素タグにマッチします。
 しかし、`index.html`はコンポーネントテンプレートではなく、`AppComponent`
 のセレクターはどのコンポーネントテンプレート内の要素にもマッチしません。
@@ -608,7 +608,7 @@ Angularの`NgModule`は`imports`、`exports`をもっていて、それらは似
 エクスポートされたクラスをコンポーネントのテンプレート内で使用するため、他のNgModuleを_インポート_します。
 _他の_NgModuleのコンポーネントでインポートして使用するため、このNgModuleのクラスを_エクスポート_します。
 
-詳細については[JavaScriptモジュールとNgModule](guide/ngmodule-vs-jsmodule)を参照してください。
+詳細については[Módulo JavaScript y NgModule](guide/ngmodule-vs-jsmodule)を参照してください。
 
 <hr/>
 

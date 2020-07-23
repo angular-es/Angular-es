@@ -3,7 +3,7 @@
 #### 前提条件
 
 次の基本的な理解
-* [JavaScriptモジュールとNgModule](guide/ngmodule-vs-jsmodule)
+* [Módulo JavaScript y NgModule](guide/ngmodule-vs-jsmodule)
 
 <hr />
 
@@ -114,7 +114,7 @@ Angular CLIで作成されたデフォルトのアプリケーションにはコ
 
 <code-example path="bootstrapping/src/app/app.module.ts" region="declarations" header="src/app/app.module.ts"></code-example>
 
-これで`ItemDirective`をコンポーネントで使えるようになりました。この例では`AppModule`を使いましたが、フィーチャーモジュールでも同じようにできます。ディレクティブの詳細については、[属性ディレクティブ](guide/attribute-directives)と[構造ディレクティブ](guide/structural-directives)を参照してください。また、[パイプ](guide/pipes)やコンポーネントにも同じテクニックを使用します。
+これで`ItemDirective`をコンポーネントで使えるようになりました。この例では`AppModule`を使いましたが、フィーチャーモジュールでも同じようにできます。ディレクティブの詳細については、[属性ディレクティブ](guide/attribute-directives)と[構造ディレクティブ](guide/structural-directives)を参照してください。また、[パイプ](guide/pipes)やコンポーネントにも同じTécnicaを使用します。
 
 コンポーネント、ディレクティブ、およびパイプは、1つのモジュールにのみ属することを忘れないでください。必要なモジュールをインポートしてシェアするために、アプリケーション中で宣言しなければならないのは一度だけです。これにより時間が節約され、アプリをリーンに保つのに役立ちます。
 
@@ -147,7 +147,7 @@ Angular CLIで作成されたデフォルトのアプリケーションにはコ
 
 ## `bootstrap`配列
 
-アプリケーションは、ルートの`AppModule`をブートストラップすることで起動します、これは`entryComponent`とも呼ばれます。
+アプリケーションは、Raíz`AppModule`をブートストラップすることで起動します、これは`entryComponent`とも呼ばれます。
 とりわけ、ブートストラッププロセスは、`bootstrap`配列にリストされているコンポーネントを作成し、それぞれをブラウザDOMに挿入します。
 
 ブートストラップされた各コンポーネントは、それ自身のコンポーネントツリーのベースです。
@@ -162,4 +162,4 @@ Angular CLIで作成されたデフォルトのアプリケーションにはコ
 
 ## Angularモジュールについての詳細
 
-アプリ中でよく使われるAngularモジュールについては、[よく使用されるモジュール](guide/frequent-ngmodules)を参照してください。
+アプリ中でよく使われるAngularモジュールについては、[Módulos de uso común](guide/frequent-ngmodules)を参照してください。

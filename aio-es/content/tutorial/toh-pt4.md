@@ -1,8 +1,8 @@
-# サービスの追加
+# Agregar servicio
 
 Tour of Heroes の中で扱っている `HeroesComponent` は、今のところ仮のデータを取得して表示している状態です。
 
-このチュートリアルのリファクタリング後には、`HeroesComponent` は小さくなりビューをサポートすることに専念します。
+このTutorialのリファクタリング後には、`HeroesComponent` は小さくなりビューをサポートすることに専念します。
 これはモックサービスを使用して、ユニットテストをより簡潔にすることにもつながります。
 
 <div class="alert is-helpful">
@@ -17,13 +17,13 @@ Tour of Heroes の中で扱っている `HeroesComponent` は、今のところ�
 コンポーネント内では直接データの取得や保存を行うべきではありません。もちろん、故意に仮のデータを渡してもいけません。
 コンポーネントはデータの受け渡しに集中し、その他の処理はサービスクラスへ委譲するべきです。
 
-このチュートリアルでは、アプリケーション全体でヒーローを取得できる `HeroService` を作成します。
+このTutorialでは、アプリケーション全体でヒーローを取得できる `HeroService` を作成します。
 そのサービスは [`new` keyword](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new) で生成するのではなく、
-Angular による [*依存性の注入*](guide/dependency-injection) で、 
+Angular による [*Inyección de dependencia*](guide/dependency-injection) で、 
 `HeroesComponent` コンストラクターに注入します。
 
 サービスは、_お互いを知らない_ クラスの間で情報を共有する最適な方法です。
-このチュートリアル後半でも `MessageService` を作成し、次の2クラスに注入します。
+このTutorial後半でも `MessageService` を作成し、次の2クラスに注入します。
 
 1. メッセージを送信する`HeroService`への注入
 2. そのメッセージとユーザーがヒーローをクリックしたときにIDを表示する`MessagesComponent`への注入
@@ -74,7 +74,7 @@ Angular CLI を使用して `HeroService` を作成しましょう。
 ## `HeroService` の提供
 
 Angularが `HeroesComponent` へ注入する（[次に](#inject)行います）よりも前に、
-_プロバイダ_ を登録することで`HeroService`が依存性の注入システムで利用できるようにする必要があります。プロバイダーとは、サービスを作成または提供できるものです。この場合、`HeroService`クラスをインスタンス化してサービスを提供します。
+_プロバイダ_ を登録することで`HeroService`がInyección de dependenciaシステムで利用できるようにする必要があります。プロバイダーとは、サービスを作成または提供できるものです。この場合、`HeroService`クラスをインスタンス化してサービスを提供します。
 
 `HeroService`がこのサービスのプロバイダーとして登録されていることを確認するために、
 あなたは _インジェクター_ にこれを登録しています。
@@ -94,7 +94,7 @@ _プロバイダ_ を登録することで`HeroService`が依存性の注入シ�
 <div class="alert is-helpful">
 
 プロバイダーについての詳細は、[プロバイダーの章](guide/providers)を参照してください。
-インジェクターについての詳細は、[依存性の注入ガイド](guide/dependency-injection)を参照してください。
+インジェクターについての詳細は、[Inyección de dependenciaガイド](guide/dependency-injection)を参照してください。
 
 </div>
 
@@ -140,7 +140,7 @@ _providers_ についてより詳しく知りたい方は [Providers](guide/prov
 
 このパラメータはプライベートな `heroService` プロパティとして定義されると同時に、 `HeroService` を注入すべき場所として認識されます。
 
-Angular が `HeroesComponent` を生成する際、[依存性の注入](guide/dependency-injection) システムは `heroService` パラメータを `HeroService` のシングルトンインスタンスとして設定します。
+Angular が `HeroesComponent` を生成する際、[Inyección de dependencia](guide/dependency-injection) システムは `heroService` パラメータを `HeroService` のシングルトンインスタンスとして設定します。
 
 ### `getHeroes()` の追加
 
@@ -210,7 +210,7 @@ Angular が `HeroesComponent` を生成する際、[依存性の注入](guide/de
 
 <div class="l-sub-section">
 
-[HTTP のチュートリアル](tutorial/toh-pt6) では、_ひとつの値_、すなわちHTTPレスポンスボディ由来のヒーローの配列を出力する `Observable<Hero[]>` を同じように返す `HttpClient.get<Hero[]>()` を呼び出します。
+[HTTP のTutorial](tutorial/toh-pt6) では、_ひとつの値_、すなわちHTTPレスポンスボディ由来のヒーローの配列を出力する `Observable<Hero[]>` を同じように返す `HttpClient.get<Hero[]>()` を呼び出します。
 
 </div>
 
@@ -428,7 +428,7 @@ path="toh-pt4/src/app/heroes/heroes.component.ts">
 
 * `HeroService` クラスのデータ利用方法を修正しました
 * `HeroService`をルートレベルでサービスの _プロバイダ_ として登録し、アプリ内のどこにでも注入できるようにしました。
-* [Angular の依存性の注入](guide/dependency-injection) を使用して、それをコンポーネントに注入しました
+* [Angular のInyección de dependencia](guide/dependency-injection) を使用して、それをコンポーネントに注入しました
 * `HeroService` の _データ取得_ メソッドを非同期化しました
 * `Observable` および、それを扱うために利用する RxJS ライブラリについて学びました
 * モックヒーローを Observable (`Observable<Hero[]>`) 型で返すために、RxJS の `of()` を使用しました

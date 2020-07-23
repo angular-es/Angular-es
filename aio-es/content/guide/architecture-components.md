@@ -1,7 +1,7 @@
-# コンポーネントとテンプレートのイントロダクション
+# コンポーネントとテンプレートのIntroducción
 
 *コンポーネント*は、[*ビュー*](guide/glossary#view "Definition of view")と呼ばれる画面のパッチを制御します。
-たとえば、個々のコンポーネントは[Tour of Heroes チュートリアル](tutorial)の次のビューを定義して制御します。
+たとえば、個々のコンポーネントは[Tour of Heroes Tutorial](tutorial)の次のビューを定義して制御します。
 
 * ナビゲーションリンクをもつアプリのルート
 * ヒーローのリスト
@@ -13,7 +13,7 @@
 たとえば、`HeroListComponent`にはヒーローの配列を保持する`heroes`プロパティがあります。
 その`selectHero()`メソッドは、ユーザーがクリックしてそのリストからヒーローを選択すると`selectedHero`プロパティを設定します。
 コンポーネントはサービスからヒーローを取得します。これはコンストラクターのTypeScript[パラメータプロパティ](http://www.typescriptlang.org/docs/handbook/classes.html#parameter-properties)です。
-サービスは、依存性の注入システムを介してコンポーネントに提供されます。
+サービスは、Inyección de dependenciaシステムを介してコンポーネントに提供されます。
 
 <code-example path="architecture/src/app/hero-list.component.ts" header="src/app/hero-list.component.ts (class)" region="class"></code-example>
 
@@ -61,7 +61,7 @@ Angularはこれらのタグ間に`HeroListComponent`ビューのインスタン
 
 テンプレートは通常のHTMLと似ていますが、アプリのロジックとアプリとDOMデータの状態に基づいてHTMLを変更するAngular[テンプレート構文](guide/template-syntax)も含まれています。テンプレートは*データバインディング*を使用してアプリケーションとDOMデータを調整し、表示する前に*パイプ*でデータを変換し、*ディレクティブ*を使用して表示されるものにアプリケーションロジックを適用することができます。
 
-たとえば、チュートリアルの`HeroListComponent`のテンプレートは次のようになります。
+たとえば、Tutorialの`HeroListComponent`のテンプレートは次のようになります。
 
 <code-example path="architecture/src/app/hero-list.component.html" header="src/app/hero-list.component.html"></code-example>
 

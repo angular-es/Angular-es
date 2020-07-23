@@ -141,7 +141,7 @@ When you create a project with the `ng new` command, a `src/polyfills.ts` config
 
 * If you need an _optional_ polyfill, you must install its npm package, then uncomment or create the corresponding import statement in the `src/polyfills.ts` configuration file.
 
-たとえば、[WEBアニメーションのポリフィルが必要な場合](http://caniuse.com/#feat=web-animation)、次のコマンドによりnpmでインストールできます。(yarnでも同様)
+たとえば、[WEBanimaciónのポリフィルが必要な場合](http://caniuse.com/#feat=web-animation)、次のコマンドによりnpmでインストールできます。(yarnでも同様)
 
 <code-example language="sh" class="code-shell">
   # install the optional web animations polyfill

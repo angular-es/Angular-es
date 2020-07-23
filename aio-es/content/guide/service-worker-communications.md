@@ -31,7 +31,7 @@
 
 ### アップデートをチェックする
 
-Service Workerに、サーバーにデプロイされたアップデートがあるかどうかを確認させることができます。
+Service Workerに、サーバーにDesplegarされたアップデートがあるかどうかを確認させることができます。
 The service worker checks for updates during initialization and on each navigation request&mdash;that is, when the user navigates from a different address to your app.
 However, you might choose to manually check for updates if you have a site that changes frequently or want updates to happen on a schedule.
 

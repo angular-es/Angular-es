@@ -1,7 +1,7 @@
-# セキュリティ
+# Seguridad
 
 この章では、クロスサイトスクリプティングやその他一般的なWebアプリケーション脆弱性に対する
-Angularでの対応について説明します。認証や認可などアプリケーションレベルのセキュリティは
+Angularでの対応について説明します。認証や認可などアプリケーションレベルのSeguridadは
 ここでは扱いません。
 
 この章で扱う内容に関するより詳細な情報は [OWASP Guide Project](https://www.owasp.org/index.php/Category:OWASP_Guide_Project) を参照してください。
@@ -18,7 +18,7 @@ Angularでの対応について説明します。認証や認可などアプリ�
 
 Angular自身の脆弱性は [security@angular.io](mailto:security@angular.io) へ報告をお願いします。
 
-セキュリティに関する問題を Google がどのように扱うかは
+Seguridadに関する問題を Google がどのように扱うかは
 [Google's security philosophy](https://www.google.com/about/appsecurity/) を
 参照してください。
 
@@ -32,11 +32,11 @@ Angular自身の脆弱性は [security@angular.io](mailto:security@angular.io) �
 
 * **Angularを最新に保つ**
 Angularは定期的にアップデートされており、最新版には以前のバージョンで見つかった
-脆弱性の修正が含まれていることがあります。セキュリティ関連の更新については
+脆弱性の修正が含まれていることがあります。Seguridad関連の更新については
 [change log](https://github.com/angular/angular/blob/master/CHANGELOG.md) を確認してください。
 
 * **独自のカスタマイズを行わない**
-独自のカスタマイズを行うと、アップデートによるセキュリティの修正や強化の恩恵を
+独自のカスタマイズを行うと、アップデートによるSeguridadの修正や強化の恩恵を
 受けられなくなります。独自のカスタマイズを行うのではなく、その改善点をプルリクエストを通じて
 コミュニティと共有してください。
 
@@ -179,7 +179,7 @@ Angularはテンプレート文字列を全面的に信頼するため、動的�
 これら処理のためサニタイズを一時的に無効にするには、対象の値が安全である旨をあらかじめAngularに伝える必要があります。
 ただし *注意してください*。悪意のある値を誤って信頼済としてマークしてしまった場合
 アプリケーションに脆弱性が混入します。
-必要に応じてセキュリティ専門家のレビューを受けてください。
+必要に応じてSeguridad専門家のレビューを受けてください。
 
 値を信頼済としてマークするには `DomSanitizer` を注入してコンテキストに応じ
 次のいずれかのメソッドを実行します。
@@ -217,7 +217,7 @@ URLに` javascript：alert(...)` をバインドするとします。
 ユーザー入力を信頼できる値に変換する必要がある場合は、コントローラーメソッドを使用します。
 次のテンプレートでは、ユーザーはYouTubeの動画IDを入力し、対応する動画を`<iframe>`に読み込むことができます。
 信頼できないソースは、たとえば、無防備なユーザーが実行する可能性があるファイルを密かにダウンロードする可能性があるため、
-`<iframe src>`属性はリソースURLのセキュリティコンテキストです。
+`<iframe src>`属性はリソースURLのSeguridadコンテキストです。
 したがって、コントローラ上のメソッドを呼び出して信頼できるビデオURLを作成します。
 これにより、Angularは`<iframe src>`へのバインディングを許可します
 
@@ -277,7 +277,7 @@ Cookieが設定されているWebサイトのコードだけが、そのサイ�
 
 Angular の `HttpClient` モジュールはこれらのクライアント側の処理をサポートしています。詳しくは [HttpClient guide](/guide/http#security-xsrf-protection) の章を参照してください。
 
-CSRFについてはオープンWebアプリケーションセキュリティプロジェクト（OWASP）の、
+CSRFについてはオープンWebアプリケーションSeguridadプロジェクト（OWASP）の、
 <a href="https://www.owasp.org/index.php/Cross-Site_Request_Forgery_%28CSRF%29">Cross-Site Request Forgery (CSRF)</a> および
 <a href="https://www.owasp.org/index.php/CSRF_Prevention_Cheat_Sheet">Cross-Site Request Forgery (CSRF) Prevention Cheat Sheet</a>を参照してください。
 スタンフォード大学の論文
@@ -310,12 +310,12 @@ Angularの`HttpClient`ライブラリはこの規約を認識し、
 
 
 <h2 id='code-review'>
-  Angularアプリケーションのセキュリティ監査
+  AngularアプリケーションのSeguridad監査
 </h2>
 
 
 
-Angularアプリケーションは通常のWebアプリケーションと同等のセキュリティが求められます。
-[_bypassSecurityTrust_](guide/security#bypass-security-apis)メソッドなど、セキュリティレビューで
+Angularアプリケーションは通常のWebアプリケーションと同等のSeguridadが求められます。
+[_bypassSecurityTrust_](guide/security#bypass-security-apis)メソッドなど、Seguridadレビューで
 監査する必要のあるAngular固有のAPIは、
-ドキュメントにセキュリティの影響を受けやすいとマークされています。
+ドキュメントにSeguridadの影響を受けやすいとマークされています。

@@ -1,9 +1,9 @@
-# アニメーションの遷移とトリガー
+# animaciónの遷移とトリガー
 
-あなたは[イントロダクション](guide/animations)ページでAngularアニメーションの基本について学びました。
+あなたは[Introducción](guide/animations)ページでAngularanimaciónの基本について学びました。
 
 このガイドでは、`*`(ワイルドカード)や`void`などの特別な遷移状態についてより深く述べ、これらの特別な状態がビューに入る、またはビューから出る要素にどのように使用されるかを示します。
-この章では、複数のアニメーショントリガー、アニメーションコールバック、およびキーフレームを使用するシーケンスベースのアニメーションについても説明します。
+この章では、複数のanimaciónトリガー、animaciónコールバック、およびキーフレームを使用するシーケンスベースのanimaciónについても説明します。
 
 ## 定義済み状態とワイルドカードマッチング
 
@@ -11,7 +11,7 @@ Angularでは、遷移の状態は`state()`関数を介して明示的に定義�
 
 ### ワイルドカード状態
 
-アスタリスク`*`、*ワイルドカード*は任意のアニメーション状態にマッチします。これはHTMLの開始、終了状態に関係なく適用される状態を定義するのに便利です。
+アスタリスク`*`、*ワイルドカード*は任意のanimación状態にマッチします。これはHTMLの開始、終了状態に関係なく適用される状態を定義するのに便利です。
 
 たとえば、`open => *`の遷移は要素の状態がopenから何か別の状態に変わるときに適用されます。
 
@@ -46,24 +46,24 @@ Angularでは、遷移の状態は`state()`関数を介して明示的に定義�
 
 `* => *`の遷移は任意の2状態間の変更時に適用されます。
 
-遷移は、定義されている順にマッチします。したがって、`* => *`(任意の状態間)の遷移よりも先に定義されている他の遷移を適用することができます。たとえば、`open => closed`や`closed => open`だけに適用されるスタイルの変更やアニメーションを定義し、呼びだされなかった状態のペアのためのフォールバックとして`* => *`を使用します。
+遷移は、定義されている順にマッチします。したがって、`* => *`(任意の状態間)の遷移よりも先に定義されている他の遷移を適用することができます。たとえば、`open => closed`や`closed => open`だけに適用されるスタイルの変更やanimaciónを定義し、呼びだされなかった状態のペアのためのフォールバックとして`* => *`を使用します。
 
 このため、`* => *`の*前*により具体的な遷移を追加してください。
 
 ### スタイルにワイルドカードを使用する
 
-現在のスタイルの値がどんなものでも使用して、それとともにアニメーション化するように指示するためには、スタイルにワイルドカードを使用します。ワイルドカードはアニメーション中の状態がトリガー内で宣言されていない場合に使用されるフォールバック値です。
+現在のスタイルの値がどんなものでも使用して、それとともにanimación化するように指示するためには、スタイルにワイルドカードを使用します。ワイルドカードはanimación中の状態がトリガー内で宣言されていない場合に使用されるフォールバック値です。
 
 <code-example path="animations/src/app/open-close.component.ts" header="src/app/open-close.component.ts" region="transition4" language="typescript"></code-example>
 
 ### void状態
 
-`void`状態を使用することで、ページに出入りする要素の遷移を設定することができます。[ビューの出入りのアニメーション化](#enter-leave-view)を参照してください。
+`void`状態を使用することで、ページに出入りする要素の遷移を設定することができます。[ビューの出入りのanimación化](#enter-leave-view)を参照してください。
 
 
 ### ワイルドカード、void状態を組み合わせる
 
-遷移でワイルドカードとvoid状態を組み合わせることで、ページに出入りするアニメーションをトリガーすることができます:
+遷移でワイルドカードとvoid状態を組み合わせることで、ページに出入りするanimaciónをトリガーすることができます:
 
 * `* => void`の遷移は、その要素がビューを離れる前の状態に関係なく、その要素が離れるときに適用されます。
 
@@ -71,9 +71,9 @@ Angularでは、遷移の状態は`state()`関数を介して明示的に定義�
 
 * ワイルドカード状態`*`は`void`を含む*任意の*状態にマッチします。
 
-## ビューへの出入りのアニメーション化
+## ビューへの出入りのanimación化
 
-このセクションでは、ページに出入りする要素をアニメーション化する方法を説明します。
+このセクションでは、ページに出入りする要素をanimación化する方法を説明します。
 
 <div class="alert is-helpful">
 
@@ -95,7 +95,7 @@ Angularでは、遷移の状態は`state()`関数を介して明示的に定義�
 
 ## :enter と :leave エイリアス
 
-`:enter`と`:leave`は`void => *`と`* => void`の遷移のエイリアスです。これらのエイリアスは、いくつかのアニメーション関数によって使用されます。
+`:enter`と`:leave`は`void => *`と`* => void`の遷移のエイリアスです。これらのエイリアスは、いくつかのanimación関数によって使用されます。
 
 <code-example hideCopy language="typescript">
 transition ( ':enter', [ ... ] );  // alias for void => *
@@ -109,12 +109,12 @@ transition ( ':leave', [ ... ] );  // alias for * => void
 
 `*ngIf`または`*ngFor`のビューがページに置かれたときに`:enter`の遷移が実行され、それらのビューがページから削除されたときに`:leave`が実行されます。
 
-この例では、`myInsertRemoveTrigger`という出入りするアニメーション用の特殊なトリガーを持ちます。HTMLテンプレートには次のコードが含まれています。
+この例では、`myInsertRemoveTrigger`という出入りするanimación用の特殊なトリガーを持ちます。HTMLテンプレートには次のコードが含まれています。
 
 <code-example path="animations/src/app/insert-remove.component.html" header="src/app/insert-remove.component.html" region="insert-remove" language="typescript">
 </code-example>
 
-コンポーネントファイルでは、`:enter`の遷移は要素がビューに挿入されたとき、初期値として不透明度を0に設定し、不透明度が1になるまでアニメーションします。
+コンポーネントファイルでは、`:enter`の遷移は要素がビューに挿入されたとき、初期値として不透明度を0に設定し、不透明度が1になるまでanimaciónします。
 
 <code-example path="animations/src/app/insert-remove.component.ts" header="src/app/insert-remove.component.ts" region="enter-leave-trigger" language="typescript">
 </code-example>
@@ -142,22 +142,22 @@ transition ( ':leave', [ ... ] );  // alias for * => void
 
 上記のコードスニペットでは、HTMLテンプレートは`<div>`要素を、`isOpen`のステータス式と、予想される値`true`と`false`をもつ`openClose`という名前のトリガーにバインドします。これは、`open`と`close`の2つの名前付き状態を作成する方法の代わりになります。
 
-コンポーネントのコード内、`animations:`プロパティの下の`@Component`メタデータにおいて、状態が`true`(ここでは "open"を意味する)と評価されるとき、関連するHTML要素の高さはワイルドカードのスタイルまたはデフォルトのものなります。この場合、アニメーションを開始する前に要素がすでに持っていた高さを使用します。要素が"closed"のときは、要素は高さ0までアニメーションして非表示になります。
+コンポーネントのコード内、`animations:`プロパティの下の`@Component`メタデータにおいて、状態が`true`(ここでは "open"を意味する)と評価されるとき、関連するHTML要素の高さはワイルドカードのスタイルまたはデフォルトのものなります。この場合、animaciónを開始する前に要素がすでに持っていた高さを使用します。要素が"closed"のときは、要素は高さ0までanimaciónして非表示になります。
 
 <code-example path="animations/src/app/open-close.component.2.ts" header="src/app/open-close.component.ts" region="trigger-boolean" language="typescript">
 </code-example>
 
-## 複数のアニメーショントリガー
+## 複数のanimaciónトリガー
 
-1つのコンポーネントに対して複数のアニメーショントリガーを定義できます。アニメーショントリガーはさまざまな要素にアタッチすることができ、要素間の親子関係はアニメーションの実行方法とタイミングに影響します。
+1つのコンポーネントに対して複数のanimaciónトリガーを定義できます。animaciónトリガーはさまざまな要素にアタッチすることができ、要素間の親子関係はanimaciónの実行方法とタイミングに影響します。
 
-### 親子のアニメーション
+### 親子のanimación
 
-アニメーションがAngularでトリガーされるたびに、親アニメーションが常に優先され、子アニメーションがブロックされます。子アニメーションを実行するには、親アニメーションは子アニメーションを含む各要素をクエリし、[`animateChild()`](api/animations/animateChild)関数を使用してアニメーションを実行する必要があります。
+animaciónがAngularでトリガーされるたびに、親animaciónが常に優先され、子animaciónがブロックされます。子animaciónを実行するには、親animaciónは子animaciónを含む各要素をクエリし、[`animateChild()`](api/animations/animateChild)関数を使用してanimaciónを実行する必要があります。
 
-#### HTML要素のアニメーションの無効化
+#### HTML要素のanimaciónの無効化
 
-`@.disabled`という特別なアニメーションコントロールバインディングをHTML要素に置くことで、その要素とネストされた要素のアニメーションを無効にすることができます。trueの場合、`@.disabled`バインディングはすべてのアニメーションのレンダリングを防ぎます。
+`@.disabled`という特別なanimaciónコントロールバインディングをHTML要素に置くことで、その要素とネストされた要素のanimaciónを無効にすることができます。trueの場合、`@.disabled`バインディングはすべてのanimaciónのレンダリングを防ぎます。
 
 次のコードサンプルでは、この機能の使用方法を説明しています。
 
@@ -173,47 +173,47 @@ transition ( ':leave', [ ... ] );  // alias for * => void
 
 `@.disabled`バインディングがtrueの場合、`@childAnimation`トリガーは実行されません。
 
-HTMLテンプレート内の要素が`@.disabled`ホストバインディングを使ってアニメーションを無効にすると、すべての内部の要素でもアニメーションは無効になります。
-1つの要素上の複数のアニメーションを選択的に無効にすることはできません。
+HTMLテンプレート内の要素が`@.disabled`ホストバインディングを使ってanimaciónを無効にすると、すべての内部の要素でもanimaciónは無効になります。
+1つの要素上の複数のanimaciónを選択的に無効にすることはできません。
 
-ただし、次のいずれかの方法で、選択した子アニメーションを無効な親に対して実行することはできます:
+ただし、次のいずれかの方法で、選択した子animaciónを無効な親に対して実行することはできます:
 
-* 親アニメーションは、[`query()`](api/animations/query)関数を使用して、HTMLテンプレートの無効な領域にある内部要素を集収することができます。
-これらの要素はまだアニメーションできます。
+* 親animaciónは、[`query()`](api/animations/query)関数を使用して、HTMLテンプレートの無効な領域にある内部要素を集収することができます。
+これらの要素はまだanimaciónできます。
 
-* サブアニメーションは親によってクエリーされ、その後で`animateChild()`関数でアニメーション化できます。
+* サブanimaciónは親によってクエリーされ、その後で`animateChild()`関数でanimación化できます。
 
-#### すべてのアニメーションを無効化する
+#### すべてのanimaciónを無効化する
 
-Angularアプリケーションのすべてのアニメーションを無効にするには、最上位のAngularコンポーネントに`@.disabled`ホストバインディングを置きます。
+Angularアプリケーションのすべてのanimaciónを無効にするには、最上位のAngularコンポーネントに`@.disabled`ホストバインディングを置きます。
 
 <code-example path="animations/src/app/app.component.ts" header="src/app/app.component.ts" region="toggle-app-animations" language="typescript"></code-example>
 
 <div class="alert is-helpful">
 
-**Note:** アニメーションをアプリケーション全体で無効にすることは、エンドツーエンド(E2E)のテストで役立ちます。
+**Note:** animaciónをアプリケーション全体で無効にすることは、エンドツーエンド(E2E)のテストで役立ちます。
 </div>
 
-## アニメーションコールバック
+## animaciónコールバック
 
-`trigger()`関数は、アニメーションの開始時と終了時に*コールバック*を発行します。次の例は、`openClose`トリガーを含むコンポーネントです。
+`trigger()`関数は、animaciónの開始時と終了時に*コールバック*を発行します。次の例は、`openClose`トリガーを含むコンポーネントです。
 
 <code-example path="animations/src/app/open-close.component.ts" header="src/app/open-close.component.ts" region="events1" language="typescript"></code-example>
 
-HTMLテンプレートでは、`@trigger.start`と`@trigger.done`から`$event`を介してアニメーションイベントが渡されます。ここで`trigger`は使用されているトリガーの名前です。
+HTMLテンプレートでは、`@trigger.start`と`@trigger.done`から`$event`を介してanimaciónイベントが渡されます。ここで`trigger`は使用されているトリガーの名前です。
 この例では、トリガーの`openClose`は次のように登場します。
 
 <code-example path="animations/src/app/open-close.component.3.html" header="src/app/open-close.component.html" region="callbacks">
 </code-example>
 
-アニメーションコールバックの潜在的用途は、データベースルックアップなどの低速API呼び出しをカバーすることです。
-たとえば、**InProgress**ボタンを設定して、バックエンドシステムの操作が終了するまで脈動、または他の視覚的な動きをする独自のループアニメーションを作成することができます。
+animaciónコールバックの潜在的用途は、データベースルックアップなどの低速API呼び出しをカバーすることです。
+たとえば、**InProgress**ボタンを設定して、バックエンドシステムの操作が終了するまで脈動、または他の視覚的な動きをする独自のループanimaciónを作成することができます。
 
-そして、現在動作しているアニメーションが終了すると別のアニメーションを呼び出すことができます。
+そして、現在動作しているanimaciónが終了すると別のanimaciónを呼び出すことができます。
 たとえば、API呼び出しが完了すると、ボタンは `inProgress`状態から`closed`状態になります。
 
-アニメーションは、それがないのと比べると操作がより速いとエンドユーザーに*知覚させる*ことができます。
-結果的に、サーバーコールのスピードを向上させたり、信頼性の低いネットワーク接続などの制御できない状況を補うよりもむしろ、シンプルなアニメーションはユーザーを幸せに保つための費用対効果の高い方法になります。
+animaciónは、それがないのと比べると操作がより速いとエンドユーザーに*知覚させる*ことができます。
+結果的に、サーバーコールのスピードを向上させたり、信頼性の低いネットワーク接続などの制御できない状況を補うよりもむしろ、シンプルなanimaciónはユーザーを幸せに保つための費用対効果の高い方法になります。
 
 コールバックはデバッグツールとして役立ちます。たとえば、`console.warn()`と組み合わせて、ブラウザの開発者JavaScriptコンソールでアプリケーションの進行状況を表示することができます。
 次のコードスニペットは、元の例(`open`と`closed`の2つの状態をもつボタン)のコンソールログ出力を作成します。
@@ -224,7 +224,7 @@ HTMLテンプレートでは、`@trigger.start`と`@trigger.done`から`$event`�
 
 ## キーフレーム
 
-さきほどのセクションでは、シンプルな2状態の遷移を解説しました。こんどは、*キーフレーム*を使用して複数のステップを順番に実行するアニメーションを作成します。
+さきほどのセクションでは、シンプルな2状態の遷移を解説しました。こんどは、*キーフレーム*を使用して複数のステップを順番に実行するanimaciónを作成します。
 
 Angularの`keyframe()`関数は、CSSのキーフレームに似ています。キーフレームは1つのタイミングセグメント内でいくつかのスタイルの変更ができるようにします。
 たとえば、ボタンはフェードするかわりに、1回の2秒間のタイムスパンで色を数回変えることができます。
@@ -239,8 +239,8 @@ Angularの`keyframe()`関数は、CSSのキーフレームに似ています。�
 
 ### オフセット
 
-キーフレームには、各スタイルの変更が発生するアニメーション内の位置を定義する*オフセット*が含まれています。
-オフセットは、0から1までの相対的な尺度であり、それぞれアニメーションの開始と終了を示します。and should be applied to each of the keyframe's steps if used at least once.
+キーフレームには、各スタイルの変更が発生するanimación内の位置を定義する*オフセット*が含まれています。
+オフセットは、0から1までの相対的な尺度であり、それぞれanimaciónの開始と終了を示します。and should be applied to each of the keyframe's steps if used at least once.
 
 キーフレームのオフセットの定義はオプショナルです。
 これらを省略すると、均等に間隔を置いたオフセットが自動的に割り当てられます。
@@ -256,11 +256,11 @@ Angularの`keyframe()`関数は、CSSのキーフレームに似ています。�
 <code-example path="animations/src/app/status-slider.component.ts" header="src/app/status-slider.component.ts" region="keyframesWithOffsets" language="typescript">
 </code-example>
 
-1つのアニメーション内でキーフレームを`duration`、`delay`、`easing`と組み合わせることができます。
+1つのanimación内でキーフレームを`duration`、`delay`、`easing`と組み合わせることができます。
 
 ### キーフレームでのパルスエフェクト
 
-アニメーション全体に特定のオフセットでスタイルを定義することによって、アニメーションにパルスエフェクトを作成するには、キーフレームを使用します。
+animación全体に特定のオフセットでスタイルを定義することによって、animaciónにパルスエフェクトを作成するには、キーフレームを使用します。
 
 次に、キーフレームを使用してパルスエフェクトを作成する例を示します:
 
@@ -272,14 +272,14 @@ Angularの`keyframe()`関数は、CSSのキーフレームに似ています。�
   <img src="generated/images/guide/animations/keyframes-pulsation.png" alt="keyframes with irregular pulsation">
 </div>
 
-このアニメーションのコードスニペットは次のようになります。
+このanimaciónのコードスニペットは次のようになります。
 
 <code-example path="animations/src/app/open-close.component.1.ts" header="src/app/open-close.component.ts" region="trigger" language="typescript"></code-example>
 
-### アニメーション可能なプロパティと単位
+### animación可能なプロパティと単位
 
-Angularのアニメーションサポートは、Webアニメーション上に構築されているため、ブラウザがアニメーション化可能なすべてのプロパティをアニメートできます。
-これには、位置、サイズ、変形、色、ボーダーなどが含まれます。W3Cは、[CSS Transitions](https://www.w3.org/TR/css-transitions-1/)ページにアニメーション可能なプロパティのリストを保持しています。
+Angularのanimaciónサポートは、Webanimación上に構築されているため、ブラウザがanimación化可能なすべてのプロパティをアニメートできます。
+これには、位置、サイズ、変形、色、ボーダーなどが含まれます。W3Cは、[CSS Transitions](https://www.w3.org/TR/css-transitions-1/)ページにanimación可能なプロパティのリストを保持しています。
 
 数値による位置プロパティの場合は、値を引用符で囲んだ文字列として適切な接尾辞で指定して単位を定義します:
 
@@ -294,24 +294,24 @@ Angularのアニメーションサポートは、Webアニメーション上に�
 
 実行時まで大きさのスタイルプロパティ値がわからないことがあります。
 たとえば、要素の内容や画面サイズによって幅と高さが異なることがあります。
-これらのプロパティは、CSSを使用してアニメーション化するのは難しいことがあります。
+これらのプロパティは、CSSを使用してanimación化するのは難しいことがあります。
 
-このような場合、`style()`の下に特別なワイルドカード`*`のプロパティ値を使うことができるので、その特定のスタイルプロパティの値は実行時に計算され、その後アニメーションに繋げられます。
+このような場合、`style()`の下に特別なワイルドカード`*`のプロパティ値を使うことができるので、その特定のスタイルプロパティの値は実行時に計算され、その後animaciónに繋げられます。
 
 この例では、`shrinkOut`というトリガーがあります。このトリガーは、HTML要素がページを離れるときに使用されます。
-アニメーションは、要素が離れる前の任意の高さを取り、その高さからゼロまでアニメーションします。
+animaciónは、要素が離れる前の任意の高さを取り、その高さからゼロまでanimaciónします。
 
 <code-example path="animations/src/app/hero-list-auto.component.ts" header="src/app/hero-list-auto.component.ts" region="auto-calc" language="typescript"></code-example>
 
 ### キーフレームのまとめ
 
-Angulerの`keyframes()`関数では、単一のトランジション内に複数の中間のスタイルを指定することができます。オプションのオフセットは、スタイルの変更が発生するアニメーション内の位置を定義します。
+Angulerの`keyframes()`関数では、単一のトランジション内に複数の中間のスタイルを指定することができます。オプションのオフセットは、スタイルの変更が発生するanimación内の位置を定義します。
 
-## Angularアニメーションの詳細
+## Angularanimaciónの詳細
 
 あなたは次に興味があるかもしれません:
 
-* [Angularアニメーション・イントロダクション](guide/animations)
-* [複雑なアニメーションシーケンス](guide/complex-animation-sequences)
-* [再利用可能なアニメーション](guide/reusable-animations)
-* [ルーティング遷移のアニメーション](guide/route-animations)
+* [Angularanimación・Introducción](guide/animations)
+* [複雑なanimaciónシーケンス](guide/complex-animation-sequences)
+* [再利用可能なanimación](guide/reusable-animations)
+* [ルーティング遷移のanimación](guide/route-animations)

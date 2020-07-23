@@ -48,7 +48,7 @@ export class SharedModule { }
 サービスを含むモジュールをインポートするということは、そのサービスの新しいインスタンスを得ることになり、それは通常はあなたが必要とするものではありません(通常はすでにあるサービスを再利用したい)。サービスのインスタンス化をコントロールする目的のためにモジュールのインポートを使用してください。
 
 共有のサービスを保持するもっとも一般的な方法は、モジュールシステムではなく(モジュールをインポートすると新しいサービスのインスタンスが生成されますが、これは一般的な用途ではありません)、
-Angularの[依存性の注入](guide/dependency-injection)を使用することです。
+Angularの[Inyección de dependencia](guide/dependency-injection)を使用することです。
 
 サービスの共有については[プロバイダー](guide/providers)を参照してください。
 
@@ -59,4 +59,4 @@ Angularの[依存性の注入](guide/dependency-injection)を使用すること�
 
 あなたはこちらにも興味があるかもしれません:
 * [プロバイダー](guide/providers)
-* [フィーチャーモジュールの種類](guide/module-types)
+* [Tipo de módulo de funciones](guide/module-types)

@@ -1,4 +1,4 @@
-# フィーチャーコンポーネントの作成
+# Crear un componente de característica
 
 現時点では、 `HeroesComponent` はヒーローのリストと選択されたヒーローの詳細の両方を表示しています。
 

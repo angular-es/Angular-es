@@ -15,7 +15,7 @@ Angularには、3つのディレクティブがあります。
 1. 属性ディレクティブ(Attribute directives)&mdash;要素やコンポーネント、別のディレクティブの見た目や動作を変更するディレクティブ
 
 *コンポーネント*は、3つのディレクティブのうち、もっとも一般的なものです。
-[入門](start "Getting Started with Angular") チュートリアルでコンポーネントをはじめて見たはずです。
+[入門](start "Getting Started with Angular") Tutorialでコンポーネントをはじめて見たはずです。
 
 *構造ディレクティブ*は、ビューの構造を変更します。
 2つの例としては、[NgFor](guide/template-syntax#ngFor)と[NgIf](guide/template-syntax#ngIf)です。
@@ -48,7 +48,7 @@ CLIコマンド [`ng generate directive`](cli/generate) をターミナル画面
 ng generate directive highlight
 </code-example>
 
-CLIは、`src/app/highlight.directive.ts`と対応するテストファイル `src/app/highlight.directive.spec.ts` を作成し、ルートの`AppModule`にディレクティブのクラスを _宣言_ します。
+CLIは、`src/app/highlight.directive.ts`と対応するテストファイル `src/app/highlight.directive.spec.ts` を作成し、Raíz`AppModule`にディレクティブのクラスを _宣言_ します。
 
 <div class="alert is-helpful">
 

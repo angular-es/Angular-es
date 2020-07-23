@@ -3721,7 +3721,7 @@ AngularのTypeScript Language Serviceは、HTMLテンプレートをサポート
 
 
 
-**Why?** Angularの依存性の注入（DI）メカニズムは、宣言されたサービスのコンストラクターパラメーターの型に基づいて、
+**Why?** AngularのInyección de dependencia（DI）メカニズムは、宣言されたサービスのコンストラクターパラメーターの型に基づいて、
 サービス自身の依存関係を解決します。
 
 

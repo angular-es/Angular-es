@@ -2,13 +2,13 @@
 
 Angularへようこそ！
 
-このチュートリアルでは、カタログ、ショッピングカート、チェックアウトフォームを備えたシンプルなeコマースサイトを順を追って説明し、Angularの要点を紹介します。
-すぐに始められるように、このガイドでは（[ローカル環境のセットアップ](guide/setup-local "Setup guide")の必要なく）インタラクティブに調べて変更できる既製のシンプルなアプリケーションを使用します。
+このTutorialでは、カタログ、ショッピングカート、チェックアウトフォームを備えたシンプルなeコマースサイトを順を追って説明し、Angularの要点を紹介します。
+すぐに始められるように、このガイドでは（[ローカル環境のpreparar](guide/setup-local "Setup guide")の必要なく）インタラクティブに調べて変更できる既製のシンプルなアプリケーションを使用します。
 
 <div class="callout is-helpful">
 <header>Web開発は初めてですか？</header>
 
-Angularのドキュメントを補完するための多くのリソースがあります。 MozillaのMDNドキュメントには[HTML](https://developer.mozilla.org/en-US/docs/Learn/HTML "Learning HTML: Guides and tutorials")と[JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript "JavaScript")の両方の紹介が含まれています。 [TypeScriptのドキュメント](https://www.typescriptlang.org/docs/home.html "TypeScript documentation")には5分間のチュートリアルが含まれています。 [Udemy](http://www.udemy.com "Udemy online courses")や[Codecademy](https://www.codecademy.com/ "Codecademy online courses")などのさまざまなオンラインコースプラットフォームもWeb開発の基本をカバーしています。
+Angularのドキュメントを補完するための多くのリソースがあります。 MozillaのMDNドキュメントには[HTML](https://developer.mozilla.org/en-US/docs/Learn/HTML "Learning HTML: Guides and tutorials")と[JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript "JavaScript")の両方の紹介が含まれています。 [TypeScriptのドキュメント](https://www.typescriptlang.org/docs/home.html "TypeScript documentation")には5分間のTutorialが含まれています。 [Udemy](http://www.udemy.com "Udemy online courses")や[Codecademy](https://www.codecademy.com/ "Codecademy online courses")などのさまざまなオンラインコースプラットフォームもWeb開発の基本をカバーしています。
 
 </div> 
 
@@ -41,7 +41,7 @@ GitHubアカウントをお持ちの場合は、
 進行状況を保存するには、左上のForkボタンを使用してプロジェクトをフォークし、
 Saveボタンをクリックして
 自分のStackBlitzアカウントに作業を保存できます。
-* このチュートリアルからコード例をコピーするには、
+* このTutorialからコード例をコピーするには、
 コード例ボックスの右上にあるアイコンをクリックしてから、
 クリップボードのコードスニペットをStackBlitzに貼り付けます。
 * StackBlitzのプレビューペインに期待したものが表示されない場合は、
@@ -49,11 +49,11 @@ Saveボタンをクリックして
 * StackBlitzは継続的に改善されているので、
 生成されたコードにわずかな違いがあるかもしれませんが、
 アプリの動作は同じになります。
-* チュートリアルに付随するStackBlitzサンプルアプリを生成すると、
+* Tutorialに付随するStackBlitzAplicación de muestraを生成すると、
 StackBlitzはスターターファイルと
 モックデータを作成します。
-チュートリアル全体で使用するファイルは、
-StackBlitzサンプルアプリの `src`フォルダーにあります。
+Tutorial全体で使用するファイルは、
+StackBlitzAplicación de muestraの `src`フォルダーにあります。
 
 </div>
 
@@ -61,7 +61,7 @@ StackBlitzサンプルアプリの `src`フォルダーにあります。
 
 [StackBlitzオンライン開発環境](https://stackblitz.com/)に直接移動し、[新しいAngularワークスペースを開始する](https://stackblitz.com/fork/angular)を選択すると、一般的なこの[例のサンプル](#new-project)ではなく汎用的なスタブアプリケーションが作られます。ここで基本的な概念に入門したあとは、Angularを学習しながらインタラクティブに作業するのに役立ちます。
 
-実際の開発では、通常、[Angular CLI](guide/glossary#command-line-interface-cli) を使用します。これは、アプリケーションを生成および変更できる強力なコマンドラインツールです。CLIを使用して新しいプロジェクトとそのすべてのパーツを作成する方法を示す完全なステップバイステップガイドについては、[Tour of Heroesチュートリアル](tutorial) を参照してください。
+実際の開発では、通常、[Angular CLI](guide/glossary#command-line-interface-cli) を使用します。これは、アプリケーションを生成および変更できる強力なコマンドラインツールです。CLIを使用して新しいプロジェクトとそのすべてのパーツを作成する方法を示す完全なステップバイステップガイドについては、[Tour of HeroesTutorial](tutorial) を参照してください。
 
 </div>
 
@@ -162,7 +162,7 @@ Angularのテンプレート構文はHTMLとJavaScriptを拡張します。
 
 <div class="alert is-helpful">
 
-Angularのテンプレート構文の全機能については、[コンポーネントとテンプレートのイントロダクション](guide/architecture-components#template-syntax "Template Syntax")を参照してください。
+Angularのテンプレート構文の全機能については、[コンポーネントとテンプレートのIntroducción](guide/architecture-components#template-syntax "Template Syntax")を参照してください。
 
 </div>
 
@@ -201,7 +201,7 @@ UI内の責任領域を定義します。
 
 Angularアプリケーションはコンポーネントのツリーで構成され、各Angularコンポーネントには特定の目的と責任があります。
 
-現在、サンプルアプリには3つのコンポーネントがあります。
+現在、Aplicación de muestraには3つのコンポーネントがあります。
 
 <div class="lightbox">
   <img src="generated/images/guide/start/app-components.png" alt="Online store with three components">
@@ -216,7 +216,7 @@ Angularアプリケーションはコンポーネントのツリーで構成さ�
 
 <div class="alert is-helpful">
 
-コンポーネントとそれらがテンプレートとどのように相互作用するかについての詳細は[コンポーネントのイントロダクション](guide/architecture-components "コンポーネントとテンプレートのイントロダクション")を参照してください。
+コンポーネントとそれらがテンプレートとどのように相互作用するかについての詳細は[コンポーネントのIntroducción](guide/architecture-components "コンポーネントとテンプレートのIntroducción")を参照してください。
 
 </div>
 
@@ -227,7 +227,7 @@ Angularアプリケーションはコンポーネントのツリーで構成さ�
 現在、製品リストには各製品の名前と説明が表示されています。
 商品リストコンポーネントは、`products.ts`の`products`配列からインポートした各商品のデータを含む `products`プロパティも定義しています。
 
-次のステップは、新しいアラート機能を作成します。 アラート機能は製品を入力として受け取り、それから製品の価格をチェックします。 そして、価格が700ドル以上であるならば、製品が発売されたとき、ユーザーが通知にサインアップすることを可能にする "Notify Me" ボタンを表示します。
+Próximos pasosは、新しいアラート機能を作成します。 アラート機能は製品を入力として受け取り、それから製品の価格をチェックします。 そして、価格が700ドル以上であるならば、製品が発売されたとき、ユーザーが通知にサインアップすることを可能にする "Notify Me" ボタンを表示します。
 
 1. 新しい商品アラートコンポーネントを作成します。
 
@@ -347,14 +347,14 @@ Angularアプリケーションはコンポーネントのツリーで構成さ�
 
 
 {@a next-steps}
-## 次のステップ
+## Próximos pasos
 
 おめでとうございます！ あなたははじめてのAngularアプリを完成させました！
 
 基本的なオンラインストアカタログがあり、商品リスト、"Share"ボタン、"Notify me"ボタンがあります。
-Angularの基礎、つまりコンポーネントとテンプレートの構文について学びました。
+Angularのbase、つまりコンポーネントとテンプレートの構文について学びました。
 また、コンポーネントクラスとテンプレートがどのように相互作用するのか、およびコンポーネントが相互に通信する方法も学びました。
 
 Angularの探索を続けるには、次のいずれかのオプションを選択してください。
-* ["アプリ内ナビゲーション"セクションに進む](start/start-routing "入門： アプリ内ナビゲーション")ことで、製品名をクリックしてアクセスでき、独自のURLパターンをもつ製品詳細ページを作成します。
-* [先に"デプロイ"セクションに進む](start/start-deployment "入門： デプロイ")ことで、ローカル開発に移動するか、アプリをFirebaseまたは独自のサーバーにデプロイします。
+* ["Navegación en la aplicación"セクションに進む](start/start-routing "入門： Navegación en la aplicación")ことで、製品名をクリックしてアクセスでき、独自のURLパターンをもつ製品詳細ページを作成します。
+* [先に"Desplegar"セクションに進む](start/start-deployment "入門： Desplegar")ことで、ローカル開発に移動するか、アプリをFirebaseまたは独自のサーバーにDesplegarします。

@@ -1,11 +1,11 @@
-# 試してみよう: デプロイ
+# Intentemos: Desplegar
 
 
-アプリケーションをデプロイするには、それをコンパイルしてから、JavaScript、CSS、およびHTMLをWebサーバー上でホストする必要があります。 ビルドされたAngularアプリケーションは非常に移植性が高く、あらゆる環境で動作したり、Node、Java、.NET、PHP、その他多くのテクノロジーによって提供されます。
+アプリケーションをDesplegarするには、それをコンパイルしてから、JavaScript、CSS、およびHTMLをWebサーバー上でホストする必要があります。 ビルドされたAngularアプリケーションは非常に移植性が高く、あらゆる環境で動作したり、Node、Java、.NET、PHP、その他多くのテクノロジーによって提供されます。
 
 <div class="alert is-helpful">
 
-[パート1](start "Try it: A basic app")から直接ここに来ても、[アプリ内ナビゲーション](start/start-routing "Try it: In-app navigation")、[データの管理](start/start-data "Try it: Manage data")、および[ユーザー入力用のフォーム](start/start-forms "Try it: Forms for user input")セクションを通してオンラインストアアプリケーションを完成させても、あなたはこのセクションの指示にしたがってデプロイできるアプリケーションをもっています。
+[パート1](start "Try it: A basic app")から直接ここに来ても、[Navegación en la aplicación](start/start-routing "Try it: In-app navigation")、[Gestión de datos](start/start-data "Try it: Manage data")、および[ユーザー入力用のフォーム](start/start-forms "Try it: Forms for user input")セクションを通してオンラインストアアプリケーションを完成させても、あなたはこのセクションの指示にしたがってDesplegarできるアプリケーションをもっています。
 
 </div>
 
@@ -46,7 +46,7 @@ ng new my-project-name
 ng build --prod
 ```
 
-これにより、デプロイする必要があるファイルが生成されます。
+これにより、Desplegarする必要があるファイルが生成されます。
 
 <div class="alert is-helpful">
 
@@ -64,28 +64,28 @@ ng build --prod
 
 1. [Firebase](https://firebase.google.com/ "Firebase web site") で firebaseアカウントにサインアップしてください。
 1. 新しいプロジェクトを作成し、好きな名前を付けます。
-1. `ng add @angular/fire`を使用して、デプロイメントを処理する`@angular/fire` schematicsを追加します。
+1. `ng add @angular/fire`を使用して、Desplegarメントを処理する`@angular/fire` schematicsを追加します。
 1. CLIをFirebaseアカウントに接続し、 `firebase login` および `firebase init` を使用してプロジェクトへの接続を初期化します。
 1. プロンプトにしたがってホスティング用に作成した `Firebase` プロジェクトを選択します。
   - 最初のプロンプトで`Hosting`オプションを選択します。
   - 先ほどFirebaseで作ったプロジェクトを選択します。
   - 公開ディレクトリとして `dist/my-project-name` を選択します。
-1. `ng deploy`でアプリケーションをデプロイします。
-1. デプロイが完了したら、 https://your-firebase-project-name.firebaseapp.com にアクセスして動かしてみましょう。
+1. `ng deploy`でアプリケーションをDesplegarします。
+1. Desplegarが完了したら、 https://your-firebase-project-name.firebaseapp.com にアクセスして動かしてみましょう。
 
 ### 別のホストでAngularアプリをホストする
 
 Angularアプリを別のWebホストでホストするには、ファイルをアップロードするかホストに送信する必要があります。
 シングルページアプリケーションを構築しているため、無効なURLを `index.html` ファイルにリダイレクトする必要があります。
-アプリケーションの開発と配布の詳細については、 [ビルドとサーブ](guide/build "Building and Serving Angular Apps") と [デプロイ](guide/deployment "Deployment guide") のガイドを参照してください。
+アプリケーションの開発と配布の詳細については、 [ビルドとサーブ](guide/build "Building and Serving Angular Apps") と [Desplegar](guide/deployment "Deployment guide") のガイドを参照してください。
 
 ## Angularコミュニティに参加する
 
-あなたはもうAngularの開発者です！ [この瞬間を共有](https://twitter.com/intent/tweet?url=https://angular.jp/start&text=Angularの入門チュートリアルを終了しました！ "Angular on Twitter") し、この入門についての考えをお聞かせください。 または、 [今後のエディションについての提案](https://github.com/angular/angular/issues/new/choose "Angular GitHub repository new issue form")を送信してください。
+あなたはもうAngularの開発者です！ [この瞬間を共有](https://twitter.com/intent/tweet?url=https://angular.jp/start&text=Angularの入門Tutorialを終了しました！ "Angular on Twitter") し、この入門についての考えをお聞かせください。 または、 [今後のエディションについての提案](https://github.com/angular/angular/issues/new/choose "Angular GitHub repository new issue form")を送信してください。
 
 Angularはさらに多くの機能を提供します。 そして、あなたは今、アプリケーションを構築し、それらの他の機能を探求することを可能にする基盤を持っています:
 
-* Angularは、モバイルアプリ、アニメーション、国際化、サーバーサイドレンダリングなどの高度な機能を提供します。
+* Angularは、モバイルアプリ、animación、国際化、サーバーサイドレンダリングなどの高度な機能を提供します。
 * [Angular Material](https://material.angular.io/ "Angular Material web site") は、Material Designコンポーネントの広範なライブラリを提供しています。
 * [Angular Protractor](https://protractor.angular.io/ "Angular Protractor web site") はAngularアプリのエンドツーエンドのテストフレームワークを提供します。
 * Angularには、広範な[サードパーティ製のツールやライブラリのネットワーク](resources "Angular resources list") もあります。

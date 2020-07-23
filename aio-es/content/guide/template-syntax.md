@@ -26,7 +26,7 @@ HTML は Angular のテンプレート言語です。
 `<script>` 要素は注目すべき例外です。
 スクリプトインジェクション攻撃の危険性を排除するために禁止されています。
 実際には、`<script>` は無視され、ブラウザコンソールに警告が表示されます。
-詳細は [セキュリティ](guide/security) のページを参照してください。
+詳細は [Seguridad](guide/security) のページを参照してください。
 
 妥当なHTMLの中には、テンプレート内ではあまり意味がないものがあります。
 `<html>`、`<body>`、および `<base>` 要素には有用な役割はありません。
@@ -738,7 +738,7 @@ Angular は変更を検知して警告のエラーを起こすかもしれませ
 
 <code-example path="property-binding/src/app/item-list/item-list.component.ts" region="item-input" header="src/app/item-list.component.ts"></code-example>
 
-サンプルアプリでは `Item` は `id` と `name` の2つのプロパティを持ったオブジェクトです。
+Aplicación de muestraでは `Item` は `id` と `name` の2つのプロパティを持ったオブジェクトです。
 
 <code-example path="property-binding/src/app/item.ts" region="item-class" header="src/app/item.ts"></code-example>
 
@@ -795,7 +795,7 @@ Angular はそれを設定し、それについて忘れます。
 しかし *要素のプロパティに文字列以外の値を設定する場合は、
 プロパティバインディングを使う必要があります。*
 
-### コンテンツのセキュリティ {@a content-security}
+### コンテンツのSeguridad {@a content-security}
 
 次の *悪意のある* コンテンツを想像してください。
 
@@ -1164,7 +1164,7 @@ Angular は “unknown directive” エラーを報告します。
 
 ### *$event* とイベントハンドル文 {@a event-and-event-handling-statements}
 
-イベントバインディングでは、Angular はターゲットイベントのイベントハンドラーをセットアップします。
+イベントバインディングでは、Angular はターゲットイベントのイベントハンドラーをprepararします。
 
 イベントが発生すると、ハンドラーはテンプレート文を実行します。
 通常、テンプレート文にはレシーバーが含まれます。
@@ -1462,7 +1462,7 @@ Angular の基本的な[双方向バインディングの構文](guide/template-
 合った値とイベントのプロパティ名をつければ、
 値アクセサを作らずに済み、`NgModel` も省略できます。
 [双方向バインディング](guide/template-syntax#two-way)セクションの `sizer` は
-このテクニックの一例です。
+このTécnicaの一例です。
 
 個別の `ngModel` バインディングは、
 要素のネイティブプロパティにバインドするよりもよいですが、
@@ -1905,7 +1905,7 @@ Angular は親のコンテキストと子のディレクティブやコンポー
 
 ### 親コンポーネント {@a in-the-parent}
 
-次のステップでは、親コンポーネントのテンプレートでプロパティをバインドします。
+Próximos pasosでは、親コンポーネントのテンプレートでプロパティをバインドします。
 この例では親コンポーネントのテンプレートは `app.component.html` です。
 
 最初に、子のセレクター（ここでは `<app-item-detail>`）を
@@ -2044,7 +2044,7 @@ import { Output, EventEmitter } from '@angular/core';
 
 これで、子コンポーネントから親にデータを送るための `@Output()` と、
 イベントを発生させるメソッドができました。
-次のステップは親に移ります。
+Próximos pasosは親に移ります。
 
 ### 親コンポーネント {@a in-the-parent-1}
 

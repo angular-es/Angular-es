@@ -94,7 +94,7 @@ Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windo
 
 
 
-あなた自身のテストやgitセットアップを誤って削除しないようにセットアップの開始時にだけ行ってください！
+あなた自身のテストやgitprepararを誤って削除しないようにprepararの開始時にだけ行ってください！
 
 
 </div>
@@ -198,7 +198,7 @@ Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windo
 すべてのガイドとクックブックは_少なくともこのコアファイル_を持っています。
 個々のファイルは個々の目的があり、アプリケーションが成長するにつれ独立して発達していきます。
 
-`src/`の外側にあるファイルはビルド、デプロイ、そしてテストに関するものです。
+`src/`の外側にあるファイルはビルド、Desplegar、そしてテストに関するものです。
 それらは設定ファイルや外部の依存です。
 
 `src/`内のファイルはあなたのアプリに属します。
@@ -279,7 +279,7 @@ Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windo
       メインモジュール(`AppModule`)を[ブートストラップ](guide/bootstrapping)します。
       JITコンパイラはほとんどのプロジェクトの開発期間中には現実的な選択であり、
       Stackblitzのようにサンプルを実行する_ライブコーディング_環境ではただひとつの実行可能な選択です。
-      別のコンパイルと[デプロイ](guide/deployment)の選択肢についてはこのドキュメントの後半で学びます。
+      別のコンパイルと[Desplegar](guide/deployment)の選択肢についてはこのドキュメントの後半で学びます。
 
     </td>
 
@@ -293,9 +293,9 @@ Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windo
 
 
 
-### 次のステップ
+### Próximos pasos
 
-もしAngularになじみがないのであれば、この[チュートリアル](tutorial "ツアー・オブ・ヒーローズ チュートリアル")に進むことをお勧めします。
+もしAngularになじみがないのであれば、この[Tutorial](tutorial "ツアー・オブ・ヒーローズ Tutorial")に進むことをお勧めします。
 
 
 </div>
@@ -327,7 +327,7 @@ _npm_ パッケージマネージャーは、それ自身が _Node.js_ アプリ
 
 ## 付録: IEを使ったローカル開発
 
-`ng serve` を使ってローカルでAngular開発をする際、自動的にブラウザとローカル開発サーバーとの間で`websocket` 接続がセットアップされるためコードが変更されると、ブラウザは自動的にリフレッシュします。
+`ng serve` を使ってローカルでAngular開発をする際、自動的にブラウザとローカル開発サーバーとの間で`websocket` 接続がprepararされるためコードが変更されると、ブラウザは自動的にリフレッシュします。
 
 Windowsではデフォルトではアプリケーションは6つの接続しかできません。
 <a href="https://msdn.microsoft.com/library/ee330736%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396#websocket_maxconn" title="MSDN WebSocket settings">MSDN WebSocket Settings</a>.
@@ -336,7 +336,7 @@ Windowsではデフォルトではアプリケーションは6つの接続しか
 
 ## 付録: `fakeAsync()/async()` を使ったテスト　{@a appendix-test-using-fakeasyncasync}
 
-もしユニットテストを実行するために `fakeAsync()/async()` ヘルパー関数を使う場合 （詳細は[テスティングガイド](guide/testing#async-test-with-fakeasync)を参照してください。) は、`zone.js/dist/zone-testing` をテストのセットアップファイルでインポートしなければなりません。
+もしユニットテストを実行するために `fakeAsync()/async()` ヘルパー関数を使う場合 （詳細は[テスティングガイド](guide/testing#async-test-with-fakeasync)を参照してください。) は、`zone.js/dist/zone-testing` をテストのprepararファイルでインポートしなければなりません。
 
 <div class="alert is-important">
 もし Angular CLIを使ってプロジェクトを作っていれば、すでに `src/test.ts` の中でインポートされています。

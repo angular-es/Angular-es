@@ -3,7 +3,7 @@
 Zoneは非同期タスクにまたがって持続する実行コンテキストです。JavaScript VMの[スレッドローカル ストレージ](http://en.wikipedia.org/wiki/Thread-local_storage)と考えることができます。
 このガイドでは、AngularのNgZoneを使用して、コンポーネントの変更を自動的に検出してHTMLを更新する方法を説明します。
 
-## 変更検知の基礎
+## 変更検知のbase
 
 `NgZone`の利点を理解するには、変更検知とは何か、そしてどのように機能するのかを明確に把握することが重要です。
 
@@ -102,7 +102,7 @@ Angularでは、このステップは不要です。データの更新するた�
 
 変更検知がどのように機能するかを理解するには、まずアプリケーションがHTMLの更新を必要とするときについて考えてみましょう。通常、更新は次のいずれかの理由によって発生します。
 
-1. コンポーネントの初期化。たとえば、Angularアプリケーションをブートストラップするとき、Angularはブートストラップコンポーネントを読み込み、 [ApplicationRef.tick()](api/core/ApplicationRef#tick)をトリガーして変更検知とビューレンダリングを呼び出します。 [データの表示](guide/displaying-data)のサンプルのように、`AppComponent`はブートストラップコンポーネントです。このコンポーネントは`title`および`myHero`プロパティを持っており、アプリケーションはこれらをHTMLにレンダリングします。
+1. コンポーネントの初期化。たとえば、Angularアプリケーションをブートストラップするとき、Angularはブートストラップコンポーネントを読み込み、 [ApplicationRef.tick()](api/core/ApplicationRef#tick)をトリガーして変更検知とビューレンダリングを呼び出します。 [Mostrar datos](guide/displaying-data)のサンプルのように、`AppComponent`はブートストラップコンポーネントです。このコンポーネントは`title`および`myHero`プロパティを持っており、アプリケーションはこれらをHTMLにレンダリングします。
 
 2. イベントリスナー。次の例のように、DOMイベントリスナーはAngularコンポーネントのデータを更新し、変更検知をトリガーすることもできます。
 
@@ -286,7 +286,7 @@ task state changed in the zone: { microTask: false,
 
 `Zone`のすべての機能は、[Zone.js](https://github.com/angular/angular/tree/master/packages/zone.js/README.md)というライブラリによって提供されています。
 このライブラリは、モンキーパッチを介して非同期APIをインターセプトすることにより、それらの特徴を実装しています。
-モンキーパッチは、ソースコードを変更せずに、実行時に機能のデフォルトの動作を追加または変更するテクニックです。
+モンキーパッチは、ソースコードを変更せずに、実行時に機能のデフォルトの動作を追加または変更するTécnicaです。
 
 ## NgZone
 
@@ -343,7 +343,7 @@ export class AppComponent implements OnInit {
 }
 ```
 
-### Zone.jsのセットアップ
+### Zone.jsのpreparar
 
 Zone.jsをAngularで利用できるようにするには、`zone.js`パッケージをインポートする必要があります。
 Angular CLIを使用している場合はこのステップは自動で行われ、`src/polyfills.ts`に次の行が表示されます。
