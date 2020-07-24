@@ -77,7 +77,7 @@ Angularのバージョン6.0未満で作成されたアプリケーションで�
 
 ### `forRoot()`と`Router` {@a forroot-and-the-router}
 
-`RouterModule`は`Router`サービスを提供し、`RouterOutlet`や`routerLink`などのルーターディレクティブも提供します。ルートアプリケーションモジュールは`RouterModule`をインポートするので、アプリケーションは`Router`を持ち、ルートアプリケーションコンポーネントはルーターディレクティブにアクセスできます。すべてのフィーチャーモジュールは、そのコンポーネントがテンプレートにルーターディレクティブを配置できるように、`RouterModule`もインポートする必要があります。
+`RouterModule`は`Router`サービスを提供し、`RouterOutlet`や`routerLink`などのルーターディレクティブも提供します。ルートアプリケーションモジュールは`RouterModule`をインポートするので、アプリケーションは`Router`を持ち、ルートアプリケーションコンポーネントはルーターディレクティブにアクセスできます。すべてのフィーチャーモジュールは、そのコンポーネントがPlantillasにルーターディレクティブを配置できるように、`RouterModule`もインポートする必要があります。
 
 `RouterModule`に`forRoot()`がない場合、個々のフィーチャーモジュールは新しい`Router`インスタンスを生成します。`Router`は１つしか存在できないため、アプリケーションは停止します。`forRoot()`メソッドを使用すると、ルートアプリケーションモジュールは`RouterModule.forRoot(...)`をインポートして`Router`を取得し、すべてのフィーチャモジュールは別の`Router`をインスタンス化しない`RouterModule.forChild(...)`をインポートします。
 

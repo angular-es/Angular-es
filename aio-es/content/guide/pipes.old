@@ -18,7 +18,7 @@
 明らかに、いくつかの値は少しの編集によって恩恵を受けます。多くのアプリケーションの内外で
 何度も同じ変換を適用したいという願望に、あなたは気付くかもしれません。
 あなたはほとんどそれらをスタイルとして考えることができます。
-実際、その変換はスタイルと同じようにHTMLテンプレート中で適用できるのです。
+実際、その変換はスタイルと同じようにHTMLPlantillas中で適用できるのです。
 
 ここではHTMLで宣言できる表示値の変換方法であるAngularパイプを紹介します。
 
@@ -34,7 +34,7 @@
 
 
 
-コンポーネントのテンプレートに注目します。
+コンポーネントのPlantillasに注目します。
 
 
 <code-example path="pipes/src/app/app.component.html" region="hero-birthday-template" header="src/app/app.component.html"></code-example>
@@ -51,7 +51,7 @@
 ## ビルトインのパイプ
 Angularには
 `DatePipe`、`UpperCasePipe`、`LowerCasePipe`、`CurrencyPipe`や`PercentPipe`というようなパイプが付属しています。
-それらはすべてテンプレートで使用できます。
+それらはすべてPlantillasで使用できます。
 
 
 <div class="alert is-helpful">
@@ -75,7 +75,7 @@ Angularは[付録](guide/pipes#no-filter-pipe)で説明されている理由の�
 パイプにパラメータを追加するには、パイプ名の後にコロン（：）とパラメータ値を付けます（たとえば`currency:'EUR'`など）。
 パイプが複数のパラメータを受け取る場合は、値をコロンで区切ります（たとえば`slice:1:5`）。
 
-誕生日のテンプレートを変更して、Dateパイプに書式パラメータを与えます。
+誕生日のPlantillasを変更して、Dateパイプに書式パラメータを与えます。
 ヒーローの4月15日の誕生日をフォーマットした後、出力結果は**<samp>04/15/88</samp>**のようになります。
 
 
@@ -84,20 +84,20 @@ Angularは[付録](guide/pipes#no-filter-pipe)で説明されている理由の�
 
 
 パラメータ値には、文字列リテラルやコンポーネントプロパティなど、
-任意の有効なテンプレート式を使用できます
-（[テンプレート構文](guide/template-syntax)ページの
-[テンプレート式](guide/template-syntax#template-expressions)セクションを参照してください）。
+任意の有効なPlantillas式を使用できます
+（[Plantillas構文](guide/template-syntax)ページの
+[Plantillas式](guide/template-syntax#template-expressions)セクションを参照してください）。
 つまり、バインドを介して誕生日の値を制御するのと同じ方法で、バインディングを通じて書式を制御できます。
 
 パイプのformatパラメータをコンポーネントの`format`プロパティにバインドする、2番目のコンポーネントを記述します。
-そのコンポーネントのテンプレートは次のとおりです。
+そのコンポーネントのPlantillasは次のとおりです。
 
 
 <code-example path="pipes/src/app/hero-birthday2.component.ts" region="template" header="src/app/hero-birthday2.component.ts (template)"></code-example>
 
 
 
-また、テンプレートにボタンを追加し、そのクリックイベントをコンポーネントの`toggleFormat()`メソッドにバインドしました。
+また、Plantillasにボタンを追加し、そのクリックイベントをコンポーネントの`toggleFormat()`メソッドにバインドしました。
 このメソッドは、コンポーネントの`format`プロパティを
 短い書式（`'shortDate'`）と長い書式（`'fullDate'`）の間で切り替えます。
 
@@ -166,7 +166,7 @@ Angularは[付録](guide/pipes#no-filter-pipe)で説明されている理由の�
 このパイプはそのような`exponent`パラメーターをもちます。
 * これがパイプであることをAngularに伝えるには、
 Angularコアライブラリからインポートする`@Pipe`デコレーターを適用します。
-* `@Pipe`デコレーターはあなたがテンプレート式の中で使用するパイプ名を定義することができます。
+* `@Pipe`デコレーターはあなたがPlantillas式の中で使用するパイプ名を定義することができます。
 名前はJavaScriptの識別子として有効である必要があります。
 あなたのパイプの名前は`exponentialStrength`です。
 
@@ -215,11 +215,11 @@ Angularコアライブラリからインポートする`@Pipe`デコレーター
 
 
 
-その動作を確認するには <live-example></live-example> でテンプレートの中の値とオプションの指数を変更してみましょう。
+その動作を確認するには <live-example></live-example> でPlantillasの中の値とオプションの指数を変更してみましょう。
 
 ## パワーブースト計算機
 
-カスタムパイプをテストするためにテンプレートを更新するのは楽しいことではありません。
+カスタムパイプをテストするためにPlantillasを更新するのは楽しいことではありません。
 この例を、パイプと`ngModel`による双方向データバインディングを組み合わせた
 "Power Boost Calculator"にアップグレードしましょう。
 
@@ -251,7 +251,7 @@ Angularは可能な限り適切なコストを下げるよう努力していま�
 <h3 class="no-toc">パイプがない場合</h3>
 
 次の例では、コンポーネントはデフォルトの積極的な変更検知ストラテジーを使用して、
-`heroes`配列内のすべてのヒーローの表示を監視および更新します。テンプレートは次のとおりです。
+`heroes`配列内のすべてのヒーローの表示を監視および更新します。Plantillasは次のとおりです。
 
 
 <code-example path="pipes/src/app/flying-heroes.component.html" region="template-1" header="src/app/flying-heroes.component.html (v1)"></code-example>
@@ -421,7 +421,7 @@ Angularは、 コンポーネントの変更検知サイクルごとに*不純�
 
 
 
-実質的な変更は、テンプレート内のパイプだけです。
+実質的な変更は、Plantillas内のパイプだけです。
 <live-example></live-example>では、`heroes`配列を変更してヒーローを追加したときに
 _flying heroes_の表示が更新されることを確認できます。
 
@@ -470,7 +470,7 @@ Asyncパイプは、コンポーネントコードから定型文を削減しま
 
 
 
-それではこのパイプへの2つのバインディングをテンプレートで定義するコンポーネントで、
+それではこのパイプへの2つのバインディングをPlantillasで定義するコンポーネントで、
 `heroes.json`ファイルからヒーローを要求してみましょう。
 
 
@@ -541,7 +541,7 @@ JSON形式の同じヒーローデータをビルトインの`JsonPipe`にチェ
 ## Próximos pasos
 
 パイプは、共通の表示値変換をカプセル化して共有するための優れた方法です。
-スタイルのように使い、テンプレートの式に適用して、
+スタイルのように使い、Plantillasの式に適用して、
 ビューの魅力と利便性を高めることができます。
 
 Angularの組み込みパイプのインベントリについては、[APIリファレンス](api?type=pipe)を参照してください。

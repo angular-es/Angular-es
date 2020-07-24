@@ -7,7 +7,7 @@
   2. The schematic updates providers which follow the `{provide: SomeToken}` pattern
      to explicitly specify `useValue: undefined`.
 
-**Example for missing `@Injectable()`**
+**Ejemplo for missing `@Injectable()`**
 
 _Before migration:_
 ```typescript
@@ -46,7 +46,7 @@ export class MySixthClass {...}
 Note that `MyThirdClass`, `MyFourthClass` and `MyFifthClass` do not need to be decorated
 with `@Injectable()` because they are never instantiated, but just used as a [DI token][DI_TOKEN].
 
-**Example for provider needing `useValue: undefined`**
+**Ejemplo for provider needing `useValue: undefined`**
 
 This example shows a provider following the `{provide: X}` pattern.
 The provider needs to be migrated to a more explicit definition where `useValue: undefined` is specified.

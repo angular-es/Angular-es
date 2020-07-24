@@ -20,7 +20,7 @@ Angular アプリケーションを設計するためのベストプラクティ
 
 Web 上でのアクセシビリティを構築するためには、セマンティックな意味情報が欠落しないように
 [ARIA 属性](https://developers.google.com/web/fundamentals/accessibility/semantics-aria)を設定します。
-アクセシビリティ関連の属性の値を制御するためには [属性バインディング](guide/template-syntax#attribute-binding)テンプレート記法を使います。
+アクセシビリティ関連の属性の値を制御するためには [属性バインディング](guide/template-syntax#attribute-binding)Plantillas記法を使います。
 
 ARIA の仕様は DOM 要素のプロパティよりも、HTML の属性に依存しています。
 Angular 内で ARIA 属性をバインドするためには接頭辞として `attr.` を使用してください。
@@ -44,7 +44,7 @@ Angular 内で ARIA 属性をバインドするためには接頭辞として `a
 
    規約により、HTML の属性の名前には小文字が使われます(`tabindex`)。一方でプロパティにはキャメルケースを使われます(`tabIndex`)。
 
-   属性とプロパティの違いについて詳しい背景は [テンプレート記法](guide/template-syntax#html-attribute-vs-dom-property)ガイドを参照してください。
+   属性とプロパティの違いについて詳しい背景は [Plantillas記法](guide/template-syntax#html-attribute-vs-dom-property)ガイドを参照してください。
 
 </div>
 
@@ -77,7 +77,7 @@ Angular Material において上記のパターンのサンプルは [`MatButton
 適切なネイティブ要素を使うためにコンテナ要素が必要になる場合があります。
 たとえば、ネイティブの `<input>` 要素は子要素をもつことができません。
 そのため、テキスト入力のカスタムコンポーネントは`<input>` を追加の要素で囲む必要があります。
-カスタムコンポーネントのテンプレートの中に `<input>` をそのまま追加した場合は、
+カスタムコンポーネントのPlantillasの中に `<input>` をそのまま追加した場合は、
 コンポーネントを使う際に任意のプロパティや属性を input 要素に設定することができなくなります。
 代わりに、コンテンツ投影を使ったコンテナコンポーネントを作成することで
 コンポーネントの API でネイティブ制御ができます。
@@ -93,7 +93,7 @@ Angular Material において上記のパターンのサンプルは [`MatButton
   <code-example path="accessibility/src/app/progress-bar.component.ts" header="src/app/progress-bar.component.ts" region="progressbar-component"></code-example>
 
 
-* このテンプレートでは、 `aria-label` 属性によってスクリーンリーダーからの制御を可能にしています。
+* このPlantillasでは、 `aria-label` 属性によってスクリーンリーダーからの制御を可能にしています。
 
   <code-example path="accessibility/src/app/app.component.html" header="src/app/app.component.html" region="template"></code-example>
 

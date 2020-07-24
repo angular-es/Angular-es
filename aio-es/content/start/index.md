@@ -29,7 +29,7 @@ Angularのドキュメントを補完するための多くのリソースがあ�
 
 * 左側のプロジェクトペインには、すべてのインフラストラクチャファイルと構成ファイルを含む、アプリケーションを構成するソースファイルが表示されます。現在選択されているファイルは、中央のエディターペインに表示されます。
 
-ソースの構造に入る前に、次のセクションでは提供されたサンプルデータを使用して、製品リストのHTML *テンプレート* を記入する方法を示します。
+ソースの構造に入る前に、次のセクションでは提供されたサンプルデータを使用して、製品リストのHTML *Plantillas* を記入する方法を示します。
 これにより、ページを動的に変更および更新することがどれほど簡単かが分かるでしょう。
 
 <div class="callout is-helpful">
@@ -67,10 +67,10 @@ StackBlitzAplicación de muestraの `src`フォルダーにあります。
 
 
 {@a template-syntax}
-## テンプレート構文
+## Plantillas構文
 
-Angularのテンプレート構文はHTMLとJavaScriptを拡張します。
-このセクションでは、"Products"エリアを実装しながらテンプレート構文を紹介します。
+AngularのPlantillas構文はHTMLとJavaScriptを拡張します。
+このセクションでは、"Products"エリアを実装しながらPlantillas構文を紹介します。
 
 <div class="alert is-helpful">
 
@@ -78,9 +78,9 @@ Angularのテンプレート構文はHTMLとJavaScriptを拡張します。
 
 </div>
 
-1.  `product-list`フォルダーで、テンプレートファイル`product-list.component.html`を開きます。
+1.  `product-list`フォルダーで、Plantillasファイル`product-list.component.html`を開きます。
 
-1. 製品リストのテンプレートを変更して製品名のリストを表示します。
+1. 製品リストのPlantillasを変更して製品名のリストを表示します。
 
     1. リスト内の各商品を同じように、ページ上に順番に表示するようにします。 定義済みの製品リストを反復するには、`*ngFor`ディレクティブを使用します。次に示すように、`*ngFor`ディレクティブを`<div>`に配置します。
 
@@ -116,7 +116,7 @@ Angularのテンプレート構文はHTMLとJavaScriptを拡張します。
     これは、製品名に「詳細」という単語を加えたものです。
     補間 `{{}}` では、プロパティの値をテキストとしてレンダリングできます。
     プロパティバインディング `[]`を使用すると、
-    テンプレート式の中でプロパティ値を使用できます。
+    Plantillas式の中でプロパティ値を使用できます。
 
     <div class="lightbox">
       <img src="generated/images/guide/start/template-syntax-product-anchor.png" alt="Product name anchor text is product name property">
@@ -152,7 +152,7 @@ Angularのテンプレート構文はHTMLとJavaScriptを拡張します。
     </div>
 
 アプリは現在、製品リストと共有機能を持っています。
-その過程で、Angularのテンプレート構文の5つの一般的な機能を使用する方法を学びました。
+その過程で、AngularのPlantillas構文の5つの一般的な機能を使用する方法を学びました。
 * `*ngFor`
 * `*ngIf`
 * 補間 `{{ }}`
@@ -162,7 +162,7 @@ Angularのテンプレート構文はHTMLとJavaScriptを拡張します。
 
 <div class="alert is-helpful">
 
-Angularのテンプレート構文の全機能については、[コンポーネントとテンプレートのIntroducción](guide/architecture-components#template-syntax "Template Syntax")を参照してください。
+AngularのPlantillas構文の全機能については、[コンポーネントとPlantillasのIntroducción](guide/architecture-components#template-syntax "Template Syntax")を参照してください。
 
 </div>
 
@@ -176,7 +176,7 @@ UI内の責任領域を定義します。
 
 コンポーネントは3つの要素で構成されています。
 * **コンポーネントクラス** では、データと機能を処理します。前のセクションでは、コンポーネントクラス内の製品データと`share()`メソッドはそれぞれデータと機能を処理しました。
-* **HTMLテンプレート** では、UIを決定します。 前のセクションでは、商品リストのHTMLテンプレートを変更して、各商品の名前、説明、および"Share"ボタンを表示しました。
+* **HTMLPlantillas** では、UIを決定します。 前のセクションでは、商品リストのHTMLPlantillasを変更して、各商品の名前、説明、および"Share"ボタンを表示しました。
 * **コンポーネント固有スタイル** では、ルック・アンド・フィールを定義します。 
 商品リストにはスタイルは定義されていませんが、
 ここにはコンポーネントCSSが存在します。
@@ -188,11 +188,11 @@ UI内の責任領域を定義します。
 
 1. `product-list`ディレクトリで、`product-list.component.ts`を開きます。
 
-1. `@Component`デコレーターに注目してください。 これにより、テンプレート、スタイル、セレクターなど、コンポーネントに関するメタデータが提供されます。
+1. `@Component`デコレーターに注目してください。 これにより、Plantillas、スタイル、セレクターなど、コンポーネントに関するメタデータが提供されます。
 
     * `selector`はコンポーネントを識別するために使われます。 セレクターは、ページ上にHTML要素としてレンダリングされるときにAngularコンポーネントに付ける名前です。 慣例により、Angularコンポーネントセレクターは `app-`のような接頭辞で始まり、その後にコンポーネント名が続きます。
 
-    *テンプレートとスタイルのファイル名もここにあります。 慣例により、コンポーネントの各部分は別々のファイルにあり、すべて同じディレクトリにあり、同じプレフィックスが付いています。
+    *Plantillasとスタイルのファイル名もここにあります。 慣例により、コンポーネントの各部分は別々のファイルにあり、すべて同じディレクトリにあり、同じプレフィックスが付いています。
 
 1. コンポーネント定義には、コンポーネントの機能を処理するエクスポートクラスも含まれています。 ここが商品リストデータと `Share()`メソッドが定義されている場所です。
 
@@ -216,7 +216,7 @@ Angularアプリケーションはコンポーネントのツリーで構成さ�
 
 <div class="alert is-helpful">
 
-コンポーネントとそれらがテンプレートとどのように相互作用するかについての詳細は[コンポーネントのIntroducción](guide/architecture-components "コンポーネントとテンプレートのIntroducción")を参照してください。
+コンポーネントとそれらがPlantillasとどのように相互作用するかについての詳細は[コンポーネントのIntroducción](guide/architecture-components "コンポーネントとPlantillasのIntroducción")を参照してください。
 
 </div>
 
@@ -246,11 +246,11 @@ Próximos pasosは、新しいアラート機能を作成します。 アラー�
 
     <code-example header="src/app/product-alerts/product-alerts.component.ts" path="getting-started/src/app/product-alerts/product-alerts.component.1.ts" region="as-generated"></code-example>    
 
-    1. `@Component()`デコレーターに注目してください。 これは、次のクラスがコンポーネントであることを示しています。 テンプレート、スタイル、セレクターなど、コンポーネントに関するメタデータを提供します。
+    1. `@Component()`デコレーターに注目してください。 これは、次のクラスがコンポーネントであることを示しています。 Plantillas、スタイル、セレクターなど、コンポーネントに関するメタデータを提供します。
 
         * `selector`はコンポーネントを識別します。 セレクターは、ページ上にHTML要素としてレンダリングされるときにAngularコンポーネントに付ける名前です。 慣例により、Angularコンポーネントセレクターは接頭辞 `app-`で始まり、その後にコンポーネント名が続きます。
 
-        * テンプレートとスタイルのファイル名は、StackBlitzが生成したHTMLとCSSファイルを参照します。
+        * Plantillasとスタイルのファイル名は、StackBlitzが生成したHTMLとCSSファイルを参照します。
 
     1. コンポーネント定義はクラス（`ProductAlertsComponent`）もエクスポートします。 これはコンポーネントの機能を処理します。
 
@@ -266,7 +266,7 @@ Próximos pasosは、新しいアラート機能を作成します。 アラー�
 
 1. 新しい製品警告コンポーネントのビューを定義します。
 
-    1. `product-alerts.component.html`テンプレートを開き、商品価格が700ドル以上の場合に表示される"Notify Me"ボタンでプレースホルダーの段落を置き換えます。
+    1. `product-alerts.component.html`Plantillasを開き、商品価格が700ドル以上の場合に表示される"Notify Me"ボタンでプレースホルダーの段落を置き換えます。
 
     <code-example header="src/app/product-alerts/product-alerts.component.html" path="getting-started/src/app/product-alerts/product-alerts.component.1.html"></code-example>
 
@@ -288,7 +288,7 @@ Próximos pasosは、新しいアラート機能を作成します。 アラー�
 
 <div class="alert is-helpful">
 
-親から子コンポーネントへのデータの受け渡し、親からの値の傍受および処理、入力プロパティ値への変更の検出および処理の詳細については、[コンポーネントの相互作用](guide/component-interaction "コンポーネント & テンプレート > コンポーネントの相互作用")を参照してください。
+親から子コンポーネントへのデータの受け渡し、親からの値の傍受および処理、入力プロパティ値への変更の検出および処理の詳細については、[コンポーネントの相互作用](guide/component-interaction "コンポーネント & Plantillas > コンポーネントの相互作用")を参照してください。
 
 </div>
 
@@ -318,7 +318,7 @@ Próximos pasosは、新しいアラート機能を作成します。 アラー�
 
     <code-example path="getting-started/src/app/product-alerts/product-alerts.component.ts" header="src/app/product-alerts/product-alerts.component.ts" region="input-output"></code-example>
 
-1. 商品アラートテンプレート `product-alerts.component.html` にて、`notify.emit()`メソッドを呼び出すためのイベントバインディングで"Notify Me"ボタンを更新します。
+1. 商品アラートPlantillas `product-alerts.component.html` にて、`notify.emit()`メソッドを呼び出すためのイベントバインディングで"Notify Me"ボタンを更新します。
 
     <code-example header="src/app/product-alerts/product-alerts.component.html" path="getting-started/src/app/product-alerts/product-alerts.component.html"></code-example>
 
@@ -341,7 +341,7 @@ Próximos pasosは、新しいアラート機能を作成します。 アラー�
 
 <div class="alert is-helpful">
 
-子コンポーネントからのイベントのリスニング、子プロパティの読み取り、子メソッドの呼び出し、および親子内での双方向通信のためのサービスの使用の詳細については、[コンポーネントの相互作用](guide/component-interaction "コンポーネント ＆ テンプレート > コンポーネントの相互作用")を参照してください。
+子コンポーネントからのイベントのリスニング、子プロパティの読み取り、子メソッドの呼び出し、および親子内での双方向通信のためのサービスの使用の詳細については、[コンポーネントの相互作用](guide/component-interaction "コンポーネント ＆ Plantillas > コンポーネントの相互作用")を参照してください。
 
 </div>
 
@@ -352,8 +352,8 @@ Próximos pasosは、新しいアラート機能を作成します。 アラー�
 おめでとうございます！ あなたははじめてのAngularアプリを完成させました！
 
 基本的なオンラインストアカタログがあり、商品リスト、"Share"ボタン、"Notify me"ボタンがあります。
-Angularのbase、つまりコンポーネントとテンプレートの構文について学びました。
-また、コンポーネントクラスとテンプレートがどのように相互作用するのか、およびコンポーネントが相互に通信する方法も学びました。
+Angularのbase、つまりコンポーネントとPlantillasの構文について学びました。
+また、コンポーネントクラスとPlantillasがどのように相互作用するのか、およびコンポーネントが相互に通信する方法も学びました。
 
 Angularの探索を続けるには、次のいずれかのオプションを選択してください。
 * ["Navegación en la aplicación"セクションに進む](start/start-routing "入門： Navegación en la aplicación")ことで、製品名をクリックしてアクセスでき、独自のURLパターンをもつ製品詳細ページを作成します。

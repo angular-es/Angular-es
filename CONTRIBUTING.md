@@ -32,7 +32,7 @@ origin/aio/
 
 翻訳作業を開始する前に、同じファイルを翻訳しようとしている人がいないかどうかを確認しましょう。
 [Translation Checkout](https://github.com/angular/angular-ja/labels/type%3A%20Translation%20Checkout)ラベルのイシューを見ると、現在翻訳に取り掛かっている領域がわかります。
-新しく翻訳をおこないたい場合は、まず[イシューを作成](https://github.com/angular/angular-ja/issues/new/choose)し、テンプレートにしたがって情報を記入してください。
+新しく翻訳をおこないたい場合は、まず[イシューを作成](https://github.com/angular/angular-ja/issues/new/choose)し、Plantillasにしたがって情報を記入してください。
 
 ## 軽微な修正
 
@@ -102,7 +102,7 @@ $ yarn serve-and-sync # localhost:4200でサーバーが立ち上がります
 
 翻訳作業を開始する前に、同じファイルを翻訳しようとしている人がいないかどうかを確認しましょう。
 [Translation Checkout](https://github.com/angular/angular-ja/labels/type%3A%20Translation%20Checkout)ラベルのイシューを見ると、現在翻訳に取り掛かっている領域がわかります。
-新しく翻訳をおこないたい場合は、まず[イシューを作成](https://github.com/angular/angular-ja/issues/new/choose)し、テンプレートにしたがって情報を記入してください。
+新しく翻訳をおこないたい場合は、まず[イシューを作成](https://github.com/angular/angular-ja/issues/new/choose)し、Plantillasにしたがって情報を記入してください。
 
 ### 翻訳プルリクエストの作成
 

@@ -44,7 +44,7 @@
 </td>
 </tr><tr>
 <td><code><b>entryComponents:</b> [SomeComponent, OtherComponent]</code></td>
-<td><p>到達可能なテンプレートで参照されていないコンポーネントのリスト。たとえば、コードから動的に作成されたもの。</p></td>
+<td><p>到達可能なPlantillasで参照されていないコンポーネントのリスト。たとえば、コードから動的に作成されたもの。</p></td>
 </tr><tr>
 <td><code><b>bootstrap:</b> [MyAppComponent]</code></td>
 <td><p>このモジュールがブートストラップされたときにブートストラップされるコンポーネントのリスト。</p>
@@ -54,7 +54,7 @@
 
 <table class="is-full-width is-fixed-layout">
 <tbody><tr>
-<th>テンプレートシンタックス</th>
+<th>Plantillasシンタックス</th>
 <th></th>
 </tr>
 <tr>
@@ -92,11 +92,11 @@
 </td>
 </tr><tr>
 <td><code>&lt;video <b>#movieplayer</b> ...&gt;<br>  &lt;button <b>(click)</b>="movieplayer.play()"&gt;<br>&lt;/video&gt;</code></td>
-<td><p>現在のテンプレートのデータバインディング式およびイベントバインディング式の中で、<code>video</code>要素のインスタンスへのアクセスを提供するローカル変数<code>movieplayer</code>を作成します。</p>
+<td><p>現在のPlantillasのデータバインディング式およびイベントバインディング式の中で、<code>video</code>要素のインスタンスへのアクセスを提供するローカル変数<code>movieplayer</code>を作成します。</p>
 </td>
 </tr><tr>
 <td><code>&lt;p <b>*myUnless</b>="myExpression"&gt;...&lt;/p&gt;</code></td>
-<td><p><code>*</code>シンボルは、現在の要素を埋め込みテンプレートに変換します。次と同等です:
+<td><p><code>*</code>シンボルは、現在の要素を埋め込みPlantillasに変換します。次と同等です:
 <code>&lt;ng-template [myUnless]="myExpression"&gt;&lt;p&gt;...&lt;/p&gt;&lt;/ng-template&gt;</code></p>
 </td>
 </tr><tr>
@@ -109,7 +109,7 @@
 </td>
 </tr><tr>
 <td><code>&lt;<b>svg:</b>rect x="0" y="0" width="100" height="100"/&gt;</code></td>
-<td><p>SVG要素をHTML要素から曖昧さを取り除くために、SVGスニペットテンプレートにはルート要素に<code>svg:</code>というプレフィックスが必要です。</p>
+<td><p>SVG要素をHTML要素から曖昧さを取り除くために、SVGスニペットPlantillasにはルート要素に<code>svg:</code>というプレフィックスが必要です。</p>
 </td>
 </tr><tr>
 <td><code>&lt;<b>svg</b>&gt;<br>  &lt;rect x="0" y="0" width="100" height="100"/&gt;<br>&lt;/<b>svg</b>&gt;</code></td>
@@ -131,11 +131,11 @@
 </td>
 </tr><tr>
 <td><code>&lt;li <b>*ngFor</b>="let item of list"&gt;</code></td>
-<td><p>li要素とその内容をテンプレートに変換し、それを使用してlist内の各項目のビューをインスタンス化します。</p>
+<td><p>li要素とその内容をPlantillasに変換し、それを使用してlist内の各項目のビューをインスタンス化します。</p>
 </td>
 </tr><tr>
 <td><code>&lt;div <b>[ngSwitch]</b>="conditionExpression"&gt;<br>  &lt;ng-template <b>[<b>ngSwitchCase</b>]</b>="case1Exp"&gt;...&lt;/ng-template&gt;<br>  &lt;ng-template <b>ngSwitchCase</b>="case2LiteralString"&gt;...&lt;/ng-template&gt;<br>  &lt;ng-template <b>ngSwitchDefault</b>&gt;...&lt;/ng-template&gt;<br>&lt;/div&gt;</code></td>
-<td><p><code>conditionExpression</code>の現在の値に基づいて埋め込みテンプレートの1つを選択することによって、divの内容を条件にしたがって入れ替えます。</p>
+<td><p><code>conditionExpression</code>の現在の値に基づいて埋め込みPlantillasの1つを選択することによって、divの内容を条件にしたがって入れ替えます。</p>
 </td>
 </tr><tr>
 <td><code>&lt;div <b>[ngClass]</b>="{'active': isActive, 'disabled': isDisabled}"&gt;</code></td>
@@ -198,7 +198,7 @@
 </tr>
 <tr>
 <td><code><b>selector:</b> '.cool-button:not(a)'</code></td>
-<td><p>テンプレート内でこのディレクティブを識別するCSSセレクタを指定します。 サポートされるセレクタには、<code>element</code>、
+<td><p>Plantillas内でこのディレクティブを識別するCSSセレクタを指定します。 サポートされるセレクタには、<code>element</code>、
 <code>[attribute]</code>、<code>.class</code>および<code>:not()</code>です。
 <p>親子関係セレクタはサポートしていません。</p>
 </td>
@@ -227,7 +227,7 @@
 </td>
 </tr><tr>
 <td><code><b>template:</b> 'Hello {{name}}'<br><b>templateUrl:</b> 'my-component.html'</code></td>
-<td><p>コンポーネントのビューのインラインテンプレートまたは外部テンプレートURL。</p>
+<td><p>コンポーネントのビューのインラインPlantillasまたは外部PlantillasURL。</p>
 </td>
 </tr><tr>
 <td><code><b>styles:</b> ['.primary {color: red}']<br><b>styleUrls:</b> ['my-component.css']</code></td>

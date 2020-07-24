@@ -339,17 +339,17 @@ class Person {
 `🌼`(黄色の花)を使用します。
 
 
-## テンプレートの論理構造
+## Plantillasの論理構造
 
 コンポーネントクラスでサービスを提供すると、
 それらのサービスを提供する場所と方法に関連する
 `ElementInjector`ツリー内にサービスが可視化されます。
 
-Angularのテンプレートの根本的な論理構造を理解すると、
+AngularのPlantillasの根本的な論理構造を理解すると、
 サービスを設定し、
 その可視性を制御するためのbaseが学べます。
 
-次の例のように、コンポーネントはテンプレートで使用されます:
+次の例のように、コンポーネントはPlantillasで使用されます:
 
 ```
 <app-root>
@@ -359,12 +359,12 @@ Angularのテンプレートの根本的な論理構造を理解すると、
 
 <div class="alert is-helpful">
 
-**Note:** 通常、コンポーネントとそのテンプレートは別々のファイルで宣言します。
+**Note:** 通常、コンポーネントとそのPlantillasは別々のファイルで宣言します。
 注入システムがどのように機能するかを理解するために、
 結合された論理ツリーの観点からそれらを見ることが有用です。
 論理という用語は、レンダリングツリー
 (アプリケーションDOMツリー)と区別します。
-コンポーネントテンプレートが配置されている場所をマークするために、
+コンポーネントPlantillasが配置されている場所をマークするために、
 このガイドでは
 `<#VIEW>`擬似要素を使用します。
 これは実際にはレンダーツリーには存在せず、メンタルモデルの目的でのみ存在します。
@@ -474,7 +474,7 @@ Angularは注入のリクエストを解決するときに次のように論理�
 </app-root>
  ```
 
-ここでの`<#VIEW>`は、テンプレートのインスタンスを表します。
+ここでの`<#VIEW>`は、Plantillasのインスタンスを表します。
 各コンポーネントには個々の`<#VIEW>`があることに注意してください。
 
 この構造の知識は、サービスを提供および注入する方法を通知し、
@@ -487,7 +487,7 @@ Angularは注入のリクエストを解決するときに次のように論理�
 
 </code-example>
 
-`<app-root>`テンプレートにバインディングを追加して、結果を表示します:
+`<app-root>`Plantillasにバインディングを追加して、結果を表示します:
 
 <code-example path="providers-viewproviders/src/app/app.component.html" header="providers-viewproviders/src/app/app.component.html" region="binding-flower">
 
@@ -555,14 +555,14 @@ Emoji from FlowerService: 🌺
 `<app-child>`自身の`ElementInjector`を調べるだけで済みます。
 インジェクターツリー全体で検索を続ける必要はありません。
 
-Próximos pasosでは、`ChildComponent`テンプレートにバインディングを追加します。
+Próximos pasosでは、`ChildComponent`Plantillasにバインディングを追加します。
 
 <code-example path="providers-viewproviders/src/app/child/child.component.html" header="providers-viewproviders/src/app/child.component.html" region="flower-binding">
 
 </code-example>
 
 新しい値をレンダリングするために、`<app-child>`を`AppComponent`
-テンプレートの下部に追加して、ビューにひまわりも表示されるようにします:
+Plantillasの下部に追加して、ビューにひまわりも表示されるようにします:
 
 ```
 Child Component
@@ -648,14 +648,14 @@ Aplicación de muestraでは、`viewProviders`を説明するために
 
 </code-example>
 
-`ChildComponent`および`AppComponent`テンプレートにバインディングを追加します。
-`ChildComponent`テンプレートで、次のバインディングを追加します:
+`ChildComponent`および`AppComponent`Plantillasにバインディングを追加します。
+`ChildComponent`Plantillasで、次のバインディングを追加します:
 
 <code-example path="providers-viewproviders/src/app/child/child.component.html" header="providers-viewproviders/src/app/child.component.html" region="animal-binding">
 
 </code-example>
 
-さらに、同じものを`AppComponent`テンプレートに追加します:
+さらに、同じものを`AppComponent`Plantillasに追加します:
 
 <code-example path="providers-viewproviders/src/app/app.component.html" header="providers-viewproviders/src/app/app.component.html" region="binding-animal">
 
@@ -733,7 +733,7 @@ Emoji from AnimalService: 🐶
 バインディングを含む最初の2行は、前のステップからのものです。
 新しい部分は`<ng-content>`と`<app-inspector>`です。
 `<ng-content>`を使用すると、コンテンツを投影できます。
-そして、`ChildComponent`テンプレート内の`<app-inspector>`は、
+そして、`ChildComponent`Plantillas内の`<app-inspector>`は、
 `InspectorComponent`を`ChildComponent`の子コンポーネントにします。
 
 次に、コンテンツの投影を利用するために`app.component.html`に次のものを追加します。

@@ -1,4 +1,4 @@
-# テンプレート構文
+# Plantillas構文
 
 <style>
   h4 {font-size: 17px !important; text-transform: none !important;}
@@ -7,45 +7,45 @@
 </style>
 
 Angular アプリケーションは、ユーザーが表示して実行できる機能を管理し、
-これをコンポーネントクラスインスタンス(*コンポーネント*)と、そのユーザー向けテンプレートとのやりとりを通して実現します。
+これをコンポーネントクラスインスタンス(*コンポーネント*)と、そのユーザー向けPlantillasとのやりとりを通して実現します。
 
-あなたは、モデル・ビュー・コントローラー(MVC)やモデル・ビュー・ビューモデル(MVVM)の経験から、コンポーネント/テンプレートの相対性に精通しているかもしれません。
-Angular では、コンポーネントはコントローラー/ビューモデルの一部として機能し、テンプレートはビューを表現します。
+あなたは、モデル・ビュー・コントローラー(MVC)やモデル・ビュー・ビューモデル(MVVM)の経験から、コンポーネント/Plantillasの相対性に精通しているかもしれません。
+Angular では、コンポーネントはコントローラー/ビューモデルの一部として機能し、Plantillasはビューを表現します。
 
-このページは、Angular のテンプレート言語に関する総合的な技術文書です。
-テンプレート言語の基本的な原則を解説し、あなたがどこかで出くわすかもしれない構文の多くについて、このドキュメント内で説明します。
+このページは、Angular のPlantillas言語に関する総合的な技術文書です。
+Plantillas言語の基本的な原則を解説し、あなたがどこかで出くわすかもしれない構文の多くについて、このドキュメント内で説明します。
 
 多くのコードスニペットでポイントとコンセプトを説明しており、
-それらはすべて<live-example title="テンプレート構文のライブコード"></live-example>で確認できます。
+それらはすべて<live-example title="Plantillas構文のライブコード"></live-example>で確認できます。
 
 
 {@a html}
-## テンプレート内のHTML
+## Plantillas内のHTML
 
-HTML は Angular のテンプレート言語です。
-ほとんどすべての HTML 構文は有効なテンプレート構文です。
+HTML は Angular のPlantillas言語です。
+ほとんどすべての HTML 構文は有効なPlantillas構文です。
 `<script>` 要素は注目すべき例外です。
 スクリプトインジェクション攻撃の危険性を排除するために禁止されています。
 実際には、`<script>` は無視され、ブラウザコンソールに警告が表示されます。
 詳細は [Seguridad](guide/security) のページを参照してください。
 
-妥当なHTMLの中には、テンプレート内ではあまり意味がないものがあります。
+妥当なHTMLの中には、Plantillas内ではあまり意味がないものがあります。
 `<html>`、`<body>`、および `<base>` 要素には有用な役割はありません。
 他のほとんどすべては有用です。
 
-テンプレートの HTML ボキャブラリーを、新しい要素や属性として表示されるコンポーネントやディレクティブで拡張することができます。
+Plantillasの HTML ボキャブラリーを、新しい要素や属性として表示されるコンポーネントやディレクティブで拡張することができます。
 次のセクションでは、データバインディングを通じて動的に DOM(Document Object Model)の値を取得および設定する方法を学びます。
 
-データバインディングの最初の形式&mdash;補間&mdash;から始めて、テンプレート HTML でできることの豊富さを確認しましょう。
+データバインディングの最初の形式&mdash;補間&mdash;から始めて、Plantillas HTML でできることの豊富さを確認しましょう。
 
 <hr/>
 
 {@a interpolation}
 
-## 補間とテンプレート式
+## 補間とPlantillas式
 
 補間を使用すると、計算された文字列を HTML 要素タグ間および属性割り当て内のテキストに組み込むことができます。
-テンプレート式は、
+Plantillas式は、
 これらの文字列を計算するために使用するものです。
 
 補間の <live-example></live-example> では、
@@ -72,7 +72,7 @@ Angular は、その名前を対応するコンポーネントプロパティの
 プロパティを評価して空白を埋めます。最初にタイトルテキストを表示し、次に画像を表示します。
 
 より一般的には、中括弧間のテキストは、
-Angular が最初に **評価** してから **文字列に変換** する **テンプレート式** です。
+Angular が最初に **評価** してから **文字列に変換** する **Plantillas式** です。
 次の補間の例では、2つの数を加算していることがポイントです:
 
 <code-example path="interpolation/src/app/app.component.html" region="convert-string" header="src/app/app.component.html" linenums="false">
@@ -102,19 +102,19 @@ Angular は、二重中括弧内のすべての式を評価し、式の結果を
 
 </div>
 
-### テンプレート式 {@a template-expressions}
+### Plantillas式 {@a template-expressions}
 
-テンプレート **式** は値を生成し、二重中括弧
+Plantillas **式** は値を生成し、二重中括弧
 `{{ }}` 内に表示します。
 Angularは 式を実行し、それをバインディングターゲットのプロパティに割り当てます。
 ターゲットは HTML 要素、コンポーネント、またはディレクティブです。
 
-`{{1 + 1}}` 内の補間中括弧はテンプレート式 `1 + 1` を囲みます。
+`{{1 + 1}}` 内の補間中括弧はPlantillas式 `1 + 1` を囲みます。
 プロパティバインディングでは、`[property]="expression"`
-のように、テンプレート式は `=` 記号の右側の引用符で囲まれます。
+のように、Plantillas式は `=` 記号の右側の引用符で囲まれます。
 
-構文に関しては、テンプレート式は JavaScript に似ています。
-いくつかの例外を除き、多くの JavaScript 式は妥当なテンプレート式です。
+構文に関しては、Plantillas式は JavaScript に似ています。
+いくつかの例外を除き、多くの JavaScript 式は妥当なPlantillas式です。
 
 次のような、副作用をもつ、
 または促進する JavaScript 式は使用できません:
@@ -128,7 +128,7 @@ Angularは 式を実行し、それをバインディングターゲットのプ
 その他の JavaScript 構文との注目すべき違いは次のとおりです。
 
 * `|` や `&` などのビット演算子はサポートされていません
-* `|`、`?.` や `!` などの新しいテンプレート式演算子を持ちます
+* `|`、`?.` や `!` などの新しいPlantillas式演算子を持ちます
 <!-- link to: guide/template-syntax#expression-operators -->
 
 ### 式のコンテキスト
@@ -141,9 +141,9 @@ Angularは 式を実行し、それをバインディングターゲットのプ
 </code-example>
 
 式は
-テンプレート入力変数 `let customer` <!-- link to built-in-directives#template-input-variables -->
-やテンプレート参照変数 `#customerInput` <!-- link to guide/template-ref-variables -->
-などの _テンプレートが持つ_
+Plantillas入力変数 `let customer` <!-- link to built-in-directives#template-input-variables -->
+やPlantillas参照変数 `#customerInput` <!-- link to guide/template-ref-variables -->
+などの _Plantillasが持つ_
 コンテキストのプロパティも参照できます。
 
 <code-example path="interpolation/src/app/app.component.html" region="template-input-variable" header="src/app/app.component.html (template input variable)" linenums="false">
@@ -152,21 +152,21 @@ Angularは 式を実行し、それをバインディングターゲットのプ
 <code-example path="interpolation/src/app/app.component.html" region="template-reference-variable" header="src/app/app.component.html (template reference variable)" linenums="false">
 </code-example>
 
-式の中にある項のコンテキストは、_テンプレート変数_、ディレクティブの
+式の中にある項のコンテキストは、_Plantillas変数_、ディレクティブの
 _コンテキスト_ オブジェクト(ある場合)、およびコンポーネントの _メンバー_ の組み合わせです。
-これらの名前空間に複数存在する名前を参照する場合は、テンプレート変数名が優先され、
+これらの名前空間に複数存在する名前を参照する場合は、Plantillas変数名が優先され、
 その後にディレクティブの _コンテキスト_ 内の名前、
 最後にコンポーネントのメンバー名が参照されます。
 
 前の例はそのような名前の衝突を示しています。
-コンポーネントは `customer` プロパティを持ち、`*ngFor` では `customer` テンプレート変数を定義しています。
+コンポーネントは `customer` プロパティを持ち、`*ngFor` では `customer` Plantillas変数を定義しています。
 
 <div class="alert is-helpful">
 
 `{{customer.name}}` 内の `customer` は、コンポーネントのプロパティではなく、
-テンプレート入力変数を参照しています。
+Plantillas入力変数を参照しています。
 
-テンプレート式は、`undefined`
+Plantillas式は、`undefined`
 以外のグローバル名前空間内のものを参照できません。
 `window` や `document` を参照することはできません。
 また、`console.log()` や `Math.max()` を呼び出すことはできず、
@@ -176,7 +176,7 @@ _コンテキスト_ オブジェクト(ある場合)、およびコンポーネ
 
 ### 式のガイドライン
 
-テンプレート式を使う場合は、次のガイドラインにしたがってください:
+Plantillas式を使う場合は、次のガイドラインにしたがってください:
 
 * [副作用を起こさない](guide/template-syntax#no-visible-side-effects)
 * [素早い実行](guide/template-syntax#quick-execution)
@@ -185,7 +185,7 @@ _コンテキスト_ オブジェクト(ある場合)、およびコンポーネ
 {@a no-visible-side-effects}
 ### 副作用を起こさない
 
-テンプレート式は、
+Plantillas式は、
 対象のプロパティの値以外のアプリケーションの状態を変更すべきではありません。
 
 このルールは Angular の「単方向データフロー」ポリシーに不可欠です。
@@ -212,7 +212,7 @@ Angular の項の中で冪等な式は、
 
 ### 素早い実行 {@a quick-execution}
 
-Angular はすべての変更検知サイクルの後にテンプレート式を実行します。
+Angular はすべての変更検知サイクルの後にPlantillas式を実行します。
 変更検知サイクルは、Promise の解決、HTTP の結果、タイマーイベント、
 キープレス、マウスの移動などの多くの非同期アクティビティによって引き起こされます。
 
@@ -221,7 +221,7 @@ Angular はすべての変更検知サイクルの後にテンプレート式を
 
 ### シンプルさ {@a simplicity}
 
-複雑なテンプレート式を書くことは可能ですが、
+複雑なPlantillas式を書くことは可能ですが、
 避けることをお勧めします。
 
 プロパティ名、またはメソッド呼び出しは標準的であるべきです、しかし、必要なときには真偽値の否定 `!` はよいでしょう。
@@ -234,26 +234,26 @@ Angular はすべての変更検知サイクルの後にテンプレート式を
 
 {@a template-statements}
 
-## テンプレート文
+## Plantillas文
 
-テンプレート **文**
+Plantillas **文**
 は、要素、コンポーネント、ディレクティブなどのバインディングターゲットによって発生した **イベント** に応答します。
-テンプレート文は [イベントバインディング](guide/template-syntax#event-binding) セクションでも触れますが、
+Plantillas文は [イベントバインディング](guide/template-syntax#event-binding) セクションでも触れますが、
 `(event)="statement"` のように `=` 記号の右側に引用符で囲まれた形で現れます。
 
 <code-example path="template-syntax/src/app/app.component.html" region="context-component-statement" header="src/app/app.component.html" linenums="false">
 </code-example>
 
-テンプレート文には *副作用があります*。
+Plantillas文には *副作用があります*。
 それがイベントのポイントです。
 これは、ユーザーの操作からアプリケーションの状態を更新する方法です。
 
 イベントへの対応は、Angular の「単方向データフロー」の反対側です。
 あなたは、このイベントループのターンの間に、何でも、どこでも自由に変更できます。
 
-テンプレート式と同様に、テンプレート *文*
+Plantillas式と同様に、Plantillas *文*
 は JavaScript のような言語を使用します。
-テンプレート文パーサーはテンプレート式パーサーとは異なり、
+Plantillas文パーサーはPlantillas式パーサーとは異なり、
 特に基本的な代入(`=`)と連鎖式（<code>;</code> または <code>,</code>）の両方をサポートします。
 
 ただし、特定の JavaScript 構文は許可されていません:
@@ -262,7 +262,7 @@ Angular はすべての変更検知サイクルの後にテンプレート式を
 * `++` や `--` などの、インクリメント、デクリメント演算子
 * `+=` and `-=` などの代入演算子
 * ビット演算子 `|` や `&`
-* [テンプレート式演算子](guide/template-syntax#expression-operators)
+* [Plantillas式演算子](guide/template-syntax#expression-operators)
 
 ### 文のコンテキスト
 
@@ -275,29 +275,29 @@ Angular はすべての変更検知サイクルの後にテンプレート式を
 <code-example path="template-syntax/src/app/app.component.html" region="context-component-statement" header="src/app/app.component.html" linenums="false">
 </code-example>
 
-文のコンテキストはテンプレート自身のコンテキストのプロパティも参照します。
-次の例では、テンプレートの `$event` オブジェクト、
-[テンプレート入力変数](guide/template-syntax#template-input-variable) (`let hero`)、
-および [テンプレート参照変数](guide/template-syntax#ref-vars) (`#heroForm`)
+文のコンテキストはPlantillas自身のコンテキストのプロパティも参照します。
+次の例では、Plantillasの `$event` オブジェクト、
+[Plantillas入力変数](guide/template-syntax#template-input-variable) (`let hero`)、
+および [Plantillas参照変数](guide/template-syntax#ref-vars) (`#heroForm`)
 がコンポーネントのイベント処理メソッドに渡されています。
 
 <code-example path="template-syntax/src/app/app.component.html" region="context-var-statement" header="src/app/app.component.html" linenums="false">
 </code-example>
 
-テンプレートコンテキストの名前はコンポーネントコンテキストの名前よりも優先されます。
+Plantillasコンテキストの名前はコンポーネントコンテキストの名前よりも優先されます。
 上記の `deleteHero(hero)` では、
-`hero` はテンプレート入力変数であり、コンポーネントの `hero` プロパティではありません。
+`hero` はPlantillas入力変数であり、コンポーネントの `hero` プロパティではありません。
 
-テンプレート文は、グローバル名前空間内のものを参照できません。
+Plantillas文は、グローバル名前空間内のものを参照できません。
 `window` や `document` を参照することはできません。
 `console.log` や `Math.max` を呼び出すことはできません。
 
 ### 文のガイドライン
 
-式と同様に、複雑なテンプレート文を書かないでください。
+式と同様に、複雑なPlantillas文を書かないでください。
 メソッド呼び出しまたは単純なプロパティ割り当てが一般的です。
 
-さて、テンプレートの式と文を理解したので、
+さて、Plantillasの式と文を理解したので、
 補間以外のさまざまなデータバインディング構文について学習する準備が整いました。
 
 
@@ -396,11 +396,11 @@ _source-to-view_、_view-to-source_、そして双方向シーケンスの_view-
 または接頭辞が前に付いています(`bind-`、`on-`、`bindon-`)。
 
 ターゲット名は _プロパティ_ 名です。それは _属性_ 名のように見えるかもしれませんが、そうではありません。
-違いを理解するには、テンプレート HTML についての新しい考え方を発展させる必要があります。
+違いを理解するには、Plantillas HTML についての新しい考え方を発展させる必要があります。
 
 ### 新しいメンタルモデル
 
-テンプレート HTML は、データバインディングの力とカスタムマークアップを使用して HTML のボキャブラリーを拡張する機能すべてを備えているので、
+Plantillas HTML は、データバインディングの力とカスタムマークアップを使用して HTML のボキャブラリーを拡張する機能すべてを備えているので、
 *HTML Plus* と見なしたくなります。
 
 それ*は*本当に HTML Plus です。
@@ -413,10 +413,10 @@ _source-to-view_、_view-to-source_、そして双方向シーケンスの_view-
 <code-example path="template-syntax/src/app/app.component.html" region="img+button" header="src/app/app.component.html" linenums="false">
 </code-example>
 
-ここではまだ Angular テンプレート内で通常の方法を使用して構造を作成し、属性の値を初期化しているだけです。
+ここではまだ Angular Plantillas内で通常の方法を使用して構造を作成し、属性の値を初期化しているだけです。
 
 それから、HTML をカプセル化するコンポーネントを使用して新しい要素を作成し、
-ネイティブの HTML 要素であるかのようにそれらをテンプレートに配置する方法を学びます。
+ネイティブの HTML 要素であるかのようにそれらをPlantillasに配置する方法を学びます。
 
 <code-example path="template-syntax/src/app/app.component.html" region="hero-detail-1" header="src/app/app.component.html" linenums="false">
 </code-example>
@@ -482,7 +482,7 @@ HTML 属性の `value` は *初期値* を指定します。DOM の `value` プ�
 </div>
 
 繰り返すと、
-**テンプレートバインディングは、*属性* ではなく *プロパティ* と *イベント* で機能します。**
+**Plantillasバインディングは、*属性* ではなく *プロパティ* と *イベント* で機能します。**
 
 <div class="callout is-helpful">
 
@@ -615,8 +615,8 @@ HTML 属性は事実上消えます。
 
 ## プロパティバインディング ( <span class="syntax">[property]</span> )
 
-ビュー要素のプロパティを設定するためにはテンプレートに **プロパティバインディング** を書いてください。
-バインディングは、[テンプレート式](guide/template-syntax#template-expressions) の値をプロパティに設定します。
+ビュー要素のプロパティを設定するためにはPlantillasに **プロパティバインディング** を書いてください。
+バインディングは、[Plantillas式](guide/template-syntax#template-expressions) の値をプロパティに設定します。
 
 もっとも一般的なプロパティバインディングは、コンポーネントのプロパティ値を要素のプロパティに設定することです。
 次の例は、コンポーネントの `heroImageUrl` プロパティを img 要素の `src` プロパティにバインドします:
@@ -697,7 +697,7 @@ Angular は最初に名前が既知のディレクティブのプロパティで
 
 ### 副作用を避けてください {@a avoid-side-effects}
 
-前述のように、テンプレート式の評価には目に見える副作用はありません。
+前述のように、Plantillas式の評価には目に見える副作用はありません。
 式の言語自体は、安全に保つための役割を果たします。
 プロパティバインディング式でに何か値を代入したり、インクリメント演算子とデクリメント演算子を使用することはできません。
 
@@ -711,7 +711,7 @@ Angular は変更された値を表示する場合と表示しない場合があ
 
 ### ふさわしい型を返してください
 
-テンプレート式は、ターゲットプロパティが期待する値の型として評価されるべきです。
+Plantillas式は、ターゲットプロパティが期待する値の型として評価されるべきです。
 ターゲットプロパティが文字列を期待する場合は文字列を返してください。
 ターゲットプロパティが数値を期待する場合は数値を返してください。
 ターゲットプロパティがオブジェクトを期待する場合はオブジェクトを返してください。
@@ -723,7 +723,7 @@ Angular は変更された値を表示する場合と表示しない場合があ
 
 ### 角括弧を忘れないでください
 
-角括弧は Angular にテンプレート式を評価するように指示します。
+角括弧は Angular にPlantillas式を評価するように指示します。
 角括弧を省略すると Angular は文字列を定数として扱い、
 その文字列でターゲットプロパティを *初期化* します。
 文字列は評価 *されません*。
@@ -740,12 +740,12 @@ Angular は変更された値を表示する場合と表示しない場合があ
 次のすべてが当てはまる場合は、角括弧を省略する *べき* です。
 
 * ターゲットプロパティが文字列値を受け入れる。
-* 文字列がテンプレートに焼き付けることができる固定値。
+* 文字列がPlantillasに焼き付けることができる固定値。
 * この初期値が変化しない。
 
 標準の HTML では、日常的にこの方法で属性を初期化します。
 そして、ディレクティブおよびコンポーネントプロパティの初期化に対しても同様に機能します。
-次の例では、`HeroDetailComponent` の `prefix` プロパティをテンプレート式ではなく固定の文字列で初期化します。
+次の例では、`HeroDetailComponent` の `prefix` プロパティをPlantillas式ではなく固定の文字列で初期化します。
 Angular はそれを設定し、それについて忘れます。
 
 <code-example path="template-syntax/src/app/app.component.html" region="property-binding-7" header="src/app/app.component.html" linenums="false">
@@ -801,7 +801,7 @@ script タグ付きの HTML がブラウザに漏れることは許さない **�
 
 ## 属性、クラス、スタイルバインディング
 
-テンプレートの構文は、プロパティバインディングにあまり適していないシナリオのための、特殊な単方向バインディングを提供します。
+Plantillasの構文は、プロパティバインディングにあまり適していないシナリオのための、特殊な単方向バインディングを提供します。
 
 ### 属性バインディング {@a attribute-binding}
 
@@ -891,7 +891,7 @@ Angular が属性バインディングを提供するのはなぜでしょうか
 </code-example>
 
 最後に、特定のクラス名にバインドできます。
-Angular は、テンプレート式が truthy と評価されたときにクラスを追加します。
+Angular は、Plantillas式が truthy と評価されたときにクラスを追加します。
 式が falsy な場合はクラスを削除します。
 
 <code-example path="template-syntax/src/app/app.component.html" region="class-binding-3" header="src/app/app.component.html" linenums="false">
@@ -950,7 +950,7 @@ Angular は、テンプレート式が truthy と評価されたときにクラ�
 <live-example name="event-binding">イベントバインディングの例</live-example> を参照してください。
 
 Angular のイベントバインディングの構文は、
-等号の左側の括弧内の **ターゲットイベント** 名と右側の引用符で囲まれたテンプレート文で構成されます。
+等号の左側の括弧内の **ターゲットイベント** 名と右側の引用符で囲まれたPlantillas文で構成されます。
 次のイベントバインディングは、
 ボタンのクリックイベントをリッスンし、
 クリックが発生するたびにコンポーネントの `onSave()` メソッドを呼び出します:
@@ -985,8 +985,8 @@ Angular のイベントバインディングの構文は、
 
 イベントバインディング内で、Angular はターゲットイベントのイベントハンドラーを設定します。
 
-イベントが発生すると、ハンドラーはテンプレート文を実行します。
-テンプレート文は通常、レシーバーが関与します。
+イベントが発生すると、ハンドラーはPlantillas文を実行します。
+Plantillas文は通常、レシーバーが関与します。
 レシーバーは、HTML のコントロールからモデルに値を格納するなど、
 イベントに応じてアクションを実行します。
 
@@ -1048,10 +1048,10 @@ Angular のイベントバインディングの構文は、
 `deleteItem()` メソッドを呼び出し、*削除するアイテム* (`ItemDetail` によって発行されたもの)
 を `$event` 変数に渡します。
 
-### テンプレート文には副作用があります
+### Plantillas文には副作用があります
 
-[テンプレート式](guide/template-syntax#template-expressions)
-には [副作用](guide/template-syntax#avoid-side-effects) があってはいけませんが、テンプレート文には通常あります。
+[Plantillas式](guide/template-syntax#template-expressions)
+には [副作用](guide/template-syntax#avoid-side-effects) があってはいけませんが、Plantillas文には通常あります。
 `deleteItem()` メソッドには副作用があります(アイテムを削除します)。
 
 アイテムを削除することでモデルが更新され、コードによっては、
@@ -1360,7 +1360,7 @@ _この_ セクションでは、一般的な構造ディレクティブにつ�
 
 * [`NgIf`](guide/template-syntax#ngIf) - 条件によって DOM に要素を追加または削除する
 * [`NgSwitch`](guide/template-syntax#ngSwitch) - 選択肢のビューを切り替える一連のディレクティブ
-* [`NgForOf`](guide/template-syntax#ngFor) - リスト内の各項目に対してテンプレートを繰り返す
+* [`NgForOf`](guide/template-syntax#ngFor) - リスト内の各項目に対してPlantillasを繰り返す
 
 <hr/>
 
@@ -1438,7 +1438,7 @@ DOM にその要素を追加、または削除できます。
 
 `NgForOf` は _リピーター_ ディレクティブ (項目のリストを表示する方法) です。
 単一の項目をどのように表示するかを定義する HTML ブロックを定義します。
-リストの各項目をレンダリングするためのテンプレートとしてそのブロックを使用するように Angular に指示します。
+リストの各項目をレンダリングするためのPlantillasとしてそのブロックを使用するように Angular に指示します。
 
 単純な `<div>` に適用された `NgForOf` の例は次のようになります:
 
@@ -1462,15 +1462,15 @@ DOM にその要素を追加、または削除できます。
 
 #### *ngFor マイクロシンタックス
 
-`*ngFor` に割り当てられた文字列はテンプレート式ではありません。
+`*ngFor` に割り当てられた文字列はPlantillas式ではありません。
 それはマイクロシンタックス (Angular が解釈するそれ自身の小さな言語) です。
 文字列 "let hero of heroes" の意味は、
 
 > *`heroes` 配列内の各ヒーローを取り出し、それをローカルの `hero`
-ループ変数に格納して、反復ごとにテンプレート HTML で使用できるようにします。*
+ループ変数に格納して、反復ごとにPlantillas HTML で使用できるようにします。*
 
 Angular はこの命令をホスト要素を囲む `<ng-template>`
-に変換し、次にこのテンプレートを繰り返し使用して、
+に変換し、次にこのPlantillasを繰り返し使用して、
 リスト内の各 `hero` の要素とバインディングの新しいセットを作成します。
 
 [_構造ディレクティブ_](guide/structural-directives#microsyntax) ガイドで _マイクロシンタックス_ について学んでください。
@@ -1479,9 +1479,9 @@ Angular はこの命令をホスト要素を囲む `<ng-template>`
 
 {@a template-input-variables}
 
-### テンプレート入力変数
+### Plantillas入力変数
 
-`hero` の前の `let` キーワードは、`hero` という _テンプレート入力変数_ を作成します。
+`hero` の前の `let` キーワードは、`hero` という _Plantillas入力変数_ を作成します。
 `NgForOf` ディレクティブは、親コンポーネントの `heroes` プロパティによって返された
 `heroes` 配列を反復処理し、各反復の間、配列からの現在の項目に `hero` をセットします。
 
@@ -1493,13 +1493,13 @@ Angular はこの命令をホスト要素を囲む `<ng-template>`
 <code-example path="template-syntax/src/app/app.component.html" region="NgFor-1-2" header="src/app/app.component.html" linenums="false">
 </code-example>
 
-_テンプレート入力変数_ については
+_Plantillas入力変数_ については
 [_構造ディレクティブ_](guide/structural-directives#template-input-variable) ガイドで学んでください。
 
 #### *ngFor で _index_ を使用する
 
 `NgForOf` ディレクティブコンテキストの `index` プロパティは、各繰り返し内で 0 から始まる項目のインデックスを返します。
-テンプレート入力変数で `index` を取得してテンプレートで使用することができます。
+Plantillas入力変数で `index` を取得してPlantillasで使用することができます。
 
 次の例では、`i` という変数名で `index` を取得し、次のようにヒーロー名と一緒に表示します。
 
@@ -1605,9 +1605,9 @@ DOM に対して要素を追加または削除するため、_構造_ ディレ�
 
 {@a ref-var}
 
-## テンプレート参照変数 ( <span class="syntax">#var</span> ) {@a template-reference-variables--var-}
+## Plantillas参照変数 ( <span class="syntax">#var</span> ) {@a template-reference-variables--var-}
 
-**テンプレート参照変数** は多くの場合、テンプレート内の DOM 要素への参照です。
+**Plantillas参照変数** は多くの場合、Plantillas内の DOM 要素への参照です。
 Angular コンポーネント、ディレクティブ、または
 <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components" title="MDN: Web Components">Web コンポーネント</a> への参照にすることもできます。
 
@@ -1617,9 +1617,9 @@ Angular コンポーネント、ディレクティブ、または
 <code-example path="template-syntax/src/app/app.component.html" region="ref-var" header="src/app/app.component.html" linenums="false">
 </code-example>
 
-テンプレート内の _任意の場所_ で
-テンプレート参照変数を参照できます。
-この `<input>` で宣言された `phone` 変数はテンプレートの別の場所の `<button>` 内で使用されます
+Plantillas内の _任意の場所_ で
+Plantillas参照変数を参照できます。
+この `<input>` で宣言された `phone` 変数はPlantillasの別の場所の `<button>` 内で使用されます
 
 <code-example path="template-syntax/src/app/app.component.html" region="ref-phone" header="src/app/app.component.html" linenums="false">
 </code-example>
@@ -1637,7 +1637,7 @@ Angular コンポーネント、ディレクティブ、または
 <code-example path="template-syntax/src/app/hero-form.component.html" header="src/app/hero-form.component.html" linenums="false">
 </code-example>
 
-この例では、テンプレート参照変数 `heroForm`
+この例では、Plantillas参照変数 `heroForm`
 が3回出現し、大量の HTML で区切られています。
 `heroForm` の値は何でしょうか?
 
@@ -1651,14 +1651,14 @@ Angular コンポーネント、ディレクティブ、または
 これは、`heroForm.form.valid` が無効な場合に送信ボタンを無効にし、
 フォームコントロールツリー全体を親コンポーネントの `onSubmit` メソッドに渡す方法を説明したものです。
 
-<h3 class="no-toc">テンプレート参照変数の警告に関する注意事項</h3>
+<h3 class="no-toc">Plantillas参照変数の警告に関する注意事項</h3>
 
-テンプレート _参照_ 変数 (`#phone`) は、[`*ngFor`](guide/template-syntax#template-input-variable)
-に見られるようなテンプレート _入力_ 変数 (`let phone`) と同じでは _ありません_。
+Plantillas _参照_ 変数 (`#phone`) は、[`*ngFor`](guide/template-syntax#template-input-variable)
+に見られるようなPlantillas _入力_ 変数 (`let phone`) と同じでは _ありません_。
 [_構造ディレクティブ_](guide/structural-directives#template-input-variable) ガイドで違いを学んでください。
 
-参照変数のスコープは _テンプレート全体_ です。
-同じテンプレート内で同じ変数名を複数回定義しないでください。
+参照変数のスコープは _Plantillas全体_ です。
+同じPlantillas内で同じ変数名を複数回定義しないでください。
 実行時の値が予測できなくなります。
 
 `＃` の代わりに `ref-` 接頭辞を使うことができます。
@@ -1693,7 +1693,7 @@ _入力_ プロパティと _出力_ プロパティを介してのみ、_他_ �
 
 <h3 class="no-toc">ディスカッション</h3>
 
-通常、テンプレートに _それ自身のコンポーネントクラス_ をバインドしています。
+通常、Plantillasに _それ自身のコンポーネントクラス_ をバインドしています。
 このようなバインディング式では、コンポーネントのプロパティまたはメソッドは (`=`) の _右側_ にあります。
 
 <code-example path="template-syntax/src/app/app.component.html" region="io-1" header="src/app/app.component.html" linenums="false">
@@ -1703,20 +1703,20 @@ _入力_ プロパティと _出力_ プロパティを介してのみ、_他_ �
 それらは `@Input()` や `@Output` で装飾されて _いません_。
 Angular は反対しません。
 
-**コンポーネントの公開プロパティは、自身のテンプレートでいつでもバインドできます。**
+**コンポーネントの公開プロパティは、自身のPlantillasでいつでもバインドできます。**
 _入力_ または _出力_ プロパティである必要はありません
 
-コンポーネントのクラスとテンプレートは密接に関連しています。
+コンポーネントのクラスとPlantillasは密接に関連しています。
 それらは両方とも同じものの一部です。
 それら _は_ 共にコンポーネントです。
-コンポーネントクラスとそのテンプレートとの間のやり取りは、内部実装の詳細です。
+コンポーネントクラスとそのPlantillasとの間のやり取りは、内部実装の詳細です。
 
 ### 別のコンポーネントにバインドする
 
 _別の_ コンポーネントのプロパティにバインドすることもできます。
 このようなバインディングでは、_他の_ コンポーネントのプロパティは (`=`) の _左側_ にあります。
 
-次の例では、`AppComponent` テンプレートは、セレクターが `'app-hero-detail'` である `HeroDetailComponent` のプロパティに `AppComponent` のクラスメンバーをバインドします。
+次の例では、`AppComponent` Plantillasは、セレクターが `'app-hero-detail'` である `HeroDetailComponent` のプロパティに `AppComponent` のクラスメンバーをバインドします。
 
 <code-example path="template-syntax/src/app/app.component.html" region="io-2" header="src/app/app.component.html" linenums="false">
 </code-example>
@@ -1792,10 +1792,10 @@ _入力_ と _出力_ という用語は、ターゲットディレクティブ�
 </figure>
 
 `HeroDetailComponent.hero` は `HeroDetailComponent` から見た **入力** プロパティです。
-データがテンプレートバインディング式からそのプロパティに *流れ込む* ためです。
+データがPlantillasバインディング式からそのプロパティに *流れ込む* ためです。
 
 `HeroDetailComponent.deleteRequest` は、`HeroDetailComponent` から見た **出力** プロパティです。
-イベントがそのプロパティからテンプレートバインディング文のハンドラーに向かって *流れ出る* ためです。
+イベントがそのプロパティからPlantillasバインディング文のハンドラーに向かって *流れ出る* ためです。
 
 <h3 id='aliasing-io'>
   入力/出力プロパティのエイリアシング
@@ -1841,9 +1841,9 @@ _入力_ と _出力_ という用語は、ターゲットディレクティブ�
 
 {@a expression-operators}
 
-## テンプレート式演算子
+## Plantillas式演算子
 
-テンプレート式言語では、特定のシナリオ用にいくつかの特別な演算子を追加した JavaScript シンタックスのサブセットを採用しています。
+Plantillas式言語では、特定のシナリオ用にいくつかの特別な演算子を追加した JavaScript シンタックスのサブセットを採用しています。
 次のセクションでは、これら2つの演算子 (_パイプ演算子_ と _セーフナビゲーション演算子_) について説明します。
 
 {@a pipe}
@@ -1855,7 +1855,7 @@ _入力_ と _出力_ という用語は、ターゲットディレクティブ�
 
 Angular の [パイプ](guide/pipes) は、このような小さな変換に適しています。
 パイプは入力値を受け取り、変換された値を返す単純な関数です。
-**パイプ演算子 (`|`)** を使用すると、テンプレート式内で簡単に適用できます:
+**パイプ演算子 (`|`)** を使用すると、Plantillas式内で簡単に適用できます:
 
 <code-example path="template-syntax/src/app/app.component.html" region="pipes-1" header="src/app/app.component.html" linenums="false">
 </code-example>
@@ -1909,7 +1909,7 @@ Angular の **セーフナビゲーション演算子 (`?.`)**
 それは合理的な振る舞いです。少なくともアプリはクラッシュしません。
 
 次の null ヒーローの `name` を表示する例のように、
-テンプレート式にプロパティパスが含まれていると仮定します。
+Plantillas式にプロパティパスが含まれていると仮定します。
 
 <code-example language="html">
   The null hero's name is {{nullHero.name}}
@@ -1975,7 +1975,7 @@ Typescript 2.0以降では、`--strictNullChecks` フラグを使用して [厳�
 あなたは
 [_非 null アサーション演算子 (!)_](http://www.typescriptlang.org/docs/handbook/release-notes/typescript-2-0.html#non-null-assertion-operator "Non-null assertion operator") を後に追加することによってそれが起こり得ないことを型チェッカーに伝えます、
 
-_Angular_ の **非 null アサーション演算子 (`!`)** は、Angular テンプレート内で同じ目的を果たします。
+_Angular_ の **非 null アサーション演算子 (`!`)** は、Angular Plantillas内で同じ目的を果たします。
 
 たとえば、[*ngIf](guide/template-syntax#ngIf) を使用して `hero` が定義されていることを確認したら、
 `hero` のプロパティも定義されていることを表明できます。
@@ -1983,14 +1983,14 @@ _Angular_ の **非 null アサーション演算子 (`!`)** は、Angular テ�
 <code-example path="template-syntax/src/app/app.component.html" region="non-null-assertion-1" header="src/app/app.component.html" linenums="false">
 </code-example>
 
-Angular コンパイラがテンプレートを TypeScript コードに変換するときに、
+Angular コンパイラがPlantillasを TypeScript コードに変換するときに、
 `hero.name` が null または undefined の可能性があることを TypeScript が報告しなくなります。
 
 [_セーフナビゲーション演算子_](guide/template-syntax#safe-navigation-operator "Safe navigation operator (?.)")
 とは異なり、**非 null アサーション演算子** は null または undefined に対して保護しません。
 そうではなく、TypeScript 型チェッカーに、特定のプロパティ式に対する厳密な null チェックを中断するように指示します。
 
-厳密な null チェックを有効にするとき、このテンプレート演算子が必要になります。それ以外はオプションです。
+厳密な null チェックを有効にするとき、このPlantillas演算子が必要になります。それ以外はオプションです。
 
 
 <a href="#top-of-page">トップに戻る</a>
@@ -1999,7 +1999,7 @@ Angular コンパイラがテンプレートを TypeScript コードに変換す
 
 {@a built-in-template-functions}
 
-## ビルトインテンプレート関数
+## ビルトインPlantillas関数
 
 {@a any-type-cast-function}
 
@@ -2012,8 +2012,8 @@ Angular コンパイラがテンプレートを TypeScript コードに変換す
 <code-example path="built-in-template-functions/src/app/app.component.html" region="any-type-cast-function-1" header="src/app/app.component.html" linenums="false">
 </code-example>
 
-Angular コンパイラがこのテンプレートを TypeScript コードに変換するとき、
-そのテンプレートに対して型チェックを実行したときに、
+Angular コンパイラがこのPlantillasを TypeScript コードに変換するとき、
+そのPlantillasに対して型チェックを実行したときに、
 `bestByDate` が `item` オブジェクトのメンバーではないことが TypeScript から報告されなくなります。
 
 `$any()` キャスト関数も `this`

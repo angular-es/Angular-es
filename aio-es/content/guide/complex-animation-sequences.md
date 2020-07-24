@@ -68,7 +68,7 @@
 
 入力時にフィルターがリアルタイムで機能します。 新しい文字を入力すると要素がページから離れ、フィルターが徐々に狭められていきます。 フィルターボックスの各文字を削除すると、ヒーローのリストが徐々にページに再挿入されます。
 
-HTMLテンプレートには、`filterAnimation`というトリガーが含まれています。
+HTMLPlantillasには、`filterAnimation`というトリガーが含まれています。
 
 <code-example path="animations/src/app/hero-list-page.component.html" header="src/app/hero-list-page.component.html" region="filter-animations"></code-example>
 

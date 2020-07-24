@@ -48,7 +48,7 @@ monorepoワークスペースをprepararするには、ルートアプリケー�
 ### アプリケーションプロジェクトファイル
 
 デフォルトでは、CLIコマンド `ng new my-app` は "my-app" という名前のワークスペースフォルダを作成し、ワークスペースの最上位の `src/` フォルダに新しいアプリケーションスケルトンを生成します。
-新しく生成されたアプリケーションには、ルートコンポーネントとテンプレートを含むルートモジュールのソースファイルが含まれています。
+新しく生成されたアプリケーションには、ルートコンポーネントとPlantillasを含むルートモジュールのソースファイルが含まれています。
 
 ワークスペースのファイル構造が整ったら、コマンドラインで `ng generate` コマンドを使用して機能とデータをアプリケーションに追加できます。
 この初期ルートレベルアプリケーションは、CLIコマンドの *デフォルトアプリケーション* です（ [追加のアプリケーション](#multiple-projects) を作成したあとでデフォルトを変更しない限り）。
@@ -87,12 +87,12 @@ If you create an application using Angular's strict mode, you will also have an 
 {@a app-src}
 
 `src/` フォルダ内の `app/` フォルダには、プロジェクトのロジックとデータが含まれています。
-Angularコンポーネント、テンプレート、スタイルはここにあります。
+Angularコンポーネント、Plantillas、スタイルはここにあります。
 
 | `src/app/` ファイル          | 目的 |
 | :-------------------------- | :------------------------------------------|
 | `app/app.component.ts`      | `AppComponent` という名前のアプリのルートコンポーネントのロジックを定義します。 このルートコンポーネントに関連付けられたビューは、コンポーネントやサービスをアプリケーションに追加したときに [ビュー階層](guide/glossary#view-hierarchy) のルートになります。 |
-| `app/app.component.html`    | ルート `AppComponent` に関連付けられているHTMLテンプレートを定義します。 |
+| `app/app.component.html`    | ルート `AppComponent` に関連付けられているHTMLPlantillasを定義します。 |
 | `app/app.component.css`     | ルート `AppComponent` の基本CSSスタイルシートを定義します。 |
 | `app/app.component.spec.ts` | ルート `AppComponent` のユニットテストを定義します。 |
 | `app/app.module.ts`         | `AppModule` という名前のルートモジュールを定義し、Angularにアプリケーションの組み立て方法を指示します。最初は `AppComponent` のみを宣言しています。 アプリにコンポーネントを追加すると、それらをここで宣言する必要があります。 |
@@ -109,7 +109,7 @@ Angularコンポーネント、テンプレート、スタイルはここにあ�
 | :--------------------- | :------------------------------------------|
 | `.browserslistrc`         | ターゲットブラウザとさまざまなフロントエンドツールのNode.jsのバージョンの共有設定をします。詳しくは[Browserslist on GitHub](https://github.com/browserslist/browserslist) を参照してください。 |
 | `karma.conf.js`      | アプリケーション固有の [Karma](https://karma-runner.github.io/2.0/config/configuration-file.html) の設定。 |
-| `tsconfig.app.json`    | TypeScriptおよびAngularテンプレートコンパイラオプションを含む、アプリケーション固有の [TypeScript](https://www.typescriptlang.org/) の設定。 [TypeScriptの設定](guide/typescript-configuration) と [Angular Compiler Options](guide/angular-compiler-options)を参照してください。 |
+| `tsconfig.app.json`    | TypeScriptおよびAngularPlantillasコンパイラオプションを含む、アプリケーション固有の [TypeScript](https://www.typescriptlang.org/) の設定。 [TypeScriptの設定](guide/typescript-configuration) と [Angular Compiler Options](guide/angular-compiler-options)を参照してください。 |
 | `tsconfig.spec.json`   | アプリケーションテスト用の [TypeScript](https://www.typescriptlang.org/) の設定。 [TypeScriptの設定](guide/typescript-configuration) を参照してください。 |
 | `tslint.json`          | アプリケーション固有の [TSLint](https://palantir.github.io/tslint/) の設定。 |
 
@@ -187,6 +187,6 @@ CLIを使用して（ `ng generate library my-lib` などのコマンドを使�
 | `karma.conf.js`      | ライブラリ固有の [Karma](https://karma-runner.github.io/2.0/config/configuration-file.html) の設定 |
 | `ng-package.json`    | ライブラリを構築するために [ng-packagr](https://github.com/ng-packagr/ng-packagr) によって使用される設定ファイル。 |
 | `package.json`       | このライブラリに必要な [npmパッケージの依存関係](guide/npm-packages) を設定します。 |
-| `tsconfig.lib.json`  | TypeScriptおよびAngularテンプレートコンパイラオプションを含む、ライブラリ固有の [TypeScript](https://www.typescriptlang.org/) の設定。 [TypeScriptの設定](guide/typescript-configuration) を参照してください。 |
+| `tsconfig.lib.json`  | TypeScriptおよびAngularPlantillasコンパイラオプションを含む、ライブラリ固有の [TypeScript](https://www.typescriptlang.org/) の設定。 [TypeScriptの設定](guide/typescript-configuration) を参照してください。 |
 | `tsconfig.spec.json` | ライブラリテスト用の [TypeScript](https://www.typescriptlang.org/) の設定。 [TypeScriptの設定](guide/typescript-configuration) を参照してください。 |
 | `tslint.json`        | ライブラリ固有の [TSLint](https://palantir.github.io/tslint/) の設定 |

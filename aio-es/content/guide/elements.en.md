@@ -125,7 +125,7 @@ Use the [Angular CLI](cli) to automatically set up your project with the correct
 - For more information about Angular browser support, see [Browser Support](guide/browser-support).
 
 
-## Example: A Popup Service
+## Ejemplo: A Popup Service
 
 Previously, when you wanted to add a component to an app at runtime, you had to define a _dynamic component_. The app module would have to list your dynamic component under `entryComponents`, so that the app wouldn't expect it to be present at startup, and then you would have to load it, attach it to an element in the DOM, and wire up all of the dependencies, change detection, and event handling, as described in [Dynamic Component Loader](guide/dynamic-component-loader).
 

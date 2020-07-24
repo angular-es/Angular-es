@@ -2,7 +2,7 @@
 
 ユーザー入力をフォームで処理することは、多くの一般的なアプリケーションで不可欠なものです。アプリケーションはフォームを使用して、ユーザーがログインしたり、プロフィールを更新したり、機密情報を入力したり、その他の多くのデータ入力タスクを実行できるようにします。
 
-Angularは、フォームを通じてユーザー入力を処理するための2つの異なるアプローチを提供します。リアクティブ型とテンプレート駆動型です。どちらもビューからユーザー入力イベントを取得し、ユーザー入力をバリデーションし、更新するフォームモデルとデータモデルを作成し、変更を監視する方法を提供します。
+Angularは、フォームを通じてユーザー入力を処理するための2つの異なるアプローチを提供します。リアクティブ型とPlantillas駆動型です。どちらもビューからユーザー入力イベントを取得し、ユーザー入力をバリデーションし、更新するフォームモデルとデータモデルを作成し、変更を監視する方法を提供します。
 
 This guide provides information to help you decide which type of form works best for your situation. It introduces the common building blocks used by both approaches. It also summarizes the key differences between the two approaches, and demonstrates those differences in the context of setup, data flow, and testing.
 
@@ -26,14 +26,14 @@ Reactive forms and template-driven forms process and manage form data differentl
 
 ## 主な違い
 
-次の表は、リアクティブフォームとテンプレート駆動フォームの主な違いをまとめたものです。
+次の表は、リアクティブフォームとPlantillas駆動フォームの主な違いをまとめたものです。
 
 <style>
   table {width: 100%};
   td, th {vertical-align: top};
 </style>
 
-||リアクティブ|テンプレート駆動|
+||リアクティブ|Plantillas駆動|
 |--- |--- |--- |
 |[Setup of form model](#setup) | Explicit, created in component class | Implicit, created by directives |
 |[Data model](#data-flow-in-forms) | Structured and immutable | Unstructured and mutable |
@@ -61,7 +61,7 @@ The two approaches share underlying building blocks, but differ in how you creat
 
 ### Common form foundation classes
 
-リアクティブとテンプレート駆動の両方のフォームは、baseとなる構成要素を共有しています。
+リアクティブとPlantillas駆動の両方のフォームは、baseとなる構成要素を共有しています。
 
 * `FormControl`は個々のフォームコントロールの値とバリデーションステータスを監視します。
 
@@ -91,7 +91,7 @@ Figure 1 shows how, in reactive forms, the form model is the source of truth; it
   <img src="generated/images/guide/forms-overview/key-diff-reactive-forms.png" alt="Reactive forms key differences">
 </div>
 
-### テンプレート駆動フォームでのpreparar
+### Plantillas駆動フォームでのpreparar
 
 In template-driven forms, the form model is implicit, rather than explicit. The directive `NgModel` creates and manages a `FormControl` instance for a given form element.
 
@@ -146,7 +146,7 @@ The model-to-view diagram shows how a programmatic change to the model is propag
   <img src="generated/images/guide/forms-overview/dataflow-reactive-forms-mtv.png" alt="Reactive forms data flow - model to view">
 </div>
 
-### テンプレート駆動フォームでのデータフロー
+### Plantillas駆動フォームでのデータフロー
 
 In template-driven forms, each form element is linked to a directive that manages the form model internally.
 
@@ -158,7 +158,7 @@ The view-to-model diagram shows how data flows when an input field's value is ch
 1. `FormControl`インスタンスは`valueChanges`オブジェクトを通して新しい値を発行します。
 1. `valueChanges`Observableのサブスクライバーが新しい値を受け取ります。
 1. コントロール値アクセサは`ngModelChange`イベントを発行する`NgModel.viewToModelUpdate()`メソッドも呼び出します。
-1. コンポーネントテンプレートは`favoriteColor`プロパティに双方向データバインディングを使っているので、コンポーネントの`favoriteColor`プロパティは
+1. コンポーネントPlantillasは`favoriteColor`プロパティに双方向データバインディングを使っているので、コンポーネントの`favoriteColor`プロパティは
 `ngModelChange`イベント(*Blue*)によって発行された値に更新されます。
 
 <div class="lightbox">
@@ -206,15 +206,15 @@ The difference is demonstrated in the previous examples that use the favorite-co
 バリデーションは、一連のフォームを管理するための不可欠な部分です。あなたが必須のフィールドをチェックしているか既存のユーザー名のために外部のAPIを問い合わせているかにかかわらず、Angularはカスタムバリデータを作成する機能と同様にビルトインバリデータのセットを提供します。
 
 * **リアクティブフォーム** はバリデーションするためのコントロールを受け取る **関数** としてカスタムバリデータを定義します。
-* **テンプレート駆動フォーム** はテンプレート **ディレクティブ** に関連付けられており、バリデート関数をラップするカスタムバリデータディレクティブを提供する必要があります。
+* **Plantillas駆動フォーム** はPlantillas **ディレクティブ** に関連付けられており、バリデート関数をラップするカスタムバリデータディレクティブを提供する必要があります。
 
 詳細については[フォームバリデーション](guide/form-validation)を参照してください。
 
 ## テスト
 
 テストは複雑なアプリケーションで大きな役割を果たし、フォームが正しく機能していることを検証するときには、シンプルなテスト戦略が役立ちます。
-リアクティブフォームとテンプレート駆動フォームは、フォームコントロールとフォームフィールドの変更に基づいてアサーションを実行するためのUIのレンダリングに異なるレベルの依存性を持っています。
-次の例では、リアクティブフォームとテンプレート駆動フォームを使用してフォームをテストするプロセスを説明します。
+リアクティブフォームとPlantillas駆動フォームは、フォームコントロールとフォームフィールドの変更に基づいてアサーションを実行するためのUIのレンダリングに異なるレベルの依存性を持っています。
+次の例では、リアクティブフォームとPlantillas駆動フォームを使用してフォームをテストするプロセスを説明します。
 
 ### リアクティブフォームをテストする
 
@@ -243,11 +243,11 @@ The next example performs the following steps to verify the model-to-view data f
 <code-example path="forms-overview/src/app/reactive/favorite-color/favorite-color.component.spec.ts" region="model-to-view" header="Favorite color test - model to view">
 </code-example>
 
-### テンプレート駆動フォームをテストする
+### Plantillas駆動フォームをテストする
 
-テンプレート駆動フォームでテストを書くには、変更検知プロセスに関する詳細な知識と、各サイクルでディレクティブがどのように実行されるかを理解して、要素が正しいタイミングで参照、テスト、または変更されるようにする必要があります。
+Plantillas駆動フォームでテストを書くには、変更検知プロセスに関する詳細な知識と、各サイクルでディレクティブがどのように実行されるかを理解して、要素が正しいタイミングで参照、テスト、または変更されるようにする必要があります。
 
-次のテストでは、テンプレート駆動フォームのビューからモデルへ、およびモデルからビューへのデータフローを検証するために、さきほどのお気に入りの色コンポーネントを使用します。
+次のテストでは、Plantillas駆動フォームのビューからモデルへ、およびモデルからビューへのデータフローを検証するために、さきほどのお気に入りの色コンポーネントを使用します。
 
 ビューからモデルへのデータフローを検証するテストは次のようになります。
 
@@ -283,7 +283,7 @@ The next example performs the following steps to verify the model-to-view data f
 * [フォームバリデーション](guide/form-validation#reactive-form-validation)
 * [ダイナミックフォーム](guide/dynamic-form)
 
-テンプレート駆動フォームの詳細については次のガイドを参照してください:
+Plantillas駆動フォームの詳細については次のガイドを参照してください:
 
 * [Building a template-driven form](guide/forms) tutorial
 * [フォームバリデーション](guide/form-validation#template-driven-validation)

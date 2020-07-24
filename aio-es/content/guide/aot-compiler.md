@@ -1,6 +1,6 @@
 # Ahead-of-time (AOT) コンパイラ
 
-Angular アプリケーションは、主にコンポーネントとその HTML テンプレートで構成されています。Angular が提供するコンポーネントとテンプレートはブラウザで直接理解できないため、Angular アプリケーションをブラウザで実行するにはコンパイルプロセスが必要です。
+Angular アプリケーションは、主にコンポーネントとその HTML Plantillasで構成されています。Angular が提供するコンポーネントとPlantillasはブラウザで直接理解できないため、Angular アプリケーションをブラウザで実行するにはコンパイルプロセスが必要です。
 
 Angular の [ahead-of-time (AOT) コンパイラ](guide/glossary#aot) は、ブラウザがそのコードをダウンロードして実行する _前_ に、ビルドフェーズ中にAngular HTML コードと TypeScript コードを効率的な JavaScript コードに変換します。ビルドプロセス中にアプリケーションをコンパイルすると、ブラウザでのレンダリングが速くなります。
 
@@ -21,20 +21,20 @@ AOTを使用する理由は次のとおりです。
    ブラウザは実行可能コードをロードするので、最初にアプリケーションをコンパイルするのを待たずにアプリケーションをすぐにレンダリングできます。
 
 * *より少ない非同期リクエスト*
-   コンパイラは外部の HTML テンプレートと CSS スタイルシートをアプリケーションの JavaScript 内に _インライン化し_ 、
+   コンパイラは外部の HTML Plantillasと CSS スタイルシートをアプリケーションの JavaScript 内に _インライン化し_ 、
    それらのソースファイルに対する別々の ajax リクエストを排除します。
 
 * *より小さい Angular フレームワークのダウンロードサイズ*
    アプリがすでにコンパイルされている場合は、Angular コンパイラをダウンロードする必要はありません。
    コンパイラは Angular 自体の約半分なので、これを省略するとアプリケーションのペイロードが大幅に減少します。
 
-* *テンプレートエラーを早期に検出する*
-   AOT コンパイラは、ユーザーが目にする前にビルドステップ中にテンプレートバインディングエラーを検出して
+* *Plantillasエラーを早期に検出する*
+   AOT コンパイラは、ユーザーが目にする前にビルドステップ中にPlantillasバインディングエラーを検出して
    報告します。
 
 * *より良いSeguridad*
-   AOT は、HTML テンプレートとコンポーネントがクライアントに提供されるずっと前から JavaScript ファイルにコンパイルします。
-   読み取るテンプレートがなく、危険なクライアントサイドの HTML または JavaScript の評価もないため、
+   AOT は、HTML Plantillasとコンポーネントがクライアントに提供されるずっと前から JavaScript ファイルにコンパイルします。
+   読み取るPlantillasがなく、危険なクライアントサイドの HTML または JavaScript の評価もないため、
    インジェクション攻撃の機会が少なくなります。
 
 {@a overview}
@@ -81,8 +81,8 @@ AOTコンパイルには三つのフェーズがあります。
 * フェーズ2は*コード生成*です。
    このフェーズでは、コンパイラの`StaticReflector`がフェーズ1で収集したメタデータを解釈し、メタデータの追加の検証を実行して、メタデータの制約違反を見つけたらエラーを投げます。
 
-* フェーズ3は*テンプレート型チェック*です。
-   オプションであるこのフェーズでは、Angularの*テンプレートコンパイラ*がTypeScriptコンパイラを使用して、テンプレートにおけるバインディング式を検証します。このフェーズは明示的に設定オプションの`fullTemplateTypeCheck`を設定して有効にできます。[Angularコンパイラオプション](guide/angular-compiler-options)を参照してください。
+* フェーズ3は*Plantillas型チェック*です。
+   オプションであるこのフェーズでは、Angularの*Plantillasコンパイラ*がTypeScriptコンパイラを使用して、Plantillasにおけるバインディング式を検証します。このフェーズは明示的に設定オプションの`fullTemplateTypeCheck`を設定して有効にできます。[Angularコンパイラオプション](guide/angular-compiler-options)を参照してください。
 
 
 ### メタデータ制約
@@ -169,7 +169,7 @@ AOTコレクター は JavaScript のサブセットしか理解できません�
     <td><code>Component</code></td>
   </tr>
    <tr>
-    <td>テンプレート文字列</td>
+    <td>Plantillas文字列</td>
     <td><code>`pie is ${multiplier} times better than cake`</code></td>
    <tr>
     <td>文字列リテラル</td>
@@ -369,11 +369,11 @@ export class HeroComponent {
     <td>可能、それがローカルへの参照であれば</td>
   </tr>
    <tr>
-    <td>置換のないテンプレート</td>
+    <td>置換のないPlantillas</td>
     <td>可能</td>
   </tr>
    <tr>
-    <td>置換を含むテンプレート</td>
+    <td>置換を含むPlantillas</td>
     <td>可能、代入が折りたたみ可能の場合</td>
   </tr>
    <tr>
@@ -543,19 +543,19 @@ export class TypicalModule {}
 
 {@a binding-expression-validation}
 
-## フェーズ 3: テンプレート型チェック
+## フェーズ 3: Plantillas型チェック
 
-Angularコンパイラのもっとも役立つ特徴の1つは、テンプレート内の式を型チェックしてそれらが実行時にクラッシュを引き起こす前にエラーを捕捉する能力です。
-テンプレート型チェックの段階では、Angular テンプレートコンパイラは TypeScript コンパイラを使用してテンプレート内のバインディング式を検証します。
+Angularコンパイラのもっとも役立つ特徴の1つは、Plantillas内の式を型チェックしてそれらが実行時にクラッシュを引き起こす前にエラーを捕捉する能力です。
+Plantillas型チェックの段階では、Angular Plantillasコンパイラは TypeScript コンパイラを使用してPlantillas内のバインディング式を検証します。
 
 プロジェクトの `tsconfig.json` の `"angularCompilerOptions"` にコンパイラオプション `"fullTemplateTypeCheck"`を追加して、
 このフェーズを明示的に有効にします ([Angular コンパイラオプション](guide/angular-compiler-options)を参照)。
 
 <div class="alert is-helpful">
 
-[AngularのIvy](guide/ivy)においては、テンプレート型チェッカーはより厳格かつ有能に完全に書き換えられます。つまり、以前の型チェッカーが検出しないさまざまな新しいエラーを捕捉できることを意味します。
+[AngularのIvy](guide/ivy)においては、Plantillas型チェッカーはより厳格かつ有能に完全に書き換えられます。つまり、以前の型チェッカーが検出しないさまざまな新しいエラーを捕捉できることを意味します。
 
-結果として、以前にビューエンジンのもとでコンパイルされたテンプレートは、Ivyでは型チェックに失敗する可能性があります。これが起こり得るのは、Ivyのより厳格なチェックが真のエラーを捕捉するため、またはアプリケーションのコードが正しく型を付けられていないため、またはアプリケーションが誤りのあるもしくは十分に明確でない型付けをしているライブラリを使用しているためです。
+結果として、以前にビューエンジンのもとでコンパイルされたPlantillasは、Ivyでは型チェックに失敗する可能性があります。これが起こり得るのは、Ivyのより厳格なチェックが真のエラーを捕捉するため、またはアプリケーションのコードが正しく型を付けられていないため、またはアプリケーションが誤りのあるもしくは十分に明確でない型付けをしているライブラリを使用しているためです。
 
 このより厳格な型チェックはバージョン9においてデフォルトで有効ではありませんが、`strictTemplates`設定オプションを設定することで有効にできます。
 将来はデフォルトで厳格な型チェックを行うことになるでしょう。
@@ -564,9 +564,9 @@ For more information about type-checking options, and about improvements to temp
 
 </div>
 
-テンプレート検証では、
+Plantillas検証では、
 `.ts` ファイル内のコードに対して TypeScript コンパイラによって型エラーが報告されるのと同様に、
-テンプレートバインディング式で型エラーが検出されるとエラーメッセージが表示されます。
+Plantillasバインディング式で型エラーが検出されるとエラーメッセージが表示されます。
 
 たとえば、次のコンポーネントを考えてみましょう:
 
@@ -587,9 +587,9 @@ my.component.ts.MyComponent.html(1,1): : Property 'addresss' does not exist on t
 ```
 
 エラーメッセージで報告されたファイル名、つまり `my.component.ts.MyComponent.html` は、
-`MyComponent` クラステンプレートの内容を保持するテンプレートコンパイラによって生成された合成ファイルです。
+`MyComponent` クラスPlantillasの内容を保持するPlantillasコンパイラによって生成された合成ファイルです。
 コンパイラはこのファイルをディスクに書き込みません。
-行番号と列番号は、クラスの `@Component` アノテーションのテンプレート文字列 (この場合は `MyComponent`) を基準にしています。
+行番号と列番号は、クラスの `@Component` アノテーションのPlantillas文字列 (この場合は `MyComponent`) を基準にしています。
 コンポーネントが`template`の代わりに `templateUrl` を使用する場合、エラーは合成ファイルの代わりに `templateUrl` によって参照される HTML ファイルで報告されます。
 
 エラー位置は、エラーのある補間式を含むテキストノードの始まりです。
@@ -603,9 +603,9 @@ my.component.ts.MyComponent.html(1,1): : Property 'addresss' does not exist on t
 
 ### タイプナローイング
 
-`ngIf` ディレクティブで使用されている式は、Angular テンプレートコンパイラで型候補を絞り込むために使用されます。
+`ngIf` ディレクティブで使用されている式は、Angular Plantillasコンパイラで型候補を絞り込むために使用されます。
 これは、TypeScript で `if` 式が行うのと同じ方法です。
-たとえば、上のテンプレートで `Object is possibly 'undefined'` エラーになるのを避けるために、`person` の値が次のように初期化されている場合にのみ補間を実行するようにオブジェクトを修正します。
+たとえば、上のPlantillasで `Object is possibly 'undefined'` エラーになるのを避けるために、`person` の値が次のように初期化されている場合にのみ補間を実行するようにオブジェクトを修正します。
 
 ```typescript
 @Component({
@@ -626,7 +626,7 @@ For more information about input type narrowing, see [Input setter coercion](gui
 `*ngIf` を使用するのが不便な場合、またはバインディング式の補間時にコンポーネント内の制約によって式が常に NULL 以外になることが保証されている場合は、[非 null 型アサーション演算子](guide/template-syntax#non-null-assertion-operator)を使用して`Object is possibly 'undefined'` エラーを抑制します。
 
 次の例では、`person` プロパティと `address` プロパティは常に一緒に設定されているため、`person` が null 以外の場合、`address` は常に null 以外の値になります。
-TypeScript やテンプレートコンパイラにこの制約を記述するのに便利な方法はありませんが、この例では `address!.street` を使用してエラーを抑制しています。
+TypeScript やPlantillasコンパイラにこの制約を記述するのに便利な方法はありませんが、この例では `address!.street` を使用してエラーを抑制しています。
 
 ```typescript
 @Component({

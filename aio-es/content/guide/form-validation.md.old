@@ -6,27 +6,27 @@
 ユーザー入力を検証することにより、正確さと完全性のために全体的なデータ品質を改善します。
 
 このページでは、UIでのユーザー入力の検証方法と、
-リアクティブおよびテンプレート駆動フォームの両方を使用した有効な検証メッセージの表示方法を示します。
+リアクティブおよびPlantillas駆動フォームの両方を使用した有効な検証メッセージの表示方法を示します。
 これは、2つのフォームモジュールの基本的な知識を前提としています。
 
 <div class="alert is-helpful">
 
-フォームをはじめてお使いの場合は、[テンプレート駆動フォーム](guide/forms)と
+フォームをはじめてお使いの場合は、[Plantillas駆動フォーム](guide/forms)と
 [リアクティブフォーム](guide/reactive-forms)のガイドを確認してください。
 
 </div>
 
 
-## テンプレート駆動バリデーション {@a template-driven-validation}
+## Plantillas駆動バリデーション {@a template-driven-validation}
 
-テンプレート駆動フォームにバリデーションを追加するには、
+Plantillas駆動フォームにバリデーションを追加するには、
 [ネイティブHTMLフォーム](https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/Constraint_validation)の検証と同じ検証属性を追加します。
 Angularは、これらの属性をフレームワーク内のバリデータ関数と照合するディレクティブを使用します。
 
 フォームコントロールの値が変更されるたびに、Angularは検証を実行し、
 INVALIDステータスに起因する検証エラーのリスト、あるいはVALIDステータスに起因するnullを返します。
 
-`ngModel` をローカルテンプレートの変数にエクスポートすることで、コントロールの状態を調べることができます。
+`ngModel` をローカルPlantillasの変数にエクスポートすることで、コントロールの状態を調べることができます。
 次の例では、 `NgModel` を `name` という名前の変数にエクスポートします:
 
 <code-example path="form-validation/src/app/template/hero-form-template.component.html" region="name-with-error-msg" header="template/hero-form-template.component.html (name)"></code-example>
@@ -39,7 +39,7 @@ INVALIDステータスに起因する検証エラーのリスト、あるいはV
 詳細については、[カスタムバリデータ](guide/form-validation#custom-validators)のセクションを参照してください。
 
 * `#name="ngModel"` は、 `NgModel` を `name` というローカル変数にエクスポートします。 
-`NgModel` は、基本となる `FormControl` インスタンスの多くのプロパティを反映しているため、テンプレート内でこれを使用して、 `valid` や `dirty` のようなコントロールの状態をチェックできます。
+`NgModel` は、基本となる `FormControl` インスタンスの多くのプロパティを反映しているため、Plantillas内でこれを使用して、 `valid` や `dirty` のようなコントロールの状態をチェックできます。
 コントロールプロパティの完全なリストについては、[AbstractControl](api/forms/AbstractControl) APIリファレンスを参照してください。
 
 * `<div>` 要素の `*ngIf` はネストされたメッセージ `divs` のセットを表示しますが、 
@@ -65,7 +65,7 @@ INVALIDステータスに起因する検証エラーのリスト、あるいはV
 ## リアクティブフォームバリデーション {@a reactive-form-validation}
 
 リアクティブフォームでは, 情報源はコンポーネントクラスです。
-テンプレートの属性を介してバリデータを追加する代わりに、
+Plantillasの属性を介してバリデータを追加する代わりに、
 バリデータ関数をコンポーネントクラスのフォームコントロールモデルに直接追加します。
 Angularは、コントロールの値が変更されるたびにこれらの関数を呼び出します。
 
@@ -83,7 +83,7 @@ Angularは、コントロールの値が変更されるたびにこれらの関�
 
 [独自のバリデータ関数を記述する](guide/form-validation#custom-validators)ことも、Angularの組み込みバリデータを使用することもできます。
 
-`required` や `minlength` など、テンプレート駆動型フォームの属性として使用できる同じ組み込みバリデータは、すべて `Validators` クラスの関数として使用できます。組み込みバリデータの完全なリストについては、[Validators](api/forms/Validators) APIリファレンスを参照してください。
+`required` や `minlength` など、Plantillas駆動型フォームの属性として使用できる同じ組み込みバリデータは、すべて `Validators` クラスの関数として使用できます。組み込みバリデータの完全なリストについては、[Validators](api/forms/Validators) APIリファレンスを参照してください。
 
 ヒーローフォームをリアクティブフォームに更新するには、
 今回は同じ組み込みバリデーターを関数形式で使用することができます。次のコードを見てください:
@@ -98,10 +98,10 @@ Angularは、コントロールの値が変更されるたびにこれらの関�
 * これらのバリデータはすべて同期バリデータであるため、2番目の引数として渡します。
 * 複数のバリデータをサポートするには、関数を配列として渡します。
 * この例では、いくつかのgetterメソッドを追加しています。リアクティブフォームでは、親グループの `get` メソッドを通じて常にフォームコントロールにアクセスできますが、
-getterをテンプレートの省略名として定義すると便利なことがあります。
+getterをPlantillasの省略名として定義すると便利なことがあります。
 
 
-再度入力したnameテンプレートを見ると、テンプレート駆動型の例とかなり似ています。
+再度入力したnamePlantillasを見ると、Plantillas駆動型の例とかなり似ています。
 
 <code-example path="form-validation/src/app/reactive/hero-form-reactive.component.html" region="name-with-error-msg" header="reactive/hero-form-reactive.component.html (name with error msg)"></code-example>
 
@@ -110,7 +110,7 @@ getterをテンプレートの省略名として定義すると便利なこと�
  * このフォームはディレクティブをエクスポートしなくなり、
  代わりにコンポーネントクラスで定義された `name` getterを使用します。
  * `required` 属性は引き続き存在します。検証の目的では必要ではありませんが、
- CSSのスタイリングやアクセシビリティ上の理由から、テンプレートにそのスタイルを保持したい場合があります。
+ CSSのスタイリングやアクセシビリティ上の理由から、Plantillasにそのスタイルを保持したい場合があります。
 
 
 ## カスタムバリデータ {@a custom-validators}
@@ -147,9 +147,9 @@ Observableの場合は、Observableを完了しなければなりません。
 
 {@a adding-to-template-driven-forms}
 
-### テンプレート駆動型フォームへ追加
+### Plantillas駆動型フォームへ追加
 
-テンプレート駆動フォームでは、 `FormControl` インスタンスに直接アクセスすることはできません。したがって、リアクティブフォームの場合と同じようにバリデータを渡すことはできません。代わりに、ディレクティブをテンプレートに追加する必要があります。
+Plantillas駆動フォームでは、 `FormControl` インスタンスに直接アクセスすることはできません。したがって、リアクティブフォームの場合と同じようにバリデータを渡すことはできません。代わりに、ディレクティブをPlantillasに追加する必要があります。
 
 対応する `ForbiddenValidatorDirective` は、 `forbiddenNameValidator` のラッパーとして機能します。
 
@@ -245,12 +245,12 @@ const heroForm = new FormGroup({
 - `FormGroup` は `identityRevealed` バリデータによって返されたクロスバリデーションエラーを持ちますが、
 - ユーザーはまだフォームと[対話](guide/form-validation#why-check-dirty-and-touched)していません。
 
-### テンプレート駆動型フォームへの追加
+### Plantillas駆動型フォームへの追加
 まず、バリデータ関数をラップするディレクティブを作成する必要があります。 `NG_VALIDATORS` トークンを使用してバリデータとして提供します。理由がわからない場合や構文を完全に理解していない場合は、前の[セクション](guide/form-validation#adding-to-template-driven-forms)に戻ってください。
 
 <code-example path="form-validation/src/app/shared/identity-revealed.directive.ts" region="cross-validation-directive" header="shared/identity-revealed.directive.ts"></code-example>
 
-次に、このディレクティブをHTMLテンプレートに追加する必要があります。バリデーターはフォームの最上位レベルに登録する必要があるため、このディレクティブを `form` タグに置きます。
+次に、このディレクティブをHTMLPlantillasに追加する必要があります。バリデーターはフォームの最上位レベルに登録する必要があるため、このディレクティブを `form` タグに置きます。
 <code-example path="form-validation/src/app/template/hero-form-template.component.html" region="cross-validation-register-validator" header="template/hero-form-template.component.html"></code-example>
 
 ユーザー体験を向上させるため、フォームが無効な場合に適切なエラーメッセージが表示されます。
@@ -279,7 +279,7 @@ const heroForm = new FormGroup({
 非同期バリデーションが開始されると、フォームコントロールは `pending` 状態になります。コントロールの `pending` 中のプロパティを検査し、それを使用して進行中の検証に関する視覚的なフィードバックを与えることができます。
 
 一般的なUIパターンは、非同期バリデーションが実行されている間にスピナーを表示することです。
-次の例は、テンプレート駆動フォームでこれを実現する方法を示しています:
+次の例は、Plantillas駆動フォームでこれを実現する方法を示しています:
 
 ```html
 <input [(ngModel)]="name" #model="ngModel" appSomeAsyncValidator>
@@ -319,7 +319,7 @@ interface HeroesService {
 
 `updateOn` プロパティを `change` （デフォルト）から `submit` または `blur` に変更することでフォームの有効性の更新を遅らせることができます。
 
-テンプレート駆動フォームの場合:
+Plantillas駆動フォームの場合:
 
 ```html
 <input [(ngModel)]="name" [ngModelOptions]="{updateOn: 'blur'}">
@@ -331,4 +331,4 @@ interface HeroesService {
 new FormControl('', {updateOn: 'blur'});
 ```
 
-**<live-example></live-example> を実行して、リアクティブおよびテンプレート駆動の完全なサンプルコードを見ることができます。**
+**<live-example></live-example> を実行して、リアクティブおよびPlantillas駆動の完全なサンプルコードを見ることができます。**

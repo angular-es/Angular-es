@@ -13,8 +13,8 @@ Stackblitz で <live-example></live-example> を実行でき、ここからコ�
 
 ## コンポーネントスタイルを使いましょう
 
-あなたが書くすべての Angular コンポーネントについて、HTMLテンプレートだけではなく、
-そのテンプレートに付随するCSSスタイルを定義し、必要な、あらゆるセレクター、ルール、
+あなたが書くすべての Angular コンポーネントについて、HTMLPlantillasだけではなく、
+そのPlantillasに付随するCSSスタイルを定義し、必要な、あらゆるセレクター、ルール、
 そしてメディアクエリーを細く指定することなどを定義できます。
 
 これを行うひとつの方法は、コンポーネントのメタデータに `styles` プロパティをセットすることです。
@@ -27,11 +27,11 @@ Stackblitz で <live-example></live-example> を実行でき、ここからコ�
 
 <div class="alert is-critical">
 
-`@Component` メタデータで定義されたスタイルは、 _そのコンポーネントのテンプレート内でのみ適用されます_  。
+`@Component` メタデータで定義されたスタイルは、 _そのコンポーネントのPlantillas内でのみ適用されます_  。
 
 </div>
 
-テンプレート内にネストされたコンポーネント、コンポーネントに投影されたコンテントによって、_継承されることはありません_ 。
+Plantillas内にネストされたコンポーネント、コンポーネントに投影されたコンテントによって、_継承されることはありません_ 。
 
 この例では、 `h1` スタイルは `HeroAppComponent` にのみ適用され、
 ネストされた `HeroMainComponent` にもアプリケーションの他の場所の `<h1>` タグにも適用されません。
@@ -66,15 +66,15 @@ Stackblitz で <live-example></live-example> を実行でき、ここからコ�
 
 ### :host
 
-`:host` 擬似クラスセレクターを使用して、(コンポーネントのテンプレートの *内部の* ターゲティング要素とは対象的に)
+`:host` 擬似クラスセレクターを使用して、(コンポーネントのPlantillasの *内部の* ターゲティング要素とは対象的に)
 コンポーネントを *ホスト* する要素のスタイルをターゲットにします。
 
 
 <code-example path="component-styles/src/app/hero-details.component.css" region="host" header="src/app/hero-details.component.css"></code-example>
 
 `:host` セレクターは、ホスト要素をターゲットにする唯一の方法です。
-コンポーネント自身のテンプレートの一部ではないため、他のセレクターを使用してコンポーネント内
-からホスト要素に到達することはできません。ホスト要素は、親コンポーネントのテンプレート内にあります。
+コンポーネント自身のPlantillasの一部ではないため、他のセレクターを使用してコンポーネント内
+からホスト要素に到達することはできません。ホスト要素は、親コンポーネントのPlantillas内にあります。
 
 *関数形式* を使用して、`:host` の後のカッコ内に別なセレクターを含むことで、
 ホストスタイルを条件付きで適用します。
@@ -100,7 +100,7 @@ Stackblitz で <live-example></live-example> を実行でき、ここからコ�
 
 ### (非推奨) `/deep/` 、 `>>>` と `::ng-deep` {@a deprecated-deep--and-ng-deep}
 
-コンポーネントスタイルは通常、コンポーネント自身のテンプレートのHTMLにのみ適用されます。
+コンポーネントスタイルは通常、コンポーネント自身のPlantillasのHTMLにのみ適用されます。
 
 Applying the `::ng-deep` pseudo-class to any CSS rule completely disables view-encapsulation for
 that rule. Any style with `::ng-deep` applied becomes a global style. In order to scope the specified style
@@ -138,7 +138,7 @@ shadow-piercing子孫コンビネータは廃止され、主要なツールや[�
 コンポーネントにスタイルを追加する方法は、いくつかあります。
 
 * `styles` または `styleUrls` メタデータの設定
-* HTML テンプレート内のインライン
+* HTML Plantillas内のインライン
 * CSS のインポート
 
 前に概説した範囲指定のルールは、これらの読み込みパターンのそれぞれに適用されます。 
@@ -155,7 +155,7 @@ shadow-piercing子孫コンビネータは廃止され、主要なツールや[�
 <div class="alert is-critical">
 
 注意： これらのスタイルは、 _このコンポーネントにのみ_ 適用されます。
-テンプレート内にネストされたコンポーネントやコンポーネントに投影されたコンテンツによって _継承されることはありません_ 。
+Plantillas内にネストされたコンポーネントやコンポーネントに投影されたコンテンツによって _継承されることはありません_ 。
 
 </div>
 
@@ -178,7 +178,7 @@ ng generate component hero-app --inline-style
 <div class="alert is-critical">
 
 注意： スタイルファイルのスタイルは、 _このコンポーネントにのみ_ 適用されます。
-テンプレート内にネストされたコンポーネントやコンポーネントに投影されたコンテンツによって _継承されることはありません_ 。
+Plantillas内にネストされたコンポーネントやコンポーネントに投影されたコンテンツによって _継承されることはありません_ 。
 
 </div>
 
@@ -194,17 +194,17 @@ Angular CLIコマンド [`ng generate component`](cli/generate) を `--inline-st
 ng generate component hero-app
 </code-example>
 
-### インラインスタイルテンプレート
+### インラインスタイルPlantillas
 
 `<style>` タグの中に入れることで、
-CSSスタイルをHTMLテンプレートに直接埋め込むことができます。
+CSSスタイルをHTMLPlantillasに直接埋め込むことができます。
 
 <code-example path="component-styles/src/app/hero-controls.component.ts" region="inlinestyles" header="src/app/hero-controls.component.ts">
 </code-example>
 
-### リンクタグテンプレート
+### リンクタグPlantillas
 
-コンポーネントのHTMLテンプレートに `<link>` タグを記述することもできます。
+コンポーネントのHTMLPlantillasに `<link>` タグを記述することもできます。
 
 <code-example path="component-styles/src/app/hero-team.component.ts" region="stylelink" header="src/app/hero-team.component.ts">
 </code-example>

@@ -109,7 +109,7 @@ transition ( ':leave', [ ... ] );  // alias for * => void
 
 `*ngIf`または`*ngFor`のビューがページに置かれたときに`:enter`の遷移が実行され、それらのビューがページから削除されたときに`:leave`が実行されます。
 
-この例では、`myInsertRemoveTrigger`という出入りするanimación用の特殊なトリガーを持ちます。HTMLテンプレートには次のコードが含まれています。
+この例では、`myInsertRemoveTrigger`という出入りするanimación用の特殊なトリガーを持ちます。HTMLPlantillasには次のコードが含まれています。
 
 <code-example path="animations/src/app/insert-remove.component.html" header="src/app/insert-remove.component.html" region="insert-remove" language="typescript">
 </code-example>
@@ -140,7 +140,7 @@ transition ( ':leave', [ ... ] );  // alias for * => void
 <code-example path="animations/src/app/open-close.component.2.html" header="src/app/open-close.component.html" region="trigger-boolean">
 </code-example>
 
-上記のコードスニペットでは、HTMLテンプレートは`<div>`要素を、`isOpen`のステータス式と、予想される値`true`と`false`をもつ`openClose`という名前のトリガーにバインドします。これは、`open`と`close`の2つの名前付き状態を作成する方法の代わりになります。
+上記のコードスニペットでは、HTMLPlantillasは`<div>`要素を、`isOpen`のステータス式と、予想される値`true`と`false`をもつ`openClose`という名前のトリガーにバインドします。これは、`open`と`close`の2つの名前付き状態を作成する方法の代わりになります。
 
 コンポーネントのコード内、`animations:`プロパティの下の`@Component`メタデータにおいて、状態が`true`(ここでは "open"を意味する)と評価されるとき、関連するHTML要素の高さはワイルドカードのスタイルまたはデフォルトのものなります。この場合、animaciónを開始する前に要素がすでに持っていた高さを使用します。要素が"closed"のときは、要素は高さ0までanimaciónして非表示になります。
 
@@ -173,12 +173,12 @@ animaciónがAngularでトリガーされるたびに、親animaciónが常に�
 
 `@.disabled`バインディングがtrueの場合、`@childAnimation`トリガーは実行されません。
 
-HTMLテンプレート内の要素が`@.disabled`ホストバインディングを使ってanimaciónを無効にすると、すべての内部の要素でもanimaciónは無効になります。
+HTMLPlantillas内の要素が`@.disabled`ホストバインディングを使ってanimaciónを無効にすると、すべての内部の要素でもanimaciónは無効になります。
 1つの要素上の複数のanimaciónを選択的に無効にすることはできません。
 
 ただし、次のいずれかの方法で、選択した子animaciónを無効な親に対して実行することはできます:
 
-* 親animaciónは、[`query()`](api/animations/query)関数を使用して、HTMLテンプレートの無効な領域にある内部要素を集収することができます。
+* 親animaciónは、[`query()`](api/animations/query)関数を使用して、HTMLPlantillasの無効な領域にある内部要素を集収することができます。
 これらの要素はまだanimaciónできます。
 
 * サブanimaciónは親によってクエリーされ、その後で`animateChild()`関数でanimación化できます。
@@ -200,7 +200,7 @@ Angularアプリケーションのすべてのanimaciónを無効にするには
 
 <code-example path="animations/src/app/open-close.component.ts" header="src/app/open-close.component.ts" region="events1" language="typescript"></code-example>
 
-HTMLテンプレートでは、`@trigger.start`と`@trigger.done`から`$event`を介してanimaciónイベントが渡されます。ここで`trigger`は使用されているトリガーの名前です。
+HTMLPlantillasでは、`@trigger.start`と`@trigger.done`から`$event`を介してanimaciónイベントが渡されます。ここで`trigger`は使用されているトリガーの名前です。
 この例では、トリガーの`openClose`は次のように登場します。
 
 <code-example path="animations/src/app/open-close.component.3.html" header="src/app/open-close.component.html" region="callbacks">

@@ -74,7 +74,7 @@ Universalアプリケーションを作成するには、`platform-server`パッ
 
 そのルートは、クライアントのサーバーへのリクエストから発生します。各リクエストは、要求されたRaíz適切なビューをもたらします。
 
-`renderModuleFactory`はテンプレートの`<app>`タグ内でそのビューをレンダリングし、クライアント用の最終的なHTMLページを作成します。
+`renderModuleFactory`はPlantillasの`<app>`タグ内でそのビューをレンダリングし、クライアント用の最終的なHTMLページを作成します。
 
 最後に、サーバーはレンダリングされたページをクライアントに返します。
 
@@ -269,7 +269,7 @@ Angular Universalアプリケーションを実行するためには、クライ
 
 ### Universal webサーバー
 
-_Universal_ webサーバーは、[Universalテンプレートエンジン](#universal-engine)によってレンダリングされた静的HTMLを使用して、アプリケーションの _ページ_ リクエストに応答します。
+_Universal_ webサーバーは、[UniversalPlantillasエンジン](#universal-engine)によってレンダリングされた静的HTMLを使用して、アプリケーションの _ページ_ リクエストに応答します。
 
 クライアント（通常はブラウザ）からのHTTPリクエストを受信して応答します。それは、スクリプト、CSS、画像などの静的リソースを配信します。おそらく、直接または別のデータサーバーのプロキシとして、データのリクエストに応答するでしょう。
 
@@ -295,7 +295,7 @@ _何らかの_ webサーバー技術はUniversalの`renderModuleFactory`を呼�
 
 {@a universal-engine}
 
-#### Universalテンプレートエンジン
+#### UniversalPlantillasエンジン
 
 このファイルで重要なポイントは、`ngExpressEngine`関数です:
 
@@ -303,7 +303,7 @@ _何らかの_ webサーバー技術はUniversalの`renderModuleFactory`を呼�
 </code-example>
 
 `ngExpressEngine`は、Universalにおける`renderModuleFactory`関数のラッパーで、クライアントのリクエストをサーバーレンダリングされたHTMLページへ変換します。
-_テンプレートエンジン_ 内では、サーバー処理に適した関数を呼び出します。
+_Plantillasエンジン_ 内では、サーバー処理に適した関数を呼び出します。
 
 最初のパラメーターは、[先程](#app-server-module)書いた`AppServerModule`です。これは、Universalサーバー側のレンダリング処理とアプリケーション間を仲介します。
 

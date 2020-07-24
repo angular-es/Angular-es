@@ -141,7 +141,7 @@ Angular Universal を使用すると、完全なアプリのように見える�
 {@a how-does-it-work}
 ## Universal Web サーバー
 
-Universal Web サーバーは、[Universal テンプレートエンジン](#universal-engine)によってレンダリングされた静的 HTML でアプリケーションページリクエストに応答します。
+Universal Web サーバーは、[Universal Plantillasエンジン](#universal-engine)によってレンダリングされた静的 HTML でアプリケーションページリクエストに応答します。
 サーバーは、クライアント (通常はブラウザ) から HTTP リクエストを受信して応答し、スクリプト、CSS、画像などの静的アセットを提供します。
 データリクエストに、直接または別のデータサーバーへのプロキシとして応答する場合があります。
 
@@ -161,12 +161,12 @@ Universal Web サーバーは、[Universal テンプレートエンジン](#univ
 内部では、これは Universal の `renderModule()` 関数を呼び出しますが、
 キャッシングやその他の有用なユーティリティを提供します。
 
-`renderModule()` 関数は、入力としてテンプレート HTML ページ (通常は `index.html`)、
+`renderModule()` 関数は、入力としてPlantillas HTML ページ (通常は `index.html`)、
 コンポーネントを含む Angular *モジュール*、および表示するコンポーネントを決定する *ルート* を受け取ります。
 ルートは、クライアントの要求からサーバーに到達します。
 
 各リクエストの結果、リクエストされたRaíz適切なビューが表示されます。
-`renderModule()` 関数は、テンプレートの `<app>` タグ内でビューをレンダリングし、
+`renderModule()` 関数は、Plantillasの `<app>` タグ内でビューをレンダリングし、
 クライアント用の完成した HTML ページを作成します。
 
 最後に、サーバーはレンダリングされたページをクライアントに返します。
@@ -188,7 +188,7 @@ Angular がそれを提供しない場合、ブラウザ内ではブラウザ AP
 
 
 {@a universal-engine}
-### Universal テンプレートエンジン
+### Universal Plantillasエンジン
 
 `server.ts` ファイルの重要な部分は `ngExpressEngine()` 関数です。
 

@@ -9,11 +9,11 @@ Zoneは非同期タスクにまたがって持続する実行コンテキスト�
 
 ### Angularにおけるデータ更新と表示
 
-Angularでは、HTMLテンプレートのコントロールをAngularコンポーネントのプロパティにバインドすることにより、[データを表示](guide/displaying-data) できます。
+Angularでは、HTMLPlantillasのコントロールをAngularコンポーネントのプロパティにバインドすることにより、[データを表示](guide/displaying-data) できます。
 
 <code-example path="displaying-data/src/app/app.component.1.ts" header="src/app/app.component.ts"></code-example>
 
-さらに、DOMイベントをAngularコンポーネントのメソッドにバインドできます。イベントをバインドしたメソッドでは、Angularコンポーネントのプロパティを更新することもできます。これにより、テンプレートに表示される対応するデータが更新されます。
+さらに、DOMイベントをAngularコンポーネントのメソッドにバインドできます。イベントをバインドしたメソッドでは、Angularコンポーネントのプロパティを更新することもできます。これにより、Plantillasに表示される対応するデータが更新されます。
 
 <code-example path="user-input/src/app/click-me.component.ts" region="click-me-component" header="src/app/click-me.component.ts"></code-example>
 

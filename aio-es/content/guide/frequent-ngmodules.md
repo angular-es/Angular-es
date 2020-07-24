@@ -37,7 +37,7 @@ Angularアプリケーションにはルートモジュールとして機能す�
  <tr>
    <td><code>FormsModule</code></td>
    <td><code>@angular/forms</code></td>
-   <td>テンプレート駆動のフォームを作成したいとき (<code>NgModel</code>を含みます)</td>
+   <td>Plantillas駆動のフォームを作成したいとき (<code>NgModel</code>を含みます)</td>
  </tr>
 
  <tr>

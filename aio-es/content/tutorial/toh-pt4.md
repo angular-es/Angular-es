@@ -268,7 +268,7 @@ Angular CLI を使い `MessagesComponent` を作成しましょう。
 
 Angular CLI は `src/app/messages` 配下にコンポーネントファイル群を生成し、`AppModule` 内に `MessagesComponent` を宣言します。
 
-作成した `MessagesComponent` を表示するために、`AppComponent` のテンプレートを修正しましょう。
+作成した `MessagesComponent` を表示するために、`AppComponent` のPlantillasを修正しましょう。
 
 <code-example
   header = "src/app/app.component.html"
@@ -339,7 +339,7 @@ Angular は `MessagesComponent` を作成する際、シングルトンな `Mess
 <code-example path="toh-pt4/src/app/messages/messages.component.ts" header="src/app/messages/messages.component.ts" region="ctor">
 </code-example>
 
-今回、`messageService` はテンプレート内でバインドして使用するつもりです。
+今回、`messageService` はPlantillas内でバインドして使用するつもりです。
 そのため、`messageService` は **パブリックである必要があります**。
 
 <div class="alert is-important">
@@ -350,14 +350,14 @@ Angular はコンポーネント内の _パブリック_ なプロパティの�
 
 ### `MessageService` へバインドする
 
-Angular CLI によって生成された `MessagesComponent` のテンプレートを下記コードへ置き換えましょう。
+Angular CLI によって生成された `MessagesComponent` のPlantillasを下記コードへ置き換えましょう。
 
 <code-example
   header = "src/app/messages/messages.component.html"
   path="toh-pt4/src/app/messages/messages.component.html">
 </code-example>
 
-このテンプレートは、コンポーネント内の `messageService` と直接紐付きます。
+このPlantillasは、コンポーネント内の `messageService` と直接紐付きます。
 
 * `*ngIf` は、表示するメッセージが存在する場合のみメッセージエリアを表示します
 

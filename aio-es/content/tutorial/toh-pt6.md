@@ -244,7 +244,7 @@ _id_ は取得したいヒーローの番号です。たとえば、 `api/heroes
 その変更を永続化したい場合は、
 それをサーバーに送り返す必要があります。
 
-ヒーロー詳細ページのテンプレートの終わりに、
+ヒーロー詳細ページのPlantillasの終わりに、
 新しい`save()`というメソッドを呼び出す保存ボタンを追加します。
 
 <code-example path="toh-pt6/src/app/hero-detail/hero-detail.component.html" region="save" header="src/app/hero-detail/hero-detail.component.html (保存)"></code-example>
@@ -287,7 +287,7 @@ URLは変わりません。ヒーローWeb APIはヒーローの`id`を見てど
 追加ボタンとペアになった`<input>`要素が使えます。
 
 下記を`HeroesComponent`の
-テンプレートの先頭に挿入します。
+Plantillasの先頭に挿入します。
 
 <code-example path="toh-pt6/src/app/heroes/heroes.component.html" region="add" header="src/app/heroes/heroes.component.html (追加)"></code-example>
 
@@ -319,7 +319,7 @@ URLは変わりません。ヒーローWeb APIはヒーローの`id`を見てど
 
 リスト内の各ヒーローは削除ボタンをもつべきです。
 
-次のボタンを`HeroesComponent`のテンプレートに追加します。
+次のボタンを`HeroesComponent`のPlantillasに追加します。
 繰り返されている`<li>`エレメント内のヒーロー名の後ろです。
 
 <code-example path="toh-pt6/src/app/heroes/heroes.component.html" header="src/app/heroes/heroes.component.html" region="delete"></code-example>
@@ -392,12 +392,12 @@ _削除されるべきヒーロー_をリストから即座に削除します。
 
 ### ダッシュボードに検索を追加
 
-`DashboardComponent`のテンプレートを開いて、
+`DashboardComponent`のPlantillasを開いて、
 ヒーロー検索のエレメント、`<app-hero-search>`をマークアップの下部に追加します。
 
 <code-example path="toh-pt6/src/app/dashboard/dashboard.component.html" header="src/app/dashboard/dashboard.component.html"></code-example>
 
-このテンプレートは`HeroesComponent`のテンプレートの`*ngFor`にとても似ています。
+このPlantillasは`HeroesComponent`のPlantillasの`*ngFor`にとても似ています。
 
 これが機能するためのPróximos pasosは、 `<app-hero-search>`に一致するセレクターをもつコンポーネントを追加することです。
 
@@ -412,7 +412,7 @@ CLIで`HeroSearchComponent`を作ります。
 
 CLIは`HeroSearchComponent`ファイルを作成し、`AppModule`のdeclarationsにそのコンポーネントを追加します。
 
-作成された`HeroSearchComponent`のテンプレートを次のようにテキストボックスと、マッチした検索結果一覧を表示するように書き換えます。
+作成された`HeroSearchComponent`のPlantillasを次のようにテキストボックスと、マッチした検索結果一覧を表示するように書き換えます。
 
 <code-example path="toh-pt6/src/app/hero-search/hero-search.component.html" header="src/app/hero-search/hero-search.component.html"></code-example>
 
@@ -511,7 +511,7 @@ CLIは`HeroSearchComponent`ファイルを作成し、`AppModule`のdeclarations
 </div>
 
 コンポーネント_クラス_が`heroes$`_observable_をsubscribeしていないことを思い出してください。
-それはテンプレート内の[`AsyncPipe`](#asyncpipe)の役割です。
+それはPlantillas内の[`AsyncPipe`](#asyncpipe)の役割です。
 
 #### 試しましょう
 

@@ -37,7 +37,7 @@
 
 ### `*ngFor` でヒーローを一覧表示する
 
-`HeroesComponent` テンプレートを開き、次のように変更してください：
+`HeroesComponent` Plantillasを開き、次のように変更してください：
 
 * `<h2>` を先頭に追加してください
 * その下にHTMLの順不同リスト (`<ul>`) を追加してください
@@ -130,14 +130,14 @@ CLIが `HeroesComponent` を生成するとき、 `HeroesComponent` のために
 コンポーネントの `hero` プロパティを `selectedHero` にリネームしますが、まだ割り当てません。
 アプリケーション起動時に _選択されたヒーロー_ はありません。
 
-次のようにして `onSelect()` メソッドを追加し、クリックされたヒーローをテンプレートからコンポーネントの `selectedHero` に割り当ててください。
+次のようにして `onSelect()` メソッドを追加し、クリックされたヒーローをPlantillasからコンポーネントの `selectedHero` に割り当ててください。
 
 <code-example path="toh-pt2/src/app/heroes/heroes.component.ts" region="on-select" header="src/app/heroes/heroes.component.ts (onSelect)"></code-example>
 
 ### 詳細セクションを追加する
 
-現在、コンポーネントテンプレートにはリストがあります。
-リストのヒーローをクリックして、そのヒーローの詳細を表示するには、それをテンプレートでレンダリングするための詳細セクションが必要です。
+現在、コンポーネントPlantillasにはリストがあります。
+リストのヒーローをクリックして、そのヒーローの詳細を表示するには、それをPlantillasでレンダリングするための詳細セクションが必要です。
 `heroes.component.html`のリストセクションの下に以下を追加します。
 
 <code-example path="toh-pt2/src/app/heroes/heroes.component.html" region="selectedHero-details" header="heroes.component.html (selected hero details)"></code-example>
@@ -154,7 +154,7 @@ CLIが `HeroesComponent` を生成するとき、 `HeroesComponent` のために
 
 アプリを起動した際、 `selectedHero` は _意図的に_ `undefined` です。
 
-`selectedHero` のプロパティを参照するテンプレート内での式のバインディングは &mdash; `{{selectedHero.name}}` のような式 &mdash; 選択されたヒーローが存在しないため _失敗_ しなければなりません。
+`selectedHero` のプロパティを参照するPlantillas内での式のバインディングは &mdash; `{{selectedHero.name}}` のような式 &mdash; 選択されたヒーローが存在しないため _失敗_ しなければなりません。
 
 ### 修正しましょう - _*ngIf_ を使って空のdetailsを非表示にする
 
@@ -200,7 +200,7 @@ _選択されたヒーロー_ の着色は [あなたが先ほど追加したス
 Angularの [クラスバインディング](guide/template-syntax#class-binding) は条件がついたCSSクラスの追加と削除を容易にします。
 装飾したい要素に `[class.some-css-class]="some-condition"` を追加するだけです。
 
-`HeroesComponent` テンプレートの中の `<li>` に `[class.selected]` バインディングを追加してください：
+`HeroesComponent` Plantillasの中の `<li>` に `[class.selected]` バインディングを追加してください：
 
 <code-example path="toh-pt2/src/app/heroes/heroes.component.1.html" region="class-selected" header="heroes.component.html (toggle the 'selected' CSS class)"></code-example>
 

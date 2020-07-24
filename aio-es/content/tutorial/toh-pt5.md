@@ -99,12 +99,12 @@ URLが`localhost:4200/heroes`のようなものである場合に`HeroesComponen
 
 ## `RouterOutlet` を追加する
 
-`AppComponent`テンプレートを開き、`<app-heroes>`要素を`<router-outlet>`で置き換えます。
+`AppComponent`Plantillasを開き、`<app-heroes>`要素を`<router-outlet>`で置き換えます。
 
 <code-example path="toh-pt5/src/app/app.component.html" region="outlet" header="src/app/app.component.html (router-outlet)">
 </code-example>
 
-ユーザーが遷移したときにアプリは `HeroesComponent`のみを表示するため、`AppComponent`のテンプレートはもう `<app-heroes>`を必要としません。
+ユーザーが遷移したときにアプリは `HeroesComponent`のみを表示するため、`AppComponent`のPlantillasはもう `<app-heroes>`を必要としません。
 
 この`<router-outlet>`は、ルーティングされたビューをどこに表示するかをルーターに教えます。
 
@@ -140,7 +140,7 @@ URLが`/`で終わっています。
 ユーザーがリンクをクリックして遷移できるようにする必要があります。
 
 `<nav>`要素を追加して、その中に、クリックされると`HeroesComponent`へ遷移するトリガーになるアンカー要素を追加します。
-修正された`AppComponent`テンプレートはこのようになります：
+修正された`AppComponent`Plantillasはこのようになります：
 
 <code-example path="toh-pt5/src/app/app.component.html" region="heroes" header="src/app/app.component.html (heroes RouterLink)">
 </code-example>
@@ -242,7 +242,7 @@ CLIは、`DashboardComponent`のためのファイルを生成し、`AppModule`�
 ユーザーは、ページのトップにあるナビゲーション領域のリンクをクリックすることで、
 `DashboardComponent`と`HeroesComponent`の間を行き来することができるべきです。
 
-*Heroes*リンクのすぐ上、`AppComponent`シェルテンプレートにダッシュボードのナビゲーションリンクを追加します。。
+*Heroes*リンクのすぐ上、`AppComponent`シェルPlantillasにダッシュボードのナビゲーションリンクを追加します。。
 
 <code-example path="toh-pt5/src/app/app.component.html" header="src/app/app.component.html">
 </code-example>
@@ -271,7 +271,7 @@ CLIは、`DashboardComponent`のためのファイルを生成し、`AppModule`�
 ヒーローリストビューをヒーロー詳細ビューに置き換えます。
 ヒーローリストビューは、今のようにヒーローの詳細を表示しなくなるはずです。
 
-`HeroesComponent`テンプレート (`heroes/heroes.component.html`) を開き、
+`HeroesComponent`Plantillas (`heroes/heroes.component.html`) を開き、
 `<app-hero-detail>`要素を一番下から削除します。
 
 今はもうヒーローアイテムをクリックしても、何も起こりません。
@@ -325,7 +325,7 @@ CLIは、`DashboardComponent`のためのファイルを生成し、`AppModule`�
 
 この`<li>`を`*ngFor`だけをもつように戻し、
 アンカー要素 (`<a>`) でバッジと名前を囲み、
-ダッシュボードのテンプレートと同じようにアンカーに`routerLink`要素を追加します。
+ダッシュボードのPlantillasと同じようにアンカーに`routerLink`要素を追加します。
 
 <code-example path="toh-pt5/src/app/heroes/heroes.component.html" region="list" header="src/app/heroes/heroes.component.html (list with links)">
 </code-example>
@@ -412,7 +412,7 @@ JavaScript (+) 演算子は文字列を数値に変換します。これがヒ�
 
 <div class="alert is-important">
 
-`id` を埋め込むためのJavaScriptの[_テンプレートリテラル_](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/template_strings)
+`id` を埋め込むためのJavaScriptの[_Plantillasリテラル_](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/template_strings)
 を定義するバッククオート ( &#96; ) に注意してください。
 </div>
 
@@ -442,7 +442,7 @@ RxJSの`of()`関数を使って_モックのヒーロー_を `Observable`とし�
 
 `HeroDetail`ビュー上にそうできるボタンを持っているといいでしょう。
 
-コンポーネントのテンプレートの最後に*戻る*ボタンを追加し、
+コンポーネントのPlantillasの最後に*戻る*ボタンを追加し、
 コンポーネントの `goBack()`メソッドにバインドします。
 
 <code-example path="toh-pt5/src/app/hero-detail/hero-detail.component.html" region="back-button" header="src/app/hero-detail/hero-detail.component.html (back button)">

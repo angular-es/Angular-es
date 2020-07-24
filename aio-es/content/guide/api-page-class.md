@@ -154,7 +154,7 @@
                 </tbody>
             </table>
             <hr>
-            <h5>Example: Descriptive Title of Method Example</h5>
+            <h5>Ejemplo: Descriptive Title of Method Ejemplo</h5>
             <p>Bacon ipsum dolor amet pork belly capicola sirloin venison alcatra ground round ham hock jowl turkey picanha bresaola pancetta brisket chicken fatback. Burgdoggen kevin salami jowl shoulder jerky leberkas meatball. Ham hock picanha burgdoggen pork belly rump bacon cupim. Bacon kielbasa sirloin shank strip steak ground round. Bresaola cow salami meatloaf pork chop leberkas flank turducken biltong meatball chuck pork tri-tip chicken. Ribeye corned beef shoulder, meatloaf strip steak jerky porchetta capicola alcatra ham.</p>
         </td>
         </tr>
@@ -162,7 +162,7 @@
     </table>
     </section>
     <section>
-        <h2>Example: Descriptive Title of Combined Example Goes Here</h2>
+        <h2>Ejemplo: Descriptive Title of Combined Ejemplo Goes Here</h2>
         <p>Intro description text about what the example is and how it can be used.</p>
             <code-example hidecopy="true" class="no-box api-heading" ng-version="5.2.0">
         <aio-code class="simple-code"><pre class="prettyprint lang-">   

@@ -142,7 +142,7 @@ URL内のパスが空の場合に通るルートであり、通常はここが�
 ### ルーターアウトレット
 
 `RouterOutlet` はルーターライブラリに含まれている、コンポーネントのように使えるディレクティブです。
-これはテンプレートの中で、ルーターがそのアウトレットのための
+これはPlantillasの中で、ルーターがそのアウトレットのための
 コンポーネントを配置する場所を示すためのプレースホルダーとして機能します。
 
 
@@ -154,7 +154,7 @@ URL内のパスが空の場合に通るルートであり、通常はここが�
 
 前述した構成では、このアプリケーションに対してブラウザのURLが `/heroes` になったとき、
 `/heroes` パスを持ったルートにマッチングして `HeroListComponent` を表示します。
-`HeroListComponent` は元のコンポーネントのテンプレートに配置した `RouterOutlet` の兄弟要素となります。
+`HeroListComponent` は元のコンポーネントのPlantillasに配置した `RouterOutlet` の兄弟要素となります。
 
 {@a basics-router-links}
 {@a router-link}
@@ -166,7 +166,7 @@ URL内のパスが空の場合に通るルートであり、通常はここが�
 URLがブラウザのアドレスバーから直接渡されることもあるでしょう。
 しかしほとんどの場合、アンカータグをクリックするようなユーザーアクションを伴って画面遷移します。
 
-次のテンプレートについて考えてみましょう。
+次のPlantillasについて考えてみましょう。
 
 
 <code-example path="router/src/app/app.component.1.html" header="src/app/app.component.html"></code-example>
@@ -175,7 +175,7 @@ URLがブラウザのアドレスバーから直接渡されることもある�
 遷移先のパスは固定であれば、`routerLink` に文字列を割り当てることができます。 (ワンタイムバインディングとなります)
 
 遷移先のパスがもっと動的なものだったら、ルーターリンクパラメーターの配列 (_リンクパラメーター配列_) を返すような
-テンプレート式をバインドすることができます。ルーターはその配列を解決して完全なURLにします。
+Plantillas式をバインドすることができます。ルーターはその配列を解決して完全なURLにします。
 
 
 {@a router-link-active}
@@ -764,7 +764,7 @@ The application has three main feature areas:
 1. A *Heroes* area for maintaining the list of heroes employed by the agency.
 1. An *Admin* area to manage the list of crises and heroes.
 
-Try it by clicking on this <live-example title="Hero Employment Agency Live Example">live example link</live-example>.
+Try it by clicking on this <live-example title="Hero Employment Agency Live Ejemplo">live example link</live-example>.
 
 Once the app warms up, you'll see a row of navigation buttons
 and the *Heroes* view with its list of heroes.

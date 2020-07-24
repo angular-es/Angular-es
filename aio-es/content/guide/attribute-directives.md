@@ -10,7 +10,7 @@
 
 Angularには、3つのディレクティブがあります。
 
-1. コンポーネント(Components)&mdash;テンプレート付きディレクティブ
+1. コンポーネント(Components)&mdash;Plantillas付きディレクティブ
 1. 構造ディレクティブ(Structural directives)&mdash;DOM要素を追加、削除してDOMレイアウトを変更するディレクティブ
 1. 属性ディレクティブ(Attribute directives)&mdash;要素やコンポーネント、別のディレクティブの見た目や動作を変更するディレクティブ
 
@@ -22,7 +22,7 @@ Angularには、3つのディレクティブがあります。
 それらについては[構造ディレクティブ](guide/structural-directives)ガイドで学んでください。
 
 *属性ディレクティブ*は、要素の属性として扱われます。
-たとえば、[テンプレートシンタックス](guide/template-syntax)ガイドの組み込みの
+たとえば、[Plantillasシンタックス](guide/template-syntax)ガイドの組み込みの
 [NgStyle](guide/template-syntax#ngStyle)ディレクティブは、
 同時に複数の要素のスタイルを変更することができます。
 
@@ -64,7 +64,7 @@ _ディレクティブ_ は、 _コンポーネント_ と同じ方法で[Angul
 
 `@Directive`デコレーターの唯一の設定プロパティは、ディレクティブの[CSS属性セレクタ](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors)`[appHighlight]`を指定します。
 
-属性セレクターとして扱うには、角括弧（`[]`）を使います。Angularは、テンプレート内の`appHighlight`という名前の属性をもつ各要素を見つけ、その要素にこのディレクティブのロジックを適用します。
+属性セレクターとして扱うには、角括弧（`[]`）を使います。Angularは、Plantillas内の`appHighlight`という名前の属性をもつ各要素を見つけ、その要素にこのディレクティブのロジックを適用します。
 
 _属性セレクタ_ パターンは、この種のディレクティブの名前を説明します。
 
@@ -96,7 +96,7 @@ _属性セレクタ_ パターンは、この種のディレクティブの名�
 
 ## 属性ディレクティブを適用する
 
-新しい`HighlightDirective`を使用するには、ルートである`AppComponent`のテンプレートへ段落(`<p>`)要素を追加し、属性としてディレクティブを適用します。
+新しい`HighlightDirective`を使用するには、ルートである`AppComponent`のPlantillasへ段落(`<p>`)要素を追加し、属性としてディレクティブを適用します。
 
 <code-example path="attribute-directives/src/app/app.component.1.html" header="src/app/app.component.html" region="applied"></code-example>
 
@@ -172,7 +172,7 @@ ng serve
 
 *input*プロパティと呼ばれるのは、データがバインディング式からディレクティブ _へ_ 流れるためです。その入力メタデータがなければ、Angularは、バインディング拒否します。詳細は[以下](guide/attribute-directives#why-input "なぜ、@Inputを追加するのか？")を参照してください。
 
-`AppComponent`のテンプレートに次のバリエーションを追加してみてください。
+`AppComponent`のPlantillasに次のバリエーションを追加してみてください。
 
 <code-example path="attribute-directives/src/app/app.component.1.html" header="src/app/app.component.html (excerpt)" region="color-1"></code-example>
 
@@ -246,7 +246,7 @@ ng serve
 
 ハイライトディレクティブには、カスタマイズ可能なプロパティが1つあります。実際のアプリケーションでは、もっと必要な場合があります。
 
-現時点では、デフォルトの色は(ユーザーがハイライトカラーを選択するまで)「赤」としてハードコードされています。テンプレート開発者にデフォルトの色を設定させます。
+現時点では、デフォルトの色は(ユーザーがハイライトカラーを選択するまで)「赤」としてハードコードされています。Plantillas開発者にデフォルトの色を設定させます。
 
 `HighlightDirective`へ`defaultColor`と呼ばれる2番目の**input**プロパティを追加します。
 
@@ -258,9 +258,9 @@ ng serve
 
 すでに`appHighlight`属性へバインドしているとき、2番目のプロパティへどのようにバインドしますか？
 
-コンポーネントの場合と同様に、必要に応じてテンプレート内で文字列を並べることで、多くのディレクティブプロパティバインディングを追加できます。
+コンポーネントの場合と同様に、必要に応じてPlantillas内で文字列を並べることで、多くのディレクティブプロパティバインディングを追加できます。
 
-開発者は、次のテンプレートHTMLを書くことができ、どちらも`AppComponent.color`へバインドします。デフォルトの色として「紫」に戻ります。
+開発者は、次のPlantillasHTMLを書くことができ、どちらも`AppComponent.color`へバインドします。デフォルトの色として「紫」に戻ります。
 
 <code-example path="attribute-directives/src/app/app.component.html" header="src/app/app.component.html (defaultColor)" region="defaultColor"></code-example>
 
@@ -277,7 +277,7 @@ Angularは、`@Input`デコレーターで _パブリック_ にしたため、`
 このページでは以下をカバーしました。
 
 * 要素の動作を変更する[**属性ディレクティブ**を作成](guide/attribute-directives#write-directive)する。
-* テンプレート内の要素へ[ディレクティブを適用](guide/attribute-directives#apply-directive)する。
+* Plantillas内の要素へ[ディレクティブを適用](guide/attribute-directives#apply-directive)する。
 * ディレクティブの動作を変更する[イベントに**応答**](guide/attribute-directives#respond-to-user)する。
 * [ディレクティブへ値をバインド](guide/attribute-directives#bindings)する。
 
@@ -309,16 +309,16 @@ Angularは、`@Input`デコレーターで _パブリック_ にしたため、`
 
 どちらも場合でも、`@Input`デコレーターは、Angularにこのプロパティが _パブリック_ であり、親コンポーネントによるバインドが可能であることを伝えています。`@Input`がなければ、Angularはプロパティへバインドすることを拒否します。
 
-テンプレートHTMLをコンポーネントへバインドしてから、`@Input`を使用したことはありません。
+PlantillasHTMLをコンポーネントへバインドしてから、`@Input`を使用したことはありません。
 その違いは何でしょうか？
 
-違いは、信頼の問題です。Angularは、コンポーネントのテンプレートをコンポーネントに属するものとして扱います。コンポーネントとそのテンプレートは、暗黙のうちに互いに信頼し合います。したがって、コンポーネントの独自のテンプレートは、`@Input`デコレーターの有無にかかわらず、そのコンポーネントの任意のプロパティへバインドすることができます。
+違いは、信頼の問題です。Angularは、コンポーネントのPlantillasをコンポーネントに属するものとして扱います。コンポーネントとそのPlantillasは、暗黙のうちに互いに信頼し合います。したがって、コンポーネントの独自のPlantillasは、`@Input`デコレーターの有無にかかわらず、そのコンポーネントの任意のプロパティへバインドすることができます。
 
 しかし、コンポーネントやディレクティブは、他のコンポーネントやディレクティブを盲目的に信頼するべきではありません。コンポーネントやディレクティブのプロパティは、デフォルトではバインディングから隠されています。それらは、Angularのバインディング機構からは _プライベート_ です。`@Input`デコレーターで装飾されると、プロパティはAngularのバインディング機構から _パブリック_ になります。その後、他のコンポーネントやディレクティブへバインドすることができます。
 
 バインディング内のプロパティ名の位置によって`@Input`が必要かどうかを知ることができます。
 
-* 等式(=)の右側のテンプレート式に表示されている場合、それはテンプレートのコンポーネントに属し、`@Input`デコレーターは必要ありません。
+* 等式(=)の右側のPlantillas式に表示されている場合、それはPlantillasのコンポーネントに属し、`@Input`デコレーターは必要ありません。
 
 * 等式(=)の左側に角括弧([])で表示されている場合、それは _他_ のコンポーネントやディレクティブに属し、そのプロパティは、`@Input`デコレーターで飾らなければなりません。
 
@@ -326,6 +326,6 @@ Angularは、`@Input`デコレーターで _パブリック_ にしたため、`
 
 <code-example path="attribute-directives/src/app/app.component.html" header="src/app/app.component.html (color)" region="color"></code-example>
 
-* 右側の式の`color`プロパティは、テンプレートのコンポーネントに属します。テンプレートとそのコンポーネントは、お互いを信頼します。`color`プロパティは`@Input`デコレーターを必要としません。
+* 右側の式の`color`プロパティは、Plantillasのコンポーネントに属します。Plantillasとそのコンポーネントは、お互いを信頼します。`color`プロパティは`@Input`デコレーターを必要としません。
 
-* 左側の`appHighlight`プロパティは、テンプレートのコンポーネントのプロパティではなく、`HighlightDirective`のエイリアス化されたプロパティを参照しています。これには信頼の問題があります。したがって、ディレクティブのプロパティは、`@Input`デコレーターを持っている必要があります。
+* 左側の`appHighlight`プロパティは、Plantillasのコンポーネントのプロパティではなく、`HighlightDirective`のエイリアス化されたプロパティを参照しています。これには信頼の問題があります。したがって、ディレクティブのプロパティは、`@Input`デコレーターを持っている必要があります。

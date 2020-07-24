@@ -33,13 +33,13 @@ CLIは`src/app/heroes/`という新しいフォルダを作成し、
 CLIは3つのメタデータプロパティを生成しました:
 
 1. `selector`&mdash; コンポーネントのCSS要素セレクター
-1. `templateUrl`&mdash; コンポーネントのテンプレートファイルの場所
+1. `templateUrl`&mdash; コンポーネントのPlantillasファイルの場所
 1. `styleUrls`&mdash; コンポーネントのプライベートCSSスタイルの場所
 
 {@a selector}
 
 [CSS要素セレクタ](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors)である
-`'app-heroes'`は、親コンポーネントのテンプレート内でこのコンポーネントを識別するHTML要素の名前と一致します。
+`'app-heroes'`は、親コンポーネントのPlantillas内でこのコンポーネントを識別するHTML要素の名前と一致します。
 
 `ngOnInit()`は[ライフサイクルフック](guide/lifecycle-hooks#oninit)です。
 Angularは、コンポーネントの作成直後に`ngOnInit()`を呼び出します。
@@ -55,7 +55,7 @@ Angularは、コンポーネントの作成直後に`ngOnInit()`を呼び出し�
 
 ### ヒーローを表示する {@a show-the-hero}
 
-`heroes.component.html`テンプレートファイルを開きます。
+`heroes.component.html`Plantillasファイルを開きます。
 Angular CLIで生成されたデフォルトのテキストを削除し、
 それを新しい`hero`プロパティへのデータバインディングに置き換えてください。
 
@@ -63,10 +63,10 @@ Angular CLIで生成されたデフォルトのテキストを削除し、
 
 ## `HeroesComponent` ビューを表示する {@a show-the-heroescomponent-view}
 
-`HeroesComponent`を表示するには、それをアプリケーションシェルの`AppComponent`のテンプレートに追加する必要があります。
+`HeroesComponent`を表示するには、それをアプリケーションシェルの`AppComponent`のPlantillasに追加する必要があります。
 
 `app-heroes`は`HeroesComponent`の[要素セレクタ](#selector)であることを思い出してください。
-なので、`AppComponent`のテンプレートファイルで、タイトルの直下に`<app-heroes>`要素を追加してください。
+なので、`AppComponent`のPlantillasファイルで、タイトルの直下に`<app-heroes>`要素を追加してください。
 
 <code-example path="toh-pt1/src/app/app.component.html" header="src/app/app.component.html"></code-example>
 
@@ -96,7 +96,7 @@ CLIの`ng serve`コマンドがまだ実行中であれば、
 
 ## ヒーローオブジェクトを表示する {@a show-the-hero-object}
 
-ヒーローの名前を知らせるためにテンプレートのバインディングを更新し、
+ヒーローの名前を知らせるためにPlantillasのバインディングを更新し、
 次のような詳細レイアウトで`id`と`name`の両方を表示します。
 
 <code-example path="toh-pt1/src/app/heroes/heroes.component.1.html" region="show-hero-2" header="heroes.component.html (HeroesComponent's template)"></code-example>
@@ -131,7 +131,7 @@ Angularは複数のビルトインパイプを備えており、あなた自身�
 
 ### 双方向データバインディング {@a two-way-binding}
 
-`HeroesComponent`テンプレートの詳細エリアをリファクタリングすると、次のようになります。
+`HeroesComponent`Plantillasの詳細エリアをリファクタリングすると、次のようになります。
 
 <code-example path="toh-pt1/src/app/heroes/heroes.component.1.html" region="name-input" header="src/app/heroes/heroes.component.html (HeroesComponent's template)"></code-example>
 

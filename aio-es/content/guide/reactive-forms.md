@@ -64,7 +64,7 @@ To register a single form control, import the `FormControl` class and create a n
 
 **Register the control in the template**
 
-コンポーネントクラスにコントロールを作成した後は、テンプレート内のフォームコントロール要素へ紐付ける必要があります。 `ReactiveFormsModule`内の`FormControlDirective`が提供する`formControl`バインディングを使い、フォームコントロールとともにテンプレートを更新します。
+コンポーネントクラスにコントロールを作成した後は、Plantillas内のフォームコントロール要素へ紐付ける必要があります。 `ReactiveFormsModule`内の`FormControlDirective`が提供する`formControl`バインディングを使い、フォームコントロールとともにPlantillasを更新します。
 
 <code-example path="reactive-forms/src/app/name-editor/name-editor.component.html" region="control-binding" header="src/app/name-editor/name-editor.component.html"></code-example>
 
@@ -76,11 +76,11 @@ To register a single form control, import the `FormControl` class and create a n
 
 </div>
 
-テンプレートバインディング構文を使うことで、フォームコントロールはテンプレート内の`name`入力要素に登録されました。フォームコントロールとDOM要素は相互に作用します。画面にモデルの変更を反映し、画面での変更をモデルに反映します。
+Plantillasバインディング構文を使うことで、フォームコントロールはPlantillas内の`name`入力要素に登録されました。フォームコントロールとDOM要素は相互に作用します。画面にモデルの変更を反映し、画面での変更をモデルに反映します。
 
 **Display the component**
 
-`name`が割り当てられたフォームコントロールは、コンポーネントがテンプレートに追加すると表示されます。
+`name`が割り当てられたフォームコントロールは、コンポーネントがPlantillasに追加すると表示されます。
 
 <code-example path="reactive-forms/src/app/app.component.1.html" region="app-name-editor" header="src/app/app.component.html (name editor)"></code-example>
 
@@ -94,11 +94,11 @@ To register a single form control, import the `FormControl` class and create a n
 
 次の手順で値の表示を行います:
 
-* テンプレートの`AsyncPipe`またはコンポーネントクラスの`subscribe()`メソッドを使い、`valueChanges`を介してフォームの値の変更を監視することができます。
+* Plantillasの`AsyncPipe`またはコンポーネントクラスの`subscribe()`メソッドを使い、`valueChanges`を介してフォームの値の変更を監視することができます。
 
 * `value`プロパティから現在の値のスナップショットを表示します。
 
-次の例では、テンプレートの補間を使ってどのように現在の値を表示するのかを示します。
+次の例では、Plantillasの補間を使ってどのように現在の値を表示するのかを示します。
 
 <code-example path="reactive-forms/src/app/name-editor/name-editor.component.html" region="display-value" header="src/app/name-editor/name-editor.component.html (control value)"></code-example>
 
@@ -119,7 +119,7 @@ To register a single form control, import the `FormControl` class and create a n
 
 </code-example>
 
-テンプレートを更新して、名前の更新をシミュレートするボタンをつけます。**Update Name** ボタンをクリックすると、フォームコントロール要素に入力されている値が現在の値として反映されます。
+Plantillasを更新して、名前の更新をシミュレートするボタンをつけます。**Update Name** ボタンをクリックすると、フォームコントロール要素に入力されている値が現在の値として反映されます。
 
 <code-example path="reactive-forms/src/app/name-editor/name-editor.component.html" region="update-value" header="src/app/name-editor/name-editor.component.html (update value)"></code-example>
 
@@ -176,7 +176,7 @@ To add a form group to this component, take the following steps.
 
 **FormGroupモデルとビューの紐付け**
 
-フォームグループは個々のコントロールの状態と変更を監視しているので、ひとつのコントロールに変更があれば、親のコントロールも新しい状態や値変更を発行します。グループのモデルはメンバーによって維持されています。モデルを定義した後、モデルをビューに反映させるようにテンプレートを更新する必要があります。
+フォームグループは個々のコントロールの状態と変更を監視しているので、ひとつのコントロールに変更があれば、親のコントロールも新しい状態や値変更を発行します。グループのモデルはメンバーによって維持されています。モデルを定義した後、モデルをビューに反映させるようにPlantillasを更新する必要があります。
 
 <code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.1.html" region="formgroup" header="src/app/profile-editor/profile-editor.component.html (template form group)"></code-example>
 
@@ -210,7 +210,7 @@ To add a form group to this component, take the following steps.
 
 **コンポーネントの表示**
 
-フォームを含む`ProfileEditor`コンポーネントを表示するために、コンポーネントテンプレートへ追加します。
+フォームを含む`ProfileEditor`コンポーネントを表示するために、コンポーネントPlantillasへ追加します。
 
 <code-example path="reactive-forms/src/app/app.component.1.html" region="app-profile-editor" header="src/app/app.component.html (profile editor)"></code-example>
 
@@ -243,11 +243,11 @@ To create a nested group in `profileForm`, add a nested `address` element to the
 
 この例では、`address group`は、既存の`firstName`と`lastName`のコントロールを、新しく`street`、`city`、 `state`、`zip`のコントロールと組み合わせます。フォームグループ内の`address`要素はフォームグループ内の`profileForm` 要素の子であっても、値や状態変更に同じルールが適用されます。ネストしたグループからの状態や値の変更は親のフォームグループに伝播し、モデル全体の一貫性を維持します。
 
-**テンプレート内のネストしたフォームのグループ化**
+**Plantillas内のネストしたフォームのグループ化**
 
-コンポーネントクラス内のモデルを更新した後、フォームグループインスタンスと入力要素をつなげるためにテンプレートを更新します。
+コンポーネントクラス内のモデルを更新した後、フォームグループインスタンスと入力要素をつなげるためにPlantillasを更新します。
 
-`street` 、 `city` 、`state` 、 `zip` フィールドを含む`address`フォームグループを`ProfileEditor`テンプレートに追加します。
+`street` 、 `city` 、`state` 、 `zip` フィールドを含む`address`フォームグループを`ProfileEditor`Plantillasに追加します。
 
 <code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.1.html" region="formgroupname" header="src/app/profile-editor/profile-editor.component.html (template nested form group)"></code-example>
 
@@ -259,7 +259,7 @@ To create a nested group in `profileForm`, add a nested `address` element to the
 
 <div class="alert is-helpful">
 
-**注:** フォームグループインスンタンスの値をコンポーネントテンプレート内で表示するには、`value` プロパティと `JsonPipe`を使用します。
+**注:** フォームグループインスンタンスの値をコンポーネントPlantillas内で表示するには、`value` プロパティと `JsonPipe`を使用します。
 
 </div>
 
@@ -281,7 +281,7 @@ To create a nested group in `profileForm`, add a nested `address` element to the
 
 </code-example>
 
-ユーザープロフィールをオンデマンドで更新するためにテンプレートにボタンを追加して、更新をシミュレートします。
+ユーザープロフィールをオンデマンドで更新するためにPlantillasにボタンを追加して、更新をシミュレートします。
 
 <code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.1.html" region="patch-value" header="src/app/profile-editor/profile-editor.component.html (update value)"></code-example>
 
@@ -386,7 +386,7 @@ HTML5には、`required`、`minlength`、`maxlength`などのネイティブバ�
 
 <div class="alert is-important">
 
-**注:** これらのHTML5バリデーション属性は、Angularのリアクティブフォームが提供するビルトインバリデーターと*組み合わせて*使用してください。これらを組み合わせて使用することで、テンプレートがチェックされた後に式が変更された時のエラーを防ぐことができます。
+**注:** これらのHTML5バリデーション属性は、Angularのリアクティブフォームが提供するビルトインバリデーターと*組み合わせて*使用してください。これらを組み合わせて使用することで、Plantillasがチェックされた後に式が変更された時のエラーを防ぐことができます。
 
 </div>
 
@@ -464,13 +464,13 @@ The following example shows you how to manage an array of *aliases* in `ProfileE
 
 </code-example>
 
-テンプレートでは、各コントロールは別々の入力フィールドとして表示されます。
+Plantillasでは、各コントロールは別々の入力フィールドとして表示されます。
 
-**テンプレートにフォーム配列を表示する**
+**Plantillasにフォーム配列を表示する**
 
-フォームモデルからエイリアスを付与するには、テンプレートに追加する必要があります。`FormGroupNameDirective`が提供する`formGroupName`のように、`FormArrayNameDirective`の`formArrayName`でフォーム配列インスタンスとテンプレートへの通信をバインドします。
+フォームモデルからエイリアスを付与するには、Plantillasに追加する必要があります。`FormGroupNameDirective`が提供する`formGroupName`のように、`FormArrayNameDirective`の`formArrayName`でフォーム配列インスタンスとPlantillasへの通信をバインドします。
 
-下のテンプレートHTMLを`formGroupName`要素の`<div>`閉じタグの後に追加してください。
+下のPlantillasHTMLを`formGroupName`要素の`<div>`閉じタグの後に追加してください。
 
 <code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.html" region="formarrayname" header="src/app/profile-editor/profile-editor.component.html (aliases form array template)"></code-example>
 
@@ -484,7 +484,7 @@ The following example shows you how to manage an array of *aliases* in `ProfileE
 
 **エイリアスを追加する**
 
-最初は、フォームにはひとつの`Alias`フィールドのみです。別フィールドを追加するには **Add Alias** ボタンをクリックします。テンプレートの下の`Form Value`に表示されているフォームモデルにあるエイリアス配列のバリデーションもできます。
+最初は、フォームにはひとつの`Alias`フィールドのみです。別フィールドを追加するには **Add Alias** ボタンをクリックします。Plantillasの下の`Form Value`に表示されているフォームモデルにあるエイリアス配列のバリデーションもできます。
 
 <div class="alert is-helpful">
 

@@ -160,7 +160,7 @@ region="transition2">
 
 ### animaciónをトリガーする
 
-animaciónがいつ開始するか検知するために、Angularは*トリガー*を必要とします。HTMLテンプレートのトリガーする要素にアタッチできるようにするために、`trigger()`関数は状態と遷移をまとめて、animaciónに名前を付けます。
+animaciónがいつ開始するか検知するために、Angularは*トリガー*を必要とします。HTMLPlantillasのトリガーする要素にアタッチできるようにするために、`trigger()`関数は状態と遷移をまとめて、animaciónに名前を付けます。
 
 `trigger()`関数は、変更を監視するためにプロパティ名を記述します。変更が発生すると、トリガーはその定義に含まれるアクションを開始します。これらのアクションは、あとで説明するような、遷移関数やその他の関数にすることができます。
 
@@ -175,13 +175,13 @@ animaciónがいつ開始するか検知するために、Angularは*トリガ�
 **Note:** 各`trigger()`関数呼び出しの中では、1つの要素はある時点で1つの状態にしかなれません。ただし、一度に複数のトリガーをアクティブにすることは可能です。
 </div>
 
-### animaciónを定義してHTMLテンプレートに適用する
+### animaciónを定義してHTMLPlantillasに適用する
 
 animaciónは、animación化されるHTML要素を制御するコンポーネントのメタデータで定義されます。animaciónを定義するコードを`@Component()`デコレーター内の`animations:`プロパティ下に配置します。
 
 <code-example path="animations/src/app/open-close.component.ts" header="src/app/open-close.component.ts" language="typescript" region="component"></code-example>
 
-コンポーネントのanimaciónトリガーを定義したら、トリガー名を角括弧で囲み、その前に`@`記号を付けてそのコンポーネントのテンプレート内の要素にアタッチすることができます。それから、次に示すように標準のAngularプロパティバインディング構文を使用して、トリガーをテンプレート式にバインドできます。ここで、`triggerName`はトリガーの名前で、`expression`は定義されたanimaciónの状態として評価されます。
+コンポーネントのanimaciónトリガーを定義したら、トリガー名を角括弧で囲み、その前に`@`記号を付けてそのコンポーネントのPlantillas内の要素にアタッチすることができます。それから、次に示すように標準のAngularプロパティバインディング構文を使用して、トリガーをPlantillas式にバインドできます。ここで、`triggerName`はトリガーの名前で、`expression`は定義されたanimaciónの状態として評価されます。
 
 ```
 <div [@triggerName]="expression">...</div>;
@@ -197,13 +197,13 @@ region="compare">
 
 この例では、`isOpen`式が`open`または`closed`の定義された状態として評価されたとき、状態変更のトリガー`openClose`を通知します。それから、状態変更をハンドルし、状態変更animaciónを開始するのは、`openClose`のコードにゆだねます。
 
-ページに出入りする要素(DOMに挿入または削除される要素)では、animaciónを条件付きにすることができます。たとえば、HTMLテンプレートのanimaciónトリガーで`*ngIf`を使用する場合などです。
+ページに出入りする要素(DOMに挿入または削除される要素)では、animaciónを条件付きにすることができます。たとえば、HTMLPlantillasのanimaciónトリガーで`*ngIf`を使用する場合などです。
 
 <div class="alert is-helpful">
 
 **Note:** コンポーネントファイル内で、animaciónを定義するトリガーを`@Component()`デコレーターの`animations`プロパティの値に設定してください。
 
-HTMLテンプレートファイル内では、定義されたanimaciónをanimación化されるHTML要素にアタッチするためにトリガー名を使用してください。
+HTMLPlantillasファイル内では、定義されたanimaciónをanimación化されるHTML要素にアタッチするためにトリガー名を使用してください。
 
 </div>
 
@@ -251,7 +251,7 @@ Angularanimaciónの高度な機能については、animaciónセクション�
 
 <tr>
 <td><code>trigger()</code></td>
-<td>animaciónを開始し、他のすべてのanimaciónの関数コールのコンテナとして機能します。HTMLテンプレートは<code>triggerName</code>にバインドされます。ユニークなトリガー名を宣言するために、最初の引数を使用します。配列構文を使用します。</td>
+<td>animaciónを開始し、他のすべてのanimaciónの関数コールのコンテナとして機能します。HTMLPlantillasは<code>triggerName</code>にバインドされます。ユニークなトリガー名を宣言するために、最初の引数を使用します。配列構文を使用します。</td>
 </tr>
 
 <tr>

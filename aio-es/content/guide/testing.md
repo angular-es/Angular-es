@@ -475,14 +475,14 @@ Observableを_サブスクライブ_する必要があります。
 ## コンポーネントテストの基本
 
 コンポーネントは、Angularアプリケーションの他のすべての部品とは違い、
-HTMLテンプレートとTypeScriptクラスを組み合わせています。
-コンポーネントは本当にテンプレートとクラスが_一緒に動作します_。
+HTMLPlantillasとTypeScriptクラスを組み合わせています。
+コンポーネントは本当にPlantillasとクラスが_一緒に動作します_。
 そして、適切にコンポーネントをテストするためには、
 目的どおりにそれらを一緒に動作させるテストを行う必要があります。
 
 このようなテストでは、
 Angularが行っているようにブラウザのDOMにコンポーネントのホスト要素を作成し、
-コンポーネントクラスとテンプレートとして定義されたDOMとのやりとりを調査する必要があります。
+コンポーネントクラスとPlantillasとして定義されたDOMとのやりとりを調査する必要があります。
 
 Angularの`TestBed`は次のセクションで見るような、この種類のテストを容易にします。
 しかし、多くの場合、DOMの関与無しで_このクラスだけでテストすること_は
@@ -523,7 +523,7 @@ Angularの`TestBed`は次のセクションで見るような、この種類の�
 
 _hero_を`@Input`プロパティにバインドし、
 _selected_ `@Output`プロパティを通して発生したイベントをリッスンする
-親コンポーネントのテンプレート内に表示されます。
+親コンポーネントのPlantillas内に表示されます。
 
 `DashboardHeroComponent`や、
 その親コンポーネントを作成せずにクラスコードが動作することをテストできます。
@@ -581,11 +581,11 @@ _クラスのみ_のテストは、クラスの動作については教えてく
 - `Lightswitch.message`は表示されているのか？
 - ユーザーは実際に`DashboardHeroComponent`で表示されるヒーローを選択できるのか？
 - 主人公の名前は、期待された形式(つまり、大文字)で表示されるのか？
-- ウェルカムメッセージは`WelcomeComponent`のテンプレートで表示されるのか？
+- ウェルカムメッセージは`WelcomeComponent`のPlantillasで表示されるのか？
 
 これは、上のような単純なコンポーネントだと問題ではないかもしれません。
 しかし、多くのコンポーネントは、
-テンプレートに記述されているDOM要素と複雑なやりとりをしているため、
+Plantillasに記述されているDOM要素と複雑なやりとりをしているため、
 コンポーネントの状態が変わることでHTMLが表示されたり消えたりします。
 
 この種類の質問に答えるには、
@@ -602,7 +602,7 @@ _クラスのみ_のテストは、クラスの動作については教えてく
 CLIが新しいコンポーネントを生成すると、
 デフォルトで初期テストファイルを作成します。
 
-たとえば、次のCLIコマンドは、`app/banner`フォルダに`BannerComponent`を生成します(インラインのテンプレートとスタイルを含む):
+たとえば、次のCLIコマンドは、`app/banner`フォルダに`BannerComponent`を生成します(インラインのPlantillasとスタイルを含む):
 
 <code-example language="sh" class="code-shell">
 ng generate component banner --inline-template --inline-style --module app
@@ -835,7 +835,7 @@ CSSセレクターでフィルタリングし、ブラウザの_ネイティブ�
 
 ### コンポーネントバインディング
 
-現在の`BannerComponent`は、静的なタイトルテキストをHTMLテンプレートに表示します。
+現在の`BannerComponent`は、静的なタイトルテキストをHTMLPlantillasに表示します。
 
 少しの変更を加えた後、
 次のようなコンポーネントの`title`プロパティにバインドすることによって、`BannerComponent`は動的なタイトルを表示します。
@@ -967,10 +967,10 @@ Angularは、input要素の`value`プロパティがセットされたことを�
 
 ### 外部ファイルを使用したコンポーネント
 
-さきほどの`BannerComponent`は、`@Component.template`プロパティと`@Component.styles`プロパティのそれぞれで指定された_インラインテンプレート_と_インラインCSS_で定義されています。
+さきほどの`BannerComponent`は、`@Component.template`プロパティと`@Component.styles`プロパティのそれぞれで指定された_インラインPlantillas_と_インラインCSS_で定義されています。
 
 多くのコンポーネントは、次のように変更した`BannerComponent`がするように、
-`@Component.templateUrl`プロパティと`@Component.styleUrls`プロパティでそれぞれ_外部テンプレート_と
+`@Component.templateUrl`プロパティと`@Component.styleUrls`プロパティでそれぞれ_外部Plantillas_と
 _外部CSS_を指定します。
 
 <code-example
@@ -1115,7 +1115,7 @@ Jasmineのマッチャーの第2引数(たとえば、 `'expected name'`)は、�
 
 ### 非同期サービスを使用するコンポーネント
 
-このサンプルでは、`AboutComponent`テンプレートは`TwainComponent`をホストします。
+このサンプルでは、`AboutComponent`Plantillasは`TwainComponent`をホストします。
 `TwainComponent`はMark Twainの引用を表示します。
 
 <code-example
@@ -1410,7 +1410,7 @@ Angular CLIで作成されたプロジェクトであれば、 `zone-testing` �
 <div class="alert is-helpful">
 
 `TestBed.compileComponents()`メソッド([下記参照](#compile-components))は、
-"just-in-time"コンパイル時に外部テンプレートとcssファイルを読み込むために`XHR`を呼び出します。
+"just-in-time"コンパイル時に外部Plantillasとcssファイルを読み込むために`XHR`を呼び出します。
 `async()`ユーティリティを使用して`compileComponents()`を呼び出すテストを作成してください。
 
 </div>
@@ -1463,7 +1463,7 @@ JavaScriptエンジンのタスクキューが空になったときに解決す�
 しかしコードが `intervalTimer()` や `setInterval` を含むときには時折必要です。
 
 次は、さきほどの2つのバージョンのテストを`done()`を使用して書いたものです。
-最初の1つは、コンポーネントの`quote`プロパティによってテンプレートに公開された`Observable`をサブスクライブします。
+最初の1つは、コンポーネントの`quote`プロパティによってPlantillasに公開された`Observable`をサブスクライブします。
 
 <code-example
   path="testing/src/app/twain/twain.component.spec.ts"
@@ -1595,7 +1595,7 @@ RxJSマーブルテストは、このガイドの範囲を超えて、豊富な�
 
 ### インプットとアウトプットを使用したコンポーネント
 
-インプットとアウトプットをもつコンポーネントは、通常、ホストコンポーネントのビューテンプレート内に配置されます。
+インプットとアウトプットをもつコンポーネントは、通常、ホストコンポーネントのビューPlantillas内に配置されます。
 ホストは、プロパティバインディングを使用してインプットプロパティを設定し、
 イベントバインディングを使用してアウトプットプロパティによって発生したイベントをリッスンします。
 
@@ -1606,7 +1606,7 @@ RxJSマーブルテストは、このガイドの範囲を超えて、豊富な�
 `DashboardComponent`によって提供される個々のヒーローを表示します。
 そのヒーローをクリックすると、ユーザーがヒーローを選択したことを`DashboardComponent`に伝えます。
 
-`DashboardHeroComponent`は、次のような`DashboardComponent`テンプレートに組み込まれています:
+`DashboardHeroComponent`は、次のような`DashboardComponent`Plantillasに組み込まれています:
 
 <code-example
   path="testing/src/app/dashboard/dashboard.component.html"
@@ -1667,13 +1667,13 @@ prepararコードがどのようにコンポーネントの`hero`プロパティ
 (`expectedHero`)を割り当てるのか、
 `DashboardComponent`が自身のリピーター内でプロパティバインディングを介してそれを設定する方法をエミュレートするかに注目してください。
 
-次のテストでは、ヒーロー名がバインディングを介してテンプレートに伝播することを確認します。
+次のテストでは、ヒーロー名がバインディングを介してPlantillasに伝播することを確認します。
 
 <code-example
   path="testing/src/app/dashboard/dashboard-hero.component.spec.ts"
   region="name-test"></code-example>
 
-[テンプレート](#dashboard-hero-component)ではヒーロー名をAngularの`UpperCasePipe`を通して渡すので、
+[Plantillas](#dashboard-hero-component)ではヒーロー名をAngularの`UpperCasePipe`を通して渡すので、
 テストではアッパーケースの名前をもつ要素の値とマッチする必要があります。
 
 <div class="alert is-helpful">
@@ -1788,7 +1788,7 @@ _クリックトリガー_プロセスを次のような`click()`関数などの
 しかし、`DashboardHeroComponent`は、ホストコンポーネントに適切にデータバインドされているときに正常に動作するでしょうか?
 
 実際の`DashboardComponent`でテストできますが、
-特に、そのテンプレートが`*ngFor`リピーター、他のコンポーネント、
+特に、そのPlantillasが`*ngFor`リピーター、他のコンポーネント、
 レイアウトHTML、追加のバインディング、
 複数のサービスを注入するコンストラクターを持っていて、
 それらのサービスとすぐにやりとりし始めるとき、
@@ -1826,7 +1826,7 @@ _テストホスト_のテストのprepararは、スタンドアロンテスト�
 `createComponent`は、`DashboardHeroComponent`のインスタンスの代わりに`TestHostComponent`のインスタンスをもつ`fixture`を返します。
 
 `TestHostComponent`を作成すると、
-前者のテンプレート内に`DashboardHeroComponent`が表示されるため、
+前者のPlantillas内に`DashboardHeroComponent`が表示されるため、
 それを作成するという副作用があります。
 ヒーロー要素(`heroEl`)のクエリは、さきほどよりも要素ツリーの深さが深いものの、テストDOM内でそれを見つけ出せます。
 
@@ -1998,8 +1998,8 @@ Observableより取得した`id`が既存のヒーローを参照していると
 
 ### ネストしたコンポーネントのテスト
 
-コンポーネントテンプレートはネストしたコンポーネントをもつことが多いです。
-そのテンプレートにはさらにコンポーネントが含まれるているでしょう。
+コンポーネントPlantillasはネストしたコンポーネントをもつことが多いです。
+そのPlantillasにはさらにコンポーネントが含まれるているでしょう。
 
 コンポーネントツリーはとても深いかもしれませんが、
 ほとんどの場合、ネストしたコンポーネントは、ツリーの最上部にあるコンポーネントのテストには何の役割も果たしません。
@@ -2025,7 +2025,7 @@ Observableより取得した`id`が既存のヒーローを参照していると
 そのような場合は、それらを作成するために`TestBed`を設定する必要があるでしょう。
 
 それらの宣言を怠ると、
-Angularコンパイラは`AppComponent`テンプレート内の`<app-banner>`、`<app-welcome>`、および`<router-outlet>`タグを認識せず、
+Angularコンパイラは`AppComponent`Plantillas内の`<app-banner>`、`<app-welcome>`、および`<router-outlet>`タグを認識せず、
 エラーをスローします。
 
 実際のコンポーネントを宣言する場合は、_それら_のネストしたコンポーネントを宣言し、
@@ -2049,7 +2049,7 @@ Angularコンパイラは`AppComponent`テンプレート内の`<app-banner>`、
   header="app/app.component.spec.ts (stub declaration)"></code-example>
 
 スタブのセレクターは、対応する実際のコンポーネントのセレクターと一致します。
-しかし、そのテンプレートとクラスは空です。
+しかし、そのPlantillasとクラスは空です。
 
 その後、`TestBed`の構成内で、
 実際に必要なコンポーネント、ディレクティブ、パイプの次に宣言します。
@@ -2091,7 +2091,7 @@ Angularコンパイラは`AppComponent`テンプレート内の`<app-banner>`、
 #### 両方のTécnicaを使用する
 
 これらのTécnicaは、
-コンポーネントの視覚的な外見を、テストの対象となるコンポーネントのテンプレート内の要素だけに縮小するので、
+コンポーネントの視覚的な外見を、テストの対象となるコンポーネントのPlantillas内の要素だけに縮小するので、
 _浅いコンポーネントテスト_と呼ばれます。
 
 `NO_ERRORS_SCHEMA`のアプローチは2つの方法を使うよりも簡単ですが、それを過度に使用しないでください。
@@ -2103,7 +2103,7 @@ _浅いコンポーネントテスト_と呼ばれます。
 _スタブコンポーネント_のアプローチには別の利点があります。
 _この_例のスタブは空ですが、
 テストで何らかの方法でそれとやりとりする必要がある場合は、
-テンプレートとクラスを取り除くことができます。
+Plantillasとクラスを取り除くことができます。
 
 実際には、
 この例のように同じpreparar内で2つのTécnicaを組み合わせます。
@@ -2128,7 +2128,7 @@ Angularコンパイラは、`<app-banner>`要素の`BannerComponentStub`を作�
 
 このサンプルコードの`RouterLinkDirectiveStub`は、
 実際のディレクティブを、
-`AppComponent`テンプレートに見られるアンカータグ配線の種類を検証するために設計された代替バージョンに置き換えます。
+`AppComponent`Plantillasに見られるアンカータグ配線の種類を検証するために設計された代替バージョンに置き換えます。
 
 <code-example
   path="testing/src/testing/router-link-directive-stub.ts"
@@ -2237,7 +2237,7 @@ _別_の総合テストでは、ユーザーが認証され、許可されてい
   <img src='generated/images/guide/testing/hero-detail.component.png' alt="HeroDetailComponent in action">
 </div>
 
-しかし、このシンプルなフォームでも多くの複雑なテンプレートを持ちます。
+しかし、このシンプルなフォームでも多くの複雑なPlantillasを持ちます。
 
 <code-example
   path="testing/src/app/hero/hero-detail.component.html" header="app/hero/hero-detail.component.html"></code-example>
@@ -2303,7 +2303,7 @@ Please call "TestBed.compileComponents" before your test.
 
 この問題の根本原因は、
 `BannerComponent`の次のバージョンのように、
-テストに関係するコンポーネントの少なくとも1つが外部テンプレートまたはCSSファイルを指定していることです。
+テストに関係するコンポーネントの少なくとも1つが外部PlantillasまたはCSSファイルを指定していることです。
 
 <code-example
   path="testing/src/app/banner/banner-external.component.ts"
@@ -2463,7 +2463,7 @@ CLIによって生成されたコンポーネントテストファイルは、
 
 <div class="alert is-helpful">
 
-`HeroDetailComponent`は外部テンプレートとCSSファイルをもつため、
+`HeroDetailComponent`は外部PlantillasとCSSファイルをもつため、
 `beforeEach()`は非同期的に`TestBed.compileComponents`を呼び出します。
 
 上記の[_`compileComponents()`の呼び出し_](#compile-components)
@@ -2979,7 +2979,7 @@ Angular テスティングユーティリティには、`TestBed`、`ComponentFi
     <td>
 
       テストモジュールの構成が完了したら、テストモジュールを非同期でコンパイルします。
-      コンポーネントテンプレートとスタイルファイルの取得は必ず非同期であるため、
+      コンポーネントPlantillasとスタイルファイルの取得は必ず非同期であるため、
       テストモジュールコンポーネントの_いずれか_に`templateUrl`または`styleUrls`がある場合は、このメソッドを呼び出す**必要があります**。
       [上記](#compile-components)を参照してください。
 
@@ -3504,7 +3504,7 @@ _フィクスチャー_のメソッドにより、Angularはコンポーネン�
 
     <td>
 
-      ソースコンポーネントテンプレート内のこの要素を見つける場所。
+      ソースコンポーネントPlantillas内のこの要素を見つける場所。
 
     </td>
   </tr>
@@ -3516,7 +3516,7 @@ _フィクスチャー_のメソッドにより、Angularはコンポーネン�
 
     <td>
 
-      テンプレートローカル変数（例：`#foo`）に関連付けられたオブジェクトの辞書。
+      Plantillasローカル変数（例：`#foo`）に関連付けられたオブジェクトの辞書。
       ローカル変数名をキーとしています。
 
     </td>
@@ -3529,7 +3529,7 @@ _フィクスチャー_のメソッドにより、Angularはコンポーネン�
 `DebugElement`とマッチするようにソース要素のサブツリーをフィルタする述語を受け取ります。
 
 述語は、`DebugElement`を受け取り、_truthy_な値を返す任意のメソッドです。
-次の例では、"content"という名前のテンプレートローカル変数への参照を含むすべての`DebugElement`
+次の例では、"content"という名前のPlantillasローカル変数への参照を含むすべての`DebugElement`
 が検索されます:
 
 <code-example path="testing/src/app/demo/demo.testbed.spec.ts" region="custom-predicate" header="app/demo/demo.testbed.spec.ts"></code-example>

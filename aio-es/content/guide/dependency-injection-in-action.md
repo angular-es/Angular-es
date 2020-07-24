@@ -126,7 +126,7 @@ Angularが `HeroesBaseComponent` を作成すると、
 親の `HeroBiosComponent` は値を `heroId` にバインドします。
 `ngOnInit` で、そのIDをヒーローをフェッチしてキャッシュするサービスに渡します。
 `hero` ゲッタープロパティは、キャッシュされているヒーローをサービスから引き出します。
-テンプレートでは、このデータがバインドされたプロパティを表示します。
+Plantillasでは、このデータがバインドされたプロパティを表示します。
 
 <live-example name="dependency-injection-in-action">live code</live-example>でこの例を見つけ、
 3つの `HeroBioComponent` インスタンスごとにキャッシュされたヒーローデータが存在することを確認してください。
@@ -179,13 +179,13 @@ Angularがクラスをインスタンス化する必要があるとき、DIフ�
 
 </code-example>
 
-テンプレートに注目してください:
+Plantillasに注目してください:
 
 <code-example path="dependency-injection-in-action/src/app/hero-bios.component.ts" region="template" header="dependency-injection-in-action/src/app/hero-bios.component.ts"></code-example>
 
 `<hero-bio>` タグの間に新しい `<hero-contact>` 要素が追加されました。
 Angularは、`HeroBioComponent` ビュー内に対応する `HeroContactComponent` を *投影* または *トランスクルード* して、
-`HeroBioComponent` テンプレートの `<ng-content>` スロットに配置します。
+`HeroBioComponent` Plantillasの `<ng-content>` スロットに配置します。
 
 <code-example path="dependency-injection-in-action/src/app/hero-bio.component.ts" region="template" header="src/app/hero-bio.component.ts (template)"></code-example>
 

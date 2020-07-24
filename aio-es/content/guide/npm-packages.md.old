@@ -57,8 +57,8 @@ CLIの `ng new` コマンドは、デフォルトの `package.json` を作成し
 **@angular/core**: Angularの重要なランタイム部。
 すべてのメタデータデコレーター・`Component`・`Directive`・依存関係注入・コンポーネントのライフサイクルフックが含まれています。
 
-**@angular/compiler**: Angularの *テンプレートコンパイラ*。
-テンプレートを理解し、アプリケーションを実行・レンダリングするコードに変換します。
+**@angular/compiler**: Angularの *Plantillasコンパイラ*。
+Plantillasを理解し、アプリケーションを実行・レンダリングするコードに変換します。
 通常、開発者はコンパイラと直接対話しません。ブラウザが [JITコンパイル](guide/aot-compiler) する際に、`platform-browser-dynamic`経由で間接的に使用します。
 
 **@angular/forms**: [template-driven](guide/forms) と [reactive forms](guide/reactive-forms) のサポート。
@@ -108,7 +108,7 @@ Zone.jsは、JavaScriptの標準仕様を決定している[TC39](http://www.ecm
 **[@angular/compiler-cli](https://github.com/angular/angular/blob/master/packages/compiler-cli/README.md)**: Angularコンパイラ。Angular CLIの`buildコマンド`と`serveコマンド`で呼び出されます。
 
 
-**[@angular/language-service](https://github.com/angular/angular-cli/)**: Angular language serviceは、コンポーネントテンプレートを分析し、TypeScript対応エディタが開発者の経験を向上させるために使用できるタイプとエラーの情報を提供します。
+**[@angular/language-service](https://github.com/angular/angular-cli/)**: Angular language serviceは、コンポーネントPlantillasを分析し、TypeScript対応エディタが開発者の経験を向上させるために使用できるタイプとエラーの情報を提供します。
 たとえば、[VS CodeのAngular language serviceプラグイン](https://marketplace.visualstudio.com/items?itemName=Angular.ng-template)を参照してください。
 
 

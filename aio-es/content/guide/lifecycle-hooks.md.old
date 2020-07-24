@@ -497,7 +497,7 @@ Angularがそれ自身で捕捉しない変更を検出し、それに対応す�
 
 <code-example path="lifecycle-hooks/src/app/after-view.component.ts" region="child-view" header="ChildComponent"></code-example>
 
-`AfterViewComponent` は、この子ビューを *テンプレート内* に表示します：
+`AfterViewComponent` は、この子ビューを *Plantillas内* に表示します：
 
 <code-example path="lifecycle-hooks/src/app/after-view.component.ts" region="template" header="AfterViewComponent (template)"></code-example>
 
@@ -546,7 +546,7 @@ Angularが呼び出す `AfterContentInit()` および `AfterContentChecked()` �
 ### コンテンツ投影
 
 *コンテンツ投影* は、コンポーネントの外部からHTMLコンテンツをインポートし、
-そのコンテンツをコンポーネントのテンプレートに指定された場所に挿入する方法です。
+そのコンテンツをコンポーネントのPlantillasに指定された場所に挿入する方法です。
 
 <div class="alert is-helpful">
 
@@ -555,8 +555,8 @@ Angularが呼び出す `AfterContentInit()` および `AfterContentChecked()` �
 </div>
 
 [前の_AfterView_](guide/lifecycle-hooks#afterview) の例でこの変化を考えてみましょう。
-今回は、テンプレート内に子ビューを含めるのではなく、 `AfterContentComponent` の親からコンテンツをインポートします。
-親のテンプレートは次のとおりです：
+今回は、Plantillas内に子ビューを含めるのではなく、 `AfterContentComponent` の親からコンテンツをインポートします。
+親のPlantillasは次のとおりです：
 
 <code-example path="lifecycle-hooks/src/app/after-content.component.ts" region="parent-template" header="AfterContentParentComponent (template excerpt)"></code-example>
 
@@ -564,7 +564,7 @@ Angularが呼び出す `AfterContentInit()` および `AfterContentChecked()` �
 そのコンテンツをコンポーネントに投影するつもりでない限り、コンポーネントの要素タグ
 *の間にコンテンツを置かないでください*。
 
-コンポーネントのテンプレートを見てみましょう：
+コンポーネントのPlantillasを見てみましょう：
 
 <code-example path="lifecycle-hooks/src/app/after-content.component.ts" region="template" header="AfterContentComponent (template)"></code-example>
 
@@ -581,7 +581,7 @@ Angularはそのコンテンツをどこに挿入するかを指示します。
   *コンテンツ投影* の兆候は2つあります：
 
   * コンポーネント要素タグ間のHTML。
-  * コンポーネントのテンプレート中の `<ng-content>` タグの存在。
+  * コンポーネントのPlantillas中の `<ng-content>` タグの存在。
 
 </div>
 
@@ -592,7 +592,7 @@ Angularはそのコンテンツをどこに挿入するかを指示します。
 *AfterContent* フックは *AfterView* フックと似ています。
 重要な違いは、子コンポーネントにあります。
 
-* *AfterView* フックは、要素のタグがコンポーネントのテンプレート *内に*
+* *AfterView* フックは、要素のタグがコンポーネントのPlantillas *内に*
 表示されている子コンポーネントである `ViewChildren` に関係します。
 
 * *AfterContent* フックは、Angularがコンポーネントに投影した子コンポーネントである

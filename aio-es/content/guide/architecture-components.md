@@ -1,4 +1,4 @@
-# コンポーネントとテンプレートのIntroducción
+# コンポーネントとPlantillasのIntroducción
 
 *コンポーネント*は、[*ビュー*](guide/glossary#view "Definition of view")と呼ばれる画面のパッチを制御します。
 たとえば、個々のコンポーネントは[Tour of Heroes Tutorial](tutorial)の次のビューを定義して制御します。
@@ -25,9 +25,9 @@ Angularは、ユーザーがアプリケーションを移動するときにコ�
 
 `@Component` デコレーターはそのすぐ下のクラスをコンポーネントクラスとして識別し、そのメタデータを指定します。下のサンプルコードでは `HeroListComponent` がクラスであり、特殊な Angular の表記や構文がまったくないことがわかります。あなたが `@Component` デコレーターをもつものとしてマークするまでは、コンポーネントではありません。
 
-コンポーネントのメタデータは、コンポーネントとそのビューを作成し表示するために必要な主要なビルディングブロックを取得する場所をAngularに通知します。特に、インラインコードを直接使用して、または参照によってテンプレートをコンポーネントに関連付けます。同時に、コンポーネントとそのテンプレートが*ビュー*を記述します。
+コンポーネントのメタデータは、コンポーネントとそのビューを作成し表示するために必要な主要なビルディングブロックを取得する場所をAngularに通知します。特に、インラインコードを直接使用して、または参照によってPlantillasをコンポーネントに関連付けます。同時に、コンポーネントとそのPlantillasが*ビュー*を記述します。
 
-`@Component`メタデータは、テンプレートを格納することやテンプレートを指すことに加えて、HTMLでコンポーネントを参照する方法や必要なサービスなどを設定します。
+`@Component`メタデータは、Plantillasを格納することやPlantillasを指すことに加えて、HTMLでコンポーネントを参照する方法や必要なサービスなどを設定します。
 
 `HeroListComponent`の基本メタデータの例を次に示します。
 
@@ -35,21 +35,21 @@ Angularは、ユーザーがアプリケーションを移動するときにコ�
 
 この例は、もっとも役立つ `@Component` の設定オプションの一部です：
 
-* `selector`: テンプレートHTML内の対応するタグを見つけるたびに、このコンポーネントのインスタンスを作成して挿入するようにAngularに指示するCSSセレクター。たとえば、アプリケーションのHTMLに`<app-hero-list></app-hero-list>`が含まれている場合、
+* `selector`: PlantillasHTML内の対応するタグを見つけるたびに、このコンポーネントのインスタンスを作成して挿入するようにAngularに指示するCSSセレクター。たとえば、アプリケーションのHTMLに`<app-hero-list></app-hero-list>`が含まれている場合、
 Angularはこれらのタグ間に`HeroListComponent`ビューのインスタンスを挿入します。
 
-* `templateUrl`: このコンポーネントのHTMLテンプレートのモジュール相対アドレス。または、HTMLテンプレートを`template`プロパティの値としてインラインで提供することもできます。このテンプレートは、コンポーネントのホストビューを定義します。
+* `templateUrl`: このコンポーネントのHTMLPlantillasのモジュール相対アドレス。または、HTMLPlantillasを`template`プロパティの値としてインラインで提供することもできます。このPlantillasは、コンポーネントのホストビューを定義します。
 
 * `providers`: コンポーネントが必要とするサービスの[プロバイダ](guide/glossary#provider)の配列。この例では、コンポーネントのコンストラクターがヒーローのリストを表示するために使用する`HeroService`インスタンスを提供する方法をAngularに通知します。
 
 {@a templates-and-views}
-## テンプレートとビュー
+## Plantillasとビュー
 
-<img src="generated/images/guide/architecture/template.png" alt="テンプレート" class="left">
+<img src="generated/images/guide/architecture/template.png" alt="Plantillas" class="left">
 
-コンポーネントのビューをその対となるテンプレートを使用して定義します。テンプレートは、コンポーネントのレンダリング方法をAngularに伝えるHTMLの形式の１つです。
+コンポーネントのビューをその対となるPlantillasを使用して定義します。Plantillasは、コンポーネントのレンダリング方法をAngularに伝えるHTMLの形式の１つです。
 
-ビューは通常、階層的に配置されており、UIセクションまたはページ全体を1つの単位として変更したり表示したり非表示にしたりできます。コンポーネントに直ちに関連付けられたテンプレートは、そのコンポーネントの*ホストビュー*を定義します。コンポーネントは、他のコンポーネントによってホストされる、*埋め込みビュー*を含むビュー階層を定義することもできます。
+ビューは通常、階層的に配置されており、UIセクションまたはページ全体を1つの単位として変更したり表示したり非表示にしたりできます。コンポーネントに直ちに関連付けられたPlantillasは、そのコンポーネントの*ホストビュー*を定義します。コンポーネントは、他のコンポーネントによってホストされる、*埋め込みビュー*を含むビュー階層を定義することもできます。
 
 <div class="lightbox">
   <img src="generated/images/guide/architecture/component-tree.png" alt="Component tree" class="left">
@@ -57,15 +57,15 @@ Angularはこれらのタグ間に`HeroListComponent`ビューのインスタン
 
 ビュー階層には、同じNgModule内のコンポーネントからのビューを含めることができますが、異なるNgModuleで定義されたコンポーネントからのビューも含めることができます（しばしば含みます）。
 
-## テンプレート構文 {@a template-syntax}
+## Plantillas構文 {@a template-syntax}
 
-テンプレートは通常のHTMLと似ていますが、アプリのロジックとアプリとDOMデータの状態に基づいてHTMLを変更するAngular[テンプレート構文](guide/template-syntax)も含まれています。テンプレートは*データバインディング*を使用してアプリケーションとDOMデータを調整し、表示する前に*パイプ*でデータを変換し、*ディレクティブ*を使用して表示されるものにアプリケーションロジックを適用することができます。
+Plantillasは通常のHTMLと似ていますが、アプリのロジックとアプリとDOMデータの状態に基づいてHTMLを変更するAngular[Plantillas構文](guide/template-syntax)も含まれています。Plantillasは*データバインディング*を使用してアプリケーションとDOMデータを調整し、表示する前に*パイプ*でデータを変換し、*ディレクティブ*を使用して表示されるものにアプリケーションロジックを適用することができます。
 
-たとえば、Tutorialの`HeroListComponent`のテンプレートは次のようになります。
+たとえば、Tutorialの`HeroListComponent`のPlantillasは次のようになります。
 
 <code-example path="architecture/src/app/hero-list.component.html" header="src/app/hero-list.component.html"></code-example>
 
-このテンプレートは `<h2>`や `<p>`のような典型的なHTML要素を使い、Angularテンプレート構文要素、`*ngFor`、`{{hero.name}}`、`(click)`、`[hero]`、`<app-hero-detail>`なども含みます。テンプレート構文要素は、プログラムロジックとデータを使用してHTMLをスクリーンにレンダリングする方法をAngularに伝えます。
+このPlantillasは `<h2>`や `<p>`のような典型的なHTML要素を使い、AngularPlantillas構文要素、`*ngFor`、`{{hero.name}}`、`(click)`、`[hero]`、`<app-hero-detail>`なども含みます。Plantillas構文要素は、プログラムロジックとデータを使用してHTMLをスクリーンにレンダリングする方法をAngularに伝えます。
 
 * `*ngFor`ディレクティブはAngularにリストの繰り返しを指示します。
 * `{{hero.name}}`、`(click)`、`[hero]` はユーザー入力に応答してDOMとの間でプログラムデータをバインドします。次の[データバインディング](#データバインディング)の詳細を参照してください。
@@ -77,7 +77,7 @@ Angularはこれらのタグ間に`HeroListComponent`ビューのインスタン
 
 フレームワークがなければ、自分でデータの値をHTMLコントロールにプッシュし、ユーザーの応答をアクションと値の更新に変える責任があります。そのようなプッシュアンドプルロジックを手作業で書くことは、経験豊富なフロントエンドJavaScriptプログラマが証明できるように面倒で、エラーが起こりやすく、悪夢のように読みづらいです。
 
-Angular は、テンプレートの部分をコンポーネントの各部分に合わせるためのメカニズムである*双方向データバインディング*をサポートしています。テンプレートHTMLにバインディングマークアップを追加して、Angularに両側の接続方法を伝えます。
+Angular は、Plantillasの部分をコンポーネントの各部分に合わせるためのメカニズムである*双方向データバインディング*をサポートしています。PlantillasHTMLにバインディングマークアップを追加して、Angularに両側の接続方法を伝えます。
 
 次の図は、データバインディングマークアップの4つの形式を示しています。各形式には、DOMへ、DOMから、またはその両方の方向があります。
 
@@ -85,7 +85,7 @@ Angular は、テンプレートの部分をコンポーネントの各部分に
   <img src="generated/images/guide/architecture/databinding.png" alt="Data Binding" class="left">
 </div>
 
-`HeroListComponent`テンプレートのこの例は、これらの3つの形式を使用しています。
+`HeroListComponent`Plantillasのこの例は、これらの3つの形式を使用しています。
 
 <code-example path="architecture/src/app/hero-list.component.1.html" header="src/app/hero-list.component.html (binding)" region="binding"></code-example>
 
@@ -97,9 +97,9 @@ Angular は、テンプレートの部分をコンポーネントの各部分に
 
 * `(click)` [*イベントバインディング*](guide/user-input#binding-to-user-input-events)は、ユーザーがヒーローの名前をクリックすると、コンポーネントの `selectHero` メソッドを呼び出します。
 
-双方向データバインディング（主に[テンプレート駆動フォーム](guide/forms)で使用される）は、
+双方向データバインディング（主に[Plantillas駆動フォーム](guide/forms)で使用される）は、
 単一の表記法でプロパティとイベントのバインディングを結合します。
-`HeroDetailComponent` テンプレートの例は、`ngModel` ディレクティブを用いて双方向データバインディングを使用しています。
+`HeroDetailComponent` Plantillasの例は、`ngModel` ディレクティブを用いて双方向データバインディングを使用しています。
 
 <code-example path="architecture/src/app/hero-detail.component.html" header="src/app/hero-detail.component.html (ngModel)" region="ngModel"></code-example>
 
@@ -114,7 +114,7 @@ Angular は、JavaScriptイベントサイクルごとに*すべての*データ
   <img src="generated/images/guide/architecture/component-databinding.png" alt="Data Binding" class="left">
 </div>
 
-データバインディングはテンプレートとそのコンポーネント間の通信で重要な役割を果たし、親コンポーネントと子コンポーネント間の通信においても重要です。
+データバインディングはPlantillasとそのコンポーネント間の通信で重要な役割を果たし、親コンポーネントと子コンポーネント間の通信においても重要です。
 
 <div class="lightbox">
   <img src="generated/images/guide/architecture/parent-child-binding.png" alt="Parent/Child binding" class="left">
@@ -122,11 +122,11 @@ Angular は、JavaScriptイベントサイクルごとに*すべての*データ
 
 ### パイプ {@a pipes}
 
-Angular のパイプを使用すると、テンプレートHTMLの表示値変換を宣言できます。`@Pipe` デコレーターをもつクラスは、入力値を出力値に変換してビューに表示する関数を定義します。
+Angular のパイプを使用すると、PlantillasHTMLの表示値変換を宣言できます。`@Pipe` デコレーターをもつクラスは、入力値を出力値に変換してビューに表示する関数を定義します。
 
 Angular は、[date](https://angular.io/api/common/DatePipe)パイプや[currency](https://angular.io/api/common/CurrencyPipe)パイプなどのさまざまなパイプを定義します。完全なリストについては、[Pipes API リスト](https://angular.io/api?type=pipe)を参照してください。新しいパイプを定義することもできます。
 
-HTMLテンプレートで値の変換を指定するには、[パイプ演算子 (|)](https://angular.io/guide/template-syntax#pipe)を使用します。
+HTMLPlantillasで値の変換を指定するには、[パイプ演算子 (|)](https://angular.io/guide/template-syntax#pipe)を使用します。
 
 `{{interpolated_value | pipe_name}}`
 
@@ -147,12 +147,12 @@ HTMLテンプレートで値の変換を指定するには、[パイプ演算子
 
 <img src="generated/images/guide/architecture/directive.png" alt="ディレクティブ" class="left">
 
-Angular テンプレートは*ダイナミック*です。Angular がレンダリングすると、*ディレクティブ*の指示にしたがってDOMが変換されます。ディレクティブは `@Directive()` デコレーターをもつクラスです。
+Angular Plantillasは*ダイナミック*です。Angular がレンダリングすると、*ディレクティブ*の指示にしたがってDOMが変換されます。ディレクティブは `@Directive()` デコレーターをもつクラスです。
 
 コンポーネントは技術的にはディレクティブです。
 しかし、コンポーネントは Angular アプリケーションにとって非常に特徴的であり、
 Angularは `@Component()` デコレーターを定義しています。
-これはテンプレート指向の機能をもつ `@Directive()` デコレーターを拡張します。
+これはPlantillas指向の機能をもつ `@Directive()` デコレーターを拡張します。
 
 コンポーネントに加えて、他に*構造*と*属性*の2つの種類のディレクティブがあります。
 Angularは両方の種類のディレクティブを定義し、`@Directive()` デコレーターを使用して独自のものを定義することができます。
@@ -162,7 +162,7 @@ Angularは両方の種類のディレクティブを定義し、`@Directive()` �
 #### 構造ディレクティブ
 
 *構造ディレクティブ*は、DOMの要素を追加、削除、置換することによってレイアウトを変更します。
-サンプルテンプレートでは、2つの組み込み構造ディレクティブを使用して、ビューのレンダリング方法にアプリケーションロジックを追加しています。
+サンプルPlantillasでは、2つの組み込み構造ディレクティブを使用して、ビューのレンダリング方法にアプリケーションロジックを追加しています。
 
 <code-example path="architecture/src/app/hero-list.component.1.html" header="src/app/hero-list.component.html (structural)" region="structural"></code-example>
 
@@ -172,7 +172,7 @@ Angularは両方の種類のディレクティブを定義し、`@Directive()` �
 #### 属性ディレクティブ
 
 *属性ディレクティブ*は、既存の要素の外観や動作を変更します。
-テンプレートでは通常のHTML属性、つまり名前のように見えます。
+Plantillasでは通常のHTML属性、つまり名前のように見えます。
 
 双方向データバインディングを実装する `ngModel` ディレクティブは、属性ディレクティブの例です。`ngModel`は、その表示値プロパティを設定し、変更イベントに応答することによって、既存の要素の動作（通常は` <input> `）を変更します。
 

@@ -1,14 +1,14 @@
 # Angular Language Service
 
-Angular Language ServiceはコードエディタにAngularテンプレート内での補完、エラー、
+Angular Language ServiceはコードエディタにAngularPlantillas内での補完、エラー、
 ヒント、ナビゲーションの機能を提供します。
-これらの機能はHTMLファイルとして分割された外部テンプレートやインラインテンプレートに対して動作します。
+これらの機能はHTMLファイルとして分割された外部PlantillasやインラインPlantillasに対して動作します。
 
 ## 機能
 
 エディタはAngularファイルを開いていることを自動で検出します。
-つづいて、Angular Language Serviceは`tsconfig.json`を読み取り、アプリケーション内に含まれるすべてのテンプレートを探して、
-あなたが開く任意のテンプレートに対して言語サービスを提供します。
+つづいて、Angular Language Serviceは`tsconfig.json`を読み取り、アプリケーション内に含まれるすべてのPlantillasを探して、
+あなたが開く任意のPlantillasに対して言語サービスを提供します。
 
 言語サービスには下記が含まれます：
 
@@ -92,15 +92,15 @@ yarn install
 ```
 
 Angularはこの開発用依存関係を認識すると、WebStorm環境内で言語機能を提供します。
-WebStormは、Language Serviceに加えて、テンプレート内の色付けとオートコンプリートを提供します。
+WebStormは、Language Serviceに加えて、Plantillas内の色付けとオートコンプリートを提供します。
 
 
 ### Sublime Text
 
-[Sublime Text](https://www.sublimetext.com/)では、Language Serviceは、プラグインとしてインストールされた場合にインラインテンプレートのみをサポートします。
+[Sublime Text](https://www.sublimetext.com/)では、Language Serviceは、プラグインとしてインストールされた場合にインラインPlantillasのみをサポートします。
 HTMLファイル内で補完を有効化するには、別のSublimeプラグインが必要です（または本プラグインの改造が必要です）。
 
-インラインテンプレートでLanguage Serviceを利用するには、TypeScriptの拡張機能としてAngular Language Serviceプラグインをインストールする必要があります。TypeScript 2.3から、TypeScriptには言語サービスから利用可能なプラグインモデルが存在しています。
+インラインPlantillasでLanguage Serviceを利用するには、TypeScriptの拡張機能としてAngular Language Serviceプラグインをインストールする必要があります。TypeScript 2.3から、TypeScriptには言語サービスから利用可能なプラグインモデルが存在しています。
 
 1. ローカルの`node_modules`ディレクトリ内で最新のTypeScriptをインストールしてください：
 
@@ -140,14 +140,14 @@ npm install --save-dev @angular/language-service
 あなたがエディタに入力すると、エディタはその情報を言語サービスのプロセスへ送信して
 プロジェクトの状態を追跡します。
 
-あなたがテンプレートの中で補完候補のリストを呼び出すとき、まずエディタはテンプレートを
+あなたがPlantillasの中で補完候補のリストを呼び出すとき、まずエディタはPlantillasを
 HTML [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree)へパースします。
-Angularのコンパイラがパースされた木構造を解析して、テンプレートがどのモジュールに含まれているか、現在のスコープ、コンポーネントのセレクター、カーソルがテンプレートASTのどこにあるのか、といったコンテキスト情報を決定します。
+Angularのコンパイラがパースされた木構造を解析して、Plantillasがどのモジュールに含まれているか、現在のスコープ、コンポーネントのセレクター、カーソルがPlantillasASTのどこにあるのか、といったコンテキスト情報を決定します。
 
 補間の場合はもう少し複雑です。
 ある`div`要素内の`{{data.---}}`という補間があり、`data.---`の部分で補完候補が必要な場合、答えを求めるにはHTML ASTは使えません。
 このHTML ASTは、ただ"`{{data.---}}`"というテキスト文字列が存在していることをコンパイラへ伝えるだけです。
-テンプレートパーサーがテンプレートAST内にあるAngular expression ASTを生成するのはこのときです。
+PlantillasパーサーがPlantillasAST内にあるAngular expression ASTを生成するのはこのときです。
 Angular Language Serviceは、このコンテキストにおける`data.---`を見つけて、TypeScriptの言語サービスに`data`のメンバを問い合わせることで、補完可能な候補のリストを返却するのです。
 
 <hr>

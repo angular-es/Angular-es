@@ -81,7 +81,7 @@ _コンポーネント_ はAngularアプリケーションのbase的な構成要
 次の3つのファイルに分割された、`AppComponent`シェルの実装が見つかります。
 
 1. `app.component.ts`&mdash; TypeScriptで書かれたコンポーネントクラスのコードです。
-1. `app.component.html`&mdash; HTMLで書かれたコンポーネントのテンプレートです。
+1. `app.component.html`&mdash; HTMLで書かれたコンポーネントのPlantillasです。
 1. `app.component.css`&mdash; このコンポーネント専用のCSSです。
 
 ### アプリケーションのタイトルを変更する
@@ -90,8 +90,8 @@ _コンポーネント_ はAngularアプリケーションのbase的な構成要
 
 <code-example path="toh-pt0/src/app/app.component.ts" region="set-title" header="app.component.ts (class title property)"></code-example>
 
-コンポーネントのテンプレートファイル(`app.component.html`)を開き、
-Angular CLIにより生成されたデフォルトのテンプレートを削除してください。
+コンポーネントのPlantillasファイル(`app.component.html`)を開き、
+Angular CLIにより生成されたデフォルトのPlantillasを削除してください。
 代わりに次のHTMLを配置してください。
 
 <code-example path="toh-pt0/src/app/app.component.html"

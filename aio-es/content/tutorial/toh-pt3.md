@@ -32,7 +32,7 @@ Angular CLIを使用して､ `hero-detail` という名前の新しいコンポ
 このディレクトリの中に4つのファイルを生成します:
 
 * コンポーネントスタイルのためのCSSファイル
-* コンポーネントテンプレートのためのHTMLファイル
+* コンポーネントPlantillasのためのHTMLファイル
 * `HeroDetailComponent` と名付けられたコンポーネントクラスのTypeScriptファイル
 * `HeroDetailComponent` クラスのテストファイル
 
@@ -41,19 +41,19 @@ Angular CLIを使用して､ `hero-detail` という名前の新しいコンポ
 
 ### template を記述する
 
-ヒーローの詳細のHTMLを `HeroesComponent` テンプレートの下部から切り取り、 `HeroDetailComponent` テンプレートに生成されたボイラープレートへ貼り付けます。
+ヒーローの詳細のHTMLを `HeroesComponent` Plantillasの下部から切り取り、 `HeroDetailComponent` Plantillasに生成されたボイラープレートへ貼り付けます。
 
 貼り付けられたHTMLは `selectedHero` を参照しています。
 新しい `HeroDetailComponent` は、選択されたヒーローだけでなく、_どんな_ ヒーローも表示することができます。
-なので、テンプレート内すべての "selectedHero" を "hero" に置き換えてください。
+なので、Plantillas内すべての "selectedHero" を "hero" に置き換えてください。
 
-完了したら、 `HeroDetailComponent` テンプレートは次のようになります。
+完了したら、 `HeroDetailComponent` Plantillasは次のようになります。
 
 <code-example path="toh-pt3/src/app/hero-detail/hero-detail.component.html" header="src/app/hero-detail/hero-detail.component.html"></code-example>
 
 ### `@Input()` heroプロパティを追加する
 
-`HeroDetailComponent` テンプレートは、 `Hero` 型であるコンポーネントの `hero` プロパティにバインドされます。
+`HeroDetailComponent` Plantillasは、 `Hero` 型であるコンポーネントの `hero` プロパティにバインドされます。
 
 `HeroDetailComponent` クラスのファイルを開いて、` Hero` シンボルをインポートします。
 
@@ -83,7 +83,7 @@ region="import-hero" header="src/app/hero-detail/hero-detail.component.ts (impor
 
 `HeroesComponent` は、まだ master/detail ビューのままです。
 
-テンプレートからヒーローの詳細を切り取るまでは、このコンポーネント自身でそれを表示していました。今度は `HeroDetailComponent` に委譲しましょう。
+Plantillasからヒーローの詳細を切り取るまでは、このコンポーネント自身でそれを表示していました。今度は `HeroDetailComponent` に委譲しましょう。
 
 2つのコンポーネントには親子関係があります。
 ユーザーがリストからヒーローを選択するたびに新しいヒーローを表示するため、
@@ -93,11 +93,11 @@ region="import-hero" header="src/app/hero-detail/hero-detail.component.ts (impor
 
 {@a heroes-component-template}
 
-### `HeroesComponent` テンプレートを更新する
+### `HeroesComponent` Plantillasを更新する
 
 `HeroDetailComponent` のセレクターは `'app-hero-detail'` です。
 
-ヒーローの詳細ビューがかつて存在した `HeroesComponent` テンプレートの下部に `<app-hero-detail>` 要素を追加してください。
+ヒーローの詳細ビューがかつて存在した `HeroesComponent` Plantillasの下部に `<app-hero-detail>` 要素を追加してください。
 
 次のように `HeroesComponent.selectedHero` を、この要素の `hero` プロパティにバインドさせます。
 
@@ -114,7 +114,7 @@ region="import-hero" header="src/app/hero-detail/hero-detail.component.ts (impor
 `selectedHero` が変更されると、_property binding_ は `hero` を更新して、
  `HeroDetailComponent` は新しいヒーローを表示します。
 
-修正された `HeroesComponent` テンプレートはこのようになります：
+修正された `HeroesComponent` Plantillasはこのようになります：
 
 <code-example path="toh-pt3/src/app/heroes/heroes.component.html"
   header="heroes.component.html"></code-example>
@@ -135,7 +135,7 @@ region="import-hero" header="src/app/hero-detail/hero-detail.component.ts (impor
 
 1. ヒーローの詳細ビューに触れることなく、 `HeroesComponent` を進化させることができます。
 
-1. 将来のコンポーネントのテンプレートで `HeroDetailComponent` を再利用することができます。
+1. 将来のコンポーネントのPlantillasで `HeroDetailComponent` を再利用することができます。
 
 ## 最終的なコードレビュー
 

@@ -96,7 +96,7 @@
     
     <code-example path="getting-started/src/app/product-details/product-details.component.ts" header="src/app/product-details/product-details.component.ts" region="add-to-cart"></code-example>
 
-1. 商品詳細テンプレートを更新して、現在の商品をカートに追加する "Buy" ボタンを表示します。
+1. 商品詳細Plantillasを更新して、現在の商品をカートに追加する "Buy" ボタンを表示します。
 
     1. `product-details.component.html` を開きます。
 
@@ -107,7 +107,7 @@
 
     <div class="alert is-helpful">
 
-    この行、 `<h4>{{ product.price | currency }}</h4>` は、`currency`パイプを使用して、 `product.price`を数値から通貨文字列に変換します。パイプは、HTMLテンプレートのデータを変換できる方法です。Angularのパイプの詳細については、[パイプ](guide/pipes "Pipes")を参照してください。
+    この行、 `<h4>{{ product.price | currency }}</h4>` は、`currency`パイプを使用して、 `product.price`を数値から通貨文字列に変換します。パイプは、HTMLPlantillasのデータを変換できる方法です。Angularのパイプの詳細については、[パイプ](guide/pipes "Pipes")を参照してください。
 
     </div>
 
@@ -200,9 +200,9 @@
     <code-example path="getting-started/src/app/cart/cart.component.3.ts" header="src/app/cart/cart.component.ts" region="props-services">
     </code-example>
 
-1. ヘッダーとともにテンプレートを更新し、 `<div>` と `*ngFor` を使用してカートアイテムの名前と価格を表示します。
+1. ヘッダーとともにPlantillasを更新し、 `<div>` と `*ngFor` を使用してカートアイテムの名前と価格を表示します。
 
-    結果、CartComponentテンプレートは次のようになります。
+    結果、CartComponentPlantillasは次のようになります。
 
     <code-example header="src/app/cart/cart.component.html" path="getting-started/src/app/cart/cart.component.2.html" region="prices">
     </code-example>
@@ -312,7 +312,7 @@ Angularの`HttpClient`の詳細については、 [クライアント・サー�
 
 ## 配送ビューを定義する
 
-アプリで配送データを取得できるようになったので、配送コンポーネントとテンプレートを作成します。
+アプリで配送データを取得できるようになったので、配送コンポーネントとPlantillasを作成します。
 
 1. `shipping` という名前の新しいコンポーネントを生成します。
 
@@ -324,7 +324,7 @@ Angularの`HttpClient`の詳細については、 [クライアント・サー�
 
     <code-example header="src/app/app.module.ts" path="getting-started/src/app/app.module.ts" region="shipping-route"></code-example>
 
-    新しい配送コンポーネントへのリンクはまだありませんが、ルートが指定するURLを入力すると、プレビューペインにテンプレートが表示されます。 URLのパターンは `https://getting-started.stackblitz.io/shipping` です。ここで、`getting-started.stackblitz.io` の部分はStackBlitzプロジェクトによって異なる場合があります。
+    新しい配送コンポーネントへのリンクはまだありませんが、ルートが指定するURLを入力すると、プレビューペインにPlantillasが表示されます。 URLのパターンは `https://getting-started.stackblitz.io/shipping` です。ここで、`getting-started.stackblitz.io` の部分はStackBlitzプロジェクトによって異なる場合があります。
 
 1. カートサービスを使用して、 `shipping.json` ファイルからHTTP経由で配送データを取得するよう配送コンポーネントを変更します。
 
@@ -344,7 +344,7 @@ Angularの`HttpClient`の詳細については、 [クライアント・サー�
 
         <code-example path="getting-started/src/app/shipping/shipping.component.ts" region="ctor"></code-example>
 
-1. 配送コンポーネントのテンプレートで、`async`パイプを使用して配送タイプと価格を表示するように更新します:
+1. 配送コンポーネントのPlantillasで、`async`パイプを使用して配送タイプと価格を表示するように更新します:
 
     <code-example header="src/app/shipping/shipping.component.html" path="getting-started/src/app/shipping/shipping.component.html"></code-example>
 

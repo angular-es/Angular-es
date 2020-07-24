@@ -70,7 +70,7 @@ _HttpClient_モジュールの`HttpBackend`を置き換える
 
 サービスメソッドは構成データの`Observable`を返すので、コンポーネントはメソッドの戻り値を**購読**します。
 サブスクリプションのコールバックでは、データフィールドをコンポーネントの`config`オブジェクトにコピーします。
-このオブジェクトは、表示のためにコンポーネントのテンプレート内でデータバインドされています。
+このオブジェクトは、表示のためにコンポーネントのPlantillas内でデータバインドされています。
 
 
 <div class="callout is-helpful">
@@ -833,7 +833,7 @@ const params = new HttpParams({fromString: 'name=foo'});
 ユーザーが検索ボックスに名前を入力すると、
 「PackageSearchComponent」は、その名前をもつパッケージの検索リクエストをNPMのウェブAPIに送信します。
 
-ここにテンプレートからの関連する抜粋があります。
+ここにPlantillasからの関連する抜粋があります。
 
 <code-example
   path="http/src/app/package-search/package-search.component.html"
@@ -868,7 +868,7 @@ RxJSの`Subject`として定義されていて、マルチキャストする`Obs
 1. `switchMap()` - 検索リクエストをサービスに送ります。
 
 このコードは、`packages$`をこの再構成された検索結果の`Observable`に設定します。
-テンプレートは[AsyncPipe](api/common/AsyncPipe)を使用して`packages$`を購読し、
+Plantillasは[AsyncPipe](api/common/AsyncPipe)を使用して`packages$`を購読し、
 値が来たら検索結果を表示します。
 
 検索値がサービスに到達するのは、それが新しい値でユーザーが入力を停止した場合のみです。

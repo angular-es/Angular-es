@@ -53,7 +53,7 @@ import { CommonModule } from '@angular/common';
 export class CustomerDashboardModule { }
 ```
 
-NgModuleの構造はルートモジュールでもフィーチャーモジュールでも同じです。CLIで生成されたフィーチャーモジュールは、ファイルの先頭に2つのJavaScriptインポート文を持ちます。最初のインポートは`NgModule`です。ルートモジュールと同様に`@NgModule`デコレーターを使用できます。 2つ目は`CommonModule`です。これは`ngIf`や`ngFor`のような多くの一般的なディレクティブを提供します。フィーチャーモジュールでは`BrowserModule`(ルートモジュールで一度だけインポートされる)の代わりに`CommonModule`をインポートします。`CommonModule`にはほとんどのテンプレートで必要とされる`ngIf`や`ngFor`のようなディレクティブの情報しか含まれていません。対して、`BrowserModule`はブラウザ用のAngularアプリケーションが一度だけ行う必要のある設定を行います。
+NgModuleの構造はルートモジュールでもフィーチャーモジュールでも同じです。CLIで生成されたフィーチャーモジュールは、ファイルの先頭に2つのJavaScriptインポート文を持ちます。最初のインポートは`NgModule`です。ルートモジュールと同様に`@NgModule`デコレーターを使用できます。 2つ目は`CommonModule`です。これは`ngIf`や`ngFor`のような多くの一般的なディレクティブを提供します。フィーチャーモジュールでは`BrowserModule`(ルートモジュールで一度だけインポートされる)の代わりに`CommonModule`をインポートします。`CommonModule`にはほとんどのPlantillasで必要とされる`ngIf`や`ngFor`のようなディレクティブの情報しか含まれていません。対して、`BrowserModule`はブラウザ用のAngularアプリケーションが一度だけ行う必要のある設定を行います。
 
 `declarations`配列はこの個別のモジュールにのみ属するコンポーネント、ディレクティブ、およびパイプの宣言を追加するために利用できます。
 コンポーネントを追加するには、コマンドラインで次のコマンドを実行してください。`customer-dashboard`は、CLIがフィーチャーモジュールを生成したディレクトリで、`CustomerDashboard`はコンポーネント名です:
@@ -82,9 +82,9 @@ ng generate component customer-dashboard/CustomerDashboard
 これで`AppModule`はフィーチャーモジュールについて知っている状態になりました。フィーチャーモジュールにサービスプロバイダーを追加した場合、他のフィーチャーモジュールと同様に`AppModule`もそれについて知っている状態になります。ただし、NgModuleは自身のコンポーネントを公開しません。
 
 
-## フィーチャーモジュールのコンポーネントテンプレートをレンダリングする
+## フィーチャーモジュールのコンポーネントPlantillasをレンダリングする
 
-CLIがフィーチャーモジュールのために`CustomerDashboardComponent`を生成したとき、それは次のようなマークアップの`customer-dashboard.component.html`テンプレートを含んでいました:
+CLIがフィーチャーモジュールのために`CustomerDashboardComponent`を生成したとき、それは次のようなマークアップの`customer-dashboard.component.html`Plantillasを含んでいました:
 
 <code-example path="feature-modules/src/app/customer-dashboard/customer-dashboard/customer-dashboard.component.html" region="feature-template" header="src/app/customer-dashboard/customer-dashboard/customer-dashboard.component.html"></code-example>
 
@@ -100,7 +100,7 @@ CLIがフィーチャーモジュールのために`CustomerDashboardComponent`�
 <code-example path="feature-modules/src/app/app.component.html" region="app-component-template" header="src/app/app.component.html"></code-example>
 
 
-そして、デフォルトでレンダリングされるタイトルに加えて、 `CustomerDashboardComponent`テンプレートもレンダリングされます:
+そして、デフォルトでレンダリングされるタイトルに加えて、 `CustomerDashboardComponent`Plantillasもレンダリングされます:
 
 <div class="lightbox">
   <img src="generated/images/guide/feature-modules/feature-module.png" alt="feature module component">

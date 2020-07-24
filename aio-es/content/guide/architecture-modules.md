@@ -13,9 +13,9 @@ NgModuleは`@NgModule`で装飾されたクラスとして定義されていま�
 
 * `declarations`: このNgModuleに属する[コンポーネント](guide/architecture-components)、*ディレクティブ*、および *パイプ*
 
-* `exports`: 他のNgModuleの *コンポーネントテンプレート* で可視で使用可能な宣言のサブセット。
+* `exports`: 他のNgModuleの *コンポーネントPlantillas* で可視で使用可能な宣言のサブセット。
 
-* `imports`: エクスポートされたクラスが *この* NgModuleで宣言されたコンポーネントテンプレートによって必要とされる他のモジュール。
+* `imports`: エクスポートされたクラスが *この* NgModuleで宣言されたコンポーネントPlantillasによって必要とされる他のモジュール。
 
 * `providers`: このNgModuleが[サービス](guide/architecture-services)のグローバルなコレクションに貢献するサービスの作成元。それらはアプリのすべての部分でアクセス可能になります。 （コンポーネントレベルでプロバイダーを指定することもでき、しばしば好まれます）
 
@@ -33,7 +33,7 @@ NgModuleは`@NgModule`で装飾されたクラスとして定義されていま�
 
 ## NgModules とコンポーネント
 
-NgModuleは、そのコンポーネントの *コンパイルコンテキスト* を提供します。ルートNgModuleには常にブートストラップ時に作成されるルートコンポーネントがありますが、任意のNgModuleに追加のコンポーネントをいくつでも含めることができます。これらのコンポーネントは、ルーター経由でロードするか、テンプレートから作成することができます。NgModuleに属するコンポーネントは、コンパイルコンテキストを共有します。
+NgModuleは、そのコンポーネントの *コンパイルコンテキスト* を提供します。ルートNgModuleには常にブートストラップ時に作成されるルートコンポーネントがありますが、任意のNgModuleに追加のコンポーネントをいくつでも含めることができます。これらのコンポーネントは、ルーター経由でロードするか、Plantillasから作成することができます。NgModuleに属するコンポーネントは、コンパイルコンテキストを共有します。
 
 <div class="lightbox">
   <img src="generated/images/guide/architecture/compilation-context.png" alt="Component compilation context" class="left">
@@ -41,7 +41,7 @@ NgModuleは、そのコンポーネントの *コンパイルコンテキスト*
 
 <br class="clear">
 
-コンポーネントとそのテンプレートは一緒に *ビュー* を定義します。コンポーネントには、*ビュー階層* を含めることができます。これにより、画面の任意の複雑な領域を定義し、ユニットとして作成、変更、および破棄することができます。ビュー階層は、異なるNgModuleに属するコンポーネントで定義されたビューを混在させることができます。これは多くの場合、特にUIライブラリの場合に当てはまります。
+コンポーネントとそのPlantillasは一緒に *ビュー* を定義します。コンポーネントには、*ビュー階層* を含めることができます。これにより、画面の任意の複雑な領域を定義し、ユニットとして作成、変更、および破棄することができます。ビュー階層は、異なるNgModuleに属するコンポーネントで定義されたビューを混在させることができます。これは多くの場合、特にUIライブラリの場合に当てはまります。
 
 <div class="lightbox">
   <img src="generated/images/guide/architecture/view-hierarchy.png" alt="View hierarchy" class="left">

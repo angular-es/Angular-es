@@ -27,7 +27,7 @@ URLは1つあり、そのURLには常に"My Store"ページが製品のリスト
 
     ルーティングは、1つ以上のURLパスをコンポーネントに関連付けます。
 
-1. ディレクティブは、ユーザーがルートまたはURLに移動する方法を定義するためにコンポーネントテンプレートを構成します。ユーザーが製品名をクリックすると、アプリにその製品の詳細が表示されます。
+1. ディレクティブは、ユーザーがルートまたはURLに移動する方法を定義するためにコンポーネントPlantillasを構成します。ユーザーが製品名をクリックすると、アプリにその製品の詳細が表示されます。
 
     1. `product-list.component.html`を開きます。
 
@@ -81,7 +81,7 @@ URLは1つあり、そのURLには常に"My Store"ページが製品のリスト
 
     ルートパラメータは、ルートで定義するパス変数に対応します。ルートに一致するURLは、`productId`を提供します。 Angularは `productId`を使用して、それぞれ固有の製品の詳細を表示します。
 
-1. テンプレートを更新して、`*ngIf`内に製品の詳細情報を表示します。
+1. Plantillasを更新して、`*ngIf`内に製品の詳細情報を表示します。
 
     <code-example header="src/app/product-details/product-details.component.html" path="getting-started/src/app/product-details/product-details.component.html" region="details">
     </code-example>

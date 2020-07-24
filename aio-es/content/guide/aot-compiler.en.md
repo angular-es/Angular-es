@@ -134,7 +134,7 @@ Define metadata objects with the following limited syntax:
 <table>
   <tr>
     <th>Syntax</th>
-    <th>Example</th>
+    <th>Ejemplo</th>
   </tr>
   <tr>
     <td>Literal object </td>

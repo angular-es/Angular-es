@@ -127,7 +127,7 @@ Angular において、コンポーネントはユーザーインターフェー
 全体のユーザー体験として構成します。
 
 *コンポーネントディレクティブ* を使うことで、AngularJS でもこれを行うことができます。
-これらのディレクティブは自身のテンプレートやコントローラー、入力/出力のバインディングのような
+これらのディレクティブは自身のPlantillasやコントローラー、入力/出力のバインディングのような
 Angular のコンポーネントが定義するものと同じものを定義することができます。
 コンポーネントディレクティブによって構築されたアプリケーションは
 `ng-controller` や `ng-include` 、スコープの継承などの低レベルの
@@ -142,7 +142,7 @@ Angular 互換にするために、 AngularJS のコンポーネントディレ�
 * `bindToController: {}`。 コンポーネントへ入力と出力は `$scope` の
   代わりにコントローラーと繋げるべきです。
 * `controller` もしくは `controllerAs`。コンポーネントは自身のコントローラーを持ちます。
-* `template` もしくは `templateUrl`。 コンポーネントは自身のテンプレートを持ちます。
+* `template` もしくは `templateUrl`。 コンポーネントは自身のPlantillasを持ちます。
 
 コンポーネントディレクティブは次の要素を使うこともできます。
 
@@ -154,7 +154,7 @@ Angular 互換にするために、 AngularJS のコンポーネントディレ�
 
 * `compile`。 Angular ではこの属性はサポートされません。
 * `replace: true`。 Angular はコンポーネントのエレメントをコンポーネントの
-  テンプレートと置換しません。AngularJS でもこの属性は廃止されました。
+  Plantillasと置換しません。AngularJS でもこの属性は廃止されました。
 * `priority` と `terminal`。 AngularJS のコンポーネントでは使うことができますが、
   Angular では使うことはできないのでそれらの属性に依存したコードは書かない方が
   よいでしょう。
@@ -285,9 +285,9 @@ AngularJS と Angular のコンポーネントやディレクティブの集ま�
 よって所有されている場合、Angular はその要素が存在しないものとして扱います。逆も同様です。
 
 通常、ハイブリッドのアプリケーションは AngularJS のアプリケーションとして動作を開始し、
-AngularJS が index.html のようなRaízテンプレートを処理します。
-AngularJS のテンプレートのどこかで Angular のコンポーネントが使われた時に
-Angular が出てきます。そのコンポーネントのテンプレートは Angular によって
+AngularJS が index.html のようなRaízPlantillasを処理します。
+AngularJS のPlantillasのどこかで Angular のコンポーネントが使われた時に
+Angular が出てきます。そのコンポーネントのPlantillasは Angular によって
 管理されることになり、Angular のコンポーネントやディレクティブを
 何個でも含めることができます。
 
@@ -295,9 +295,9 @@ Angular が出てきます。そのコンポーネントのテンプレートは
 次の2つの方法のうち、どちらかを使うことで2つのフレームワークの境界を
 行き来することができます。
 
-1. もう一方のフレームワークからコンポーネント使う方法。AngularJS のテンプレートで
-   Angular のコンポーネントを使うか、Angular のテンプレートで AngularJS の
-   テンプレートを使う。
+1. もう一方のフレームワークからコンポーネント使う方法。AngularJS のPlantillasで
+   Angular のコンポーネントを使うか、Angular のPlantillasで AngularJS の
+   Plantillasを使う。
 
 2. もう一方のフレームワークからトランスクルードかコンテンツ投影を行う方法。
    ngUpgrade は AngularJS のトランスクルードと Angular のコンテンツ投影という
@@ -309,7 +309,7 @@ Angular が出てきます。そのコンポーネントのテンプレートは
 
 もう一方のフレームワークのコンポーネントを使う際は常に
 フレームワーク間の行き来が発生します。しかし、その行き来は
-コンポーネントのテンプレートの要素にのみ発生します。次のように、
+コンポーネントのPlantillasの要素にのみ発生します。次のように、
 Angular のコンポーネントを AngularJS から使う場合を考えてみます。
 
 <code-example language="html" escape="html">
@@ -317,9 +317,9 @@ Angular のコンポーネントを AngularJS から使う場合を考えてみ�
 </code-example>
 
 DOM 要素の `<a-component>` は AngularJS の要素として管理されます。
-なぜなら、AngularJS のテンプレートの中で定義されているからです。
+なぜなら、AngularJS のPlantillasの中で定義されているからです。
 そのため、そこには AngularJS のディレクティブのみ追加することができますが
-Angular のディレクティブは *できません* 。 `<a-component>` のテンプレートの中でのみ
+Angular のディレクティブは *できません* 。 `<a-component>` のPlantillasの中でのみ
 Angular が入ることができます。同じことが Angular から AngularJS のコンポーネントを
 使う場合にもいえます。
 
@@ -447,7 +447,7 @@ AngularJS のアプリケーションをハイブリッドに置き換え始め�
 
 <div class="alert is-helpful">
 
-AngularJS はアプリケーションのRaízテンプレートを管理するため、
+AngularJS はアプリケーションのRaízPlantillasを管理するため、
 `@NgModule` デコレーターに `bootstrap` の宣言を追加しないことに注意してください。
 
 </div>
@@ -497,7 +497,7 @@ NgModule の `entryComponents` に追加しなければなりません。
 
 </div>
 
-最終的に、`heroDetail` という名前で、AngularJS のテンプレートの
+最終的に、`heroDetail` という名前で、AngularJS のPlantillasの
 中にある他のディレクティブと同じように使うことができるようになります。
 
 <code-example path="upgrade-module/src/index-downgrade-static.html" region="usecomponent">
@@ -519,13 +519,13 @@ NgModule の `entryComponents` に追加しなければなりません。
 <code-example path="upgrade-module/src/app/downgrade-io/hero-detail.component.ts" header="hero-detail.component.ts">
 </code-example>
 
-これらの入力と出力は AngularJS のテンプレートから与えることができ、`downgradeComponent()`
+これらの入力と出力は AngularJS のPlantillasから与えることができ、`downgradeComponent()`
 がそれらを紐づけてくれます。
 
 <code-example path="upgrade-module/src/index-downgrade-io.html" region="usecomponent">
 </code-example>
 
-AngularJS のテンプレートの中であっても、 **Angular の属性記法を使って入力と出力をバインドしている** ことに
+AngularJS のPlantillasの中であっても、 **Angular の属性記法を使って入力と出力をバインドしている** ことに
 注意してください。これはコンポーネントをダウングレードするための要件です。
 それ自体の式は通常 AngularJS の式のままです。
 
@@ -544,7 +544,7 @@ AngularJS のテンプレートの中であっても、 **Angular の属性記�
   (heroDeleted)="handleHeroDeleted($event)"
 </code-example>
 
-しかし AngularJS のテンプレートから使う場合、ケバブケースを使わなければなりません。
+しかし AngularJS のPlantillasから使う場合、ケバブケースを使わなければなりません。
 
 <code-example format="">
   [my-hero]="hero"
@@ -557,7 +557,7 @@ AngularJS のテンプレートの中であっても、 **Angular の属性記�
 この場合は `Hero` オブジェクトが該当します。なぜならそれは `this.deleted.emit()`
 へ渡されたオブジェクトだからです。
 
-これは AngularJS のテンプレートであるため、Angular でバインディングされた属性であっても、
+これは AngularJS のPlantillasであるため、Angular でバインディングされた属性であっても、
 そのエレメントにある他の AngularJS のディレクティブを引き続き使うことができます。
 たとえば、`ng-repeat` を使ってそのコンポーネントのコピーをいくつも簡単に作ることができます。
 
@@ -583,7 +583,7 @@ Angular から使うことができます。
 [コンポーネント API](https://docs.angularjs.org/api/ng/type/angular.Module)
 を使うことです。
 
-アップグレード可能なコンポーネントの簡単な例として、テンプレートとコントローラーのみ
+アップグレード可能なコンポーネントの簡単な例として、Plantillasとコントローラーのみ
 もつコンポーネントがあります。
 
 <code-example path="upgrade-module/src/app/upgrade-static/hero-detail.component.ts" region="hero-detail" header="hero-detail.component.ts">
@@ -611,8 +611,8 @@ Angular はその子要素に関しては気にしません。
 
 アップグレードされたコンポーネントはもともとの AngularJS のコンポーネントディレクティブの
 スコープ/コントローラーのバインディングで定義された入力と出力をもつこともできます。
-そのコンポーネントを Angular のテンプレートから使う時は
-**Angular のテンプレート記法** を使い、
+そのコンポーネントを Angular のPlantillasから使う時は
+**Angular のPlantillas記法** を使い、
 次のルールにしたがって入力と出力を提供してください。
 
 <table>
@@ -623,7 +623,7 @@ Angular はその子要素に関しては気にしません。
       バインディングの定義
     </th>
     <th>
-      テンプレート記法
+      Plantillas記法
     </th>
   </tr>
   <tr>
@@ -697,7 +697,7 @@ Angular はその子要素に関しては気にしません。
 <code-example path="upgrade-module/src/app/upgrade-io/hero-detail.component.ts" region="hero-detail-io" header="hero-detail.component.ts">
 </code-example>
 
-Angular のテンプレート記法を使うことで、このコンポーネントを Angular にアップグレードし、入力と出力を
+Angular のPlantillas記法を使うことで、このコンポーネントを Angular にアップグレードし、入力と出力を
 アップグレードされたディレクティブに記述し、入力と出力を提供することができます。
 
 <code-example path="upgrade-module/src/app/upgrade-io/hero-detail.component.ts" region="hero-detail-io-upgrade" header="hero-detail.component.ts">
@@ -710,7 +710,7 @@ Angular のテンプレート記法を使うことで、このコンポーネン
 
 <img src="generated/images/guide/upgrade/ajs-to-a-with-projection.png" alt="Projecting AngularJS content into Angular" class="left">
 
-ダウングレードされた Angular のコンポーネントを AngularJS のテンプレートから
+ダウングレードされた Angular のコンポーネントを AngularJS のPlantillasから
 使う時、いくつかのコンテンツを *トランスクルード* する必要が出てくるかもしれません。
 これをすることも可能です。Angular にトランスクルードにあたるものはないものの、
 似た概念として *コンテンツ投影* があります。`upgrade/static` を使うことで、
@@ -746,7 +746,7 @@ Angular コンポーネントの中で AngularJS のコンテンツが投影さ�
 
 AngularJS のコンポーネントディレクティブがトランスクルードをサポートする時、
 トランスクルードを行う地点を示すために `ng-transclude` ディレクティブを
-テンプレートの中で使うことができます。
+Plantillasの中で使うことができます。
 
 <code-example path="upgrade-module/src/app/a-to-ajs-transclusion/hero-detail.component.ts" header="hero-detail.component.ts">
 </code-example>
@@ -880,7 +880,7 @@ AngularJS のアプリケーションにはコンテンツをレンダリング�
 
 <div class="alert is-important">
 
-**備考** AngularJS が読み込まれ、ブートストラップされたあとも、Raíz設定を紐づけるリスナーはRaíz変更を監視し続けます。AngularJS が表示されていない時はリスナーが停止するように、 [$routeProvider](https://docs.angularjs.org/api/ngRoute/provider/$routeProvider) で空のテンプレートをレンダリングする `otherwise` オプションを設定します。これにより、他のすべてのルートは Angular によって制御されます。
+**備考** AngularJS が読み込まれ、ブートストラップされたあとも、Raíz設定を紐づけるリスナーはRaíz変更を監視し続けます。AngularJS が表示されていない時はリスナーが停止するように、 [$routeProvider](https://docs.angularjs.org/api/ngRoute/provider/$routeProvider) で空のPlantillasをレンダリングする `otherwise` オプションを設定します。これにより、他のすべてのルートは Angular によって制御されます。
 
 </div>
 
@@ -1150,7 +1150,7 @@ AngularJS 1.5 のコンポーネント API を使っており、
 * `core` や `phone-detain`、`phone-list` モジュールは
   個々のサブディレクトリにあり、
   これらのサブディレクトリには JavaScript のコードと、
-  個々の機能に特有の HTML テンプレート があります。
+  個々の機能に特有の HTML Plantillas があります。
   これは [Folders-by-Feature Structure](https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md#folders-by-feature-structure) と
   [Modularity](https://github.com/johnpapa/angular-styleguide/blob/master/a1/README.md#modularity) のルールに書かれていることです。
 
@@ -1292,7 +1292,7 @@ AngularJS ではコントローラーはコンストラクターを持ちます�
 そのクラスはさらに3つのメンバーを宣言します。電話の配列、現在の並び替えのキー、
 検索クエリです。これらはすべてコントローラーへすでに紐づけていましたが、
 どこにも明示的に宣言されていませんでした。
-最後の１つに関してはテンプレートでだけ参照されており、
+最後の１つに関してはPlantillasでだけ参照されており、
 TypeScript のコードでは実際には使われていませんでした。
 しかし、見通しをよくするために、すべてをコントローラーのメンバーで定義するべきです。
 
@@ -1562,13 +1562,13 @@ AngularJS では、コンポーネントの名前をもとにマッチさせて�
 これは AngularJS のバージョンでやっていたように、
 `phone-list` という名前のエレメントとマッチします。
 
-このコンポーネントのテンプレートを Angular の記法に変換しましょう。
+このコンポーネントのPlantillasを Angular の記法に変換しましょう。
 検索のコントロールは AngularJS の `$ctrl` 式を Angular の
 双方向の `[(ngModel)]` バインディング記法に置き換えます。
 
 <code-example path="upgrade-phonecat-2-hybrid/app/phone-list/phone-list.template.html" region="controls" header="app/phone-list/phone-list.template.html (search controls)"></code-example>
 
-[テンプレート記法のページに記載されているように](guide/template-syntax#directives)、
+[Plantillas記法のページに記載されているように](guide/template-syntax#directives)、
 リストの `ng-repeat` を `*ngFor` に置き換えます。
 イメージタグの `ng-src` をネイティブの `src` プロパティに置き換えます。
 
@@ -1626,7 +1626,7 @@ AngularJS のインジェクターは `PhoneDetails` が AngularJS のコント�
 
 <code-example path="upgrade-phonecat-2-hybrid/app/app.module.ts" region="routeparams" header="app/app.module.ts ($routeParams)"></code-example>
 
-電話詳細のコンポーネントのテンプレートを、次のように Angular の記法へ変換してください。
+電話詳細のコンポーネントのPlantillasを、次のように Angular の記法へ変換してください。
 
 <code-example path="upgrade-phonecat-2-hybrid/app/phone-detail/phone-detail.template.html" header="app/phone-detail/phone-detail.template.html">
 </code-example>
@@ -1642,14 +1642,14 @@ AngularJS のインジェクターは `PhoneDetails` が AngularJS のコント�
   Angular は AngularJS が持っているのと
   [そっくりの `ngClass`](guide/template-syntax#directives) を持っていますが、その値は式として魔法のように評価されません。
   Angular ではアトリビュートの値がプロパティの式のとき、
-  文字列のリテラルとは対照的に、必ずテンプレートで指定します。
+  文字列のリテラルとは対照的に、必ずPlantillasで指定します。
 
 * `ng-repeat` を `*ngFor` で置き換えました。
 
 * イベントのバインディングと共に、`ng-click` を `click` で置き換えました。
 
 * 電話が表示されている時だけレンダリングされるように、
-  `ngIf` の中にすべてのテンプレートをラップしました。
+  `ngIf` の中にすべてのPlantillasをラップしました。
   これはコンポーネントが最初にロードされた時、 まだ `phone` が無く、
   式が存在しない値を参照してしまうからです。AngularJS とは違い、
   Angular の式は未定義のオブジェクトのプロパティを参照しようとした時に黙って失敗しません。
@@ -1728,7 +1728,7 @@ Angular ではアプリケーションのコンポーネントツリーの先頭
 <code-example path="upgrade-phonecat-3-final/app/app.component.ts" header="app/app.component.ts">
 </code-example>
 
-`<router-outlet>` のみ含んだ、簡素なテンプレートを持っています。
+`<router-outlet>` のみ含んだ、簡素なPlantillasを持っています。
 このコンポーネントはアクティブなRaízコンテンツのみレンダリングし、他には何もしません。
 
 そのセレクターはアプリケーションが起動した時にホストの Web ページにある `<phonecat-app>` エレメントに、
@@ -1767,7 +1767,7 @@ Raíz `AppComponent` をブートストラップのコンポーネントとし�
 <code-example path="upgrade-phonecat-3-final/app/app.module.ts" header="app/app.module.ts">
 </code-example>
 
-`<phone-list>` または `<phone-detail>` タグと共にルーティングのテンプレートを使う代わりに、
+`<phone-list>` または `<phone-detail>` タグと共にルーティングのPlantillasを使う代わりに、
 `PhoneListComponent` と `PhoneDetailComponent` に直接ルーティングしているため、
 Angular のセレクターも使うことができます。
 
@@ -1877,7 +1877,7 @@ TypeScript への変換の間、E2E テストを動作させ続けるために�
   ng12Hybrid: true
 </code-example>
 
-コンポーネントとテンプレートを Angular へアップグレードし始めた時、より多くの変更が必要となるでしょう。
+コンポーネントとPlantillasを Angular へアップグレードし始めた時、より多くの変更が必要となるでしょう。
 なぜなら、E2E テストは AngularJS に特有のマッチャーを持っているからです。
 PhoneCat に対しては、Angular で動作させるために次のような変更が必要です。
 
@@ -2045,7 +2045,7 @@ SystemJS ですべての新しい Angular のコードを読み込む必要が�
 <code-example path="upgrade-phonecat-2-hybrid/karma.conf.ajs.js" region="files" header="karma.conf.js">
 </code-example>
 
-Angular のコンポーネントの HTML テンプレートも同様に読み込まれるため、
+Angular のコンポーネントの HTML Plantillasも同様に読み込まれるため、
 Karma が正しいパスへそれらをルーティングできるように手助けをします。
 
 <code-example path="upgrade-phonecat-2-hybrid/karma.conf.ajs.js" region="html" header="karma.conf.js">

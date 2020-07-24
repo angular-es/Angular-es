@@ -1,4 +1,4 @@
-# テンプレート駆動フォーム {@a template-driven-forms}
+# Plantillas駆動フォーム {@a template-driven-forms}
 
 フォームはビジネスアプリケーションの根幹です。
 フォームを使用してログインし、ヘルプリクエストを送信し、注文し、フライトを予約し、
@@ -13,7 +13,7 @@
 
 </div>
 
-## テンプレート駆動フォームの導入
+## Plantillas駆動フォームの導入
 
 フォームを開発するには、デザインスキル（このページの対象外）と
 *双方向データ・バインディング、変更検知、検証、エラー処理*のための
@@ -21,33 +21,33 @@
 
 このページでは、単純なフォームを最初から作成する方法を示します。ここでは次のことを学びます
 
-* コンポーネントとテンプレートを使ってAngularフォームを作成します。
+* コンポーネントとPlantillasを使ってAngularフォームを作成します。
 * `ngModel` を使用して、入力コントロールの値を読み書きするための双方向データバインディングを作成します。
 * 状態の変化とフォームコントロールの有効性を追跡します。
 * コントロールの状態を追跡する特別なCSSクラスを使用して視覚的フィードバックを提供します。
 * 検証エラーをユーザーに表示し、フォームコントロールを有効または無効にします。 
-* テンプレート参照変数を使用してHTML要素間で情報を共有します。
+* Plantillas参照変数を使用してHTML要素間で情報を共有します。
 
 {@a template-driven}
 
 このページで説明されているフォーム固有のディレクティブとTécnicaを使用して、
-Angular[テンプレート構文](guide/template-syntax)でテンプレートを記述することにより、フォームを構築できます。
+Angular[Plantillas構文](guide/template-syntax)でPlantillasを記述することにより、フォームを構築できます。
 
 <div class="alert is-helpful">
 
   リアクティブ（またはモデル駆動型）アプローチを使用してフォームを構築することもできます。
-  ただし、このページでは、テンプレート駆動フォームに焦点を当てています。
+  ただし、このページでは、Plantillas駆動フォームに焦点を当てています。
 
 </div>
 
-ほとんどのフォームは、Angularテンプレートを使って構築することができます&mdash;ログインフォーム、コンタクトフォーム、ほぼすべてのビジネスフォーム。
+ほとんどのフォームは、AngularPlantillasを使って構築することができます&mdash;ログインフォーム、コンタクトフォーム、ほぼすべてのビジネスフォーム。
 コントロールを創造的に配置し、データにバインドし、検証ルールを指定し、検証エラーを表示し、特定のコントロールを条件付きで有効または無効にしたり、
 ビジュアルフィードバックをトリガーしたりできます。
 
 Angularは、あなた自身が苦労している反復的で定型的なタスクの多くを処理することで、
 プロセスを簡単にします。
 
-次のようなテンプレート駆動フォームを構築する方法を学びます。
+次のようなPlantillas駆動フォームを構築する方法を学びます。
 
 <div class="lightbox">
   <img src="generated/images/guide/forms/hero-form-1.png" alt="Clean Form">
@@ -76,7 +76,7 @@ Angularは、あなた自身が苦労している反復的で定型的なタス�
 
 1. `Hero` モデルクラスを作成します。 
 1. フォームを制御するコンポーネントを作成します。
-1. 初期フォームレイアウトのテンプレートを作成します。
+1. 初期フォームレイアウトのPlantillasを作成します。
 1. `ngModel` 双方向データバインディング構文を使用して、各フォームコントロールにデータプロパティをバインドします。 
 1. 各フォーム入力コントロールに `name` 属性を追加します。
 1. 視覚的なフィードバックを提供するカスタムCSSを追加します。
@@ -127,7 +127,7 @@ TypeScriptコンパイラは、 `public` コンストラクターパラメータ
 
 ## フォームコンポーネントを作成する
 
-Angularフォームには、HTMLベースの_テンプレート_と、 
+Angularフォームには、HTMLベースの_Plantillas_と、 
 データとユーザー対話をプログラムで処理するコンポーネント _クラス_ の2つの部分があります。
 まずはクラスから、簡単にいえば、ヒーローエディターは何ができるのかということから始めましょう。
 
@@ -149,12 +149,12 @@ Angular CLIコマンド [ `ng generate component` ](cli/generate) を使用し�
 このコンポーネントを理解するには、前のページで説明したAngularの概念のみが必要です。
 
 * コードはAngularコアライブラリと作成した `Hero` モデルをインポートします。
-* "hero-form"という `@Component` のセレクター値は、このフォームを `<app-hero-form>` タグによって親テンプレートに配置できることを意味します。
-* `templateUrl` プロパティは、テンプレートHTMLのための別のファイルを指します。
+* "hero-form"という `@Component` のセレクター値は、このフォームを `<app-hero-form>` タグによって親Plantillasに配置できることを意味します。
+* `templateUrl` プロパティは、PlantillasHTMLのための別のファイルを指します。
 * デモにふさわしいダミーデータを `model` と `powers` に定義します。
 
 実際のデータを取得して保存するためのデータサービスを挿入したり、親コンポーネントへのバインドのために、
-これらのプロパティを入力と出力として公開することができます（[テンプレート構文ページ](guide/template-syntax)の[入力プロパティと出力プロパティ](guide/template-syntax#inputs-outputs)を参照してください）。
+これらのプロパティを入力と出力として公開することができます（[Plantillas構文ページ](guide/template-syntax)の[入力プロパティと出力プロパティ](guide/template-syntax#inputs-outputs)を参照してください）。
 これは今は気にすることではなく、これらの将来の変更はフォームに影響しません。
 
 * `diagnostic` モデルのJSON表現を返すためのプロパティを追加しました。
@@ -165,7 +165,7 @@ Angular CLIコマンド [ `ng generate component` ](cli/generate) を使用し�
 `app.module.ts` アプリケーションのルートモジュールを定義します。その中でアプリケーションで使用する外部モジュールを特定し、
 `HeroFormComponent` モジュールに属するコンポーネントを宣言します。
 
-テンプレート駆動フォームは専用のモジュールに含まれているので、フォームを使用する前に、アプリケーションモジュールの `imports` 配列に `FormsModule` を追加する必要があります。
+Plantillas駆動フォームは専用のモジュールに含まれているので、フォームを使用する前に、アプリケーションモジュールの `imports` 配列に `FormsModule` を追加する必要があります。
 
 次のように更新してください。
 
@@ -178,7 +178,7 @@ Angular CLIコマンド [ `ng generate component` ](cli/generate) を使用し�
   1. `FormsModule` をインポートします。
 
   1. `@NgModule` デコレーターに定義されている `imports` リストに `FormsModule` を追加します。これにより、
-  アプリケーションは `ngModel` を含むすべてのテンプレート駆動フォーム機能にアクセスできます。
+  アプリケーションは `ngModel` を含むすべてのPlantillas駆動フォーム機能にアクセスできます。
 
 </div>
 
@@ -193,7 +193,7 @@ Angular CLIコマンド [ `ng generate component` ](cli/generate) を使用し�
 
 `AppComponent` はアプリケーションのルートコンポーネントです。これは新しい `HeroFormComponent` のホストになります。
 
-テンプレートの内容を次のものに置き換えます。
+Plantillasの内容を次のものに置き換えます。
 
 <code-example path="forms/src/app/app.component.html" header="src/app/app.component.html"></code-example>
 
@@ -205,9 +205,9 @@ Angular CLIコマンド [ `ng generate component` ](cli/generate) を使用し�
 
 </div>
 
-## 最初のHTMLフォームテンプレートを作成する
+## 最初のHTMLフォームPlantillasを作成する
 
-テンプレートファイルを次の内容で更新します。
+Plantillasファイルを次の内容で更新します。
 
 <code-example path="forms/src/app/hero-form/hero-form.component.html" region="start" header="src/app/hero-form/hero-form.component.html"></code-example>
 
@@ -222,7 +222,7 @@ Angular CLIコマンド [ `ng generate component` ](cli/generate) を使用し�
 
 <div class="alert is-helpful">
 
-  テンプレート駆動フォームでは、 `FormsModule` をインポートした場合は、 `FormsModule` の用途で `<form>` タグを使用するために何もする必要はありません。
+  Plantillas駆動フォームでは、 `FormsModule` をインポートした場合は、 `FormsModule` の用途で `<form>` タグを使用するために何もする必要はありません。
   それがどのように機能するかを確認してください。
 
 </div>
@@ -258,7 +258,7 @@ Angular CLIコマンド [ `ng generate component` ](cli/generate) を使用し�
 <code-example path="forms/src/app/hero-form/hero-form.component.html" header="src/app/hero-form/hero-form.component.html (powers)" region="powers"></code-example>
 
 このコードは、能力のリストの個々の能力ごとに `<option>` タグを繰り返します。
-テンプレート入力変数 `pow` は、各繰り返しにおいて異なる能力です。
+Plantillas入力変数 `pow` は、各繰り返しにおいて異なる能力です。
 補間構文を使用して能力の名前を表示します。
 
 {@a ngModel}
@@ -299,7 +299,7 @@ Angular CLIコマンド [ `ng generate component` ](cli/generate) を使用し�
 `[(ngModel)]="..."` というバインディング構文に焦点を当ててください。
 
 データを表示するにはさらに1つの追加が必要です。
-フォームのテンプレート変数を宣言します。
+フォームのPlantillas変数を宣言します。
 次のように `<form>` タグを `#heroForm="ngForm"` を使って更新します。
 
 <code-example path="forms/src/app/hero-form/hero-form.component.html" header="src/app/hero-form/hero-form.component.html (excerpt)" region="template-variable"></code-example>
@@ -337,7 +337,7 @@ Angular CLIコマンド [ `ng generate component` ](cli/generate) を使用し�
 <div class="alert is-helpful">
 
   これが *双方向データバインディング* です。
-  詳細については、[テンプレート構文](guide/template-syntax)ページの[NgModelによる双方向バインディング](guide/template-syntax#ngModel)を参照してください。
+  詳細については、[Plantillas構文](guide/template-syntax)ページの[NgModelによる双方向バインディング](guide/template-syntax#ngModel)を参照してください。
 
 </div>
 
@@ -456,7 +456,7 @@ Angular CLIコマンド [ `ng generate component` ](cli/generate) を使用し�
 
 </table>
 
-一時的に `spy` という名前の[テンプレート参照変数](guide/template-syntax#ref-vars)を _Name_ の `<input>` に追加し、
+一時的に `spy` という名前の[Plantillas参照変数](guide/template-syntax#ref-vars)を _Name_ の `<input>` に追加し、
 それを使用して入力のCSSクラスを表示します。
 
 <code-example path="forms/src/app/hero-form/hero-form.component.html" header="src/app/hero-form/hero-form.component.html (excerpt)" region="ngModelName-2"></code-example>
@@ -484,7 +484,7 @@ Angular CLIコマンド [ `ng generate component` ](cli/generate) を使用し�
 値が無効であるときに強力なシグナルを送りたいので、 `ng-valid` / `ng-invalid` のペアにもっとも関心があります。
 また、必須項目にも印を付けたいです。このような視覚的フィードバックを作成するには、 `ng-*` CSSクラスの定義を追加します。
 
-`#spy` テンプレート参照変数と `TODO` はその目的を果たしたので削除しましょう。
+`#spy` Plantillas参照変数と `TODO` はその目的を果たしたので削除しましょう。
 
 ## 視覚的なフィードバックのためにカスタムCSSを追加する
 
@@ -518,14 +518,14 @@ Angular CLIコマンド [ `ng generate component` ](cli/generate) を使用し�
 
 この効果を得るには、次のように `<input>` タグを拡張します。
 
-* [テンプレートの参照変数](guide/template-syntax#ref-vars)
+* [Plantillasの参照変数](guide/template-syntax#ref-vars)
 * コントロールが無効である場合にのみ表示される `<div>` の" *is required* "メッセージ。
 
 次に、 _Name_ 入力ボックスに追加されたエラーメッセージの例を示します。
 
 <code-example path="forms/src/app/hero-form/hero-form.component.html" header="src/app/hero-form/hero-form.component.html (excerpt)" region="name-with-error-msg"></code-example>
 
-テンプレート内から入力ボックスのAngularコントロールにアクセスするには、テンプレート参照変数が必要です。
+Plantillas内から入力ボックスのAngularコントロールにアクセスするには、Plantillas参照変数が必要です。
 ここでは、 `name` という変数を作成し、それに"ngModel"という値を与えました。
 
 <div class="alert is-helpful">
@@ -597,7 +597,7 @@ Angular CLIコマンド [ `ng generate component` ](cli/generate) を使用し�
 
 <code-example path="forms/src/app/hero-form/hero-form.component.html" header="src/app/hero-form/hero-form.component.html (ngSubmit)" region="ngSubmit"></code-example>
 
-すでにテンプレート参照変数 `#heroForm` を定義し、それを値"ngForm"で初期化しています。
+すでにPlantillas参照変数 `#heroForm` を定義し、それを値"ngForm"で初期化しています。
 さて、この変数を使用して、Submitボタンでフォームにアクセスします。
 
 
@@ -616,7 +616,7 @@ Angularの助けがなかったらボタンの有効/無効状態をフォーム
 
 あなたにとってはこんなに簡単でした。
 
-1. （拡張された）フォーム要素にテンプレート参照変数を定義します。
+1. （拡張された）フォーム要素にPlantillas参照変数を定義します。
 2. 数行離れたボタンで変数を参照します。
 
 ## 2つのフォーム領域を切り替える（追加クレジット）
@@ -663,10 +663,10 @@ HTMLには、 `submitted` フラグをクリアする式にクリックイベン
 このページで説明したAngularフォームは、データの変更、
 検証などのサポートを提供するために、次のフレームワーク機能を利用しています。
 
-* Angular HTMLフォームテンプレート。
+* Angular HTMLフォームPlantillas。
 * `@Component` デコレーターをもつフォームコンポーネントクラス。
 * `NgForm.ngSubmit` イベントプロパティにバインドしてフォームの送信を処理します。
-* `#heroForm` や `#name` のようなテンプレート参照変数。
+* `#heroForm` や `#name` のようなPlantillas参照変数。
 * 双方向データバインディングのための `[(ngModel)]` 構文。
 * 検証およびフォーム要素の変更追跡のために `name` 属性を使います。
 * コントロールが有効かどうかをチェックし、エラーメッセージを表示/非表示にするための入力コントロールの参照変数の `valid` プロパティ。

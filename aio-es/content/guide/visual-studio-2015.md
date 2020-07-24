@@ -100,7 +100,7 @@ While Visual Studio Update 3 ships with TypeScript support out of the box, it cu
 
 To install the latest version of TypeScript:
 
- * Download and install the latest [TypeScript for Visual Studio 2015](https://www.microsoft.com/en-us/download/details.aspx?id=48593),
+ * Descargar and install the latest [TypeScript for Visual Studio 2015](https://www.microsoft.com/en-us/download/details.aspx?id=48593),
 
  * OR install it with npm: `npm install -g typescript@latest`.
 

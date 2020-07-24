@@ -2,8 +2,8 @@
 
 アンケートなどの多くの形式は、形式と意図が互いに非常に似ている場合があります。
 このようなフォームのさまざまなバージョンをより速く簡単に生成するために、
-ビジネスオブジェクトモデルを記述するメタデータに基づいて *動的フォームテンプレート* を作成できます。
-その後、テンプレートを使用して、データモデルの変更に応じて新しいフォームを自動的に生成できます。
+ビジネスオブジェクトモデルを記述するメタデータに基づいて *動的フォームPlantillas* を作成できます。
+その後、Plantillasを使用して、データモデルの変更に応じて新しいフォームを自動的に生成できます。
 
 この手法は、急速に変化するビジネス要件や規制要件を満たすために
 コンテンツを頻繁に変更する必要がある種類のフォームがある場合に特に役立ちます。
@@ -81,13 +81,13 @@
 
 この例では、このベースから、異なるコントロールタイプを表す
 2 つの新しいクラス `TextboxQuestion` と `DropdownQuestion` を派生させます。
-Próximos pasosでフォームテンプレートを作成するとき、適切なコントロールを動的にレンダリングするために、これらの特定の質問タイプをインスタンス化します。
+Próximos pasosでフォームPlantillasを作成するとき、適切なコントロールを動的にレンダリングするために、これらの特定の質問タイプをインスタンス化します。
 
 * `TextboxQuestion` コントロールタイプは質問を提示し、ユーザーが入力できるようにします。
 
    <code-example path="dynamic-form/src/app/question-textbox.ts" header="src/app/question-textbox.ts"></code-example>
 
-   `TextboxQuestion` コントロールタイプは、フォームテンプレートで `<input>` 要素を使用して表されます。
+   `TextboxQuestion` コントロールタイプは、フォームPlantillasで `<input>` 要素を使用して表されます。
    要素の `type` 属性は、 `options` 引数で指定されたタイプフィールド（`text`、`email`、`url` など）に基づいて定義されます。
 
 * `DropdownQuestion` コントロールは、セレクトボックスに選択肢のリストを表示します。
@@ -106,10 +106,10 @@ Próximos pasosでフォームテンプレートを作成するとき、適切�
 ## ダイナミックフォームのコンテンツを作成する
 
 ダイナミックフォーム自体は、後の手順で追加するコンテナーコンポーネントによって表されます。
-それぞれの質問は、 `DynamicFormQuestionComponent` のインスタンスと一致する `<app-question>` タグによってフォームコンポーネントのテンプレートで表されます。
+それぞれの質問は、 `DynamicFormQuestionComponent` のインスタンスと一致する `<app-question>` タグによってフォームコンポーネントのPlantillasで表されます。
 
 `DynamicFormQuestionComponent` は、データにバインドされた質問オブジェクトの値に基づいて個々の質問の詳細をレンダリングする責任があります。
-フォームは [`[formGroup]` ディレクティブ](api/forms/FormGroupDirective "API reference") に依存して、テンプレート HTML をbaseとなるコントロールオブジェクトに接続します。
+フォームは [`[formGroup]` ディレクティブ](api/forms/FormGroupDirective "API reference") に依存して、Plantillas HTML をbaseとなるコントロールオブジェクトに接続します。
 `DynamicFormQuestionComponent` はフォームグループを作成し、表示および検証ルールを指定して、質問モデルで定義されたコントロールをそれらに追加します。
 
 <code-tabs>
@@ -126,7 +126,7 @@ Próximos pasosでフォームテンプレートを作成するとき、適切�
 
 `DynamicFormQuestionComponent` の目的は、モデルで定義された質問タイプを提示することです。
 この時点では 2 種類の質問しかありませんが、さらに多くなることを想像できます。
-テンプレートの `ngSwitch` ステートメントは、表示する質問のタイプを決定します。
+Plantillasの `ngSwitch` ステートメントは、表示する質問のタイプを決定します。
 スイッチは、 [`formControlName`](api/forms/FormControlName "FormControlName directive API reference") および [`formGroup`](api/forms/FormGroupDirective "FormGroupDirective API reference") セレクターでディレクティブを使用します。 どちらのディレクティブも `ReactiveFormsModule` で定義されています。
 
 {@a questionnaire-data}
@@ -149,9 +149,9 @@ Próximos pasosでフォームテンプレートを作成するとき、適切�
 
 {@a dynamic-template}
 
-## ダイナミックフォームテンプレートを作成する
+## ダイナミックフォームPlantillasを作成する
 
-`DynamicFormComponent` コンポーネントは、フォームのエントリポイントとメインコンテナーであり、テンプレートで `<app-dynamic-form>` を使用して表されます。
+`DynamicFormComponent` コンポーネントは、フォームのエントリポイントとメインコンテナーであり、Plantillasで `<app-dynamic-form>` を使用して表されます。
 
 `DynamicFormComponent` コンポーネントは、各質問を `DynamicFormQuestionComponent` と一致する `<app-question>` 要素にバインドすることで質問のリストを提示します。
 
@@ -169,7 +169,7 @@ Próximos pasosでフォームテンプレートを作成するとき、適切�
 
 ### フォームを表示する
 
-ダイナミックフォームのインスタンスを表示するために、 `AppComponent` シェルテンプレートは、 `QuestionService` によって返された `questions` 配列をフォームコンテナーコンポーネント `<app-dynamic-form>` に渡します。
+ダイナミックフォームのインスタンスを表示するために、 `AppComponent` シェルPlantillasは、 `QuestionService` によって返された `questions` 配列をフォームコンテナーコンポーネント `<app-dynamic-form>` に渡します。
 
 <code-example path="dynamic-form/src/app/app.component.ts" header="app.component.ts">
 
@@ -182,7 +182,7 @@ Próximos pasosでフォームテンプレートを作成するとき、適切�
 
 ### 有効なデータの確保
 
-フォームテンプレートは、メタデータの動的データバインディングを使用して、
+フォームPlantillasは、メタデータの動的データバインディングを使用して、
 特定の質問についてハードコードされた想定を行わずにフォームをレンダリングします。
 制御メタデータとバリデーション基準の両方を動的に追加します。
 

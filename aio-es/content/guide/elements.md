@@ -46,7 +46,7 @@ Custom Elements は自分自身をブートストラップします。つまり�
 <my-popup message="Use Angular!"></my-popup>
 ```
 
-Custom Elements がページ上に置かれると、ブラウザは登録されたクラスのインスタンスを作成し、それを DOM に追加します。コンテンツはコンポーネントのテンプレートによって提供され、コンポーネントと DOM データを使ってレンダリングされます。コンポーネントの入力プロパティは、その要素の入力属性に対応します。
+Custom Elements がページ上に置かれると、ブラウザは登録されたクラスのインスタンスを作成し、それを DOM に追加します。コンテンツはコンポーネントのPlantillasによって提供され、コンポーネントと DOM データを使ってレンダリングされます。コンポーネントの入力プロパティは、その要素の入力属性に対応します。
 
 <div class="lightbox">
   <img src="generated/images/guide/elements/customElement1.png" alt="Custom element in browser" class="left">

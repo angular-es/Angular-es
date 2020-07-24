@@ -27,7 +27,7 @@ Unless otherwise noted, patterns use a limited glob format:
 * `?` matches exactly one character excluding `/`.
 * The `!` prefix marks the pattern as being negative, meaning that only files that don't match the pattern will be included.
 
-Example patterns:
+Ejemplo patterns:
 
 * `/**/*.html` specifies all HTML files.
 * `/*.html` specifies only HTML files in the root.

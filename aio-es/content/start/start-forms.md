@@ -6,7 +6,7 @@
 
 ## Angularのフォーム
 
-Angularのフォームは、標準のHTMLフォームに基づいて構築され、カスタムフォームコントロールと簡単な検証エクスペリエンスの作成に役立ちます。 Angular Reactiveフォームには2つの部分があります。フォームを保存および管理するためにコンポーネントに存在するオブジェクトと、テンプレートに存在するフォームの可視化です。
+Angularのフォームは、標準のHTMLフォームに基づいて構築され、カスタムフォームコントロールと簡単な検証エクスペリエンスの作成に役立ちます。 Angular Reactiveフォームには2つの部分があります。フォームを保存および管理するためにコンポーネントに存在するオブジェクトと、Plantillasに存在するフォームの可視化です。
 
 ## チェックアウトフォームモデルを定義する
 
@@ -52,9 +52,9 @@ Angularのフォームは、標準のHTMLフォームに基づいて構築され
 
 1. `cart.component.html`を開きます。
 
-1. テンプレートの下部に、ユーザー情報を取り込むためのHTMLフォームを追加します。
+1. Plantillasの下部に、ユーザー情報を取り込むためのHTMLフォームを追加します。
 
-1. `formGroup` プロパティバインディングを使用して、 `checkoutForm` をテンプレート内の `form` タグにバインドします。 また、フォームを送信するための"購入"ボタンを含めてください。
+1. `formGroup` プロパティバインディングを使用して、 `checkoutForm` をPlantillas内の `form` タグにバインドします。 また、フォームを送信するための"購入"ボタンを含めてください。
 
   <code-example header="src/app/cart/cart.component.html" path="getting-started/src/app/cart/cart.component.3.html" region="checkout-form">
   </code-example>

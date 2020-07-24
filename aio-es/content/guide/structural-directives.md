@@ -38,16 +38,16 @@ DOM の _構造_ を構築または再構成します。
 角括弧なし。括弧なし。`*ngIf` に文字列をセットするだけです。
 
 このガイドでは、[アスタリスク (*) は便利な表記法](guide/structural-directives#asterisk) であること、
-文字列は通常のテンプレート式ではなく
+文字列は通常のPlantillas式ではなく
 [_マイクロシンタックス_](guide/structural-directives#microsyntax) であることを学びます。
 Angular はこの表記法を、`<ng-template>`
 でホスト要素とその子孫を囲むマークアップにデシュガーします。
-個々の構造ディレクティブは、そのテンプレートを使用して何か違うことをします。
+個々の構造ディレクティブは、そのPlantillasを使用して何か違うことをします。
 
 3つの一般的なビルトイン構造ディレクティブ
 ([NgIf](guide/template-syntax#ngIf)、[NgFor](guide/template-syntax#ngFor)、[NgSwitch...](guide/template-syntax#ngSwitch)) は、
-[_テンプレート構文_](guide/template-syntax) ガイドで説明されており、
-Angular のドキュメント全体のサンプルで見られます。テンプレートの例は次のようになります:
+[_Plantillas構文_](guide/template-syntax) ガイドで説明されており、
+Angular のドキュメント全体のサンプルで見られます。Plantillasの例は次のようになります:
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (built-in)" region="built-in"></code-example>
@@ -76,7 +76,7 @@ _それらがどのように機能するのか_、そして構造ディレクテ
 ディレクティブの _属性名_ は _lowerCamelCase_ (`ngIf`) でつづられます。
 このガイドでは、そのプロパティとディレクティブが何をするのかについて話すときにディレクティブ
 _クラス_ を参照します。
-このガイドでは、HTML テンプレートの要素にディレクティブをどのように適用するかを説明するときに
+このガイドでは、HTML Plantillasの要素にディレクティブをどのように適用するかを説明するときに
 _属性名_ を参照します。
 
 
@@ -92,7 +92,7 @@ Angular ディレクティブには他にも (1)&nbsp;コンポーネントと (
 他の場所で詳しく説明しています。
 
 *コンポーネント* は、ネイティブの HTML 要素のように HTML の領域を管理します。
-技術的にみると、それはテンプレート付きのディレクティブです。
+技術的にみると、それはPlantillas付きのディレクティブです。
 
 [*属性* ディレクティブ](guide/attribute-directives)
 は、要素、コンポーネント、または他のディレクティブの外観または動作を変更します。
@@ -266,7 +266,7 @@ Angular は、同じ方法で `*ngFor` をアスタリスク (*) 構文から `<
 Angular のマイクロシンタックスを使用すると、コンパクトでわかりやすい文字列でディレクティブを設定できます。
 マイクロシンタックスパーサーはその文字列を `<ng-template>` の属性に変換します。
 
-* `let` キーワードは、テンプレート内で参照する [_テンプレート入力変数_](guide/structural-directives#template-input-variable) を宣言します。
+* `let` キーワードは、Plantillas内で参照する [_Plantillas入力変数_](guide/structural-directives#template-input-variable) を宣言します。
 この例の入力変数は、`hero`、`i`、および `odd` です。
 パーサーは、`let hero`、`let i`、`let odd` を、
 `let-hero`、`let-i`、`let-odd` という名前の変数に変換します。
@@ -433,25 +433,25 @@ The following table demonstrates how Angular desugars microsyntax.
 {@a template-input-variables}
 
 
-## テンプレート入力変数
+## Plantillas入力変数
 
-_テンプレート入力変数_ は、テンプレートの単一インスタンス _内_ で参照できる変数です。この例には、`hero`、`i`、および `odd`
+_Plantillas入力変数_ は、Plantillasの単一インスタンス _内_ で参照できる変数です。この例には、`hero`、`i`、および `odd`
 のようないくつかの変数が含まれます。
 すべてのキーワードの前には `let` が付きます。
 
-_テンプレート入力変数_ は、
-[テンプレート _参照_ 変数](guide/template-syntax#ref-vars) と
+_Plantillas入力変数_ は、
+[Plantillas _参照_ 変数](guide/template-syntax#ref-vars) と
 _意味的_ にも _構文的_ にも同じでは **ありません**。
 
-`let` キーワード (`let hero`) を使ってテンプレート _入力_ 変数を宣言します。
-変数のスコープは、繰り返されるテンプレートの _単一インスタンス_ に制限されています。
+`let` キーワード (`let hero`) を使ってPlantillas _入力_ 変数を宣言します。
+変数のスコープは、繰り返されるPlantillasの _単一インスタンス_ に制限されています。
 他の構造ディレクティブの定義でも同じ変数名を使用できます。
 
-変数名の前に `#` (`#var`) を付けてテンプレート _参照_ 変数を宣言します。
+変数名の前に `#` (`#var`) を付けてPlantillas _参照_ 変数を宣言します。
 _参照_ 変数は、それにアタッチされた要素、コンポーネント、またはをディレクティブを参照します。
-それは _テンプレート全体_ の _どこからでも_ アクセスできます。
+それは _Plantillas全体_ の _どこからでも_ アクセスできます。
 
-テンプレート _入力_ 変数名とテンプレート _参照_ 変数名は、個々の名前空間を持ちます。
+Plantillas _入力_ 変数名とPlantillas _参照_ 変数名は、個々の名前空間を持ちます。
 `let hero` 内の `hero` は、`#hero` として宣言された `hero` と同じ変数になることはありません。
 
 
@@ -532,7 +532,7 @@ Angular の _NgSwitch_ は、実際には `NgSwitch`、`NgSwitchCase`、およ�
 ディレクティブをホストする要素が1つもない場合は、
 [&lt;ng-container&gt;](guide/structural-directives#ng-container) を使用してください。
 
-構造ディレクティブをテンプレート内の _属性_ または _要素_ 形式で適用することには
+構造ディレクティブをPlantillas内の _属性_ または _要素_ 形式で適用することには
 それほどよい理由はありませんが、Angular が `<ng-template>` を作成し、
 それがどのように機能するかを理解することは重要です。あなたがあなた自身の構造ディレクティブを書くとき、`<ng-template>` を参照するでしょう。
 
@@ -599,7 +599,7 @@ Angular は中央の "Hip!" を消去し、歓声と熱狂をやや抑えます�
 _通常は_ ... でも _いつでも_ ではありません。
 
 CSS スタイルは新しいレイアウトを想定も対応もしないので、
-グルーピングした要素はテンプレートの外観を崩すかもしれません。
+グルーピングした要素はPlantillasの外観を崩すかもしれません。
 たとえば、次のようなパラグラフのレイアウトがあるとします。
 
 
@@ -707,7 +707,7 @@ JavaScript の `if` ブロックの中括弧のようなものです:
 
 中括弧がなければ、JavaScript は、あなたがそれらすべてを単一ブロックとして条件付きで実行する意図があっても、
 最初の文のみを実行するでしょう。
-`<ng-container>` は Angular テンプレート内での同様のニーズを満たします。
+`<ng-container>` は Angular Plantillas内での同様のニーズを満たします。
 
 
 {@a unless}
@@ -718,7 +718,7 @@ JavaScript の `if` ブロックの中括弧のようなものです:
 
 このセクションでは、`NgIf` の逆を行う
 `UnlessDirective` 構造ディレクティブを作成します。
-条件が `true` の場合、`NgIf` はテンプレートの内容を表示します。
+条件が `true` の場合、`NgIf` はPlantillasの内容を表示します。
 `UnlessDirective` は、条件が ***false*** のときに内容を表示します。
 
 
@@ -734,7 +734,7 @@ JavaScript の `if` ブロックの中括弧のようなものです:
 
 * ディレクティブクラスにデコレーターを適用します。
 
-* テンプレート内の要素に適用されたときにディレクティブを識別する CSS *属性セレクター* を設定します。
+* Plantillas内の要素に適用されたときにディレクティブを識別する CSS *属性セレクター* を設定します。
 
 次は、始めの部分です:
 
@@ -786,7 +786,7 @@ Angular が生成した
 
 
 
-[_テンプレート構文_](guide/template-syntax#inputs-outputs) ガイドの `@Input` について参照してください。
+[_Plantillas構文_](guide/template-syntax#inputs-outputs) ガイドの `@Input` について参照してください。
 
 
 </div>
@@ -801,7 +801,7 @@ Angular は、条件の値が変わるたびに `appUnless` プロパティを�
 `appUnless` プロパティが機能するために、セッターが必要です。
 
 * 条件が falsy で、ビューが以前に作成されていない場合は、
-テンプレートから _埋め込みビュー_ を作成するように _ビューコンテナ_ に指示します。
+Plantillasから _埋め込みビュー_ を作成するように _ビューコンテナ_ に指示します。
 
 * 条件が truthy でビューが現在表示されている場合は、
 コンテナをクリアしてビューも破棄します。
