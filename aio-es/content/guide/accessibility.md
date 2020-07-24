@@ -52,7 +52,7 @@ Angular 内で ARIA 属性をバインドするためには接頭辞として `a
 ## Angular UI コンポーネント
 
 Angular チームによってメンテナンスされている [Angular Material](https://material.angular.io/) ライブラリはアクセシビリティをもつように作られた、再利用可能な UI コンポーネントの集まりです。
-[Component Development Kit (CDK)](https://material.angular.io/cdk/categories) には、さまざまな分野のアクセシビリティをサポートするためのツールを提供する `a11y` パッケージが含まれています。
+[Component Desarrollo Kit (CDK)](https://material.angular.io/cdk/categories) には、さまざまな分野のアクセシビリティをサポートするためのツールを提供する `a11y` パッケージが含まれています。
 たとえば、
 
 * `LiveAnnouncer` は `aria-live` 領域を使用する、スクリーンリーダー利用者へメッセージを伝えるために使います。詳しい情報は W3C の文書の [aria-live 領域](https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-live) を参照してください。

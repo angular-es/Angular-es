@@ -62,12 +62,12 @@
     },
     {
       "title": "Empezando",
-      "tooltip": "Set up your environment and learn basic concepts",
+      "tooltip": "Configura tu entorno y aprende conceptos básicos",
       "children": [
         {
           "url": "guide/setup-local",
           "title": "Preparar",
-          "tooltip": "Angular Configurar para el desarrollo local utilizando la CLI.",
+          "tooltip": "Configurar Angular para el desarrollo local utilizando el CLI.",
           "translated": true
         },
         {
@@ -705,7 +705,7 @@
       ]
     },
     {
-      "title": "Angularを拡張する",
+      "title": "Extendiendo Angular",
       "tooltip": "Working with libraries and extending the CLI.",
       "children": [
         {
@@ -940,28 +940,28 @@
       "children": [
         {
           "url": "about",
-          "title": "About",
-          "tooltip": "Angular contributors."
+          "title": "Acerca de",
+          "tooltip": "Contribuyentes de Angular ."
         },
         {
           "url": "resources",
-          "title": "Resource Listing",
-          "tooltip": "Angular tools, training, and blogs from around the web."
+          "title": "Listado de recursos",
+          "tooltip": "Herramientas de Angular, capacitación y blogs de toda la web."
         },
         {
           "url": "presskit",
-          "title": "Press Kit",
-          "tooltip": "Press contacts, logos, and branding."
+          "title": "Carpeta de prensa",
+          "tooltip": "Contactos de prensa, logotipos y marca."
         },
         {
           "url": "https://blog.angular.io/",
           "title": "Blog",
-          "tooltip": "Angular Blog"
+          "tooltip": "Blog de Angular"
         },
         {
           "url": "analytics",
-          "title": "Usage Analytics",
-          "tooltip": "Angular Usage Analytics"
+          "title": "Analítica de uso",
+          "tooltip": "Analítica de uso en Angular  "
         }
       ]
     },
@@ -971,22 +971,22 @@
         {
           "url": "https://stackoverflow.com/questions/tagged/angular",
           "title": "Stack Overflow",
-          "tooltip": "Stack Overflow: where the community answers your technical Angular questions."
+          "tooltip": "Stack Overflow: donde la comunidad responde sus preguntas técnicas de Angular."
         },
         {
           "url": "https://gitter.im/angular/angular",
           "title": "Gitter",
-          "tooltip": "Chat about Angular with other birds of a feather."
+          "tooltip": "Charla sobre Angular con otras aves de una pluma."
         },
         {
           "url": "https://github.com/angular/angular/issues",
-          "title": "Report Issues",
-          "tooltip": "Post issues and suggestions on github."
+          "title": "Reporte problemas",
+          "tooltip": "Publique problemas y sugerencias en github."
         },
         {
           "url": "https://github.com/angular/code-of-conduct/blob/master/CODE_OF_CONDUCT.md",
-          "title": "Code of Conduct",
-          "tooltip": "Treating each other with respect."
+          "title": "Código de Conducta",
+          "tooltip": "Tratarnos unos a otros con respeto."
         }
       ]
     },
@@ -996,12 +996,12 @@
         {
           "url": "events",
           "title": "Events",
-          "tooltip": "Post issues and suggestions on github."
+          "tooltip": "Publica problemas y sugerencias en github."
         },
         {
           "url": "http://www.meetup.com/topics/angularjs/",
           "title": "Meetups",
-          "tooltip": "Attend a meetup and learn from fellow developers."
+          "tooltip": "Asista a una reunión y aprenda de otros desarrolladores."
         },
         {
           "url": "https://twitter.com/angular",
@@ -1015,8 +1015,8 @@
         },
         {
           "url": "contribute",
-          "title": "Contribute",
-          "tooltip": "Contribute to Angular"
+          "title": "Contribuir",
+          "tooltip": "Contribuir con Angular"
         }
       ]
     },
@@ -1025,7 +1025,7 @@
       "children": [
         {
           "url": "https://angular.io/",
-          "title": "English Edition (Official)"
+          "title": "Edición en inglés (oficial)"
         },
         {
           "title": "中文版",

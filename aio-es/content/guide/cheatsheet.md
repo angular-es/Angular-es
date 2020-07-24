@@ -1,16 +1,16 @@
-<h1 class="no-toc">チートシート</h1>
+<h1 class="no-toc">Hoja de trucos </h1>
 
 <div id="cheatsheet">
 <table class="is-full-width is-fixed-layout">
 <tbody><tr>
-<th>ブートストラップ</th>
-<th><p><code>import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';</code>
+<th>Bootstrap</th>
+<th><p><code>import {platformBrowserDynamic} from'@angular/platform-browser-dynamic';</code>
 </p>
 </th>
 </tr>
 <tr>
 <td><code><b>platformBrowserDynamic().bootstrapModule</b>(AppModule);</code></td>
-<td><p>指定された<code>NgModule</code>のルートコンポーネントを使って、アプリケーションをブートストラップします。</p>
+<td><p>Bootstrap the application with the specified <code>NgModule</code> root component. </p>
 </td>
 </tr>
 </tbody></table>

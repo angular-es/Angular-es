@@ -105,7 +105,7 @@ If you do, this page can help you understand their purpose.
     <td>
 
 
-      Tooling configuration files and folders.
+      Herramientas configuration files and folders.
       Ignore them until you have a compelling reason to do otherwise.
     </td>
 

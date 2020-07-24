@@ -1,17 +1,17 @@
-コントリビュータ行動規範
+Código de conducta del contribuyente
 
-バージョン 0.3b-angular
+Versión 0.3b-angular
 
-Angular プロジェクトのコントリビュータおよびメンテナとして、issue の投稿、ドキュメントの更新、Pull request の送信、コメントへのフィードバック、その他すべての活動を通じて、コントリビュータ全員を尊重することを誓います。
+Como colaborador y mantenedor del proyecto Angular, me comprometo a respetar a todos los contribuyentes mediante la publicación de problemas, la actualización de la documentación, el envío de solicitudes de extracción, la retroalimentación en los comentarios y todo lo demás.
 
-Angular のチャネル(GitHub、Gitter、IRC、メーリングリスト、Google+、Twitter等)を通じたコミュニケーションは、建設的でなければならず、個人的な攻撃、荒らし行為、公的または私的な嫌がらせ、侮辱、その他倫理に反する行為は決して許されません。
+La comunicación a través de los canales de Angular (GitHub, Gitter, IRC, listas de correo, Google+, Twitter, etc.) debe ser constructiva e incluir ataques personales, vandalismo, acoso público o privado, insultos y otras cuestiones éticas. Actos contrarios a los que nunca se permiten.
 
-性別、性別、性的指向、障がい、年齢、人種、民族、宗教、経験のレベルにかかわらず、このプロジェクトに関わるすべての人に礼儀と敬意を示すことを約束します。Angular プロジェクトに貢献している人にも同じことを期待しています。
+Prometemos ser corteses y respetuosos con todos los involucrados en este proyecto, independientemente de su género, género, orientación sexual, discapacidad, edad, raza, etnia, religión o nivel de experiencia. Esperamos lo mismo de quienes contribuyen al proyecto Angular.
 
-コミュニティのメンバーがこの行動規範に違反した場合、Angular プロジェクトのメンテナは問題やコメント、Pull request を削除したり、あるいはアカウントをブロックするなど、適切な処置を取ることができます。
+Si un miembro de la comunidad viola este código de conducta, los encargados del proyecto Angular pueden tomar las medidas adecuadas, como eliminar el problema o comentario, solicitar una solicitud o bloquear la cuenta.
 
-許容できない行為を受けたり、目撃したり、その他の懸念がある場合は、conduct@angular.io まで e-mail でお問い合わせください。
+Si experimenta algún comportamiento inaceptable, testigo o cualquier otra inquietud, envíenos un correo electrónico a conduct@angular.io.
 
 ---
 
-この文書は [angular/code-of-conduct/CODE_OF_CONDUCT.md](https://github.com/angular/code-of-conduct/blob/master/CODE_OF_CONDUCT.md) を日本語訳したものです。
+Este documento es una traducción al español de [angular / code-of-conduct / CODE_OF_CONDUCT.md] (https://github.com/angular/code-of-conduct/blob/master/CODE_OF_CONDUCT.md).

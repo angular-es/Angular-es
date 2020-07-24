@@ -1,59 +1,59 @@
-# angular.io のオリジナルコンテンツを更新する方法
+Cómo actualizar el contenido original de # angular.io
 
-## 事前準備
+## Preparación anticipada
 
-- node_modules の準備
-- Git submodule の準備
+-prepare node_modules
+-Preparación de submódulos de Git
 
-## Workflow
+## Flujo de trabajo
 
-1. `update-origin.sh` を編集する
+1. Edite `update-origin.sh`
 
-`aioHash` を最新の angular.io のフッターから取得します。
+Obtenga el `aioHash` del último pie de página angular.io.
 
-![image](./docs/aio-origin-hash.png)
+! [imagen] (./ docs / aio-origin-hash.png)
 
-```sh
-aioHash="4bc0084"
-```
+`` `sh
+aioHash = "4bc0084"
+`` `
 
-2. `update-origin.sh` を実行します
+2. Ejecute `update-origin.sh`
 
-3. 変更をマイグレーションします
+3. Migra tus cambios
 
 
-## マイグレーション
+## Migración
 
-### Pattern 1. オリジナルからオリジナル
+### Patrón 1. Original a original
 
-- `foobar.md` (not translated)
-- `contributors.json`
-- `resouces.json`
-- `presskit.html`
+-`foobar.md` (no traducido)
+-`contributors.json`
+-`resouces.json`
+-`presskit.html`
 
-翻訳済みファイルが存在しないものは、そのまま適用します。
+Si el archivo traducido no existe, se aplicará tal cual.
 
-### Pattern 2. 翻訳済みのオリジナルファイル
+### Patrón 2. Archivo original traducido
 
-- `foobar.en.md`
-- `index.en.html`
+-`foobar.en.md`
+-`index.en.html`
 
-#### 変更が小さい場合
+#### Si el cambio es pequeño
 
-変更点に再翻訳の必要があれば翻訳済みファイルへ反映します。
+Si es necesario volver a traducir los cambios, se reflejarán en el archivo traducido.
 
-#### 変更が大きい場合
+#### Cuando los cambios son grandes
 
-1. 未翻訳状態のまま、翻訳済みファイルの該当箇所へオリジナルのテキストをコピーし、日英混在の状態にします。
-2. 未翻訳の部分について翻訳を募集するIssueを作成します。
+1. Copie el texto original en la parte correspondiente del archivo traducido en el estado no traducido para que esté en un estado mixto de español e inglés.
+2. Cree un Issue para solicitar la traducción de partes no traducidas.
 
-### Pattern 3. aio アプリケーションコード
+### Patrón 3. código de aplicación aio
 
-angular.io のアプリケーションを改変するためにいくつかのファイルが変更されていますが、gitの更新によってその変更が消されてしまいます。
+Algunos archivos se han modificado para modificar la aplicación angular.io, pero una actualización de git borra esos cambios.
 
-- `navigation.model.ts`
-- `nav-item.component.html`
-- `doc-viewer.component.ts`
-- `githubLinks.html`
+-`navigation.model.ts`
+-`nav-item.component.html`
+-`doc-viewer.component.ts`
+-`githubLinks.html`
 
-これらのファイルについては、必要な変更はそのままにし、それ以外の変更があれば手動でマージします。
+Para estos archivos, deje los cambios que desee y combine los otros cambios manualmente.

@@ -1,171 +1,164 @@
-# angular-jaへのコントリビューション
+Contribución a # angular-es
 
-## ファイル構成
+## organización de archivos
 
-- `origin`: `angular/angular` リポジトリをsubmodule管理しています
-- `aio-ja`: 翻訳の原文ファイル `xxx.en.md` と 翻訳ファイル `.md` 、その他 `origin` を上書きするためのファイルを管理しています。
+-`origin`: gestiona el repositorio `angular / angular` como un submódulo
+-`aio-es`: gestiona el archivo fuente de traducción `xxx.en.md`, el archivo de traducción` .md` y otros archivos para sobrescribir `origin`.
 
-### aioディレクトリの構成
+### Estructura del directorio aio
 
-基本的には `content`ディレクトリ内のMarkdownファイルに対して翻訳をおこないます。
-その他必要に応じて、アプリケーションのソースコードにも手を加えます。
+Básicamente, el archivo Markdown en el directorio `content` está traducido.
+Si es necesario, edite también el código fuente de la aplicación.
 
 https://github.com/angular/angular/tree/master/aio
 
-```
-origin/aio/
+`` `
+origen / aio /
 ├── README.md
-├── content # MarkdownやHTMLなどで書かれたドキュメンテーションのリソースファイル。主にここのファイルを翻訳する
-│   ├── cli # CLIドキュメントのリソース
-│   ├── examples # サンプルコードのソースコード
-│   ├── guide # ガイドドキュメントのリソース
-│   ├── images # ドキュメンテーション中の画像
-│   ├── marketing # リンク集やイベント情報など、Angular紹介用のリソース
-│   ├── start # 入門Tutorialのリソース
-│   ├── navigation.json # サイトの各種ナビゲーションの管理ファイル
-│   └── tutorial # Tour of Heroes Tutorialのリソース
-├── src # angular.ioアプリケーションのソースコード
+├── contenido # Un archivo de recursos de documentos escrito en Markdown o HTML. Principalmente traduzca archivos aquí
+│ ├── recurso de documento cli #CLI
+│ ├── ejemplos # Código fuente del código de muestra
+│ ├── guía # Recurso de documento de guía
+│ ├── imágenes # Imagen en la documentación
+│ ├── marketing # Recursos para presentar Angular, como enlaces e información de eventos
+│ ├── inicio # Introducción Recursos del tutorial
+│ ├── navigation.json # Archivos de administración de navegación del sitio
+│ └── tutorial # Tour of Heroes Recursos del tutorial
+├── código fuente de la aplicación src # angular.io
 ...
-```
+`` `
 
-## 翻訳作業の流れ
+## Flujo del proceso de traducción
 
-翻訳作業を開始する前に、同じファイルを翻訳しようとしている人がいないかどうかを確認しましょう。
-[Translation Checkout](https://github.com/angular/angular-ja/labels/type%3A%20Translation%20Checkout)ラベルのイシューを見ると、現在翻訳に取り掛かっている領域がわかります。
-新しく翻訳をおこないたい場合は、まず[イシューを作成](https://github.com/angular/angular-ja/issues/new/choose)し、Plantillasにしたがって情報を記入してください。
+Antes de comenzar a traducir, asegúrese de que nadie esté intentando traducir el mismo archivo.
+[Verificación de traducción] (https://github.com/angular/angular-es/labels/type%3A%20Translation%20Checkout) Si observa el tema de la etiqueta, puede ver el área donde actualmente estamos trabajando en la traducción.
+Si desea hacer una nueva traducción, [Crear problema] (https://github.com/angular/angular-es/issues/new/choose) y complete la información de acuerdo con Plantillas.
 
-## 軽微な修正
+## Corrección menor
 
-すでに翻訳されたドキュメントの軽微な修正は、GitHub上の `Edit` 機能でプルリクエストを作成してください。
+Para correcciones menores a la documentación ya traducida, cree una solicitud de extracción con la función `Editar` en GitHub.
 
-![edit-on-github](./docs/edit-on-github.png)
+! [edit-on-github] (./ docs / edit-on-github.png)
 
-## 翻訳の追加
+## Añadir traducción
 
-未翻訳のドキュメントをあらたに翻訳するには、原文ファイルを `xxx.en.md` として `origin` から `aio-ja` へコピーし、その原文に対する翻訳を `xxx.md` として作成します。
-その2つのファイルを追加するプルリクエストを提出してください。
+Para traducir un documento no traducido nuevamente, copie el archivo fuente como `xxx.en.md` de` origin` a `aio-es` y cree una traducción para esa fuente como` xxx.md`. ..
+Envíe una solicitud de extracción para agregar los dos archivos.
 
-### ローカル環境のpreparar
+### preparación local
 
-#### 1. リポジトリのクローン
+#### 1. Clon de repositorio
 
-```
-$ git clone git@github.com:angular/angular-ja.git
-```
+`` `
+$ git clone git@github.com: angular / angular-es.git
+`` `
 
-#### 2. originリポジトリの同期
+#### 2. Sincronización del repositorio de origen
 
-このリポジトリではsubmoduleを使って翻訳元リポジトリと統合しています。
+Este repositorio utiliza un submódulo para integrarse con el repositorio de origen.
 
-```
-$ git submodule sync
-$ git submodule update --init
-```
+`` `
+$ git sincronización de submódulo
+Actualización del submódulo $ git --init
+`` `
 
-#### 3. 初回ビルド
+#### 3. Primera compilación
 
-ビルドが完了すると、 `.tmp/aio/dist` ディレクトリにドキュメンテーションサイトが出力されます。
-好みのツールで開発サーバーを立ててビルドされたサイトを確認できます。
+Cuando se complete la compilación, el sitio de documentación se mostrará en el directorio `.tmp / aio / dist`.
+Puede verificar el sitio creado configurando un servidor de desarrollo con su herramienta favorita.
 
-```
+`` `
 $ ./build.sh
-```
+`` `
 
-**注意**
+**Nota**
 
-- ビルド時間がとても長いので、コーヒーを淹れながら待ちます。
-- MacOSにおいて、ビルド処理の途中でOSのファイルディスクリプタを使い切ってしまうことがあります。
-  その場合は次のように最大数を増やす必要があります。
+-El tiempo de construcción es muy largo, así que espere mientras prepara café.
+-En MacOS, el descriptor de archivo del sistema operativo se puede utilizar durante el proceso de compilación.
+  En ese caso, debe aumentar el número máximo de la siguiente manera.
 
 https://github.com/meteor/meteor/issues/8057#issuecomment-261011063
 
-```
-$ echo kern.maxfiles=65536 | sudo tee -a /etc/sysctl.conf
-$ echo kern.maxfilesperproc=65536 | sudo tee -a /etc/sysctl.conf
-$ sudo sysctl -w kern.maxfiles=65536
-$ sudo sysctl -w kern.maxfilesperproc=65536
+`` `
+$ echo kern.maxfiles = 65536 | sudo tee -a /etc/sysctl.conf
+$ echo kern.maxfilesperproc = 65536 | sudo tee -a /etc/sysctl.conf
+$ sudo sysctl -w kern.maxfiles = 65536
+$ sudo sysctl -w kern.maxfilesperproc = 65536
 $ ulimit -n 65536
-```
+`` `
 
-#### 差分ビルドを使った作業
+#### Trabajando con compilaciones diferenciales
 
-一度ローカルビルドをおこなった後であれば、`.tmp/aio` ディレクトリの中で直接ファイルを書き換えて差分ビルドによりスムーズに作業できます。
-`yarn serve-and-sync`コマンドの実行中であれば、`.tmp/aio`内のファイルへの変更があるときに自動でリビルドできます。
-ただし`.tmp`ディレクトリ内での作業はGit管理されないので、作業後に`aio-ja`ディレクトリに反映することを忘れないようにしましょう。
+Después de hacer una compilación local una vez, puede reescribir el archivo directamente en el directorio `.tmp / aio` y trabajar sin problemas con una compilación diferencial.
+Mientras se ejecute el comando `yarn serve-and-sync`, puede reconstruir automáticamente cuando haya cambios en los archivos en` .tmp / aio`.
+Sin embargo, el trabajo en el directorio `.tmp` no es administrado por Git, así que asegúrese de reflejarlo en el directorio` aio-es` después del trabajo.
 
-```
-$ cd .tmp/aio
-$ yarn serve-and-sync # localhost:4200でサーバーが立ち上がります
-```
+`` `
+$ cd .tmp / aio
+$ yarn serve-and-sync # localhost: 4200 iniciará el servidor
+`` `
 
-### 翻訳イシューの作成
+### Creando un problema de traducción
 
-翻訳作業を開始する前に、同じファイルを翻訳しようとしている人がいないかどうかを確認しましょう。
-[Translation Checkout](https://github.com/angular/angular-ja/labels/type%3A%20Translation%20Checkout)ラベルのイシューを見ると、現在翻訳に取り掛かっている領域がわかります。
-新しく翻訳をおこないたい場合は、まず[イシューを作成](https://github.com/angular/angular-ja/issues/new/choose)し、Plantillasにしたがって情報を記入してください。
+Antes de comenzar a traducir, asegúrese de que nadie esté intentando traducir el mismo archivo.
+[Verificación de traducción] (https://github.com/angular/angular-es/labels/type%3A%20Translation%20Checkout) Si observa el tema de la etiqueta, puede ver el área donde actualmente estamos trabajando en la traducción.
+Si desea hacer una nueva traducción, [Crear problema] (https://github.com/angular/angular-es/issues/new/choose) y complete la información de acuerdo con Plantillas.
 
-### 翻訳プルリクエストの作成
+### Crear una solicitud de extracción de traducción
 
-angular/angular-jaをフォークしたリポジトリに変更をプッシュし、フォーク元にプルリクエストを提出します。
-プルリクエストはレビューされたのち、問題がなければマージされます
+Envíe los cambios al repositorio donde bifurcó angular / angular-es y envíe una solicitud de extracción a la fuente de la bifurcación.
+Las solicitudes de extracción se revisarán y fusionarán si todo está bien
 
-## 翻訳のガイドライン
+## Pautas de traducción
 
-日本語への翻訳は、以下のガイドラインに従ってください。
+Siga las pautas a continuación para la traducción al español.
 
-### 原文を `.en.md` ファイルとして保存する
+### guardar el texto fuente como un archivo `.en.md`
 
-originを更新したあとの原文自体のdiffを管理するために、翻訳した時点の原文を `xxx.en.md` ファイルとして保存します。
-新たに翻訳する場合は、英語で書かれた `xxx.md` ファイルを `xxx.en.md` ファイルにコピーし、コピー元の `xxx.md` ファイルを上書き編集します。
+Para gestionar la diferencia del texto original después de actualizar el origen, guarde el texto original en el momento de la traducción como un archivo `xxx.en.md`.
+Para una nueva traducción, copie el archivo inglés `xxx.md` en el archivo` xxx.en.md` y edite el archivo fuente de la copia `xxx.md`.
 
-### 改行位置を原文と揃える
+### Alinear la posición de salto de línea con el texto original
 
-可能な限り、原文と翻訳文の行数を揃え、更新時のdiffチェックが楽になるように協力してください。
+Si es posible, asegúrese de que las líneas originales y traducidas tengan el mismo número de líneas, y coopere para facilitar la verificación de diferencias al actualizar.
 
-### textlintに従う
+### seguir textlint
 
-基本的な表記ゆれの統一はtextlintを利用して自動修正できるようにしています。
-もしtextlintでエラーが検出されれば、CIで検知され、プルリクエストがmergeできません。
+La unificación básica de las fluctuaciones de notación se puede corregir automáticamente mediante textlint.
+Si textlint detecta un error, se detecta en CI y la solicitud de extracción no se puede fusionar.
 
-### 原文のニュアンスを維持する
+### Mantenga matices originales
 
-ドキュメンテーションは技術文書であるため、日本語としての読みやすさを維持しながら、なるべく原文のニュアンスを保ち、意訳は最低限にとどめます。
+Dado que la documentación es un documento técnico, manteniendo la legibilidad , mantenga los matices del texto original tanto como sea posible y mantenga las traducciones al mínimo.
 
-慣れるまでは、Google翻訳などの機械翻訳をベースに、Angular特有の用語などを修正するようにして進めるのがおすすめです。
+Hasta que se acostumbre, se recomienda proceder corrigiendo los términos específicos de Angular basados ​​en traducciones automáticas como Google Translate.
 
-### カタカナ語の表記について
 
-日本語に翻訳することが難しい単語は、カタカナ語に置き換えることがあります。
-外来語をカタカナに変換するルールは、原則として文化庁による[外来語の表記][]に従うものとします。
-ただし、特別な文脈であったり、通例的な表記が存在する場合は例外を認めるものとします。
+### Acerca de 'Enlaces colgantes encontrados': Agregar ancla
 
-[外来語の表記]: https://www.bunka.go.jp/kokugo_nihongo/sisaku/joho/joho/kijun/naikaku/gairai/
+Cuando compila, puede obtener el siguiente error:
 
-### `Dangling Links Found` について: アンカーの追加
+`` `
+warn: Dangling Links Found in "guide / despliegue.json":
+ -guide / browser-support # polyfills
+warn: Dangling Links Found in "guide / deprecations.json":
+ -guide / releases # deprecation-practices,
+ -guide / component-styles # deprecated-deep - y-ng-deep
+warn: Dangling Links Found in "guide / glossary.json":
+ -guide / workspace-config # project-tool-configuration-options,
+ -guide / workspace-config # project-tool-configuration-options
+warn: Dangling Links Found in "api / common / NgForOf.json":
+ -guide / template-syntax # template-reference-variables - var-
+error: Error: 6 enlaces no coincidentes
+`` `
 
-ビルドすると次のようなエラーが発生することがあります。
+Este error es un enlace relativo en la documentación que advierte que no se puede encontrar el enlace.
+En el primer ejemplo anterior, aunque la `guía / implementación` está vinculada a` guide / browser-support # polyfills`, la página `guide / browser-support` dice` # polyfills`. Advertencia de que el titular no existe.
 
-```
-warn:    Dangling Links Found in "guide/deployment.json":
- - guide/browser-support#polyfills
-warn:    Dangling Links Found in "guide/deprecations.json":
- - guide/releases#deprecation-practices,
- - guide/component-styles#deprecated-deep--and-ng-deep
-warn:    Dangling Links Found in "guide/glossary.json":
- - guide/workspace-config#project-tool-configuration-options,
- - guide/workspace-config#project-tool-configuration-options
-warn:    Dangling Links Found in "api/common/NgForOf.json":
- - guide/template-syntax#template-reference-variables--var-
-error:   Error: 6 unmatched links
-```
+Este error a menudo ocurre cuando traduce un encabezado que comienza con `#`. Debe agregar un ancla en la traducción para resolver la referencia del enlace. Agregue una directiva del formulario `{@a xxxxxx}` al encabezado traducido de la siguiente manera.
 
-このエラーは、ドキュメンテーション内の相対リンクで、リンク先が見つからないことを警告しているものです。
-上記の1番上の例では、 `guide/deployment` の中から `guide/browser-support#polyfills` へリンクしているにもかかわらず、 `guide/browser-support` ページに `#polyfills` という見出しが存在しないことを警告しています。
+`` `md
 
-このエラーは `#` で始まる見出し部分を翻訳したときにしばしば発生します。リンクの参照を解決するために、翻訳文の中にアンカーを追加する必要があります。次のように、翻訳後の見出しに `{@a xxxxxx}` という形式のディレクティブを付与してください。
+## Polyfill {@a polyfills}
 
-```md
-
-## ポリフィル {@a polyfills}
-
-```
+`` `

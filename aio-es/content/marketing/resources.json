@@ -1,8 +1,8 @@
 {
-  "Community": {
+  "Comunidad": {
     "order": 3,
     "subCategories": {
-      "Community Curations": {
+      "Curaciones comunitarias": {
         "order": 1,
         "resources": {
           "awesome-angular-components": {
@@ -11,7 +11,7 @@
             "url": "https://github.com/brillout/awesome-angular-components"
           },
           "angular-ru": {
-            "desc": "Angular-RU Community on GitHub is a single entry point for all resources, chats, podcasts and meetups for Angular in Russia.",
+            "desc": "Angular-RU Comunidad on GitHub is a single entry point for all resources, chats, podcasts and meetups for Angular in Russia.",
             "title": "Angular Conferences and Angular Camps in Moscow, Russia.",
             "url": "https://angular-ru.github.io/"
           },
@@ -26,9 +26,9 @@
             "url": "https://www.reddit.com/r/Angular2/"
           },
           "angular-devto": {
-            "desc": "Read and share content and chat about Angular on DEV Community.",
+            "desc": "Read and share content and chat about Angular on DEV Comunidad.",
             "url": "https://dev.to/t/angular",
-            "title": "DEV Community"
+            "title": "DEV Comunidad"
           },
           "angular-in-depth": {
             "desc": "The place where advanced Angular concepts are explained",
@@ -68,10 +68,10 @@
       }
     }
   },
-  "Development": {
+  "Desarrollo": {
     "order": 1,
     "subCategories": {
-      "Cross-Platform Development": {
+      "Cross-Platform Desarrollo": {
         "order": 5,
         "resources": {
           "a3b": {
@@ -94,7 +94,7 @@
           }
         }
       },
-      "Data Libraries": {
+      "Bibliotecas de datos": {
         "order": 3,
         "resources": {
           "rx-web": {
@@ -176,7 +176,7 @@
           }
         }
       },
-      "Tooling": {
+      "Herramientas": {
         "order": 2,
         "resources": {
           "a1": {
@@ -228,7 +228,7 @@
           "uijar": {
             "desc": "A drop in module to automatically create a living style guide based on the test you write for your components.",
             "logo": "",
-            "title": "UI-jar - Test Driven Style Guide Development",
+            "title": "UI-jar - Test Driven Style Guide Desarrollo",
             "url": "https://github.com/ui-jar/ui-jar"
           },
           "protactor": {
@@ -239,7 +239,7 @@
           }
         }
       },
-      "UI Components": {
+      "Componentes de Interfaz de usuario (UI)": {
         "order": 4,
         "resources": {
           "AngularUIToolkit": {
@@ -322,7 +322,7 @@
           "mcc": {
             "desc": "Material components made by the community",
             "logo": "",
-            "title": "Material Community Components",
+            "title": "Material Comunidad Components",
             "url": "https://github.com/tiaguinho/material-community-components"
           },
           "mosaic": {
@@ -423,10 +423,10 @@
       }
     }
   },
-  "Education": {
+  "Educación": {
     "order": 2,
     "subCategories": {
-      "Books": {
+      "Libros": {
         "order": 1,
         "resources": {
           "-KLIzGEp8Mh5W-FkiQnL": {
@@ -494,7 +494,7 @@
           }
         }
       },
-      "Online Training": {
+      "Entrenamiento en linea": {
         "order": 3,
         "resources": {
           "angular-dyma": {
@@ -607,7 +607,7 @@
           }
         }
       },
-      "Workshops & Onsite Training": {
+      "Talleres y capacitación en el lugar": {
         "order": 2,
         "resources": {
           "webucator": {

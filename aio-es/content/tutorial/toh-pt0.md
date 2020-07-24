@@ -17,7 +17,7 @@ Tutorialのこの部分では、次のことを行います。
 
 ## 環境を設定する
 
-開発環境をprepararするには、[ローカル環境の構築](guide/setup-local "Setting up for Local Development") のインストラクションに従いましょう。
+開発環境をprepararするには、[ローカル環境の構築](guide/setup-local "Setting up for Local Desarrollo") のインストラクションに従いましょう。
 
 
 ## 新しいワークスペースと初期アプリケーションリンクを作成する

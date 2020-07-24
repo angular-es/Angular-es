@@ -9,7 +9,7 @@ Angularフレームワーク、 Angular CLI、 Angularアプリケーション�
 
 <div class="alert is-helpful">
 
-Node.jsとnpmの必要なバージョンとインストール方法については [ローカル環境の構築](guide/setup-local "Setting up for Local Development") を参照してください。
+Node.jsとnpmの必要なバージョンとインストール方法については [ローカル環境の構築](guide/setup-local "Setting up for Local Desarrollo") を参照してください。
 
 もしすでに他のバージョンのNode.jsとnpmを使用したプロジェクトがマシン上にある場合、[nvm](https://github.com/creationix/nvm)を使って複数のバージョンのNode.jsとnpmを管理することを検討してください。
 
