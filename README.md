@@ -1,4 +1,5 @@
 #Angular en Español
+
 [![Estado de Netlify!](https://api.netlify.com/api/v1/badges/6bb24e1f-4269-4a46-8628-46ef3286cb9c/deploy-status)](https://app.netlify.com/sites/angular-es/deploys)
 
 [![Discord](https://img.shields.io/discord/593256013008994305.svg?label=Discord&logo=discord&color=7289DA&labelColor=2C2F33)](https://discord.gg/tS4XVkS)
