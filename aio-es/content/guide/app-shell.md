@@ -29,31 +29,31 @@ ng generar app-shell
 Después de ejecutar este comando, notará que el archivo de configuración `angular.json` se ha actualizado con algunos otros cambios y dos nuevos objetivos.
 
 <code-example language = "json">
-"servidor": {
-  "constructor": "@ angular-devkit / build-angular: server",
-  "opciones": {
-    "outputPath": "dist / my-app-server",
-    "main": "src / main.server.ts",
+"server": {
+  "builder": "@angular-devkit/build-angular:server",
+  "options": {
+    "outputPath": "dist/my-app-server",
+    "main": "src/main.server.ts",
     "tsConfig": "tsconfig.server.json"
   }
 },
-"aplicación-shell": {
-  "constructor": "@ angular-devkit / build-angular: app-shell",
-  "opciones": {
-    "browserTarget": "my-app: build",
-    "serverTarget": "mi-aplicación: servidor",
-    "ruta": "shell"
+"app-shell": {
+  "builder": "@angular-devkit/build-angular:app-shell",
+  "options": {
+    "browserTarget": "my-app:build",
+    "serverTarget": "my-app:server",
+    "route": "shell"
   },
-  "configuraciones": {
-    "producción": {
-      "browserTarget": "mi-aplicación: compilación: producción",
-      "serverTarget": "mi-aplicación: servidor: producción"
+  "configurations": {
+    "production": {
+      "browserTarget": "my-app:build:production",
+      "serverTarget": "my-app:server:production"
     }
   }
 }
 </code-example>
 
-## Paso 3: asegúrese de que su aplicación esté construida con contenido de shell
+## Paso 3: asegúrese de que su aplicación esté construida con contenido de el shell
 
 Construya el objetivo `app-shell` usando la CLI.
 
