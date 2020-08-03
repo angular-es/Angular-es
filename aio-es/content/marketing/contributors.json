@@ -108,7 +108,7 @@
     "name": "Pawel Kozlowski",
     "picture": "pawel.jpg",
     "twitter": "pkozlowski_os",
-    "bio": "Open source hacker, AngularJS book author, AngularUI lead developer. Pawel is an software-development addict who believes in free, open source software. He is a core contributor to the AngularJS framework, AngularUI, Karma-runner and several other projects. He is the co-author of the \"Mastering Web Application Desarrollo with AngularJS\" book. When not coding, Pawel can be spotted speaking at various software development conferences.",
+    "bio": "Open source hacker, AngularJS book author, AngularUI lead developer. Pawel is an software-development addict who believes in free, open source software. He is a core contributor to the AngularJS framework, AngularUI, Karma-runner and several other projects. He is the co-author of the \"Mastering Web Application Development with AngularJS\" book. When not coding, Pawel can be spotted speaking at various software development conferences.",
     "groups": ["Angular"],
     "lead": "kara"
   },
@@ -205,7 +205,7 @@
     "picture": "alyssa.jpg",
     "twitter": "alyssanicoll",
     "website": "http://alyssa.io",
-    "bio": "Alyssa is an Angular Developer Advocate for KUI and a GDE. Her two degrees (Web Design & Desarrollo and Psychology) feed her speaking career. She has spoken at over 35 conferences internationally. She is a weekly panelist on Adventures in Angular and Angular Air, which have a combined following of over 16,000 listeners. She enjoys gaming, scuba diving, and has a newborn that fondly goes by 'Mr. Milks'.",
+    "bio": "Alyssa is an Angular Developer Advocate for KUI and a GDE. Her two degrees (Web Design & Development and Psychology) feed her speaking career. She has spoken at over 35 conferences internationally. She is a weekly panelist on Adventures in Angular and Angular Air, which have a combined following of over 16,000 listeners. She enjoys gaming, scuba diving, and has a newborn that fondly goes by 'Mr. Milks'.",
     "groups": ["GDE"]
   },
   "ralph": {
@@ -341,7 +341,7 @@
     "name": "Lukas Ruebbelke",
     "picture": "lukas.jpg",
     "twitter": "simpulton",
-    "bio": "Developer. Hacker. Comunidad backer. Author and blogger. Console logger.",
+    "bio": "Developer. Hacker. Community backer. Author and blogger. Console logger.",
     "groups": ["GDE"]
   },
   "christianweyer": {
@@ -508,7 +508,7 @@
     "name": "Keilla Menezes Fernandes",
     "picture": "keilla.jpg",
     "twitter": "keillamenezes_",
-    "bio": "I am Senior Software Desarrollo Consultant in ThoughtWorks and GDE in Angular. Graduated in Computer Science from Federal University of Bahia, I have been worked with software development for more than 11 years. Since 2017, I started with Angular Framework and I went deep into front-end ecosystem and became more specialized in this area. I participate in a computer science community, Campinas Front-end, that promotes events in this area. In the end of 2016, I started to do technical talks. The passion for science is the engine that drives me to seek answers to the problems that computing aims to solve. Besides that, sharing knowledge and experiences is the path I choose to democratize the technology for all.",
+    "bio": "I am Senior Software Development Consultant in ThoughtWorks and GDE in Angular. Graduated in Computer Science from Federal University of Bahia, I have been worked with software development for more than 11 years. Since 2017, I started with Angular Framework and I went deep into front-end ecosystem and became more specialized in this area. I participate in a computer science community, Campinas Front-end, that promotes events in this area. In the end of 2016, I started to do technical talks. The passion for science is the engine that drives me to seek answers to the problems that computing aims to solve. Besides that, sharing knowledge and experiences is the path I choose to democratize the technology for all.",
     "groups": ["GDE"]
   },
   "mira": {
@@ -558,7 +558,7 @@
     "groups": ["GDE"],
     "twitter": "ladyleet",
     "website": "https://www.thisdot.co/labs",
-    "bio": "Tracy is the Co-Founder of This Dot Labs, a consultancy focused on helping companies with digital transformations. She is also a Google Developer Expert, RxJS Core Team member, a Women Techmakers Lead, and a frequent keynote speaker at conferences. She heads up Comunidad Relations for Node.js at OpenJS Foundation, is the host of the Modern Web podcast, organizer of This.JavaScript, Contributor Days, Google Developer Group Silicon Valley and Triangle, and RxWorkshop. You can find her on Twitter @ladyleet or at http://thisdot.co/labs."
+    "bio": "Tracy is the Co-Founder of This Dot Labs, a consultancy focused on helping companies with digital transformations. She is also a Google Developer Expert, RxJS Core Team member, a Women Techmakers Lead, and a frequent keynote speaker at conferences. She heads up Community Relations for Node.js at OpenJS Foundation, is the host of the Modern Web podcast, organizer of This.JavaScript, Contributor Days, Google Developer Group Silicon Valley and Triangle, and RxWorkshop. You can find her on Twitter @ladyleet or at http://thisdot.co/labs."
   },
   "jiali": {
     "name": "Jia Li",

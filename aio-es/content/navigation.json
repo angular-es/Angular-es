@@ -225,7 +225,7 @@
               "translated": true
             },
             {
-              "url": "",
+              "url": "guide/user-input",
               "title": "Entrada del Usuario",
               "tooltip": "La entrada del usuario dispara un evento DOM. Use enlaces de eventos para escuchar estos eventos y devolver los valores actualizados a su componente y modelo.",
               "translated": true

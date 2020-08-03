@@ -519,12 +519,12 @@ This section contains a complete list all of the currently deprecated CLI flags.
 
 | API/Option                      | May be removed in | Notes                                                                           |
 | ------------------------------- | ----------------- |-------------------------------------------------------------------------------- |
-| `ModuleNotFoundException`       | <!--v8--> v10     | Not used within projects. Used with Herramientas API only. Not Yarn PnP compatible and not used in the Angular CLI. Use Node.js [require.resolve](https://nodejs.org/api/modules.html#modules_require_resolve_request_options).|
-| `resolve`                       | <!--v8--> v10     | Not used within projects. Used with Herramientas API only. Not Yarn PnP compatible and not used in the Angular CLI. Use Node.js [require.resolve](https://nodejs.org/api/modules.html#modules_require_resolve_request_options).|
-| `setResolveHook`                | <!--v8--> v10     | Not used within projects. Used with Herramientas API only. Not Yarn PnP compatible and not used in the Angular CLI. Use Node.js [require.resolve](https://nodejs.org/api/modules.html#modules_require_resolve_request_options).|
-| `ResolveOptions`                | <!--v8--> v10     | Not used within projects. Used with Herramientas API only. Not Yarn PnP compatible and not used in the Angular CLI. Use Node.js [require.resolve](https://nodejs.org/api/modules.html#modules_require_resolve_request_options).|
+| `ModuleNotFoundException`       | <!--v8--> v10     | Not used within projects. Used with Tooling API only. Not Yarn PnP compatible and not used in the Angular CLI. Use Node.js [require.resolve](https://nodejs.org/api/modules.html#modules_require_resolve_request_options).|
+| `resolve`                       | <!--v8--> v10     | Not used within projects. Used with Tooling API only. Not Yarn PnP compatible and not used in the Angular CLI. Use Node.js [require.resolve](https://nodejs.org/api/modules.html#modules_require_resolve_request_options).|
+| `setResolveHook`                | <!--v8--> v10     | Not used within projects. Used with Tooling API only. Not Yarn PnP compatible and not used in the Angular CLI. Use Node.js [require.resolve](https://nodejs.org/api/modules.html#modules_require_resolve_request_options).|
+| `ResolveOptions`                | <!--v8--> v10     | Not used within projects. Used with Tooling API only. Not Yarn PnP compatible and not used in the Angular CLI. Use Node.js [require.resolve](https://nodejs.org/api/modules.html#modules_require_resolve_request_options).|
 | `terminal`                      | <!--v8--> v10     | Unused implementation of terminal codes (color).                                |
-| `isObservable`                  | <!--v8--> v10     | Not used within projects. Used with Herramientas API only. Use `isObservable` function from the `rxjs` package.|
+| `isObservable`                  | <!--v8--> v10     | Not used within projects. Used with Tooling API only. Use `isObservable` function from the `rxjs` package.|
 
 ### @ngtools/webpack
 

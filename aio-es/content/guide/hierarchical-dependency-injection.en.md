@@ -440,7 +440,7 @@ should be used at this location.
 </div>
 
 
-### Ejemplo app structure
+### Example app structure
 
 The example app has a `FlowerService` provided in `root` with an `emoji`
 value of `🌺` (red hibiscus).
