@@ -79,6 +79,12 @@ $ ./build.sh
 
 https://github.com/meteor/meteor/issues/8057#issuecomment-261011063
 
+echo kern.maxfiles=65536 | sudo tee -a /etc/sysctl.conf
+echo kern.maxfilesperproc=65536 | sudo tee -a /etc/sysctl.conf
+sudo sysctl -w kern.maxfiles=65536
+sudo sysctl -w kern.maxfilesperproc=65536
+ulimit -n 65536
+
 `` `
 $ echo kern.maxfiles = 65536 | sudo tee -a /etc/sysctl.conf
 $ echo kern.maxfilesperproc = 65536 | sudo tee -a /etc/sysctl.conf
@@ -139,11 +145,11 @@ Hasta que se acostumbre, se recomienda proceder corrigiendo los t√©rminos espec√
 Cuando compila, puede obtener el siguiente error:
 
 `` `
-warn: Dangling Links Found in "guide / despliegue.json":
- -guide / browser-support # polyfills
+warn: Dangling Links Found in "guide /deploy.json":
+ -guide/browser-support#polyfills
 warn: Dangling Links Found in "guide / deprecations.json":
- -guide / releases # deprecation-practices,
- -guide / component-styles # deprecated-deep - y-ng-deep
+ -guide/releases # deprecation-practices,
+ -guide/component-styles # deprecated-deep - y-ng-deep
 warn: Dangling Links Found in "guide / glossary.json":
  -guide / workspace-config # project-tool-configuration-options,
  -guide / workspace-config # project-tool-configuration-options

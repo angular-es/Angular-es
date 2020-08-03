@@ -1,4 +1,4 @@
-#Crear un nuevo proyecto
+# Crear un nuevo proyecto
 
 Primero, cree la aplicación inicial usando la CLI angular. En este Tutorial, modificará y ampliará la aplicación Inicial para crear la aplicación Tour de Heroes.
 

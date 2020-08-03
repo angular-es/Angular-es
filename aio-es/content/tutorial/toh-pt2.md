@@ -211,6 +211,7 @@ Si el héroe en la fila actual es el mismo que `selectedHero`, Angular agregará
 El `<li>` completado se ve así:
 
 <code-example path = "toh-pt2 / src / app / heroes / heroes.component.html" region = "li" header = "heroes.component.html (elemento de lista hero)"> </code-example>
+
 {@a final-code-review}
 
 ## Revisión final del código
