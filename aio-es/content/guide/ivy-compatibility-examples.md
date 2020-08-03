@@ -98,7 +98,7 @@ Ivy behavior for directive/string predicates:
 ```
 
 
-### Ejemplo of error
+### Example of error
 
 The error message that you see will depend on how the particular content query is used in the application code.
 Frequently, an error is thrown when a property is referenced on the content query result (which is now `undefined`).
@@ -175,7 +175,7 @@ This means that compilation has the potential to be faster (and opens the framew
 
 Adding the proper decorator explicitly provides this information.
 
-### Ejemplo of error
+### Example of error
 
 In JIT mode, the framework will throw the following error:
 
@@ -268,7 +268,7 @@ This change makes change detection easier to reason about for debugging purposes
 In this case, it means that the `value` binding will be checked before the `*ngFor` is checked, as it is declared above the `*ngFor` in the template.
 Consequently, the value of the `<select>` element will be set before any options are created, and it won't be able to match and display the correct option in the DOM.
 
-### Ejemplo of error
+### Example of error
 
 There is no error thrown, but the `<select>` in question will not have the correct initial value displayed in the DOM.
 
@@ -325,7 +325,7 @@ In the ViewEngine runtime, directive input bindings and element bindings were ex
 
 In contrast, Ivy processes the template in just one pass, so that bindings are checked in the same order that they are written in the template. In this case, it means that the `myDir.name` binding will be checked before the `name` input sets the property on the directive (and thus it will be `undefined`). Since the `myDir.name` property will be set by the time the next change detection pass runs, a change detection error is thrown.
 
-### Ejemplo of error
+### Example of error
 
 Assuming that the value for `myName` is `Angular`, you should see an error that looks like
 

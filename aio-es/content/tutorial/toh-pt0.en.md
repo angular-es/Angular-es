@@ -17,7 +17,7 @@ In this part of the tutorial, you'll do the following:
 
 ## Set up your environment
 
-To set up your development environment, follow the instructions in [Local Environment Setup](guide/setup-local "Setting up for Local Desarrollo").
+To set up your development environment, follow the instructions in [Local Environment Setup](guide/setup-local "Setting up for Local Development").
 
 
 ## Create a new workspace and an initial application

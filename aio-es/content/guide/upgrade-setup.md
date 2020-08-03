@@ -9,7 +9,7 @@ Question: Can we remove this file and instead direct readers to https://github.c
 **Audience:** Use this guide **only** in the context of  [Upgrading from AngularJS](guide/upgrade "Upgrading from AngularJS to Angular") or [Upgrading for Performance](guide/upgrade-performance "Upgrading for Performance").
 Those Upgrade guides refer to this Setup guide for information about using the [deprecated QuickStart GitHub repository](https://github.com/angular/quickstart "Deprecated Angular QuickStart GitHub repository"), which was created prior to the current Angular [CLI](cli "CLI Overview").
 
-**For all other scenarios,** see the current instructions in [Setting up the Local Environment and Workspace](guide/setup-local "Setting up for Local Desarrollo").
+**For all other scenarios,** see the current instructions in [Setting up the Local Environment and Workspace](guide/setup-local "Setting up for Local Development").
 
 
 </div>
@@ -56,8 +56,8 @@ Perform the _clone-to-launch_ steps with these terminal commands.
 {@a download}
 
 
-## Descargar
-<a href="https://github.com/angular/quickstart/archive/master.zip" title="Descargar the QuickStart seed repository">Descargar the QuickStart seed</a>
+## Download
+<a href="https://github.com/angular/quickstart/archive/master.zip" title="Download the QuickStart seed repository">Download the QuickStart seed</a>
 and unzip it into your project folder. Then perform the remaining steps with these terminal commands.
 
 

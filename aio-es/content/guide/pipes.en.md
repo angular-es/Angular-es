@@ -75,7 +75,7 @@ For example, `{{ amount | currency:'EUR':'Euros '}}` adds the second parameter, 
 
 Some pipes require at least one parameter and allow more optional parameters, such as [`SlicePipe`](/api/common/SlicePipe "API reference for SlicePipe"). For example, `{{ slice:1:5 }}` creates a new array or string containing a subset of the elements starting with element `1` and ending with element `5`.
 
-### Ejemplo: Formatting a date
+### Example: Formatting a date
 
 The tabs in the following example demonstrates toggling between two different formats (`'shortDate'` and `'fullDate'`):
 
@@ -116,7 +116,7 @@ For `date` pipe format options, see [DatePipe](api/common/DatePipe "DatePipe API
 
 </div>
 
-### Ejemplo: Applying two formats by chaining pipes
+### Example: Applying two formats by chaining pipes
 
 You can chain pipes so that the output of one pipe becomes the input to the next.
 
@@ -166,7 +166,7 @@ Implement the [`PipeTransform`](/api/core/PipeTransform "API reference for PipeT
 
 Angular invokes the `transform` method with the value of a binding as the first argument, and any parameters as the second argument in list form, and returns the transformed value.
 
-### Ejemplo: Transforming a value exponentially
+### Example: Transforming a value exponentially
 
 In a game, you may want to implement a transformation that raises a value exponentially to increase a hero's power.
 For example, if the hero's score is 2, boosting the hero's power exponentially by 10 produces a score of 1024.

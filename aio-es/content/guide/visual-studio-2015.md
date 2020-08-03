@@ -2,7 +2,7 @@
 
 {@a top}
 
-Some developers prefer Visual Studio as their Integrated Desarrollo Environment (IDE).
+Some developers prefer Visual Studio as their Integrated Development Environment (IDE).
 
 This cookbook describes the steps required to set up and use Angular app files in Visual Studio 2015 within an ASP.NET 4.x project.
 
@@ -47,7 +47,7 @@ Note that the resulting code does not map to the docs. Adjust accordingly.
 
 Install **[Node.js® and npm](https://nodejs.org/en/download/)**
 if they are not already on your machine.
-See [Local Environment Setup](guide/setup-local "Setting up for Local Desarrollo") for supported versions and instructions.
+See [Local Environment Setup](guide/setup-local "Setting up for Local Development") for supported versions and instructions.
 
 
 
@@ -100,7 +100,7 @@ While Visual Studio Update 3 ships with TypeScript support out of the box, it cu
 
 To install the latest version of TypeScript:
 
- * Descargar and install the latest [TypeScript for Visual Studio 2015](https://www.microsoft.com/en-us/download/details.aspx?id=48593),
+ * Download and install the latest [TypeScript for Visual Studio 2015](https://www.microsoft.com/en-us/download/details.aspx?id=48593),
 
  * OR install it with npm: `npm install -g typescript@latest`.
 
@@ -116,7 +116,7 @@ restart it to make sure everything is clean.
 </h2>
 
 
- Follow the instructions in [Local Environment Setup](guide/setup-local "Setting up for Local Desarrollo") to create a starter Angular app using the CLI command [`ng new`](cli/new).
+ Follow the instructions in [Local Environment Setup](guide/setup-local "Setting up for Local Development") to create a starter Angular app using the CLI command [`ng new`](cli/new).
 
 
 

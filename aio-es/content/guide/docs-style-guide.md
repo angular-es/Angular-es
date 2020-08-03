@@ -287,7 +287,7 @@ The current guidelines allow for a three-level navigation structure with two hea
 
 ## Code snippets
 
-Guides are rich in examples of working Angular code. Ejemplo code can be commands entered in a terminal window, a fragment of TypeScript or HTML, or an entire code file.
+Guides are rich in examples of working Angular code. Example code can be commands entered in a terminal window, a fragment of TypeScript or HTML, or an entire code file.
 
 Whatever the source, the doc viewer renders them as "code snippets", either individually with the [_code-example_](#code-example "code-example") component or as a tabbed collection with the [_code-tabs_](#code-tabs "code-tabs") component.
 
@@ -470,7 +470,7 @@ A couple of observations:
 1. Omitting the `header` is fine when the source of the fragment is obvious. We just said that this is a fragment of the `app.module.ts` file which was displayed immediately above, in full, with a header.
 There's no need to repeat the header.
 
-#### Ejemplo of bad code
+#### Example of bad code
 
 Sometimes you want to display an example of bad code or bad design.
 
@@ -793,10 +793,10 @@ You can change the appearance and behavior of the live example with attributes a
 
 Give the live example anchor a custom label and tooltip by setting the `title` attribute.
 
-<live-example title="Live Ejemplo with title"></live-example>
+<live-example title="Live Example with title"></live-example>
 
 ```html
-<live-example title="Live Ejemplo with title"></live-example>
+<live-example title="Live Example with title"></live-example>
 ```
 
 You can achieve the same effect by putting the label between the `<live-example>` tags:
@@ -811,13 +811,13 @@ You can achieve the same effect by putting the label between the `<live-example>
 
 To link to a Stackblitz in a folder whose name is not the same as the current guide page, set the `name` attribute to the name of that folder.
 
-<live-example name="router">Live Ejemplo from the Router guide</live-example>
+<live-example name="router">Live Example from the Router guide</live-example>
 
 ```html
-<live-example name="router">Live Ejemplo from the Router guide</live-example>
+<live-example name="router">Live Example from the Router guide</live-example>
 ```
 
-<h3 class="no-toc">Live Ejemplo for named Stackblitz</h3>
+<h3 class="no-toc">Live Example for named Stackblitz</h3>
 
 To link to a Stackblitz defined by a named `stackblitz.json` file, set the `stackblitz` attribute. The following example links to the Stackblitz defined by `second.stackblitz.json` in the current guide's directory.
 
@@ -827,7 +827,7 @@ To link to a Stackblitz defined by a named `stackblitz.json` file, set the `stac
 <live-example stackblitz="second"></live-example>
 ```
 
-<h3 class="no-toc">Live Ejemplo without download</h3>
+<h3 class="no-toc">Live Example without download</h3>
 
 To skip the download link, add the `noDownload` attribute.
 
@@ -837,14 +837,14 @@ To skip the download link, add the `noDownload` attribute.
 <live-example noDownload>Just the Stackblitz</live-example>
 ```
 
-<h3 class="no-toc">Live Ejemplo with download-only</h3>
+<h3 class="no-toc">Live Example with download-only</h3>
 
 To skip the live Stackblitz link and only link to the download, add the `downloadOnly` attribute.
 
-<live-example downloadOnly>Descargar only</live-example>
+<live-example downloadOnly>Download only</live-example>
 
 ```html
-<live-example downloadOnly>Descargar only</live-example>
+<live-example downloadOnly>Download only</live-example>
 ```
 
 <h3 class="no-toc">Embedded live example</h3>

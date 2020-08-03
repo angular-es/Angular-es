@@ -52,7 +52,7 @@ NOTE:
 ## Angular UI components
 
 The [Angular Material](https://material.angular.io/) library, which is maintained by the Angular team, is a suite of reusable UI components that aims to be fully accessible.
-The [Component Desarrollo Kit (CDK)](https://material.angular.io/cdk/categories) includes the `a11y` package that provides tools to support various areas of accessibility.
+The [Component Development Kit (CDK)](https://material.angular.io/cdk/categories) includes the `a11y` package that provides tools to support various areas of accessibility.
 For example:
 
 * `LiveAnnouncer` is used to announce messages for screen-reader users using an `aria-live` region. See the W3C documentation for more information on [aria-live regions](https://www.w3.org/WAI/PF/aria-1.1/states_and_properties#aria-live).
@@ -145,7 +145,7 @@ You should avoid situations where focus returns to the `body` element after a ro
 
 * [Codelyzer](http://codelyzer.com/rules/) provides linting rules that can help you make sure your code meets accessibility standards.
 
-Libros
+Books
 
 * "A Web for Everyone: Designing Accessible User Experiences", Sarah Horton and Whitney Quesenbery
 
