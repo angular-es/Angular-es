@@ -1,215 +1,221 @@
-# ヒーローエディター {@a the-hero-editor}
+# El editor de Héroe {@a the-hero-editor}
 
-アプリケーションに基本的なタイトルが追加されました。
-次に、ヒーロー情報を表示するための新しいコンポーネントを作成し、
-そのコンポーネントをアプリケーションシェルに配置します。
+Se ha agregado un título básico a la aplicación.
+Luego crea un nuevo componente para mostrar la información del héroe,
+Coloque el componente en el shell de la aplicación.
 
 <div class="alert is-helpful">
 
-  For the sample app that this page describes, see the <live-example></live-example>.
+  Para ver la aplicación de ejemplo que describe esta página, consulte el <live-example></live-example>.
 
 </div>
 
-## heroes コンポーネントを作成する {@a create-the-heroes-component}
+## Crear un componente de héroes {@a create-the-heroes-component}
 
-Angular CLIを使用して､`heroes`という名前の新しいコンポーネントを生成します。
+Use la CLI angular para generar un nuevo componente llamado `heroes`.
 
 <code-example language="sh" class="code-shell">
   ng generate component heroes
 </code-example>
 
-CLIは`src/app/heroes/`という新しいフォルダを作成し、
-`HeroesComponent`に関する3つのファイルをテストファイルと一緒に生成します。
+CLI crea una nueva carpeta llamada `src/app/heroes/`,
+Genere tres archivos sobre `HeroesComponent` junto con los archivos de prueba.
 
-`HeroesComponent`のクラスファイルは次のとおりです。
+El archivo de clase de `HeroesComponent` es el siguiente.
 
 <code-example path="toh-pt1/src/app/heroes/heroes.component.ts" region="v1" header="app/heroes/heroes.component.ts (initial version)"></code-example>
 
-常にAngularコアライブラリから`Component`シンボルをインポートし、
-コンポーネントクラスに`@Component`で注釈を付けます。
+Importe siempre el símbolo `Componente` de la biblioteca central angular,
+Anote la clase de componente con `@Component`.
 
-`@Component`は、コンポーネントのAngularメタデータを指定するデコレーター関数です。
+`@Component` es una función decoradora que especifica metadatos angulares para un componente.
 
-CLIは3つのメタデータプロパティを生成しました:
+La CLI generó 3 propiedades de metadatos:
 
-1. `selector`&mdash; コンポーネントのCSS要素セレクター
-1. `templateUrl`&mdash; コンポーネントのPlantillasファイルの場所
-1. `styleUrls`&mdash; コンポーネントのプライベートCSSスタイルの場所
+1. `selector`&mdash; Selector de elementos CSS para el componente
+1. `templateUrl`&mdash; Ubicación del archivo Plantillas para el componente
+1. `styleUrls`&mdash; La ubicación de los estilos CSS privados del componente.
 
 {@a selector}
 
-[CSS要素セレクタ](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors)である
-`'app-heroes'`は、親コンポーネントのPlantillas内でこのコンポーネントを識別するHTML要素の名前と一致します。
+El [Selector de elementos CSS](https://developer.mozilla.org/en-US/docs/Web/CSS/Type_selectors)
+`` app-heroes '' coincide con el nombre del elemento HTML que identifica este componente en el componente padre Plantillas.
 
-`ngOnInit()`は[ライフサイクルフック](guide/lifecycle-hooks#oninit)です。
-Angularは、コンポーネントの作成直後に`ngOnInit()`を呼び出します。
-初期化ロジックを置くのに適しています。
+El `ngOnInit()` es un [gancho de ciclo de vida](guide/lifecycle-hooks#oninit) ("lifecycle hook") . Angular llama a `ngOnInit ()` inmediatamente después de crear el componente.
+Adecuado para poner la lógica de inicialización.
 
-常にコンポーネントクラスを`export`するので、`AppModule`のようにいつでも他の場所に`import`できます。
+Siempre `exporta` la clase de componente, por lo que siempre puede` importarla 'en otro lugar, como un `AppModule`.
 
-### `hero` プロパティを追加する {@a add-a-hero-property}
+### Agregue la propiedad `hero` {@a add-a-hero-property}
 
-"Windstorm"という名前のヒーローのために、`HeroesComponent`に`hero`プロパティを追加します。
+Agregue una propiedad `hero` al` HeroesComponent` para un héroe llamado "Windstorm".
 
 <code-example path="toh-pt1/src/app/heroes/heroes.component.ts" region="add-hero" header="heroes.component.ts (hero property)"></code-example>
 
-### ヒーローを表示する {@a show-the-hero}
+### Mostrar heroe {@a show-the-hero}
 
-`heroes.component.html`Plantillasファイルを開きます。
-Angular CLIで生成されたデフォルトのテキストを削除し、
-それを新しい`hero`プロパティへのデータバインディングに置き換えてください。
+Abra el archivo `heroes.component.html`Plantillas.
+Elimine el texto predeterminado generado por CLI angular,
+Reemplácelo con un enlace de datos a la nueva propiedad `hero '.
 
 <code-example path="toh-pt1/src/app/heroes/heroes.component.1.html" header="heroes.component.html" region="show-hero-1"></code-example>
 
-## `HeroesComponent` ビューを表示する {@a show-the-heroescomponent-view}
+## Mostrar la vista `HeroesComponent` {@a show-the-heroescomponent-view}
 
-`HeroesComponent`を表示するには、それをアプリケーションシェルの`AppComponent`のPlantillasに追加する必要があります。
+Para ver el `HeroesComponent`, debe agregarlo a las Plantillas en el` AppComponent` del shell de su aplicación.
 
-`app-heroes`は`HeroesComponent`の[要素セレクタ](#selector)であることを思い出してください。
-なので、`AppComponent`のPlantillasファイルで、タイトルの直下に`<app-heroes>`要素を追加してください。
+Recuerde que `app-heroes` es el [selector de elemento](#selector) del` HeroesComponent`.
+Entonces, en el archivo Plantillas de `AppComponent`, agregue el elemento` <app-heroes> `directamente debajo del título.
 
 <code-example path="toh-pt1/src/app/app.component.html" header="src/app/app.component.html"></code-example>
 
-CLIの`ng serve`コマンドがまだ実行中であれば、
-ブラウザが更新され、アプリケーションのタイトルとヒーローの名前が表示されます。
+Si el comando CLI `ng serve` todavía se está ejecutando,
+El navegador se actualiza para mostrar el título de la aplicación y el nombre del héroe.
 
-## Hero インターフェースを作成する {@a create-a-hero-interface}
+## Crear interfaz de héroe
 
-本当のヒーローは名前だけではありません。
+{@a create-a-hero-interface}
 
-`src/app`フォルダ内の独自のファイルに、`Hero`インターフェースを作成します。
-それに`id`プロパティと`name`プロパティを与えます。
+El un héroe es más que un nombre.
+
+Cree una interfaz `Hero` en su propio archivo en la carpeta `src/app`.
+Déle una propiedad `id` y una propiedad `name`.
 
 <code-example path="toh-pt1/src/app/hero.ts"  header="src/app/hero.ts"></code-example>
 
 
-`HeroesComponent`クラスに戻り、`Hero`インターフェースをインポートします。
+Regrese a la clase `HeroesComponent` e importe la interfaz `Hero`.
 
-コンポーネントの`hero`プロパティを`Hero`型にリファクタリングします。
-それを、`1`という`id`と`Windstorm`という名前で初期化します。
+Refactorice la propiedad de héroe del componente para que sea del tipo 'Héroe'.
+Inicialícelo con un `id` de `1` y un nombre de `Windstorm`.
 
-改訂された`HeroesComponent`のクラスファイルは、次のようになります。
+El archivo de clase revisado `HeroesComponent` se ve así:
 
 <code-example path="toh-pt1/src/app/heroes/heroes.component.ts" header="src/app/heroes/heroes.component.ts"></code-example>
 
-ヒーローを文字列からオブジェクトに変更したため、ページが正しく表示されなくなりました。
+Cambió el héroe de texto a un objeto, lo que provocó que la página se mostrara incorrectamente.
 
-## ヒーローオブジェクトを表示する {@a show-the-hero-object}
+## Mostrar objeto de héroe 
 
-ヒーローの名前を知らせるためにPlantillasのバインディングを更新し、
-次のような詳細レイアウトで`id`と`name`の両方を表示します。
+{@a show-the-hero-object}
+
+Actualice los enlaces de Plantillas para anunciar el nombre del héroe,
+Muestre tanto el `id` como el `name` con un diseño detallado como este:
 
 <code-example path="toh-pt1/src/app/heroes/heroes.component.1.html" region="show-hero-2" header="heroes.component.html (HeroesComponent's template)"></code-example>
 
-ブラウザが更新され、ヒーローの情報が表示されます。
+El navegador se actualiza para mostrar la información del héroe.
 
-## _UppercasePipe_ で書式設定する {@a format-with-the-uppercasepipe}
+## Formatee con _UppercasePipe_ 
 
-`hero.name`のバインディングをこのように修正してください。
+{@a format-with-the-uppercasepipe}
+
+Modifique el enlace para `hero.name` de esta manera:
 <code-example path="toh-pt1/src/app/heroes/heroes.component.html" header="src/app/heroes/heroes.component.html" region="pipe">
 </code-example>
 
-ブラウザが更新され、ヒーローの名前が大文字で表示されるようになります。
+El navegador se actualizará para mostrar el nombre del héroe en mayúsculas.
 
-補間バインディングの中、パイプ演算子 ( | ) の直後にある単語`uppercase`は、
-組み込みの`UppercasePipe`を起動します。
+En el enlace de interpolación, la palabra `mayúscula` inmediatamente después del operador de tubería (|) es
+Inicie el 'Tubo(Pipe) en mayúscula' incorporado.
 
-[パイプ](guide/pipes)は、文字列、通貨金額、日付や、その他の表示データを書式設定するのに適しています。
-Angularは複数のビルトインパイプを備えており、あなた自身が独自のパイプを作ることもできます。
+[tuberia](guide/pipes) ("pipe") Es adecuado para formatear cadenas, importes monetarios, fechas y otros datos de visualización.
+Angular viene con múltiples tuberías incorporadas, y puede crear las suyas propias.
 
 {@a edit-the-hero}
-## ヒーローを編集する
+## Editar héroe
 
-ユーザーは`<input>`テキストボックスでヒーローの名前を編集できるべきです。
+El usuario debe poder editar el nombre del héroe en el cuadro de texto `<input>`.
 
-テキストボックスにはヒーローの`name`プロパティが _表示_ され、
-ユーザーの入力時にそのプロパティが _更新_ されます。
-これは、コンポーネントクラスから _画面へ_ 、
-そして画面から _コンポーネントクラスへの_ データフローを意味します。
+En el cuadro de texto, la propiedad `name` del héroe se muestra _,
+La propiedad se actualiza según los tipos de usuario.
+Esto es de la clase de componente a _screen_,
+Y significa el flujo de datos desde la pantalla a la clase de componente.
 
-そのデータフローを自動化するには、`<input>`フォーム要素と`hero.name`プロパティとの間に双方向データバインディングを設定します。
+Para automatizar ese flujo de datos, configure un enlace de datos bidireccional entre el elemento de formulario `<input>` y la propiedad `hero.name`.
 
-### 双方向データバインディング {@a two-way-binding}
+### Enlace de datos bidireccional {@a enlace bidireccional}
 
-`HeroesComponent`Plantillasの詳細エリアをリファクタリングすると、次のようになります。
+Refactorizando el área de detalle de las Plantas `HeroesComponent` se ve así:
 
 <code-example path="toh-pt1/src/app/heroes/heroes.component.1.html" region="name-input" header="src/app/heroes/heroes.component.html (HeroesComponent's template)"></code-example>
 
-**[(ngModel)]** は、Angularの双方向データバインディング構文です。
+**[(ngModel)]** Es la sintaxis de enlace de datos bidireccional de Angular.
 
-これで`hero.name`プロパティをHTMLのテキストボックスにバインドするので、
-`hero.name`プロパティからテキストボックスへ、テキストボックスから`hero.name`プロパティへ、 _双方向に_ データを流すことができます。
+Esto vinculará la propiedad `hero.name` al cuadro de texto HTML, por lo que
+Puede pasar datos _ en ambas direcciones desde la propiedad `hero.name` al cuadro de texto y desde el cuadro de texto a la propiedad` hero.name`.
 
-### 見つからない _FormsModule_ {@a the-missing-formsmodule}
+### No encontrado _FormsModule_ {@a the-missing-formsmodule}
 
-`[(ngModel)]`を追加したときにアプリケーションが動かなくなったことに注目してください。
+Observe que la aplicación dejó de funcionar cuando agregué el `[(ngModel)]`.
 
-エラーを表示するには、ブラウザの開発ツールを開き、
-コンソールで次のようなメッセージを探します、
+Para ver el error, abra las herramientas de desarrollo de su navegador,
+Busque mensajes como el siguiente en la consola,
 
 <code-example language="sh" class="code-shell">
-Template parse errors:
-Can't bind to 'ngModel' since it isn't a known property of 'input'.
+Errores de análisis de plantilla:
+No se puede vincular a 'nGModelo' ya que no es una propiedad conocida de 'entrada'.
 </code-example>
 
-`ngModel`は有効なAngularディレクティブですが、デフォルトでは使用できません。
+`ngModel`Es una directiva angular válida pero no está disponible por defecto.
 
-これはオプションの`FormsModule`に属しており、使用するにはそのモジュールをオプトインする必要があります。
+Pertenece al `FormsModule` opcional y debe optar por ese módulo para usarlo.
 
 ## _AppModule_
 
-Angularでは、アプリケーションの部品がどのように合わさるかや、
-アプリケーションが必要としている他のファイルやライブラリを知る必要があります。
-この情報を _メタデータ_ といいます。
+En Angular, cómo encajan las partes de la aplicación,
+Necesita saber qué otros archivos y bibliotecas necesita su aplicación.
+Esta información se llama _metadata_.
 
-一部のメタデータは、コンポーネントクラスに追加した`@Component`デコレーター内にあります。
-その他の重要なメタデータは[`@NgModule`](guide/ngmodules)デコレーター内にあります。
+Algunos de los metadatos se encuentran en el decorador `@ Component` que agregó a su clase de componentes.
+Otros metadatos importantes son[`@NgModule`](guide/ngmodules)Está en el decorador.
 
-もっとも重要な`@NgModule`デコレーターは、トップレベルの **AppModule** クラスに注釈を付けます。
+El decorador más importante `@NgModule` anota la clase ** AppModule ** de nivel superior.
 
-Angular CLI は、プロジェクトを作成するときに`src/app/app.module.ts`に`AppModule`クラスを作成しました。
-ここで`FormsModule`をオプトインします。
+Angular CLI creó la clase `AppModule` en `src/app/app.module.ts` al crear el proyecto.
+Ahora opta por el `FormsModule`.
 
-### _FormsModule_ をインポートする {@a import-formsmodule}
+### Importar _FormsModule_ {@a import-formsmodule}
 
-`AppModule` (`app.module.ts`) を開き、`@angular/forms`ライブラリから`FormsModule`シンボルをインポートします。
+Abra `AppModule` (` app.module.ts`) e importe el símbolo `FormsModule` desde la biblioteca` @ angular / forms`.
 
 <code-example path="toh-pt1/src/app/app.module.ts" header="app.module.ts (@NgModule imports)"
  region="formsmodule-js-import">
 </code-example>
 
-それから、`FormsModule`を`@NgModule`メタデータの`imports`配列に追加します。
-この配列には、アプリケーションに必要な外部モジュールのリストが含まれています。
+A continuación, agregue el `FormsModule` a la matriz` imports` de los metadatos `@ NgModule`.
+Esta matriz contiene una lista de módulos externos que requiere su aplicación.
 
 <code-example path="toh-pt1/src/app/app.module.ts" header="app.module.ts ( @NgModule imports)"
 region="ng-imports">
 </code-example>
 
-ブラウザが更新されると、アプリケーションは再び動作するはずです。ヒーローの名前を編集し、テキストボックスの上にある`<h2>`に即座に変更が反映されていることを確認できます。
+La aplicación debería funcionar nuevamente cuando se actualice el navegador. Puedes editar el nombre del héroe y ver los cambios reflejados inmediatamente en el `<h2>` arriba del cuadro de texto.
 
-### `HeroesComponent` を宣言する {@a declare-heroescomponent}
+### Declarar `HeroesComponent` {@a declare-heroescomponent}
 
-すべてのコンポーネントは、 _ただ1つの_ [NgModule](guide/ngmodules)で宣言されなければなりません。
+Todos los componentes deben declararse con _exactamente uno_ [NgModule](guide/ngmodules).
 
-_あなたは_ `HeroesComponent`を宣言していません。
-では、なぜアプリケーションは動作したのでしょうか？
+_No has declarado _HeroesComponent`.
+Entonces, ¿por qué funcionó la aplicación?
 
-アプリケーションが動作したのは、Angular CLI が`HeroesComponent`を生成したときに、`AppModule`でそのコンポーネントの宣言を行っていたからです。
+La aplicación funcionó porque Angular CLI declaró el componente en el `AppModule` cuando generó el `HeroesComponent`.
 
-`src/app/app.module.ts`を開き、先頭付近で`HeroesComponent`がインポートされているのを見つけてください。
+Abra `src/app/app.module.ts` y encuentre el `HeroesComponent` importado cerca de la parte superior.
+
 <code-example path="toh-pt1/src/app/app.module.ts" header="src/app/app.module.ts" region="heroes-import" >
 </code-example>
 
-`HeroesComponent`は、`@NgModule.declarations`配列で宣言されています。
+`HeroesComponent` se declara en la matriz`@NgModule.declarations`.
 <code-example path="toh-pt1/src/app/app.module.ts" header="src/app/app.module.ts" region="declarations">
 </code-example>
 
-`AppModule`は`AppComponent`と`HeroesComponent`の両方のアプリケーションコンポーネントを宣言しています。
+`AppModule` declara los componentes de aplicación `AppComponent` y `HeroesComponent`.
 
 
-## 最終的なコードレビュー {@a final-code-review}
+## Revisión del código final {@a final-code-review}
 
-このページで解説したコードファイルは次のとおりです。
+Los archivos de código descritos en esta página son:
 
 <code-tabs>
 
@@ -234,14 +240,13 @@ region="ng-imports">
   </code-pane>
 
 </code-tabs>
-
 {@a summary}
-## まとめ
+## Resumen 
 
-* CLIを使用して、2番目の `HeroesComponent` を作成しました。
-* `HeroesComponent` を `AppComponent` シェルに追加して表示しました。
-* 名前をフォーマットするために、 `UppercasePipe` を適用しました。
-* `ngModel` ディレクティブで双方向データバインディングを使用しました。
-* `AppModule` について学びました。
-* `AppModule` に `FormsModule` をインポートして、Angular `ngModel` ディレクティブを認識して適用するようにしました。
-* `AppModule` でコンポーネントを宣言することの重要性を学び、CLIがあなたのためにその宣言を行っていることを認識しました。
+* Ha creado un segundo `HeroesComponent` usando CLI.
+* Agregó `HeroesComponent` al shell de` AppComponent` y lo mostró.
+* Aplico 'UppercasePipe' para formatear el nombre.
+* Utilizo el enlace de datos bidireccional en la directiva `ngModel`.
+* Aprendío sobre `AppModule`.
+* Importó `FormsModule` en` AppModule` para reconocer y aplicar la directiva Angular `ngModel`.
+* Aprendío la importancia de declarar un componente en un `AppModule` y me di cuenta de que la CLI está haciendo esa declaración por usted.

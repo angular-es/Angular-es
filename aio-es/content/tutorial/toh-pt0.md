@@ -1,54 +1,57 @@
-# 新規プロジェクトの作成
+# Crear un nuevo proyecto
 
-まず、Angular CLIを使用して初期アプリケーションを作成します。このTutorialでは、スターターアプリケーションを修正して拡張し、Tour of Heroesアプリを作成します。
+Primero, cree la aplicación inicial usando la CLI angular. En este Tutorial, modificará y ampliará la aplicación Inicial para crear la aplicación Tour de Heroes.
 
-Tutorialのこの部分では、次のことを行います。
+En esta parte del Tutorial, se hara lo siguiente:
 
-1. 環境を設定します。
-2. 新しいワークスペースと初期アプリケーションプロジェクトを作成します。
-3. アプリケーションをサーブします。
-4. アプリケーションを変更します。
+1. Establecer el medio ambiente.
+2. Crear un nuevo espacio de trabajo y un proyecto de aplicación inicial.
+3. Servir la aplicación.
+4. Cambiar la aplicación.
 
 <div class="alert is-helpful">
 
-  For the sample app that this page describes, see the <live-example></live-example>.
+Para ver la aplicación de ejemplo que describe esta página, consulte el <live-example></live-example>.
 
 </div>
 
-## 環境を設定する
+## Establecer su entorno
 
-開発環境をprepararするには、[ローカル環境の構築](guide/setup-local "Setting up for Local Desarrollo") のインストラクションに従いましょう。
+Para preparar su entorno de desarrollo, siga las instrucciones en [Creación de un entorno local](guide/setup-local "Setting up for Local Desarrollo").
 
 
-## 新しいワークスペースと初期アプリケーションリンクを作成する
 
-Angularワークスペースのコンテキストでアプリケーションを開発します。[ワークスペース](guide/glossary#workspace)には、1つ以上の[プロジェクト](guide/glossary#project)のファイルが含まれます。プロジェクトとは、アプリケーション、ライブラリ、またはエンドツーエンド（e2e）のテストを構成する一連のファイルです。このTutorialでは、新しいワークスペースを作成します。
 
-新しいワークスペースと初期のアプリケーションプロジェクトを作成するには：
+## Crear un nuevo espacio de trabajo y un enlace de aplicación inicial
 
- 1. Angularワークスペースフォルダにないことを確認します。たとえば、Getting Startedワークスペースを以前に作成した場合は、そのフォルダの親フォルダに変更します。
- 2. CLIコマンド `ng new` を実行し、次に示すように、`angular-tour-of-heroes` という名前を指定します。
+Desarrolle su aplicación en el contexto del espacio de trabajo angular. [Espacio de trabajo](guide/glossary#workspace). contiene uno o más archivos [proyecto]. Un proyecto es un conjunto de archivos que componen una aplicación, biblioteca o prueba de extremo a extremo (e2e). 
+En este Tutorial, creará un nuevo espacio de trabajo.
+
+Para crear un nuevo espacio de trabajo y un proyecto de aplicación inicial:
+
+  1. Asegúrese de que no esté en la carpeta del espacio de trabajo angular. Por ejemplo, si creó anteriormente el espacio de trabajo Introducción, cambie a la carpeta principal de esa carpeta.
+  2. Ejecute el comando CLI `ng new` y asígnele el nombre` angular-tour-of-heroes`, como se muestra a continuación.
 
   <code-example language="sh" class="code-shell">
     ng new angular-tour-of-heroes
   </code-example>
 
-  3. `ng new` コマンドを実行すると、最初のアプリプロジェクトに含める機能に関する情報が表示されます。 EnterキーまたはReturnキーを押してデフォルト値を受け入れます。
+3. Ejecute el comando `ng new` y verá información sobre las funciones que desea incluir en su primer proyecto de aplicación. Presione Entrar o Volver para aceptar el valor predeterminado.
 
-Angular CLIは、必要なAngular npmパッケージおよびその他の依存関係をインストールします。これには数分かかることがあります。
+Angular CLI instala los paquetes angulares npm necesarios y otras dependencias. Esto puede tomar unos pocos minutos.
 
-また、次のワークスペースとスタータープロジェクトファイルも作成されます。
+También crea el siguiente espacio de trabajo y archivos de proyecto de inicio.
 
-  * `angular-tour-of-heroes`という名前のルートフォルダがある新しいワークスペース。 
-  * 同じく`angular-tour-of-heroes`と呼ばれる初期スケルトンアプリケーションプロジェクト。（`src`サブフォルダ内） 
-  * エンドツーエンドのテストプロジェクト。（`e2e`サブフォルダ内）
-  * 関連する設定ファイル。
+  * Un nuevo espacio de trabajo con una carpeta raíz llamada `angular-tour-of-heroes`.
+  * Un proyecto de aplicación esqueleto inicial también llamado `angular-tour-of-heroes`. (En la subcarpeta `src`)
+  * Proyecto de prueba de extremo a extremo. (En la subcarpeta `e2e`)
+  * Archivos de configuración relacionados.
 
-最初のアプリプロジェクトには、すぐに実行できる簡単なウェルカムアプリが含まれています。
+El primer proyecto de aplicación contiene una aplicación de bienvenida simple que puede ejecutar de inmediato.
 
-## アプリケーションをサーブする
+## Servir la aplicación
 
-ワークスペースディレクトリに移動し、アプリケーションを起動します。
+Vaya a su directorio de espacio de trabajo e inicie la aplicación.
 
 <code-example language="sh" class="code-shell">
   cd angular-tour-of-heroes
@@ -57,67 +60,67 @@ Angular CLIは、必要なAngular npmパッケージおよびその他の依存�
 
 <div class="alert is-helpful">
 
-`ng serve`コマンドはアプリケーションをビルド、開発用サーバーを起動し、ソースファイルを監視します。
-あなたが監視されているファイルに変更を行ったときには、変更があったファイルに対し再ビルドを行います。
+El comando `ng serve` crea la aplicación, inicia el servidor de desarrollo y observa los archivos de origen.
+Cuando realiza un cambio en un archivo que se está viendo, se realizará una reconstrucción en el archivo modificado.
 
-`--open`フラグを指定すると、`http://localhost:4200`がブラウザで開かれます。
+Si especifica la bandera `--open`, se abrirá `http://localhost:4200` en su navegador.
 
 </div>
 
-ブラウザ上でアプリケーションが動いていることを確認してください。
+Asegúrese de que la aplicación se esté ejecutando en su navegador.
 
-## Angularのコンポーネント
+## Componentes de Anguwlarw
 
-表示されているページは _アプリケーションシェル_ です。
-このシェルは`AppComponent`という名前のAngular**コンポーネント**から操作されます。
+La página que se muestra es _Aplicación Shell_.
+Este shell funciona desde un componente **angular** llamado `AppComponent`.
 
-_コンポーネント_ はAngularアプリケーションのbase的な構成要素です。
-コンポーネントはスクリーン上にデータを表示し、ユーザーの入力を待ち受け、その入力に対しアクションを取ります。
+Los componentes son los componentes básicos de las aplicaciones angulares.
+Los componentes muestran datos en la pantalla, escuchan la entrada del usuario y toman medidas al respecto.
 
-## アプリケーションを変更する
+## Cambiar la aplicación
 
-スターターアプリをいくつか変更するために、好きなテキストエディタまたはIDEでプロジェクトを開き、`src/app`に移動してください。
+Para hacer algunos cambios en la aplicación de inicio, abra el proyecto en su editor de texto favorito o IDE y vaya a `src / app`.
 
-次の3つのファイルに分割された、`AppComponent`シェルの実装が見つかります。
+Encontrará la implementación del shell `AppComponent`, dividido en tres archivos:
 
-1. `app.component.ts`&mdash; TypeScriptで書かれたコンポーネントクラスのコードです。
-1. `app.component.html`&mdash; HTMLで書かれたコンポーネントのPlantillasです。
-1. `app.component.css`&mdash; このコンポーネント専用のCSSです。
+1. `app.component.ts`&mdash; Este es el código para la clase de componente escrita en TypeScript.
+1. `app.component.html`&mdash; Este es el componente Plantillas escrito en HTML.
+1. `app.component.css`&mdash; CSS solo para este componente.
 
-### アプリケーションのタイトルを変更する
+### Cambiar el título de la aplicación
 
-コンポーネントクラスファイル(`app.component.ts`)を開き、`title`プロパティの値を`Tour of Heroes`に変更してください。
+Abra el archivo de clase de componente (`app.component.ts`) y cambie el valor de la propiedad` title` a `Tour de Heroes`.
 
 <code-example path="toh-pt0/src/app/app.component.ts" region="set-title" header="app.component.ts (class title property)"></code-example>
 
-コンポーネントのPlantillasファイル(`app.component.html`)を開き、
-Angular CLIにより生成されたデフォルトのPlantillasを削除してください。
-代わりに次のHTMLを配置してください。
+Abra el archivo Plantilas (`app.component.html`) del componente,
+Elimine las Plantillas predeterminadas generadas por Angular CLI.
+Coloque el siguiente HTML en su lugar.
 
 <code-example path="toh-pt0/src/app/app.component.html"
   header="app.component.html (template)"></code-example>
 
-二重の波括弧はAngularの*補間バインディング*の構文です。
-この補間バインディングはコンポーネントの`title`プロパティの値を、HTMLのheaderタグの中に渡します。
+Las llaves dobles son la sintaxis de *interpolación vinculante* de Angular.
+Este enlace de interpolación pasa el valor de la propiedad `title` del componente en la etiqueta de encabezado HTML.
 
-ブラウザがページを更新し、新しいアプリケーションのタイトルが表示されます。
+El navegador actualiza la página con el nuevo título de la aplicación.
 
 {@a app-wide-styles}
 
-### アプリケーションのスタイルを追加する
+### Añadir estilo de aplicación
 
-ほとんどのアプリケーションは、アプリケーション全体で一貫した見た目を目指しています。
-CLIはこの目的のために、空の`styles.css`を生成しました。
-アプリケーション全体に適用するスタイルをそこに記述してください。
+La mayoría de las aplicaciones apuntan a una apariencia consistente en toda la aplicación.
+CLI ha generado un `styles.css` vacío para este propósito.
+Escriba estilos que se apliquen a toda la aplicación allí.
 
-`src/style.css` を開き、次のコードをファイルに追加します。
+Abra `src / style.css` y agregue el siguiente código al archivo.
 
 <code-example path="toh-pt0/src/styles.1.css" header="src/styles.css (excerpt)">
 </code-example>
 
-## 最終的なコードのおさらい
+## Revisión final del código
 
-以下がこのページで述べられたコードのファイルです。
+A continuación se muestra un archivo del código mencionado en esta página.
 
 <code-tabs>
 
@@ -133,8 +136,8 @@ CLIはこの目的のために、空の`styles.css`を生成しました。
   </code-pane>
 </code-tabs>
 
-## まとめ
+## Resumen
 
-* Angular CLIを用いて初期アプリケーションの骨組みを作成しました。
-* Angularのコンポーネントがデータを表示することを学びました。
-* アプリケーションのタイトルを表示するために二重波カッコによる補間を使いました。
+* Usted creó la estructura de la aplicación inicial utilizando la CLI angular.
+* Aprendio que los componentes de angular muestran datos.
+* Usolas llaves dobles de interpolación para mostrar el título de la aplicación.

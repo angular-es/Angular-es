@@ -1,37 +1,37 @@
-# Agregar servicio
+# Agregar servicios
 
-Tour of Heroes の中で扱っている `HeroesComponent` は、今のところ仮のデータを取得して表示している状態です。
+El `HeroesComponent` de Tour de los  Heroes actualmente está obteniendo y mostrando datos simulados.
 
-このTutorialのリファクタリング後には、`HeroesComponent` は小さくなりビューをサポートすることに専念します。
-これはモックサービスを使用して、ユニットテストをより簡潔にすることにもつながります。
+Después de la refactorización en este tutorial, `HeroesComponent` será sencillo y se centrará en apoyar la vista.
+También será más fácil realizar pruebas unitarias con un servicio simulado.
 
 <div class="alert is-helpful">
 
-  For the sample app that this page describes, see the <live-example></live-example>.
+  Para ver la aplicación de ejemplo que describe esta página, consulte el<live-example></live-example>.
 
 </div>
 
+## Por qué servicios
 
-## なぜサービスが必要なのか？
+Los componentes no deberían buscar ni guardar datos directamente y, desde luego, no deberían presentar a sabiendas datos simulados.
+Deben centrarse en presentar datos y delegar el acceso a los datos a un servicio.
 
-コンポーネント内では直接データの取得や保存を行うべきではありません。もちろん、故意に仮のデータを渡してもいけません。
-コンポーネントはデータの受け渡しに集中し、その他の処理はサービスクラスへ委譲するべきです。
+En este tutorial, creará un `HeroService` que todas las clases de aplicación pueden usar para obtener héroes.
+En lugar de crear ese servicio con la [palabra clave `nueva`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new),
+dependerá de Angular [* inyección de dependencia *](guide/dependency-injection)
+para inyectarlo en el constructor `HeroesComponent`.
 
-このTutorialでは、アプリケーション全体でヒーローを取得できる `HeroService` を作成します。
-そのサービスは [`new` keyword](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/new) で生成するのではなく、
-Angular による [*Inyección de dependencia*](guide/dependency-injection) で、 
-`HeroesComponent` コンストラクターに注入します。
+Los servicios son una excelente manera de compartir información entre clases que no se _conocen entre sí_.
+Creará un `MessageService` y lo inyectará en dos lugares.
 
-サービスは、_お互いを知らない_ クラスの間で情報を共有する最適な方法です。
-このTutorial後半でも `MessageService` を作成し、次の2クラスに注入します。
-
-1. メッセージを送信する`HeroService`への注入
-2. そのメッセージとユーザーがヒーローをクリックしたときにIDを表示する`MessagesComponent`への注入
+1. Inyecte en HeroService, que utiliza el servicio para enviar un mensaje.
+2. Inyecte en MessagesComponent, que muestra ese mensaje, y también muestra la ID
+cuando el usuario hace clic en un héroe.
 
 
-## `HeroService` の作成
+## Crea el `HeroService`
 
-Angular CLI を使用して `HeroService` を作成しましょう。
+Usando la CLI Angular, cree un servicio llamado `hero`.
 
 <code-example language="sh" class="code-shell">
   ng generate service hero
@@ -43,44 +43,46 @@ Angular CLI を使用して `HeroService` を作成しましょう。
  header="src/app/hero.service.ts (new service)"></code-example>
 
 
-### `@Injectable()` サービス
+### Servicio `@Injectable ()`
 
-生成されたファイル内で Angular の Injectable シンボルがインポートされ、`@Injectable()` デコレーターとしてクラスを注釈していることに注目してください。
-これは、クラスを _依存関係注入システム_ に参加するものとしてマークします。 `HeroService`クラスは、注入可能なサービスを提供する予定であり、それ自身が依存関係をもつこともできます。
-まだ依存関係はありませんが、[間もなくそうなります](#inject-message-service)。
+Observe que el símbolo Inyectable de Angular se importa en el archivo generado, anotando la clase como decorador `@Injectable ()`.
+Esto marca a la clase como participante en el sistema de inyección de dependencia. La clase `HeroService` proporcionará servicios inyectables y puede tener dependencias.
+Aún no hay dependencias, [estará pronto] (# inject-message-service).
 
-`@Injectable()`デコレーターは、`@Component()`デコレーターがコンポーネントクラスに対して行ったのと同じ方法で、サービスのメタデータオブジェクトを受け入れます。
+El decorador `@Injectable ()` acepta el objeto de metadatos de un servicio de la misma manera que el decorador `@Component ()` para las clases de componentes.
 
-### ヒーローデータの取得
+### Obtener datos del héroe
 
-`HeroService` はさまざまな場所からヒーローデータを取得する可能性があります。&mdash; 外部Webサービス、ローカルストレージ、またはモックデータかもしれません。
 
-コンポーネントからデータ取得ロジックを切り離すということは、そういったサービス側の事情にとらわれず、いつでも実装方針の変更ができることを意味しています。
-コンポーネント側は、サービスがどのように動いていようと関係ありません。
+El `HeroService` podría obtener datos de héroes desde cualquier lugar&mdash;; un servicio web, almacenamiento local o una fuente de datos simulada.
 
-この章の実装では、引き続き _モックヒーロー_ を使用します。
+ 
+Eliminar el acceso a datos de los componentes significa que puede cambiar de opinión acerca de la implementación en cualquier momento, sin tocar ningún componente.
+No saben cómo funciona el servicio.
 
-`Hero` および `HEROES` をインポートします。
+La implementación en este tutorial continuará entregando _héroes simulados_.
+
+Importar `Hero` and `HEROES`.
 
 <code-example path="toh-pt4/src/app/hero.service.ts" header="src/app/hero.service.ts" region="import-heroes">
 </code-example>
 
-`getHeroes` メソッドを追加し、_モックヒーロー_ を返します。
+Agregue el método `getHeroes` y devuelva el _mock hero_.
 
 <code-example path="toh-pt4/src/app/hero.service.1.ts" header="src/app/hero.service.ts" region="getHeroes">
 </code-example>
 
 {@a provide}
-## `HeroService` の提供
+## Proporcione el `HeroService`
 
-Angularが `HeroesComponent` へ注入する（[次に](#inject)行います）よりも前に、
-_プロバイダ_ を登録することで`HeroService`がInyección de dependenciaシステムで利用できるようにする必要があります。プロバイダーとは、サービスを作成または提供できるものです。この場合、`HeroService`クラスをインスタンス化してサービスを提供します。
+Debe poner el `HeroService` a disposición del sistema de inyección de dependencias.
+antes de que Angular pueda inyectarlo en el 'Componente de héroes' al registrar un proveedor. Un proveedor es algo que puede crear o prestar un servicio; en este caso, crea una instancia de la clase `HeroService` para proporcionar el servicio.
 
-`HeroService`がこのサービスのプロバイダーとして登録されていることを確認するために、
-あなたは _インジェクター_ にこれを登録しています。
-インジェクターは、必要な場所でプロバイダーを選択して注入するためのオブジェクトです。
+Para asegurarse de que el `HeroService` pueda proporcionar este servicio, regístrelo
+con el _inyector_, que es el objeto responsable de elegir
+e inyectando el proveedor donde la aplicación lo requiere.
 
-デフォルトでは、Angular CLIコマンド `ng generate service`は、プロバイダーのメタデータ、つまり` providedIn: 'root'`を `@Injectable()` デコレーターに含めることで、プロバイダーをサービスの _ルートインジェクター_ に登録します。
+Por defecto, el comando Angular CLI `ng generate service` registra a un proveedor con el inyector raíz para su servicio al incluir los metadatos del proveedor, que se proporcionan en el decorador` @Injectable () `.
 
 ```
 @Injectable({
@@ -88,22 +90,20 @@ _プロバイダ_ を登録することで`HeroService`がInyección de dependen
 })
 ```
 
-ルートレベルでサービスを提供すると、Angularは`HeroService`の単一の共有インスタンスを作成し、それを要求する任意のクラスに注入します。
-`@Injectable`メタデータでプロバイダーを登録すると、Angularはサービスが使用されなくなった場合にそれを削除することでアプリケーションを最適化することもできます。
+Cuando proporciona el servicio en el nivel raíz, Angular crea una única instancia compartida de `HeroService` e inyecta en cualquier clase que lo solicite.
+El registro del proveedor en los metadatos `@ Injectable` también le permite a Angular optimizar una aplicación eliminando el servicio si resulta que no se usará después de todo.
 
 <div class="alert is-helpful">
 
-プロバイダーについての詳細は、[プロバイダーの章](guide/providers)を参照してください。
-インジェクターについての詳細は、[Inyección de dependenciaガイド](guide/dependency-injection)を参照してください。
+Para obtener más información sobre los proveedores, consulte la [Sección de proveedores](guide/providers).
+Para obtener más información sobre los inyectores, consulte la [Guía de inyección de dependencia](guide/dependency-injection).
 
 </div>
-
-これにより、 `HeroService` は `HeroesComponent` で利用できる状態になりました。
+El `HeroService` ahora está listo para conectarse al` HeroesComponent`.
 
 <div class="alert is-important">
 
-これは、`HeroService`の提供と使用を可能にする暫定的なコードサンプルです。
-この時点で、コードは["最終的なコードレビュー"](#final-code-review)の`HeroService`とは異なります。
+Este es un ejemplo de código provisional que le permitirá proporcionar y usar el `HeroService`. En este punto, el código diferirá del `HeroService` en la [" revisión final del código "](#final-code-review).
 
 </div>
 
@@ -113,115 +113,118 @@ _providers_ についてより詳しく知りたい方は [Providers](guide/prov
 
 </div>
 
+## Actualizar `HeroesComponent`
 
-## `HeroesComponent` の更新
+Abra el archivo de clase `HeroesComponent`.
 
-`HeroesComponent` クラスを開いてください。
-
-もう必要ないので、`HEROES`のインポートを削除してください。
-代わりに`HeroService`をインポートしましょう。
+Elimine la importación `HEROES`, porque ya no la necesitará.
+Importa el `HeroService` en su lugar.
 
 <code-example path="toh-pt4/src/app/heroes/heroes.component.ts" header="src/app/heroes/heroes.component.ts (import HeroService)" region="hero-service-import">
 </code-example>
 
-`heroes` プロパティの定義を、単純な宣言に置き換えます。
+Reemplace la definición de la propiedad `heroes` con una simple declaración.
 
 <code-example path="toh-pt4/src/app/heroes/heroes.component.ts" header="src/app/heroes/heroes.component.ts" region="heroes">
 </code-example>
 
 {@a inject}
 
-### `HeroService` の注入
+### Inyecte el `HeroService`
 
-`HeroService` 型のプライベートプロパティである `heroService` をコンストラクターに追加しましょう。
+Agregue un parámetro privado `heroService` de tipo `HeroService` al constructor.
 
 <code-example path="toh-pt4/src/app/heroes/heroes.component.1.ts" header="src/app/heroes/heroes.component.ts" region="ctor">
 </code-example>
 
-このパラメータはプライベートな `heroService` プロパティとして定義されると同時に、 `HeroService` を注入すべき場所として認識されます。
+El parámetro define simultáneamente una propiedad privada `heroService` y la identifica como un sitio de inyección` HeroService`.
 
-Angular が `HeroesComponent` を生成する際、[Inyección de dependencia](guide/dependency-injection) システムは `heroService` パラメータを `HeroService` のシングルトンインスタンスとして設定します。
+Cuando Angular crea un `HeroesComponent`, el sistema [Inyección de dependencia](guide/dependency-injection) establece el parámetro `heroService` en la instancia única de` HeroService`.
 
-### `getHeroes()` の追加
+### Añadir `getHeroes ()`
 
-サービスからヒーローデータを取得するためのメソッドを作成しましょう。
+Crea un método para recuperar a los héroes del servicio
 
 <code-example path="toh-pt4/src/app/heroes/heroes.component.1.ts" header="src/app/heroes/heroes.component.ts" region="getHeroes">
 </code-example>
 
 {@a oninit}
 
-### `ngOnInit()` での呼び出し
+### Llamarlo en `ngOnInit ()`
 
-`getHeroes()` はコンストラクターでも呼び出すことはできますが、これは最適な方法ではありません。
+Si bien podría llamar a `getHeroes ()` en el constructor, esa no es la mejor práctica.
 
-コンストラクターではプロパティ定義などの簡単な初期化のみを行い、それ以外は _何もするべきではありません_ 。
-もちろん、_実際の_ データ取得サービスが行うであろう、サーバーへのHTTPリクエストを行う関数は呼び出すべきではありません。
+Reserve el constructor para una inicialización simple, como conectar los parámetros del constructor a las propiedades.
+El constructor no debe _hacer nada_.
+Ciertamente no debería llamar a una función que realiza solicitudes HTTP a un servidor remoto como lo haría un servicio de datos _real_.
 
-`getHeroes()` はコンストラクターではなく、 [*ngOnInit ライフサイクルフック*](guide/lifecycle-hooks) 内で呼び出しましょう。
-この `ngOnInit()` は、 Angular が `HeroesComponent` インスタンスを生成した後、適切なタイミングで呼び出されます。
+En su lugar, llame a `getHeroes()` dentro del [* ngOnInit lifecycle hook *](guide/lifecycle-hooks) y
+deje que Angular llame a `ngOnInit()` en el momento apropiado _después_ de construir una instancia de `HeroesComponent`.
 
 <code-example path="toh-pt4/src/app/heroes/heroes.component.ts" header="src/app/heroes/heroes.component.ts" region="ng-on-init">
 </code-example>
 
-### 実行の確認
+### Verlo correr
 
-ブラウザの更新後、アプリケーションは以前と同じように実行されるはずです。
-ヒーローリストが表示され、ヒーロー名をクリックすると詳細が表示されるでしょう。
+Después de que el navegador se actualice, la aplicación debería ejecutarse como antes,
+mostrando una lista de héroes y una vista detallada de héroe cuando haces clic en el nombre de un héroe.
 
-## Observable データ
+## Datos observables
 
-`HeroService.getHeroes()` は同期的なメソッドであり、これは `HeroService` が即座にヒーローデータを取得できることを示しています。
-
-また `HeroesComponent` は、`getHeroes()` の返り値がまるで同期的に取得できるかのように扱っています。
+El método `HeroService.getHeroes()` tiene una firma sincrónica,
+lo que implica que el `HeroService` puede buscar héroes sincrónicamente.
+El `HeroesComponent` consume el resultado `getHeroes()`
+como si los héroes pudieran ser recuperados sincrónicamente.
 
 <code-example path="toh-pt4/src/app/heroes/heroes.component.1.ts" header="src/app/heroes/heroes.component.ts" region="get-heroes">
 </code-example>
 
-しかしこれは、実際のアプリケーションでは機能しません。
-現在のサービスはモックヒーローを返しているのでこれを免れていますが、
-リモートサーバーからヒーローデータを取得するにあたり、この処理は _非同期_ ということに気づくでしょう。
+Esto no funcionará en una aplicación real.
+Ahora te saldrás con la tuya porque el servicio actualmente devuelve _héroes simulados_.
+Pero pronto la aplicación buscará héroes de un servidor remoto,
+que es una operación inherentemente _asincrónica_.
 
-`HeroService` はサーバーのレスポンスを待たなければならず、`getHeroes()` は即座にヒーローデータを返すことができません。
-そしてそのサービスが待機している間、ブラウザはブロックされないでしょう。
+El `HeroService` debe esperar a que el servidor responda,
+`getHeroes ()` no puede regresar inmediatamente con los datos del héroe,
+y el navegador no se bloqueará mientras el servicio espere.
 
-`HeroService.getHeroes()` は何らかの非同期処理を実装する必要があります。
+`HeroService.getHeroes ()` debe tener una firma asíncrona de algún tipo.
 
-この章では、`HeroService.getHeroes()` は `Observable` を返します。
-なぜなら、後にヒーローデータの取得で利用する Angular の [`HttpClient.get()`](guide/http) メソッドが `Observable` を返すからです。
+En este tutorial, `HeroService.getHeroes()` devolverá un `Observable`
+porque eventualmente usará el método angular `HttpClient.get` para buscar a los héroes y [`HttpClient.get ()` devuelve un `Observable`](guide/http).
 
 ### Observable `HeroService`
 
-`Observable` は [RxJS ライブラリ](http://reactivex.io/rxjs/) で重要なクラスのひとつです。
+`Observable` es una de las clases clave en la [biblioteca RxJS] (http://reactivex.io/rxjs/).
 
-[HTTP に関する後の章](tutorial/toh-pt6), でも Angular の `HttpClient` メソッドが `Observable` を返すことに触れるでしょう。
-この章ではRxJSの `of()` 関数を使ってサーバーからのデータの取得をシミュレートします。
+En un [tutorial posterior sobre HTTP](tutorial/toh-pt6), aprenderá que los métodos `HttpClient` de Angular devuelven RxJS `Observable`s.
+En este tutorial, simulará obtener datos del servidor con la función RxJS `of()`.
 
-`HeroService` を開き、`Observable` および `of` を `RxJS` からインポートします。
+Abra el archivo `HeroService` e importe los símbolos `Observable` y `of` de RxJS. 
 
 <code-example path="toh-pt4/src/app/hero.service.ts" header="src/app/hero.service.ts (Observable imports)" region="import-observable">
 </code-example>
 
-`getHeroes()` メソッドを 次のように書き直しましょう。
+Reemplace el método `getHeroes ()` con lo siguiente:
 
 <code-example path="toh-pt4/src/app/hero.service.ts" header="src/app/hero.service.ts" region="getHeroes-1"></code-example>
 
-`of(HEROES)` は _ひとつの値_、すなわちモックヒーローの配列を出力する `Observable<Hero[]>` を返します。
+`of (HEROES)` devuelve un `Observable <Hero[]>` que emite _un valor único_, el conjunto de héroes simulados.
 
 <div class="l-sub-section">
 
-[HTTP のTutorial](tutorial/toh-pt6) では、_ひとつの値_、すなわちHTTPレスポンスボディ由来のヒーローの配列を出力する `Observable<Hero[]>` を同じように返す `HttpClient.get<Hero[]>()` を呼び出します。
+En el [tutorial HTTP](tutorial/toh-pt6), llamará a `HttpClient.get <Hero[]>()` que también devuelve un `Observable <Hero[]>` que emite _un valor único_, una matriz de héroes del cuerpo de la respuesta HTTP.
 
 </div>
 
-### `HeroesComponent` での Subscribe
+### Suscríbete en `HeroesComponent`
 
-`HeroService.getHeroes` メソッドは `Hero[]` を返していましたが、
-現在の返り値は `Observable<Hero[]>` です。
+El método `HeroService.getHeroes` utilizado para devolver un` Hero [] `.
+Ahora devuelve un `Observable <Hero []>`.
 
-そのため、これらの違いを修正する必要があるでしょう。
+Tendrás que ajustarte a esa diferencia en `HeroesComponent`.
 
-`getHeroes` を開き、下記コードに変更しましょう。
+Encuentre el método `getHeroes` y reemplácelo con el siguiente código
 （比較のために以前のバージョンと横に並べられています）
 
 <code-tabs>
@@ -236,75 +239,79 @@ Angular が `HeroesComponent` を生成する際、[Inyección de dependencia](g
 
 </code-tabs>
 
-`Observable.subscribe()` はとても重要な違いです。
+`Observable.subscribe ()` es la diferencia crítica.
 
-修正前のコードでは、`heroes` プロパティにヒーローリストを代入していました。
-その代入は、まるでサーバーが即座に値を返すか、レスポンスを待機する間UIのレンダリングを中止したかのように _同期的_ です。
+La versión anterior asigna una variedad de héroes a la propiedad 'heroes' del componente.
+La asignación ocurre _sincrónicamente_, como si el servidor pudiera devolver héroes al instante
+o el navegador podría congelar la interfaz de usuario mientras esperaba la respuesta del servidor.
 
-`HeroService` が実際にサーバーへのリクエストを行う場合、修正前のコードは動作しません。
+Eso _no funcionará_ cuando el `HeroService` realmente está haciendo solicitudes a un servidor remoto.
 
-新しいバージョンでは、`Observable` がヒーローの配列を出力するのを待っています。&mdash; 
-これは現在あるいは数分後に起こる可能性があります。
-そのとき、 `subscribe()`メソッド は、出力された配列をコールバックに渡し、コンポーネントの `heroes` プロパティを設定します。
+La nueva versión espera a que el 'Observable' emita una serie de héroes,&mdash;
+que podría suceder ahora o varios minutos a partir de ahora.
+El método `subscribe ()` pasa la matriz emitida a la devolución de llamada,
+que establece la propiedad 'heroes' del componente.
 
-この非同期的手法は、`HeroService` がサーバーからヒーローを取得する際、正常に動作します。
+Este enfoque asincrónico funcionará cuando
+el `HeroService` solicite héroes del servidor.
 
-## メッセージの表示
+## Mostrar mensajes
 
-このセクションでは、次について説明します。
+Esta sección lo guía a través de lo siguiente:
 
-* メッセージを表示するための `MessagesComponent` を画面下部に追加する
-* 表示するメッセージを送信するために、アプリケーション全体で注入可能な `MessageService` を作成する
-* `HeroService` に `MessageService` を注入する
-* `HeroService` のデータ取得成功時にメッセージを表示する
+* agregando un `MessagesComponent` que muestra los mensajes de la aplicación en la parte inferior de la pantalla
+* crear un `MessageService` inyectable para toda la aplicación para enviar mensajes que se mostrarán
+* inyectando `MessageService` en el `HeroService`
+* mostrando un mensaje cuando `HeroService` busca héroes con éxito
 
-### `MessagesComponent` の作成
+### Crear `MessagesComponent`
 
-Angular CLI を使い `MessagesComponent` を作成しましょう。
-
+Use la CLI para crear el `MessagesComponent`.
 <code-example language="sh" class="code-shell">
   ng generate component messages
 </code-example>
 
-Angular CLI は `src/app/messages` 配下にコンポーネントファイル群を生成し、`AppModule` 内に `MessagesComponent` を宣言します。
 
-作成した `MessagesComponent` を表示するために、`AppComponent` のPlantillasを修正しましょう。
+La CLI crea los archivos componentes en la carpeta `src/app/messages` y declara el `MessagesComponent` en `AppModule`.
+
+Modifique la plantilla `AppComponent` para mostrar el `MessagesComponent` generado.
 
 <code-example
   header = "src/app/app.component.html"
   path="toh-pt4/src/app/app.component.html">
 </code-example>
 
-`MessagesComponent` のデフォルトテキストが、ページ最下部に配置されていることを確認してください。
+Debería ver el párrafo predeterminado de `MessagesComponent` en la parte inferior de la página.
 
-### `MessageService` の作成
+### Cree el `MessageService`
 
-Angular CLI を使い、`src/app` 配下に `MessageService` を作成します。
+Use la CLI para crear el `MessageService` en `src/app`.
 
 <code-example language="sh" class="code-shell">
   ng generate service message
 </code-example>
 
-`MessageService` を開き、次のコードへ修正してください。
+Abra `MessageService` y reemplace su contenido con lo siguiente.
 
 <code-example header = "src/app/message.service.ts" path="toh-pt4/src/app/message.service.ts">
 </code-example>
 
-このサービスは `messages` および `add()`、`clear()` メソッドを他のクラスから利用できるように公開しています。
-また、`add()` メソッドは新たなメッセージを `messages` へ追加し、`clear()` メソッドは `messages` の値を初期化します。
+El servicio expone su caché de `mensajes` y dos métodos: uno para` agregar () `un mensaje al caché y otro para` borrar () `el caché.
 
 {@a inject-message-service}
-### `HeroService` への注入
+### Inyectarlo en el `HeroService`
 
-`HeroService`で`MessageService` をインポートしましょう。
+En `HeroService`, importe el` MessageService`.
+
 
 <code-example
   header = "src/app/hero.service.ts (import MessageService)"
   path="toh-pt4/src/app/hero.service.ts" region="import-message-service">
 </code-example>
 
-プライベートな `messageService` プロパティを宣言するパラメータを使用してコンストラクターを変更します。
-Angular は `HeroService` を生成する際、そのプロパティへシングルトンな `MessageService` を注入します。
+Modifique el constructor con un parámetro que declare una propiedad privada `messageService`.
+Angular inyectará el singleton `MessageService` en esa propiedad
+cuando crea el `HeroService`.
 
 <code-example
   path="toh-pt4/src/app/hero.service.ts" header="src/app/hero.service.ts" region="ctor">
@@ -312,81 +319,86 @@ Angular は `HeroService` を生成する際、そのプロパティへシング
 
 <div class="l-sub-section">
 
-これは典型的な "*サービス内でサービスを利用する*" 例です。
-`HeroesComponent` に注入されている `HeroService` には、`MessageService` が注入されています。
+Este es un escenario típico de "* servicio en servicio *":
+inyecta el `MessageService` en el` HeroService` que se inyecta en el `HeroesComponent`.
 
 </div>
 
-### `HeroService` からメッセージを送る
+### Enviar un mensaje desde `HeroService`
 
-ヒーローが取得されたときにメッセージを送信するように `getHeroes()` メソッドを変更します。
+Modifique el método `getHeroes()` para enviar un mensaje cuando se busquen los héroes.
 
 <code-example path="toh-pt4/src/app/hero.service.ts" header="src/app/hero.service.ts" region="getHeroes">
 </code-example>
 
-### `HeroService` からのメッセージを表示する
+### Mostrar el mensaje de `HeroService`
 
-`MessagesComponent` は `HeroService` がヒーローを取得した際に送信するメッセージを含め、すべてのメッセージを表示しなければなりません。
+El `MessagesComponent` debería mostrar todos los mensajes,
+incluido el mensaje enviado por el `HeroService` cuando busca héroes.
 
-`MessagesComponent` を開き、`MessageService` をインポートしてください。
+Abra `MessagesComponent` e importe el` MessageService`
 
 <code-example header="src/app/messages/messages.component.ts (import MessageService)" path="toh-pt4/src/app/messages/messages.component.ts" region="import-message-service">
 </code-example>
 
-コンストラクターに **パブリック** な `messageService` プロパティを宣言しましょう。
-Angular は `MessagesComponent` を作成する際、シングルトンな `MessageService` インスタンスをそのプロパティへ注入します。
+Modifique el constructor con un parámetro que declare una propiedad  `messageService` **publica**.
+Angular inyectará el único `MessageService` en esa propiedad
+cuando crea el `MessagesComponent`.
 
 <code-example path="toh-pt4/src/app/messages/messages.component.ts" header="src/app/messages/messages.component.ts" region="ctor">
 </code-example>
 
-今回、`messageService` はPlantillas内でバインドして使用するつもりです。
-そのため、`messageService` は **パブリックである必要があります**。
+La propiedad `messageService` **debe ser pública** porque la vinculará en la plantilla.
 
 <div class="alert is-important">
 
-Angular はコンポーネント内の _パブリック_ なプロパティのみをバインドします
+Angular solo se une a las propiedades _publicas_ del componente .
 
 </div>
 
-### `MessageService` へバインドする
+### Enlace al `MessageService`
 
-Angular CLI によって生成された `MessagesComponent` のPlantillasを下記コードへ置き換えましょう。
-
+Reemplace la plantilla `MessagesComponent` generada por CLI con lo siguiente.
+ 
 <code-example
   header = "src/app/messages/messages.component.html"
   path="toh-pt4/src/app/messages/messages.component.html">
 </code-example>
 
-このPlantillasは、コンポーネント内の `messageService` と直接紐付きます。
+Esta plantilla se une directamente al componente `messageService` del componente.
 
-* `*ngIf` は、表示するメッセージが存在する場合のみメッセージエリアを表示します
+* `* NgIf` solo muestra el área de mensajes si hay mensajes para mostrar.
 
-* `*ngFor` は、`<div>` 要素をくり返してメッセージリストを表示します
 
-* Angular の [イベントバインディング](guide/template-syntax#event-binding) は、ボタンのクリックイベントと `MessageService.clear()` を紐付けます
+* Un `* ngFor` presenta la lista de mensajes en elementos repetidos` <div> `.
 
-["最終的なコードレビュー"](#final-code-review) タブ内に記載されている `messages.component.css` をコンポーネントのスタイルに追加すると、このメッセージUIの外観はよりよいものになるでしょう。
 
-## `HeroService` にメッセージを追加する
+* Un [enlace de evento](guide/template-syntax#event-binding) en angular une el evento de clic del botón
+a `MessageService.clear ()`.
 
-次の例は、ユーザーがヒーローをクリックするたびに、メッセージを送信、表示し、
-そしてユーザーの選択履歴を表示する方法を示します。
-これは、あなたが次ののセクション[Routing](tutorial/toh-pt5)を見るときに助けになります。
+Los mensajes se verán mejor cuando agregue los estilos CSS privados a `messages.component.css`
+como se indica en una de las pestañas ["revisión de código final"](#final-code-review) a continuación.
+
+## Agregar mensajes adicionales al servicio de héroe
+
+El siguiente ejemplo muestra cómo enviar y mostrar un mensaje cada vez que el usuario hace clic en
+un héroe, que muestra un historial de las selecciones del usuario. Esto será útil cuando llegues a
+siguiente sección sobre [Enrutamiento](tutorial/toh-pt5).
 
 <code-example header="src/app/heroes/heroes.component.ts"
 path="toh-pt4/src/app/heroes/heroes.component.ts">
 </code-example>
 
-ブラウザが更新され、ページにヒーローリストを表示されます。
-ヒーローリストを見るためにブラウザを更新し、一番下までスクロールすると 
-`HeroService` からのメッセージを表示されます。あなたがヒーローをクリックするたびに、新しいメッセージが選択を登録して表示されます。
-メッセージ履歴を削除するために「clear」ボタンを使用します。
+El navegador se actualizará y la página mostrará la lista de héroes.
+Actualiza el navegador para ver la lista de héroes y desplázate hacia abajo para ver
+mensajes del HeroService. Cada vez que haces clic en un héroe, aparece un nuevo mensaje para grabar
+la selección. Use el botón "borrar" para borrar el historial de mensajes.
 
 {@a final-code-review}
 
-## 最終的なコードレビュー
+## Revisión final del código
 
-このページで解説したコードを次に記載します。
+Aquí están los archivos de código discutidos en esta página.
 
 <code-tabs>
 
@@ -424,14 +436,15 @@ path="toh-pt4/src/app/heroes/heroes.component.ts">
 
 </code-tabs>
 
-## まとめ
+## Resumen
 
-* `HeroService` クラスのデータ利用方法を修正しました
-* `HeroService`をルートレベルでサービスの _プロバイダ_ として登録し、アプリ内のどこにでも注入できるようにしました。
-* [Angular のInyección de dependencia](guide/dependency-injection) を使用して、それをコンポーネントに注入しました
-* `HeroService` の _データ取得_ メソッドを非同期化しました
-* `Observable` および、それを扱うために利用する RxJS ライブラリについて学びました
-* モックヒーローを Observable (`Observable<Hero[]>`) 型で返すために、RxJS の `of()` を使用しました
-* コンポーネントのコンストラクター内ではなく、`ngOnInit` ライフサイクルフックで `HeroService` メソッドを呼び出しました
-* クラス間で疎結合な情報伝達を行うため、 `MessageService` を作成しました
-* コンポーネントに注入された `HeroService` は、もうひとつのサービスである `MessageService` とともに作成されます
+* Refactorizó el acceso a datos a la clase `HeroService`.
+* Registro el `HeroService` como el _proveedor_ de su servicio en el nivel raíz para que pueda inyectarse en cualquier lugar de la aplicación.
+* Usaste la [Inyección de dependencia angular](guide/dependency-injection) para inyectarlo en un componente.
+* Le dio al `HeroService` el método _get data_ una firma asincrónica.
+* Descubrio `Observable` y la biblioteca RxJS _Observable_.
+* Uso RxJS `of ()` para devolver un observable de héroes simulados (`Observable <Hero []>`).
+* El gancho del ciclo de vida `ngOnInit` del componente llama al método `HeroService`, no al constructor.
+* Usted creó un `MessageService` para una comunicación débilmente acoplada entre clases.
+* El `HeroService` inyectado en un componente se crea con otro servicio inyectado,
+  `MessageService`.
