@@ -165,7 +165,7 @@ export function app() {
   server.set('view engine', 'html');
   server.set('views', distFolder);
 
-  // Ejemplo Express Rest API endpoints
+  // Example Express Rest API endpoints
   // app.get('/api/**', (req, res) => { });
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {

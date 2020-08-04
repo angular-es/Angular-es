@@ -15,7 +15,7 @@ The CLI schematic `@nguniversal/express-engine` performs the required steps, as 
 
 <div class="alert is-helpful">
 
-  **Note:** <live-example downloadOnly>Descargar the finished sample code</live-example>,
+  **Note:** <live-example downloadOnly>Download the finished sample code</live-example>,
   which runs in a [Node.js® Express](https://expressjs.com/) server.
 
 </div>

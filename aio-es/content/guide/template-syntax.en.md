@@ -436,7 +436,7 @@ Comparing the [`<td>` attributes](https://developer.mozilla.org/en-US/docs/Web/H
 In particular, you can navigate from the attributes page to the properties via "DOM interface" link, and navigate the inheritance hierarchy up to `HTMLTableCellElement`.
 
 
-#### Ejemplo 1: an `<input>`
+#### Example 1: an `<input>`
 
 When the browser renders `<input type="text" value="Sarah">`, it creates a
 corresponding DOM node with a `value` property initialized to "Sarah".
@@ -452,7 +452,7 @@ The HTML attribute `value` specifies the *initial* value; the DOM `value` proper
 
 To see attributes versus DOM properties in a functioning app, see the <live-example name="binding-syntax"></live-example> especially for binding syntax.
 
-#### Ejemplo 2: a disabled button
+#### Example 2: a disabled button
 
 The `disabled` attribute is another example. A button's `disabled`
 *property* is `false` by default so the button is enabled.
@@ -936,7 +936,7 @@ If there are multiple bindings to the same class name, conflicts are resolved us
       Input Type
     </th>
     <th>
-      Ejemplo Input Values
+      Example Input Values
     </th>
   </tr>
   <tr>
@@ -1024,7 +1024,7 @@ If there are multiple bindings to the same style property, conflicts are resolve
       Input Type
     </th>
     <th>
-      Ejemplo Input Values
+      Example Input Values
     </th>
   </tr>
   <tr>
@@ -2108,7 +2108,7 @@ properties in the child component class. The property `currentItem` and the meth
 To combine property and event bindings using the banana-in-a-box
 syntax, `[()]`, see [Two-way Binding](guide/template-syntax#two-way).
 
-For more detail on how these work, see the previous sections on [Input](guide/template-syntax#input) and [Output](guide/template-syntax#output). To see it in action, see the <live-example name="inputs-outputs">Inputs and Outputs Ejemplo</live-example>.
+For more detail on how these work, see the previous sections on [Input](guide/template-syntax#input) and [Output](guide/template-syntax#output). To see it in action, see the <live-example name="inputs-outputs">Inputs and Outputs Example</live-example>.
 
 ## `@Input()` and `@Output()` declarations
 

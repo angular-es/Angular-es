@@ -47,7 +47,7 @@ To clarify how changes are detected and values updated, consider the following c
       }
     }
 
-    // Ejemplo 1: update data inside button click event handler
+    // Example 1: update data inside button click event handler
     document.getElementById('btn').addEventListener('click', () => {
       // update value
       value = 'button update value';
@@ -55,7 +55,7 @@ To clarify how changes are detected and values updated, consider the following c
       detectChange();
     });
 
-    // Ejemplo 2: HTTP Request
+    // Example 2: HTTP Request
     const xhr = new XMLHttpRequest();
     xhr.addEventListener('load', function() {
       // get response from server
@@ -66,7 +66,7 @@ To clarify how changes are detected and values updated, consider the following c
     xhr.open('GET', serverUrl);
     xhr.send();
 
-    // Ejemplo 3: setTimeout
+    // Example 3: setTimeout
     setTimeout(() => {
       // update value inside setTimeout callback
       value = 'timeout update value';
@@ -74,7 +74,7 @@ To clarify how changes are detected and values updated, consider the following c
       detectChange();
     }, 100);
 
-    // Ejemplo 4: Promise.then
+    // Example 4: Promise.then
     Promise.resolve('promise resolved a value').then(v => {
       // update value inside Promise thenCallback
       value = v;
@@ -82,7 +82,7 @@ To clarify how changes are detected and values updated, consider the following c
       detectChange();
     }, 100);
 
-    // Ejemplo 5: some other asynchronous APIs
+    // Example 5: some other asynchronous APIs
     document.getElementById('canvas').toBlob(blob => {
       // update value when blob data is created from the canvas
       value = `value updated by canvas, size is ${blob.size}`;

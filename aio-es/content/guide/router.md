@@ -454,7 +454,7 @@ The application has three main feature areas:
 1. A *Heroes* area for maintaining the list of heroes employed by the agency.
 1. An *Admin* area to manage the list of crises and heroes.
 
-Try it by clicking on this <live-example title="Hero Employment Agency Live Ejemplo">live example link</live-example>.
+Try it by clicking on this <live-example title="Hero Employment Agency Live Example">live example link</live-example>.
 
 The app renders with a row of navigation buttons and the *Heroes* view with its list of heroes.
 
