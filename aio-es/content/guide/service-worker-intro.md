@@ -1,35 +1,35 @@
-# Angular Service Worker Introducción
+# Angular service worker introduction
 
-Service Workerは、従来のWebDesplegarメントモデルを強化し、ネイティブにインストールされたコードと同等の信頼性とパフォーマンスでユーザー体験できるようにアプリケーションを補強します。AngularアプリケーションへのService Workerの追加は、アプリケーションを [Progressive Web App](https://developers.google.com/web/progressive-web-apps/) (PWAとしても知られます) に変えるためのステップのひとつです。
+Service workers augment the traditional web deployment model and empower applications to deliver a user experience with the reliability and performance on par with natively-installed code. Adding a service worker to an Angular application is one of the steps for turning an application into a [Progressive Web App](https://developers.google.com/web/progressive-web-apps/) (also known as a PWA).
 
-簡潔にいうと、Service Workerは、Webブラウザで実行され、アプリケーションのキャッシュを管理するスクリプトのことです。
+At its simplest, a service worker is a script that runs in the web browser and manages caching for an application.
 
-Service Workerは、ネットワークプロキシとして機能します。アプリケーションによって行われたすべてのHTTPリクエストを傍受し、応答する方法を選択できます。たとえば、ローカルキャッシュを参照し、キャッシュされたレスポンスがある場合はそのレスポンスを送信することができます。プロキシは、`fetch`のようなプログラム的にAPIによって作られたリクエストでも制限されません。HTMLで参照されるリソースや、最初の`index.html`へのリクエストでさえも含みます。したがって、Service Workerベースのキャッシュは完全にプログラム可能であり、サーバー指定のキャッシュヘッダーに依存しません。
+Service workers function as a network proxy. They intercept all outgoing HTTP requests made by the application and can choose how to respond to them. For example, they can query a local cache and deliver a cached response if one is available. Proxying isn't limited to requests made through programmatic APIs, such as `fetch`; it also includes resources referenced in HTML and even the initial request to `index.html`. Service worker-based caching is thus completely programmable and doesn't rely on server-specified caching headers.
 
-アプリケーションを構成する他のスクリプト（Angularアプリなど）とは異なり、Service Workerは、ユーザーがタブを閉じた後も保持されます。次にブラウザがアプリケーションをロードすると、Service Workerが最初にロードされ、アプリケーションのロードに必要なすべてのリソース要求をインターセプトできます。Service Workerの設計次第では、アプリケーションを *ネットワークに接続せずに完全にロードできます*。
+Unlike the other scripts that make up an application, such as the Angular app bundle, the service worker is preserved after the user closes the tab. The next time that browser loads the application, the service worker loads first, and can intercept every request for resources to load the application. If the service worker is designed to do so, it can *completely satisfy the loading of the application, without the need for the network*.
 
-高速で信頼性あるネットワークであっても、ラウンドトリップ遅延はアプリケーションをロードする際に大きな遅延を招く可能性があります。Service Workerを使用してネットワークへの依存を減らすと、ユーザー体験が大幅に向上します。
+Even across a fast reliable network, round-trip delays can introduce significant latency when loading the application. Using a service worker to reduce dependency on the network can significantly improve the user experience.
 
 
-## AngularにおけるService Worker
+## Service workers in Angular
 
-シングルページアプリケーションとしてのAngularは、Service Workerのメリットを享受するうえで最重要な位置にあります。バージョン5.0.0より、AngularはService Workerの実装を提供しています。Angularの開発者は、このService Workerを利用して、低レベルのAPIをコーディングすることなく、信頼性とパフォーマンスを向上させることができます。
+Angular applications, as single-page applications, are in a prime position to benefit from the advantages of service workers. Starting with version 5.0.0, Angular ships with a service worker implementation. Angular developers can take advantage of this service worker and benefit from the increased reliability and performance it provides, without needing to code against low-level APIs.
 
-AngularにおけるService Workerは、低速、あるいは信頼性が低いネットワーク接続を通してアプリケーションを使用しているユーザーの体験を最適化し、古いコンテンツを配信してしまうリスクを最小限に抑えるように設計されています。
+Angular's service worker is designed to optimize the end user experience of using an application over a slow or unreliable network connection, while also minimizing the risks of serving outdated content.
 
-AngularにおけるService Workerの振る舞いは、次の設計目標に従います。
+The Angular service worker's behavior follows that design goal:
 
-* アプリケーションのキャッシュは、ネイティブアプリケーションのインストールに似ています。アプリケーションは1つのユニットとしてキャッシュされ、すべてのファイルが同時に更新されます。
-* 実行中のアプリケーションは、すべて同じバージョンのファイルで実行され続けます。互換性がない可能性がある新しいバージョンからキャッシュされたファイルを突然受信し始めることはありません。
-* ユーザーがアプリケーションを更新すると、完全にキャッシュされた最新のバージョンが表示されます。新しいタブには最新のキャッシュされたコードが読み込まれます。
-* 更新は、変更が公開された後、比較的迅速にバックグラウンドで行われます。以前のバージョンのアプリケーションは、アップデートがインストールされ準備が整うまで提供されます。
-* Service Workerは、可能な限り帯域幅を節約します。リソースは変更された場合にのみダウンロードされます。
+* Caching an application is like installing a native application. The application is cached as one unit, and all files update together.
+* A running application continues to run with the same version of all files. It does not suddenly start receiving cached files from a newer version, which are likely incompatible.
+* When users refresh the application, they see the latest fully cached version. New tabs load the latest cached code.
+* Updates happen in the background, relatively quickly after changes are published. The previous version of the application is served until an update is installed and ready.
+* The service worker conserves bandwidth when possible. Resources are only downloaded if they've changed.
 
-これらの動作をサポートするために、AngularにおけるService Workerは*マニフェスト*ファイルをサーバーからロードします。マニフェストは、キャッシュするリソースを記述し、すべてのファイルのハッシュを含みます。アプリケーションの更新が展開されると、マニフェストの内容が変更され、アプリケーションの新しいバージョンをダウンロードしてキャッシュする必要があることがService Workerに通知されます。このマニフェストは、CLIに生成された`ngsw-config.json`という設定ファイルから生成されます。
+To support these behaviors, the Angular service worker loads a *manifest* file from the server. The manifest describes the resources to cache and includes hashes of every file's contents. When an update to the application is deployed, the contents of the manifest change, informing the service worker that a new version of the application should be downloaded and cached. This manifest is generated from a CLI-generated configuration file called `ngsw-config.json`.
 
-AngularにおけるService Workerのインストールは、`NgModule`に含めるだけです。ブラウザにAngularにおけるService Workerを登録することに加えて、Service Workerとやりとりしたり、Service Workerを制御するために使用できる、いくつかのサービスをインジェクション可能にします。たとえば、新しい更新が利用可能になったときに通知を受けるようにアプリケーションに依頼することも、Service Workerに利用可能な更新をサーバーに確認するように依頼することもできます。
+Installing the Angular service worker is as simple as including an `NgModule`. In addition to registering the Angular service worker with the browser, this also makes a few services available for injection which interact with the service worker and can be used to control it. For example, an application can ask to be notified when a new update becomes available, or an application can ask the service worker to check the server for available updates.
 
-## 前提条件
+## Prerequisites
 
 To make use of all the features of Angular service worker, use the latest versions of Angular and the Angular CLI.
 
@@ -59,7 +59,8 @@ To avoid such an error, you can check whether the Angular service worker is enab
 
 To learn more about other browsers that are service worker ready, see the [Can I Use](https://caniuse.com/#feat=serviceworkers) page and [MDN docs](https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API).
 
-## 関連資料
+
+## Related resources
 
 The rest of the articles in this section specifically address the Angular implementation of service workers.
 
@@ -68,15 +69,16 @@ The rest of the articles in this section specifically address the Angular implem
 * [Service Worker in Production](guide/service-worker-devops)
 * [Service Worker Configuration](guide/service-worker-config)
 
-Service Workerの一般的な情報については、[Service Workerの紹介](https://developers.google.com/web/fundamentals/primers/service-workers/)を参照してください。
+For more information about service workers in general, see [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers/).
 
-ブラウザサポートの詳細については、[Service Workerの紹介](https://developers.google.com/web/fundamentals/primers/service-workers/)の[サポートしているブラウザを使う](https://developers.google.com/web/fundamentals/primers/service-workers/#browser_support)セクションや、Jake Archibaldの[Is Serviceworker ready?](https://jakearchibald.github.io/isserviceworkerready/)、[Can I Use](http://caniuse.com/#feat=serviceworkers)を参照してください。
+For more information about browser support, see the [browser support](https://developers.google.com/web/fundamentals/primers/service-workers/#browser_support) section of [Service Workers: an Introduction](https://developers.google.com/web/fundamentals/primers/service-workers/), Jake Archibald's [Is Serviceworker ready?](https://jakearchibald.github.io/isserviceworkerready/), and
+[Can I Use](http://caniuse.com/#feat=serviceworkers).
 
 For additional recommendations and examples, see:
 
 * [Precaching with Angular Service Worker](https://web.dev/precaching-with-the-angular-service-worker/)
 * [Creating a PWA with Angular CLI](https://web.dev/creating-pwa-with-angular-cli/)
 
-## Próximos pasosへ
+## Next steps
 
 To begin using Angular service workers, see [Getting Started with service workers](guide/service-worker-getting-started).

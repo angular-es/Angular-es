@@ -1,90 +1,90 @@
-# Próximos pasos: ツールとTécnica
+# Next steps: tools and techniques
 
-基本的なAngularの構成ブロックを理解したあと、
-Angularアプリケーションの開発と提供に役立つ機能とツールの詳細を学ぶことができます。
+After you understand the basic Angular building blocks, you can learn more
+about the features and tools that can help you develop and deliver Angular applications.
 
-* [ツアー・オブ・ヒーローズ](tutorial)Tutorialを通じて、基本的な要素を組み合わせてうまく設計されたアプリケーションを作る方法を実感することができます。
+* Work through the [Tour of Heroes](tutorial) tutorial to get a feel for how to fit the basic building blocks together to create a well-designed application.
 
-* [Glosario](guide/glossary) では Angular 特有の単語や使い方を知ることができます。
+* Check out the [Glossary](guide/glossary) to understand Angular-specific terms and usage.
 
-* 開発の段階や関心のある分野に応じて、キーとなる機能を深く学ぶためにドキュメントを活用してください。
+* Use the documentation to learn about key features in more depth, according to your stage of development and areas of interest.
 
-## アプリケーションの設計
+## Application architecture
 
-* [コンポーネント & Plantillas](guide/displaying-data)ガイドでは、アプリケーションのデータをコンポーネントの[Plantillas](guide/glossary#template)につなぎ、インタラクティブなアプリケーションを作る方法を解説します。
+* The [Components and templates](guide/displaying-data) guide explains how to connect the application data in your [components](guide/glossary#component) to your page-display [templates](guide/glossary#template), to create a complete interactive application.
 
-* [NgModules](guide/ngmodules) ガイドでは、Angular アプリケーションのモジュール構造について詳しい情報を提供します。
+* The [NgModules](guide/ngmodules) guide provides in-depth information on the modular structure of an Angular application.
 
-* [Enrutamiento y transición de pantalla](guide/router) ガイドでは、異なる[ビュー](guide/glossary#view)の間を遷移するようなシングルページアプリケーションの作り方について詳しく説明します。
+* The [Routing and navigation](guide/router) guide provides in-depth information on how to construct applications that allow a user to navigate to different [views](guide/glossary#view) within your single-page app.
 
-* [Inyección de dependencia](guide/dependency-injection) ガイドでは、それぞれのコンポーネントクラスが機能を提供するためのサービスやオブジェクトを取得できるようなアプリケーションの作り方について詳しく説明します。
+* The [Dependency injection](guide/dependency-injection) guide provides in-depth information on how to construct an application such that each component class can acquire the services and objects it needs to perform its function.
 
-## レスポンシブプログラミング
+## Responsive programming
 
-**コンポーネント & Plantillas** ガイドでは、ビューでコンポーネントのデータを表示したいときや、ユーザーの入力に応じたいときに使う[Plantillas構文](guide/template-syntax)のガイダンスと詳細を提供します。
+The **Components and Templates** guide provides guidance and details of the [template syntax](guide/template-syntax) that you use to display your component data when and where you want it within a view, and to collect input from users that you can respond to.
 
-さらにこれらのページやセクションには、Angular アプリでのいくつかの基本的なTécnicaが記載されています。
+Additional pages and sections describe some basic programming techniques for Angular apps.
 
-* [ライフサイクル・フック](guide/lifecycle-hooks): ライフサイクル・フックインターフェースを実装することで、コンポーネントの作成から破棄まで、コンポーネントの存続期間中の重要な瞬間に触れることができます。
+* [Lifecycle hooks](guide/lifecycle-hooks): Tap into key moments in the lifetime of a component, from its creation to its destruction, by implementing the lifecycle hook interfaces.
 
-* [Observable とイベント処理](guide/observables): コンポーネントやサービスで observable を使用して、ユーザーインタラクションイベントや非同期操作結果など、あらゆるタイプのメッセージをパブリッシュして購読する方法です。
+* [Observables and event processing](guide/observables): How to use observables with components and services to publish and subscribe to messages of any type, such as user-interaction events and asynchronous operation results.
 
-* [Angular elements](guide/elements): フレームワークに依存しない形で新たな HTML 要素を定義するウェブ標準技術である Web Components を使って、コンポーネントを *custom elements* としてパッケージする方法です。
+* [Angular elements](guide/elements): How to package components as *custom elements* using Web Components, a web standard for defining new HTML elements in a framework-agnostic way.
 
-* [フォーム](guide/forms): HTML ベースの検証とダーティーチェックを使用して、複雑なデータ入力シナリオをサポートします。
+* [Forms](guide/forms-overview): Support complex data entry scenarios with HTML-based input validation.
 
-* [animación](guide/animations): Angularのanimaciónライブラリを使用して、animaciónTécnicaやCSSの詳細な知識なしに
-コンポーネントの動作をアニメートできます。
+* [Animations](guide/animations): Use Angular's animation library to animate component behavior
+without deep knowledge of animation techniques or CSS.
 
-## クライアントとサーバーのインタラクション
+## Client-server interaction
 
-Angular は、ほとんどのロジックやデータがクライアント側にあるシングルページアプリケーション向けのフレームワークを提供します。
-ほとんどのアプリはデータを取得、保存するために `HttpClient` を使ってサーバーにアクセスする必要があります。
-いくつかのプラットフォームやアプリケーションでは、PWA (Progressive Web App) モデルによってユーザー体験を改善させたいかもしれません。
+Angular provides a framework for single-page apps, where most of the logic and data resides on the client.
+Most apps still need to access a server using the `HttpClient` to access and save data.
+For some platforms and applications, you might also want to use the PWA (Progressive Web App) model to improve the user experience.
 
-* [HTTP](guide/http): HTTP クライアントを使用してサーバーと通信してデータを取得、保存し、サーバー側のアクションを呼び出します。
+* [HTTP](guide/http): Communicate with a server to get data, save data, and invoke server-side actions with an HTTP client.
 
-* [サーバーサイドレンダリング](guide/universal): Angular Universal は、サーバーサイドレンダリング(SSR)によってサーバー上に静的アプリケーションページを生成します。これにより、パフォーマンスを向上させ、モバイルデバイスや低パワーのデバイスで最初のページをすばやく表示し、Webクローラを手助けするために、Angular アプリケーションをサーバー上で実行できます。
+* [Server-side rendering](guide/universal): Angular Universal generates static application pages on the server through server-side rendering (SSR). This allows you to run your Angular app on the server in order to improve performance and show the first page quickly on mobile and low-powered devices, and also facilitate web crawlers.
 
-* [Service WorkersとPWA](guide/service-worker-intro): service worker を使用してネットワークへの依存を減らしユーザー体験を大幅に改善します。
+* [Service workers and PWA](guide/service-worker-intro): Use a service worker to reduce dependency on the network and significantly improve the user experience.
 
-* [Web workers](guide/web-worker): CPU を使う処理をバックグラウンドスレッドで走らせる方法について学びます。
+* [Web workers](guide/web-worker): Learn how to run CPU-intensive computations in a background thread.
 
-## 開発サイクルのサポート
+## Support for the development cycle
 
-**開発ワークフロー** セクションでは、Angular アプリケーションのコンパイル、テスト、Desplegarに使うツールやプロセスについて説明します。
+The **Development Workflow** section describes the tools and processes you use to compile, test, and deploy Angular applications.
 
-* [CLIコマンドリファレンス](cli): Angular CLIは、プロジェクトの作成、アプリケーションおよびライブラリコードの生成、およびテスト、バンドル、Desplegarなどのさまざまな進行中の開発タスクの実行に使用するコマンドラインツールです。
+* [CLI Command Reference](cli): The Angular CLI is a command-line tool that you use to create projects, generate application and library code, and perform a variety of ongoing development tasks such as testing, bundling, and deployment.
 
-* [コンパイル](guide/aot-compiler): Angularは、開発環境用のジャストインタイム（JIT）コンパイルと、本番環境用の事前（AOT）コンパイルを提供します。
+* [Compilation](guide/aot-compiler): Angular provides just-in-time (JIT) compilation for the development environment, and ahead-of-time (AOT) compilation for the production environment.
 
-* [テスティングプラットフォーム](guide/testing): Angular フレームワークとやり取りするアプリケーションの部品において、ユニットテストを実行します。
+* [Testing platform](guide/testing): Run unit tests on your application parts as they interact with the Angular framework.
 
-* [Desplegarメント](guide/deployment): Angular アプリケーションをリモートサーバーにDesplegarする方法を学びます。
+* [Deployment](guide/deployment): Learn techniques for deploying your Angular application to a remote server.
 
-* [Seguridadガイドライン](guide/security): 一般的な Web アプリケーションの脆弱性やクロスサイトスクリプティングなどの攻撃に対する Angular の組み込みの保護機能について説明します。
+* [Security guidelines](guide/security): Learn about Angular's built-in protections against common web-app vulnerabilities and attacks such as cross-site scripting attacks.
 
-* [国際化](guide/i18n):  Angular の国際化(i18n)ツールを使用して、アプリを複数の言語で利用できるようにします。
+* [Internationalization](guide/i18n): Make your app available in multiple languages with Angular's internationalization (i18n) tools.
 
-* [アクセシビリティ](guide/accessibility): アプリをすべてのユーザーにとって使いやすくしましょう。
+* [Accessibility](guide/accessibility): Make your app accessible to all users.
 
 
-## ファイル構造、設定、依存
+## File structure, configuration, and dependencies
 
-* [ワークスペースとファイル構成](guide/file-structure): Angularワークスペースとプロジェクトフォルダの構造を理解する。
+* [Workspace and file structure](guide/file-structure): Understand the structure of Angular workspace and project folders.
 
-* [ビルドとサーブ](guide/build): 開発時、ステージング、およびプロダクションなど、プロジェクトのさまざまなビルドおよびプロキシサーバー構成を定義する方法を学びます。
+* [Building and serving](guide/build): Learn to define different build and proxy server configurations for your project, such as development, staging, and production.
 
-* [npmパッケージ](guide/npm-packages): Angular フレームワーク、Angular CLI、Angularアプリケーションで使用されるコンポーネントは、[npm](https://docs.npmjs.com/)パッケージとしてパッケージ化され、npmレジストリを介して配布されます。 Angular CLIはデフォルトの `package.json`ファイルを作成します。このファイルは、うまく機能し、多くの一般的なアプリケーションシナリオを共同でサポートするパッケージのスターターセットを指定します。
+* [npm packages](guide/npm-packages): The Angular Framework, Angular CLI, and components used by Angular applications are packaged as [npm](https://docs.npmjs.com/) packages and distributed via the npm registry. The Angular CLI creates a default `package.json` file, which specifies a starter set of packages that work well together and jointly support many common application scenarios.
 
-* [TypeScript の設定](guide/typescript-configuration): TypeScript は Angular アプリケーション開発における主要な言語です。
+* [TypeScript configuration](guide/typescript-configuration): TypeScript is the primary language for Angular application development.
 
-* [ブラウザのサポート](guide/browser-support): アプリを幅広いブラウザに対応させます。
+* [Browser support](guide/browser-support): Make your apps compatible across a wide range of browsers.
 
-## Angular の拡張
+## Extending Angular
 
-* [Angular ライブラリ](guide/libraries): 再利用可能なライブラリの使い方、作り方を学びます。
+* [Angular libraries](guide/libraries): Learn about using and creating re-usable libraries.
 
-* [Schematics](guide/schematics): CLI の自動生成機能をカスタマイズしたり拡張したりする方法を学びます。
+* [Schematics](guide/schematics): Learn about customizing and extending the CLI's generation capabilities.
 
-* [CLI builders](guide/cli-builder): アプリケーションのビルドやテストなどの複雑なタスクを実行するように CLI の機能をカスタマイズ、拡張する方法を学びます。
+* [CLI builders](guide/cli-builder): Learn about customizing and extending the CLI's ability to apply tools to perform complex tasks, such as building and testing applications.

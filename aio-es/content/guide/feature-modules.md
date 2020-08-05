@@ -1,36 +1,36 @@
-# フィーチャーモジュール
+# Feature modules
 
-フィーチャーモジュールはコードを整理する目的で用いられるNgModuleです。
+Feature modules are NgModules for the purpose of organizing code.
 
-この記事で説明されているフィーチャーモジュールを含む最終的なAplicación de muestraケーションについては、
-<live-example></live-example>を参照してください。
+For the final sample app with a feature module that this page describes,
+see the <live-example></live-example>.
 
 <hr>
 
-あなたのアプリケーションが成長したとしましょう。あなたは個別の機能について関連するコードを整理することができます。
-これは機能を明確に分けたいときに役立ちます。フィーチャーモジュールによって、
-特定の機能に関連するコードを管理したり、
-他のコードから機能を分離することができます。
-アプリケーションの領域を線引きすることは、開発者やチーム間でのコラボレーション、
-ディレクティブの分離やルートモジュールのサイズ調整を行うときの助けになるでしょう。
+As your app grows, you can organize code relevant for a specific feature.
+This helps apply clear boundaries for features. With feature modules,
+you can keep code related to a specific functionality or feature
+separate from other code. Delineating areas of your
+app helps with collaboration between developers and teams, separating
+directives, and managing the size of the root module.
 
 
-## フィーチャーモジュールとルートモジュール
+## Feature modules vs. root modules
 
-フィーチャーモジュールは構造的なベストプラクティスであり、コアAngular APIのコンセプトと対照的です。
-フィーチャーモジュールは、ユーザーのワークフロー、ルーティング、フォームなど、
-特定のアプリケーションのニーズにフォーカスした一貫した機能のセットを提供します。
-ルートモジュール内だけですべてを完結できますが、
-フィーチャーモジュールはアプリを集中した領域に分割するのに役立ちます。 
-フィーチャーモジュールは、それが提供するサービスや共有するコンポーネント、
-ディレクティブ、およびパイプを介して、ルートモジュールおよび他のモジュールと連携します。
+A feature module is an organizational best practice, as opposed to a concept of the core Angular API. A feature module delivers a cohesive set of functionality focused on a
+specific application need such as a user workflow, routing, or forms.
+While you can do everything within the root module, feature modules
+help you partition the app into focused areas. A feature module
+collaborates with the root module and with other modules through
+the services it provides and the components, directives, and
+pipes that it shares.
 
-## フィーチャーモジュールの作成方法
+## How to make a feature module
 
-すでに[Angular CLI](cli)で生成したアプリケーションがある場合は、
-次のコマンドをプロジェクトのルートディレクトリで実行してフィーチャーモジュールを生成してください。
-`CustomerDashboard`はあなたの好きなモジュール名に置きかえてかまいません。
-"Module"接尾辞についてはCLIが付け加えてくれるので省略することができます:
+Assuming you already have an app that you created with the [Angular CLI](cli), create a feature
+module using the CLI by entering the following command in the
+root project directory. Replace `CustomerDashboard` with the
+name of your module. You can omit the "Module" suffix from the name because the CLI appends it:
 
 ```sh
 ng generate module CustomerDashboard
@@ -38,7 +38,7 @@ ng generate module CustomerDashboard
 ```
 
 
-結果的に、CLIは次のような内容の`customer-dashboard.module.ts`というファイルを中にもつ`customer-dashboard`フォルダーを作ります:
+This causes the CLI to create a folder called `customer-dashboard` with a file inside called `customer-dashboard.module.ts` with the following contents:
 
 ```typescript
 import { NgModule } from '@angular/core';
@@ -53,54 +53,54 @@ import { CommonModule } from '@angular/common';
 export class CustomerDashboardModule { }
 ```
 
-NgModuleの構造はルートモジュールでもフィーチャーモジュールでも同じです。CLIで生成されたフィーチャーモジュールは、ファイルの先頭に2つのJavaScriptインポート文を持ちます。最初のインポートは`NgModule`です。ルートモジュールと同様に`@NgModule`デコレーターを使用できます。 2つ目は`CommonModule`です。これは`ngIf`や`ngFor`のような多くの一般的なディレクティブを提供します。フィーチャーモジュールでは`BrowserModule`(ルートモジュールで一度だけインポートされる)の代わりに`CommonModule`をインポートします。`CommonModule`にはほとんどのPlantillasで必要とされる`ngIf`や`ngFor`のようなディレクティブの情報しか含まれていません。対して、`BrowserModule`はブラウザ用のAngularアプリケーションが一度だけ行う必要のある設定を行います。
+The structure of an NgModule is the same whether it is a root module or a feature module. In the CLI generated feature module, there are two JavaScript import statements at the top of the file: the first imports `NgModule`, which, like the root module, lets you use the `@NgModule` decorator; the second imports `CommonModule`, which contributes many common directives such as `ngIf` and `ngFor`. Feature modules import `CommonModule` instead of `BrowserModule`, which is only imported once in the root module. `CommonModule` only contains information for common directives such as `ngIf` and `ngFor` which are needed in most templates, whereas `BrowserModule` configures the Angular app for the browser which needs to be done only once.
 
-`declarations`配列はこの個別のモジュールにのみ属するコンポーネント、ディレクティブ、およびパイプの宣言を追加するために利用できます。
-コンポーネントを追加するには、コマンドラインで次のコマンドを実行してください。`customer-dashboard`は、CLIがフィーチャーモジュールを生成したディレクトリで、`CustomerDashboard`はコンポーネント名です:
+The `declarations` array is available for you to add declarables, which
+are components, directives, and pipes that belong exclusively to this particular module. To add a component, enter the following command at the command line where `customer-dashboard` is the directory where the CLI generated the feature module and `CustomerDashboard` is the name of the component:
 
 ```sh
 ng generate component customer-dashboard/CustomerDashboard
 
 ```
 
-これにより、custom-dashboardフォルダ内に新しいコンポーネントのためのフォルダが生成され、`CustomerDashboardComponent`の情報でフィーチャーモジュールが更新されます:
+This generates a folder for the new component within the customer-dashboard folder and updates the feature module with the `CustomerDashboardComponent` info:
 
 
 <code-example path="feature-modules/src/app/customer-dashboard/customer-dashboard.module.ts" region="customer-dashboard-component" header="src/app/customer-dashboard/customer-dashboard.module.ts"></code-example>
 
 
 
-`CustomerDashboardComponent`はいま、JavaScriptのインポートリストの一番上にインポートされ、さらにAngularに新しいコンポーネントがこのフィーチャーモジュールに関連することを知らせるために`declarations`配列に追加されました。
+The `CustomerDashboardComponent` is now in the JavaScript import list at the top and added to the `declarations` array, which lets Angular know to associate this new component with this feature module.
 
-## フィーチャーモジュールをインポートする
+## Importing a feature module
 
-フィーチャーモジュールをアプリケーションに組み込むためには、ルートモジュールである`app.module.ts`にそのモジュールについて知ってもらう必要があります。 `customer-dashboard.module.ts`の最後で`CustomerDashboardModule`がエクスポートされていることに注目してください。これにより他のモジュールがアクセスできるようになります。`AppModule`にインポートするために、`app.module.ts`の`imports`配列に追加してみましょう:
+To incorporate the feature module into your app, you have to let the root module, `app.module.ts`, know about it. Notice the `CustomerDashboardModule` export at the bottom of `customer-dashboard.module.ts`. This exposes it so that other modules can get to it. To import it into the `AppModule`, add it to the imports in `app.module.ts` and to the `imports` array:
 
 <code-example path="feature-modules/src/app/app.module.ts" region="app-module" header="src/app/app.module.ts"></code-example>
 
 
-これで`AppModule`はフィーチャーモジュールについて知っている状態になりました。フィーチャーモジュールにサービスプロバイダーを追加した場合、他のフィーチャーモジュールと同様に`AppModule`もそれについて知っている状態になります。ただし、NgModuleは自身のコンポーネントを公開しません。
+Now the `AppModule` knows about the feature module. If you were to add any service providers to the feature module, `AppModule` would know about those too, as would any other feature modules. However, NgModules don’t expose their components.
 
 
-## フィーチャーモジュールのコンポーネントPlantillasをレンダリングする
+## Rendering a feature module’s component template
 
-CLIがフィーチャーモジュールのために`CustomerDashboardComponent`を生成したとき、それは次のようなマークアップの`customer-dashboard.component.html`Plantillasを含んでいました:
+When the CLI generated the `CustomerDashboardComponent` for the feature module, it included a template, `customer-dashboard.component.html`, with the following markup:
 
 <code-example path="feature-modules/src/app/customer-dashboard/customer-dashboard/customer-dashboard.component.html" region="feature-template" header="src/app/customer-dashboard/customer-dashboard/customer-dashboard.component.html"></code-example>
 
 
-`AppComponent`でこのHTMLを見るためには、まず`CustomerDashboardModule`内の`CustomerDashboardComponent`をエクスポートしなければなりません。 `customer-dashboard.module.ts`の`declarations`配列の直下に、 `CustomerDashboardComponent`を含む`exports`配列を追加しましょう:
+To see this HTML in the `AppComponent`, you first have to export the `CustomerDashboardComponent` in the `CustomerDashboardModule`. In `customer-dashboard.module.ts`, just beneath the `declarations` array, add an `exports` array containing `CustomerDashboardComponent`:
 
 <code-example path="feature-modules/src/app/customer-dashboard/customer-dashboard.module.ts" region="component-exports" header="src/app/customer-dashboard/customer-dashboard.module.ts"></code-example>
 
 
 
-次に、`AppComponent`、`app.component.html`に`<app-customer-dashboard>`タグを追加します:
+Next, in the `AppComponent`, `app.component.html`, add the tag `<app-customer-dashboard>`:
 
 <code-example path="feature-modules/src/app/app.component.html" region="app-component-template" header="src/app/app.component.html"></code-example>
 
 
-そして、デフォルトでレンダリングされるタイトルに加えて、 `CustomerDashboardComponent`Plantillasもレンダリングされます:
+Now, in addition to the title that renders by default, the `CustomerDashboardComponent` template renders too:
 
 <div class="lightbox">
   <img src="generated/images/guide/feature-modules/feature-module.png" alt="feature module component">
@@ -108,9 +108,9 @@ CLIがフィーチャーモジュールのために`CustomerDashboardComponent`�
 
 <hr />
 
-## Sobre NgModuleのさらに詳しい情報
+## More on NgModules
 
-あなたは次の記事に興味があるかもしれません:
-* [Angularルーターによるモジュールの遅延ロード](guide/lazy-loading-ngmodules).
-* [プロバイダー](guide/providers).
-* [Tipo de módulo de funciones](guide/module-types).
+You may also be interested in the following:
+* [Lazy Loading Modules with the Angular Router](guide/lazy-loading-ngmodules).
+* [Providers](guide/providers).
+* [Types of Feature Modules](guide/module-types).

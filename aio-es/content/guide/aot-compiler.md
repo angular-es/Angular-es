@@ -1,10 +1,10 @@
-# Ahead-of-time (AOT) コンパイラ
+# Ahead-of-time (AOT) compilation
 
-Angular アプリケーションは、主にコンポーネントとその HTML Plantillasで構成されています。Angular が提供するコンポーネントとPlantillasはブラウザで直接理解できないため、Angular アプリケーションをブラウザで実行するにはコンパイルプロセスが必要です。
+An Angular application consists mainly of components and their HTML templates. Because the components and templates provided by Angular cannot be understood by the browser directly, Angular applications require a compilation process before they can run in a browser.
 
-Angular の [ahead-of-time (AOT) コンパイラ](guide/glossary#aot) は、ブラウザがそのコードをダウンロードして実行する _前_ に、ビルドフェーズ中にAngular HTML コードと TypeScript コードを効率的な JavaScript コードに変換します。ビルドプロセス中にアプリケーションをコンパイルすると、ブラウザでのレンダリングが速くなります。
+The Angular [ahead-of-time (AOT) compiler](guide/glossary#aot) converts your Angular HTML and TypeScript code into efficient JavaScript code during the build phase _before_ the browser downloads and runs that code. Compiling your application during the build process provides a faster rendering in the browser.
 
-このガイドでは、AOT コンパイラを使用してアプリケーションを効率的にコンパイルするためのメタデータの指定方法と利用可能なコンパイラオプションの適用方法について説明します。
+This guide explains how to specify metadata and apply available compiler options to compile your applications efficiently using the AOT compiler.
 
 <div class="alert is-helpful">
 
@@ -14,49 +14,49 @@ Angular の [ahead-of-time (AOT) コンパイラ](guide/glossary#aot) は、ブ�
 
 {@a why-aot}
 
-AOTを使用する理由は次のとおりです。
+Here are some reasons you might want to use AOT.
 
-* *より速いレンダリング*
-   AOT では、ブラウザはコンパイル済みのアプリケーションをダウンロードします。
-   ブラウザは実行可能コードをロードするので、最初にアプリケーションをコンパイルするのを待たずにアプリケーションをすぐにレンダリングできます。
+* *Faster rendering*
+   With AOT, the browser downloads a pre-compiled version of the application.
+   The browser loads executable code so it can render the application immediately, without waiting to compile the app first.
 
-* *より少ない非同期リクエスト*
-   コンパイラは外部の HTML Plantillasと CSS スタイルシートをアプリケーションの JavaScript 内に _インライン化し_ 、
-   それらのソースファイルに対する別々の ajax リクエストを排除します。
+* *Fewer asynchronous requests*
+   The compiler _inlines_ external HTML templates and CSS style sheets within the application JavaScript,
+   eliminating separate ajax requests for those source files.
 
-* *より小さい Angular フレームワークのダウンロードサイズ*
-   アプリがすでにコンパイルされている場合は、Angular コンパイラをダウンロードする必要はありません。
-   コンパイラは Angular 自体の約半分なので、これを省略するとアプリケーションのペイロードが大幅に減少します。
+* *Smaller Angular framework download size*
+   There's no need to download the Angular compiler if the app is already compiled.
+   The compiler is roughly half of Angular itself, so omitting it dramatically reduces the application payload.
 
-* *Plantillasエラーを早期に検出する*
-   AOT コンパイラは、ユーザーが目にする前にビルドステップ中にPlantillasバインディングエラーを検出して
-   報告します。
+* *Detect template errors earlier*
+   The AOT compiler detects and reports template binding errors during the build step
+   before users can see them.
 
-* *より良いSeguridad*
-   AOT は、HTML Plantillasとコンポーネントがクライアントに提供されるずっと前から JavaScript ファイルにコンパイルします。
-   読み取るPlantillasがなく、危険なクライアントサイドの HTML または JavaScript の評価もないため、
-   インジェクション攻撃の機会が少なくなります。
+* *Better security*
+   AOT compiles HTML templates and components into JavaScript files long before they are served to the client.
+   With no templates to read and no risky client-side HTML or JavaScript evaluation,
+   there are fewer opportunities for injection attacks.
 
 {@a overview}
 
-## コンパイラの選択
+## Choosing a compiler
 
-Angular には、アプリケーションをコンパイルする2つの方法があります。
+Angular offers two ways to compile your application:
 
-* **_Just-in-Time_ (JIT)** は実行時にブラウザ内でアプリケーションをコンパイルします。This was the default until Angular 8.
-* **_Ahead-of-Time_ (AOT)** はビルド時にアプリとライブラリをコンパイルします。This is the default since Angular 9.
+* **_Just-in-Time_ (JIT)**, which compiles your app in the browser at runtime. This was the default until Angular 8.
+* **_Ahead-of-Time_ (AOT)**, which compiles your app and libraries at build time. This is the default since Angular 9.
 
 When you run the [`ng build`](cli/build) (build only) or [`ng serve`](cli/serve) (build and serve locally) CLI commands, the type of compilation (JIT or AOT) depends on the value of the `aot` property in your build configuration specified in `angular.json`. By default, `aot` is set to `true` for new CLI apps.
 
-詳細については、[CLI コマンドリファレンス](cli) および [Angularアプリのビルドとサーブ](guide/build)を参照してください。
+See the [CLI command reference](cli) and [Building and serving Angular apps](guide/build) for more information.
 
-## どのようにAOTは機能するか
+## How AOT works
 
-AngularのAOTコンパイラは、Angularが管理することになるアプリケーションの部分を解釈するために**メタデータ**を抽出します。
-`@Component()`や`@Input()`などの**デコレーター**において明示的に、または修飾されるクラスのコンストラクター宣言において暗黙的に、メタデータを指定できます。
-メタデータは、どのようにアプリケーションのクラスのインスタンスを構築して実行時にそれらと相互作用するかをAngularに教えます。
+The Angular AOT compiler extracts **metadata** to interpret the parts of the application that Angular is supposed to manage.
+You can specify the metadata explicitly in **decorators** such as `@Component()` and `@Input()`, or implicitly in the constructor declarations of the decorated classes.
+The metadata tells Angular how to construct instances of your application classes and interact with them at runtime.
 
-次の例では、`@Component()` メタデータオブジェクトとクラスコンストラクターは Angular に `TypicalComponent` のインスタンスを作成し表示する方法を伝えます。
+In the following example, the `@Component()` metadata object and the class constructor tell Angular how to create and display an instance of `TypicalComponent`.
 
 ```typescript
 @Component({
@@ -69,63 +69,63 @@ export class TypicalComponent {
 }
 ```
 
-Angular コンパイラはメタデータを _1回_ 抽出し、 `TypicalComponent` に対して _ファクトリ_ を生成します。
-`TypicalComponent` インスタンスを作成する必要があるとき、Angular はファクトリを呼び出します。ファクトリは注入された依存関係をもつコンポーネントクラスの新しいインスタンスにバインドされた新しいビジュアル要素を生成します。
+The Angular compiler extracts the metadata _once_ and generates a _factory_ for `TypicalComponent`.
+When it needs to create a `TypicalComponent` instance, Angular calls the factory, which produces a new visual element, bound to a new instance of the component class with its injected dependency.
 
-### コンパイルフェーズ
+### Compilation phases
 
-AOTコンパイルには三つのフェーズがあります。
-* フェーズ1は*コード解析*です。
-   このフェーズでは、TypeScriptコンパイラと*AOTコレクター*がソース表現を作ります。コレクターは収集したメタデータを解釈しようとはしません。それはメタデータをできる限りで表現し、メタデータの構文違反を見つけたらエラーを記録します。
+There are three phases of AOT compilation.
+* Phase 1 is *code analysis*.
+   In this phase, the TypeScript compiler and  *AOT collector* create a representation of the source. The collector does not attempt to interpret the metadata it collects. It represents the metadata as best it can and records errors when it detects a metadata syntax violation.
 
-* フェーズ2は*コード生成*です。
-   このフェーズでは、コンパイラの`StaticReflector`がフェーズ1で収集したメタデータを解釈し、メタデータの追加の検証を実行して、メタデータの制約違反を見つけたらエラーを投げます。
+* Phase 2 is *code generation*.
+    In this phase, the compiler's `StaticReflector` interprets the metadata collected in phase 1, performs additional validation of the metadata, and throws an error if it detects a metadata restriction violation.
 
-* フェーズ3は*Plantillas型チェック*です。
-   オプションであるこのフェーズでは、Angularの*Plantillasコンパイラ*がTypeScriptコンパイラを使用して、Plantillasにおけるバインディング式を検証します。このフェーズは明示的に設定オプションの`fullTemplateTypeCheck`を設定して有効にできます。[Angularコンパイラオプション](guide/angular-compiler-options)を参照してください。
+* Phase 3 is *template type checking*.
+   In this optional phase, the Angular *template compiler* uses the TypeScript compiler to validate the binding expressions in templates. You can enable this phase explicitly by setting the `fullTemplateTypeCheck` configuration option; see [Angular compiler options](guide/angular-compiler-options).
 
 
-### メタデータ制約
+### Metadata restrictions
 
-TypeScript の _サブセット_ にメタデータを記述します。これは、次の一般的な制約に従う必要があります。
+You write metadata in a _subset_ of TypeScript that must conform to the following general constraints:
 
-* [式の構文](#expression-syntax) をサポートされている JavaScript のサブセットに制限します
-* [コード折りたたみ](#code-folding)の後、エクスポートされたシンボルだけを参照します
-* コンパイラによって[サポートされている関数](#supported-functions)だけを呼び出します
-* 修飾されデータバインドされたクラスメンバーはパブリックでなければなりません
+* Limit [expression syntax](#expression-syntax) to the supported subset of JavaScript.
+* Only reference exported symbols after [code folding](#code-folding).
+* Only call [functions supported](#supported-functions) by the compiler.
+* Decorated and data-bound class members must be public.
 
-AOTコンパイル用のアプリケーションを準備するための追加のガイドラインと説明については、[Angular: Writing AOT-friendly applications](https://medium.com/sparkles-blog/angular-writing-aot-friendly-applications-7b64c8afbe3f)を参照してください。
+For additional guidelines and instructions on preparing an application for AOT compilation, see [Angular: Writing AOT-friendly applications](https://medium.com/sparkles-blog/angular-writing-aot-friendly-applications-7b64c8afbe3f).
 
 <div class="alert is-helpful">
 
-AOTコンパイルでのエラーは一般的に、コンパイラの要求(以降でより完全に説明します)に準拠しないメタデータによって起こります。
-これらの問題の理解と解決のヘルプは、[AOTメタデータエラー](guide/aot-metadata-errors)を参照してください。
+Errors in AOT compilation commonly occur because of metadata that does not conform to the compiler's requirements (as described more fully below).
+For help in understanding and resolving these problems, see [AOT Metadata Errors](guide/aot-metadata-errors).
 
 </div>
 
-### AOTコンパイルを設定する
+### Configuring AOT compilation
 
-[TypeScript設定ファイル](guide/typescript-configuration)においてオプションを加えることで、コンパイルプロセスを制御できます。利用可能なオプションの完全なリストについては[Angularコンパイラオプション](guide/angular-compiler-options)を参照してください。
+You can provide options in the [TypeScript configuration file](guide/typescript-configuration) that controls the compilation process. See [Angular compiler options](guide/angular-compiler-options) for a complete list of available options.
 
-## フェーズ 1: コード解析
+## Phase 1: Code analysis
 
-TypeScriptコンパイラは最初のフェーズの解析的な仕事をいくつかします。それは、アプリケーションコードを生成するためにAOTコンパイラが必要とする型情報をもつ、_型定義ファイル_`.d.ts`を発行します。
-同時に、AOT**コレクター**はAngularデコレーターに記録されたメタデータを解析し、`.d.ts`ファイルごとに1つの**`.metadata.json`**ファイルにメタデータ情報を出力します。
+The TypeScript compiler does some of the analytic work of the first phase. It emits the `.d.ts` _type definition files_ with type information that the AOT compiler needs to generate application code.
+At the same time, the AOT **collector** analyzes the metadata recorded in the Angular decorators and outputs metadata information in **`.metadata.json`** files, one per `.d.ts` file.
 
-`.metadata.json` は、[抽象構文木 (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree) として表されるデコレーターのメタデータの全体的な構造の図と考えることができます。
+You can think of `.metadata.json` as a diagram of the overall structure of a decorator's metadata, represented as an [abstract syntax tree (AST)](https://en.wikipedia.org/wiki/Abstract_syntax_tree).
 
 <div class="alert is-helpful">
 
-Angular の [schema.ts](https://github.com/angular/angular/blob/master/packages/compiler-cli/src/metadata/schema.ts)
-には、TypeScript インターフェースの集まりとして JSON 形式が記述されています。
+Angular's [schema.ts](https://github.com/angular/angular/blob/master/packages/compiler-cli/src/metadata/schema.ts)
+describes the JSON format as a collection of TypeScript interfaces.
 
 </div>
 
 {@a expression-syntax}
-### 式の構文制約
+### Expression syntax limitations
 
-AOTコレクター は JavaScript のサブセットしか理解できません。
-次の限られた構文でメタデータオブジェクトを定義します。
+The AOT collector only understands a subset of JavaScript.
+Define metadata objects with the following limited syntax:
 
 <style>
   td, th {vertical-align: top}
@@ -133,23 +133,23 @@ AOTコレクター は JavaScript のサブセットしか理解できません�
 
 <table>
   <tr>
-    <th>構文</th>
-    <th>例</th>
+    <th>Syntax</th>
+    <th>Example</th>
   </tr>
   <tr>
-    <td>オブジェクトリテラル</td>
+    <td>Literal object </td>
     <td><code>{cherry: true, apple: true, mincemeat: false}</code></td>
   </tr>
   <tr>
-    <td>配列リテラル</td>
+    <td>Literal array  </td>
     <td><code>['cherries', 'flour', 'sugar']</code></td>
   </tr>
   <tr>
-    <td>拡張配列リテラル</td>
+    <td>Spread in literal array</td>
     <td><code>['apples', 'flour', ...the_rest]</code></td>
   </tr>
    <tr>
-    <td>コール</td>
+    <td>Calls</td>
     <td><code>bake(ingredients)</code></td>
   </tr>
    <tr>
@@ -157,61 +157,61 @@ AOTコレクター は JavaScript のサブセットしか理解できません�
     <td><code>new Oven()</code></td>
   </tr>
    <tr>
-    <td>プロパティアクセス</td>
+    <td>Property access</td>
     <td><code>pie.slice</code></td>
   </tr>
    <tr>
-    <td>配列のインデックス</td>
+    <td>Array index</td>
     <td><code>ingredients[0]</code></td>
   </tr>
    <tr>
-    <td>ID 参照</td>
+    <td>Identity reference</td>
     <td><code>Component</code></td>
   </tr>
    <tr>
-    <td>Plantillas文字列</td>
+    <td>A template string</td>
     <td><code>`pie is ${multiplier} times better than cake`</code></td>
    <tr>
-    <td>文字列リテラル</td>
+    <td>Literal string</td>
     <td><code>pi</code></td>
   </tr>
    <tr>
-    <td>数値リテラル</td>
+    <td>Literal number</td>
     <td><code>3.14153265</code></td>
   </tr>
    <tr>
-    <td>真偽値リテラル</td>
+    <td>Literal boolean</td>
     <td><code>true</code></td>
   </tr>
    <tr>
-    <td>null リテラル</td>
+    <td>Literal null</td>
     <td><code>null</code></td>
   </tr>
    <tr>
-    <td>サポートされている接頭演算子</td>
+    <td>Supported prefix operator </td>
     <td><code>!cake</code></td>
   </tr>
    <tr>
-    <td>サポートされている二項演算子</td>
+    <td>Supported binary operator </td>
     <td><code>a+b</code></td>
   </tr>
    <tr>
-    <td>条件演算子</td>
+    <td>Conditional operator</td>
     <td><code>a ? b : c</code></td>
   </tr>
    <tr>
-    <td>括弧</td>
+    <td>Parentheses</td>
     <td><code>(a+b)</code></td>
   </tr>
 </table>
 
 
-式がサポートされていない構文を使う場合、コレクターはエラーノードを `.metadata.json` ファイルに書き込みます。アプリケーションコードを生成するためにその部分のメタデータが必要な場合、
-コンパイラは後でエラーを報告します。
+If an expression uses unsupported syntax, the collector writes an error node to the `.metadata.json` file.
+The compiler later reports the error if it needs that piece of metadata to generate the application code.
 
 <div class="alert is-helpful">
 
- エラーを伴う `.metadata.json` ファイルを生成せずに `ngc` に構文エラーを即座に報告させたい場合は、TypeScript設定ファイルの `strictMetadataEmit` オプションを設定してください。
+ If you want `ngc` to report syntax errors immediately rather than produce a `.metadata.json` file with errors, set the `strictMetadataEmit` option in the TypeScript configuration file.
 
 ```
   "angularCompilerOptions": {
@@ -220,18 +220,18 @@ AOTコレクター は JavaScript のサブセットしか理解できません�
  }
  ```
 
-Angular ライブラリはすべての Angular の `.metadata.json` ファイルがクリーンであることを保証するためにこのオプションを持っています、そして自身のライブラリを構築するとき同じことをするのはベストプラクティスです。
+Angular libraries have this option to ensure that all Angular `.metadata.json` files are clean and it is a best practice to do the same when building your own libraries.
 
 </div>
 
 {@a function-expression}
 {@a arrow-functions}
-### アロー関数は使えません
+### No arrow functions
 
-AOTコンパイラは[関数式](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/function)および
-_ラムダ_ 関数とも呼ばれる[アロー関数](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Functions/Arrow_functions)をサポートしていません。
+The AOT compiler does not support [function expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function)
+and [arrow functions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions), also called _lambda_ functions.
 
-次のコンポーネントデコレーターを考えてみましょう。
+Consider the following component decorator:
 
 ```typescript
 @Component({
@@ -240,11 +240,11 @@ _ラムダ_ 関数とも呼ばれる[アロー関数](https://developer.mozilla.
 })
 ```
 
-AOTコレクターはメタデータ式ではアロー関数 `() => new Server()` をサポートしません。
-関数の代わりにエラーノードを生成します。
-コンパイラが後でこのノードを解釈すると、アロー関数を _エクスポートされた関数_ に変換するように促すエラーが報告されます。
+The AOT collector does not support the arrow function, `() => new Server()`, in a metadata expression.
+It generates an error node in place of the function.
+When the compiler later interprets this node, it reports an error that invites you to turn the arrow function into an _exported function_.
 
-これを変換することでエラーを修正できます。
+You can fix the error by converting to this:
 
 ```typescript
 export function serverFactory() {
@@ -257,23 +257,23 @@ export function serverFactory() {
 })
 ```
 
-バージョン 5 以降、コンパイラは `.js` ファイルを出力しながらこの書き換えを自動的に実行します。
+In version 5 and later, the compiler automatically performs this rewriting while emitting the `.js` file.
 
 {@a exported-symbols}
 {@a code-folding}
-### コードの折りたたみ
+### Code folding
 
-コンパイラは **_エクスポートされた_** シンボルへの参照しか解決できません。
-それでもコレクターは収集中に式を評価し、オリジナルの式ではなくその結果を`.metadata.json`に記録できます。
-これにより、式内のエクスポートされていないシンボルを限定的に使用できます。
+The compiler can only resolve references to **_exported_** symbols.
+The collector, however, can evaluate an expression during collection and record the result in the `.metadata.json`, rather than the original expression.
+This allows you to make limited use of non-exported symbols within expressions.
 
-たとえば、コレクターは式 `1 + 2 + 3 + 4` を評価し、それを結果 `10` で置き換えることができます。
-このプロセスは _折りたたみ_ と呼ばれます。この方法で縮小できる式は _折りたたみ可能_ です。
+For example, the collector can evaluate the expression `1 + 2 + 3 + 4` and replace it with the result, `10`.
+This process is called _folding_. An expression that can be reduced in this manner is _foldable_.
 
 {@a var-declaration}
-コレクターはモジュールローカルな `const` 宣言と初期化された `var` と `let` 宣言への参照を評価することができ、事実上 `.metadata.json` ファイルからそれらを削除します。
+The collector can evaluate references to module-local `const` declarations and initialized `var` and `let` declarations, effectively removing them from the `.metadata.json` file.
 
-次のコンポーネント定義を考えてみてください。
+Consider the following component definition:
 
 ```typescript
 const template = '<div>{{hero.name}}</div>';
@@ -287,9 +287,9 @@ export class HeroComponent {
 }
 ```
 
-エクスポートされていないので、コンパイラは `template` 定数を参照できませんでした。
-それでもコレクターは`template`定数をその内容をインラインにすることでメタデータ定義へ折りたたみできます。
-効果はあなたが書いた場合と同じです。
+The compiler could not refer to the `template` constant because it isn't exported.
+The collector, however, can fold the `template` constant into the metadata definition by in-lining its contents.
+The effect is the same as if you had written:
 
 ```typescript
 @Component({
@@ -301,9 +301,9 @@ export class HeroComponent {
 }
 ```
 
-`template`への参照がなくなり、コンパイラが後で`.metadata.json`における_コレクターの_出力を解釈したときにコンパイラを煩わせることはなくなりました。
+There is no longer a reference to `template` and, therefore, nothing to trouble the compiler when it later interprets the _collector's_ output in `.metadata.json`.
 
-別の式に `template` 定数を含めることでこの例をさらに一歩進めることができます。
+You can take this example a step further by including the `template` constant in another expression:
 
 ```typescript
 const template = '<div>{{hero.name}}</div>';
@@ -317,15 +317,15 @@ export class HeroComponent {
 }
 ```
 
-コレクターはこの式をそれに相当する_折りたたんだ_文字列に変換します。
+The collector reduces this expression to its equivalent _folded_ string:
 
 ```
 '<div>{{hero.name}}</div><div>{{hero.title}}</div>'
 ```
 
-#### 折りたたみ可能な構文
+#### Foldable syntax
 
-次の表は、コレクターがどの式を折りたたむことができるかどうかを示しています。
+The following table describes which expressions the collector can and cannot fold:
 
 <style>
   td, th {vertical-align: top}
@@ -333,101 +333,101 @@ export class HeroComponent {
 
 <table>
   <tr>
-    <th>構文</th>
-    <th>折りたたみ可能</th>
+    <th>Syntax</th>
+    <th>Foldable</th>
   </tr>
   <tr>
-    <td>オブジェクトリテラル</td>
-    <td>可能</td>
+    <td>Literal object </td>
+    <td>yes</td>
   </tr>
   <tr>
-    <td>配列リテラル</td>
-    <td>可能</td>
+    <td>Literal array  </td>
+    <td>yes</td>
   </tr>
   <tr>
-    <td>拡張配列リテラル</td>
-    <td>不可</td>
+    <td>Spread in literal array</td>
+    <td>no</td>
   </tr>
    <tr>
-    <td>コール</td>
-    <td>不可</td>
+    <td>Calls</td>
+    <td>no</td>
   </tr>
    <tr>
     <td>New</td>
-    <td>不可</td>
+    <td>no</td>
   </tr>
    <tr>
-    <td>プロパティアクセス</td>
-    <td>可能、ターゲットが折りたたみ可能の場合</td>
+    <td>Property access</td>
+    <td>yes, if target is foldable</td>
   </tr>
    <tr>
-    <td>配列のインデックス</td>
-    <td>可能、ターゲットとインデックスが折りたたみ可能の場合</td>
+    <td>Array index</td>
+    <td> yes, if target and index are foldable</td>
   </tr>
    <tr>
-    <td>ID 参照</td>
-    <td>可能、それがローカルへの参照であれば</td>
+    <td>Identity reference</td>
+    <td>yes, if it is a reference to a local</td>
   </tr>
    <tr>
-    <td>置換のないPlantillas</td>
-    <td>可能</td>
+    <td>A template with no substitutions</td>
+    <td>yes</td>
   </tr>
    <tr>
-    <td>置換を含むPlantillas</td>
-    <td>可能、代入が折りたたみ可能の場合</td>
+    <td>A template with substitutions</td>
+    <td>yes, if the substitutions are foldable</td>
   </tr>
    <tr>
-    <td>文字列リテラル</td>
-    <td>可能</td>
+    <td>Literal string</td>
+    <td>yes</td>
   </tr>
    <tr>
-    <td>数値リテラル</td>
-    <td>可能</td>
+    <td>Literal number</td>
+    <td>yes</td>
   </tr>
    <tr>
-    <td>真偽値リテラル</td>
-    <td>可能</td>
+    <td>Literal boolean</td>
+    <td>yes</td>
   </tr>
    <tr>
-    <td>null リテラル</td>
-    <td>可能</td>
+    <td>Literal null</td>
+    <td>yes</td>
   </tr>
    <tr>
-    <td>サポートされている接頭演算子</td>
-    <td>可能、オペランドが折りたたみ可能の場合</td>
+    <td>Supported prefix operator </td>
+    <td>yes, if operand is foldable</td>
   </tr>
    <tr>
-    <td>サポートされている二項演算子</td>
-    <td>可能、左右両方が折りたたみ可能の場合</td>
+    <td>Supported binary operator </td>
+    <td>yes, if both left and right are foldable</td>
   </tr>
    <tr>
-    <td>条件演算子</td>
-    <td>可能、条件が折りたたみ可能の場合</td>
+    <td>Conditional operator</td>
+    <td>yes, if condition is foldable </td>
   </tr>
    <tr>
-    <td>括弧</td>
-    <td>可能、式が折りたたみ可能の場合</td>
+    <td>Parentheses</td>
+    <td>yes, if the expression is foldable</td>
   </tr>
 </table>
 
 
-式が折りたたみ可能ではない場合、コレクターはそれをコンパイラが解決するための [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) として `.metadata.json` に書き込みます。
+If an expression is not foldable, the collector writes it to `.metadata.json` as an [AST](https://en.wikipedia.org/wiki/Abstract_syntax_tree) for the compiler to resolve.
 
 
-## フェーズ 2: コード生成
+## Phase 2: code generation
 
-コレクターは、メタデータを収集して `.metadata.json` に出力しますが、そのメタデータを理解しようとはしません。
-可能な限りメタデータとして表現し、メタデータ構文の違反を検出したときにエラーを記録します。
-コード生成フェーズで `.metadata.json` を解釈するのはコンパイラの仕事です。
+The collector makes no attempt to understand the metadata that it collects and outputs to `.metadata.json`.
+It represents the metadata as best it can and records errors when it detects a metadata syntax violation.
+It's the compiler's job to interpret the `.metadata.json` in the code generation phase.
 
-コンパイラはコレクターがサポートするすべての構文形式を理解しますが、_セマンティックス_ がコンパイラの規則に違反している場合は、_構文として_ 正しいメタデータを拒否することがあります。
+The compiler understands all syntax forms that the collector supports, but it may reject _syntactically_ correct metadata if the _semantics_ violate compiler rules.
 
-### 公開されたシンボル
+### Public symbols
 
-コンパイラは _エクスポートされたシンボル_ しか参照できません。
+The compiler can only reference _exported symbols_.
 
-* デコレートされたコンポーネントクラスメンバは公開されている必要があります。`@Input()` プロパティを非公開にしたり、保護することはできません。
-* データバインドプロパティも公開されている必要があります。
+* Decorated component class members must be public. You cannot make an `@Input()` property private or protected.
+* Data bound properties must also be public.
 
 ```typescript
 // BAD CODE - title is private
@@ -442,32 +442,32 @@ export class AppComponent {
 
 {@a supported-functions}
 
-### サポートされるクラスと関数
+### Supported classes and functions
 
-コレクターは関数呼び出しや`new`によるオブジェクト作成を構文が正しいものとして表現できます。
-ところがコンパイラは、_特殊な_関数の呼び出しや_特殊な_オブジェクトの作成について後で生成を拒否できます。
+The collector can represent a function call or object creation with `new` as long as the syntax is valid.
+The compiler, however, can later refuse to generate a call to a _particular_ function or creation of a _particular_ object.
 
-コンパイラは、コアデコレーターのみをサポートする、そして式を戻すマクロ(関数や静的メソッド)の呼び出しのみをサポートする、特定のクラスのインスタンスのみを作成できます。
-* 新しいインスタンス
+The compiler can only create instances of certain classes, supports only core decorators, and only supports calls to macros (functions or static methods) that return expressions.
+* New instances
 
-   コンパイラは `@angular/core` から `InjectionToken` クラスのインスタンスを作成するメタデータのみを許可します。
+   The compiler only allows metadata that create instances of the class `InjectionToken` from `@angular/core`.
 
-* サポートされるデコレーター
+* Supported decorators
 
-   コンパイラは[`@angular/core`モジュールのAngularデコレーター](api/core#decorators)のメタデータのみサポートします。
+   The compiler only supports metadata for the [Angular decorators in the `@angular/core` module](api/core#decorators).
 
-* 関数呼び出し
+* Function calls
 
-   ファクトリ関数はエクスポートされた名前付き関数である必要があります。
-   AOTコンパイラはファクトリ関数についてラムダ式("アロー関数")をサポートしません。
+   Factory functions must be exported, named functions.
+   The AOT compiler does not support lambda expressions ("arrow functions") for factory functions.
 
 {@a function-calls}
-### 関数と静的メソッドの呼び出し
+### Functions and static method calls
 
-コレクターは1つの`return`文を含むどんな関数や静的メソッドも受け入れます。
-ところがコンパイラは、*式*を戻す関数や静的メソッドの形式のマクロのみをサポートします。
+The collector accepts any function or static method that contains a single `return` statement.
+The compiler, however, only supports macros in the form of functions or static methods that return an *expression*.
 
-たとえば、次の関数を考えてください:
+For example, consider the following function:
 
 ```typescript
 export function wrapInArray<T>(value: T): T[] {
@@ -475,9 +475,9 @@ export function wrapInArray<T>(value: T): T[] {
 }
 ```
 
-メタデータ定義の中で `wrapInArray` を呼び出すことができます。それはコンパイラの制限的な JavaScript サブセットに準拠する式の値を返すからです。
+You can call the `wrapInArray` in a metadata definition because it returns the value of an expression that conforms to the compiler's restrictive JavaScript subset.
 
-このように `wrapInArray()` を使うかもしれません:
+You might use  `wrapInArray()` like this:
 
 ```typescript
 @NgModule({
@@ -486,7 +486,7 @@ export function wrapInArray<T>(value: T): T[] {
 export class TypicalModule {}
 ```
 
-コンパイラはこの使用法を、あなたが書いたかのように扱います:
+The compiler treats this usage as if you had written:
 
 ```typescript
 @NgModule({
@@ -494,19 +494,19 @@ export class TypicalModule {}
 })
 export class TypicalModule {}
 ```
-Angular の [`RouterModule`](api/router/RouterModule) は、ルートと子ルートを宣言するのに役立つように、2つのマクロ静的メソッド `forRoot` と `forChild` をエクスポートします。
-これらのメソッドの[ソースコード](https://github.com/angular/angular/blob/master/packages/router/src/router_module.ts#L139 "RouterModule.forRoot source code")を調べて、
-複雑な [NgModules](guide/ngmodules) の構成をマクロで簡単にする方法を確認してください。
+The Angular [`RouterModule`](api/router/RouterModule) exports two macro static methods, `forRoot` and `forChild`, to help declare root and child routes.
+Review the [source code](https://github.com/angular/angular/blob/master/packages/router/src/router_module.ts#L139 "RouterModule.forRoot source code")
+for these methods to see how macros can simplify configuration of complex [NgModules](guide/ngmodules).
 
 {@a metadata-rewriting}
 
-### メタデータの書き換え
+### Metadata rewriting
 
-コンパイラは `useClass`、`useValue`、`useFactory`、および `data` の各フィールドを含むオブジェクトリテラルを特別に扱い、これらのフィールドの1つを初期化する式をエクスポートされた変数に変換します。この変数が式を置き換えます。
-これらの式を書き換えるこのプロセスは、式に含まれる可能性があるものに対するすべての制限を取り除きます。
-なぜならば、コンパイラは式の値を知る必要がなく、つまり値への参照だけを生成できればよいからです。
+The compiler treats object literals containing the fields `useClass`, `useValue`, `useFactory`, and `data` specially, converting the expression initializing one of these fields into an exported variable that replaces the expression.
+This process of rewriting these expressions removes all the restrictions on what can be in them because
+the compiler doesn't need to know the expression's value&mdash;it just needs to be able to generate a reference to the value.
 
-あなたはこんな風に書くかもしれません:
+You might write something like:
 
 ```typescript
 class TypicalServer {
@@ -519,8 +519,8 @@ class TypicalServer {
 export class TypicalModule {}
 ```
 
-書き換えなしでは、ラムダはサポートされておらず`TypicalServer`はエクスポートされていないため、これは不正になります。
-これを許可するため、コンパイラは自動でこんな風に書き換えます。
+Without rewriting, this would be invalid because lambdas are not supported and `TypicalServer` is not exported.
+To allow this, the compiler automatically rewrites this to something like:
 
 ```typescript
 class TypicalServer {
@@ -535,131 +535,131 @@ export const ɵ0 = () => new TypicalServer();
 export class TypicalModule {}
 ```
 
-これにより、コンパイラは、`ɵ0` の値に何が含まれているのかを知らなくても、ファクトリー内で `ɵ0` への参照を生成できます。
+This allows the compiler to generate a reference to `ɵ0` in the factory without having to know what the value of `ɵ0` contains.
 
-コンパイラは `.js` ファイルの発行中に書き換えを行います。
-ただし、これは `.d.ts` ファイルを書き換えないため、TypeScript はそれをエクスポートとして認識しません。したがって、それは ES モジュールのエクスポートされた API を汚染しません。
+The compiler does the rewriting during the emit of the `.js` file.
+It does not, however, rewrite the `.d.ts` file, so TypeScript doesn't recognize it as being an export. and it does not interfere with the ES module's exported API.
 
 
 {@a binding-expression-validation}
 
-## フェーズ 3: Plantillas型チェック
+## Phase 3: Template type checking
 
-Angularコンパイラのもっとも役立つ特徴の1つは、Plantillas内の式を型チェックしてそれらが実行時にクラッシュを引き起こす前にエラーを捕捉する能力です。
-Plantillas型チェックの段階では、Angular Plantillasコンパイラは TypeScript コンパイラを使用してPlantillas内のバインディング式を検証します。
+One of the Angular compiler's most helpful features is the ability to type-check expressions within templates, and catch any errors before they cause crashes at runtime.
+In the template type-checking phase, the Angular template compiler uses the TypeScript compiler to validate the binding expressions in templates.
 
-プロジェクトの `tsconfig.json` の `"angularCompilerOptions"` にコンパイラオプション `"fullTemplateTypeCheck"`を追加して、
-このフェーズを明示的に有効にします ([Angular コンパイラオプション](guide/angular-compiler-options)を参照)。
+Enable this phase explicitly by adding the compiler option `"fullTemplateTypeCheck"` in the `"angularCompilerOptions"` of the project's TypeScript configuration file
+(see [Angular Compiler Options](guide/angular-compiler-options)).
 
 <div class="alert is-helpful">
 
-[AngularのIvy](guide/ivy)においては、Plantillas型チェッカーはより厳格かつ有能に完全に書き換えられます。つまり、以前の型チェッカーが検出しないさまざまな新しいエラーを捕捉できることを意味します。
+In [Angular Ivy](guide/ivy), the template type checker has been completely rewritten to be more capable as well as stricter, meaning it can catch a variety of new errors that the previous type checker would not detect.
 
-結果として、以前にビューエンジンのもとでコンパイルされたPlantillasは、Ivyでは型チェックに失敗する可能性があります。これが起こり得るのは、Ivyのより厳格なチェックが真のエラーを捕捉するため、またはアプリケーションのコードが正しく型を付けられていないため、またはアプリケーションが誤りのあるもしくは十分に明確でない型付けをしているライブラリを使用しているためです。
+As a result, templates that previously compiled under View Engine can fail type checking under Ivy. This can happen because Ivy's stricter checking catches genuine errors, or because application code is not typed correctly, or because the application uses libraries in which typings are inaccurate or not specific enough.
 
-このより厳格な型チェックはバージョン9においてデフォルトで有効ではありませんが、`strictTemplates`設定オプションを設定することで有効にできます。
-将来はデフォルトで厳格な型チェックを行うことになるでしょう。
+This stricter type checking is not enabled by default in version 9, but can be enabled by setting the `strictTemplates` configuration option.
+We do expect to make strict type checking the default in the future.
 
 For more information about type-checking options, and about improvements to template type checking in version 9 and above, see [Template type checking](guide/template-typecheck).
 
 </div>
 
-Plantillas検証では、
-`.ts` ファイル内のコードに対して TypeScript コンパイラによって型エラーが報告されるのと同様に、
-Plantillasバインディング式で型エラーが検出されるとエラーメッセージが表示されます。
+Template validation produces error messages when a type error is detected in a template binding
+expression, similar to how type errors are reported by the TypeScript compiler against code in a `.ts`
+file.
 
-たとえば、次のコンポーネントを考えてみましょう:
-
-```typescript
-@Component({
-  selector: 'my-component',
-  template: '{{person.addresss.street}}'
-})
-class MyComponent {
-  person?: Person;
-}
-```
-
-これにより次のエラーが発生します:
-
-```
-my.component.ts.MyComponent.html(1,1): : Property 'addresss' does not exist on type 'Person'. Did you mean 'address'?
-```
-
-エラーメッセージで報告されたファイル名、つまり `my.component.ts.MyComponent.html` は、
-`MyComponent` クラスPlantillasの内容を保持するPlantillasコンパイラによって生成された合成ファイルです。
-コンパイラはこのファイルをディスクに書き込みません。
-行番号と列番号は、クラスの `@Component` アノテーションのPlantillas文字列 (この場合は `MyComponent`) を基準にしています。
-コンポーネントが`template`の代わりに `templateUrl` を使用する場合、エラーは合成ファイルの代わりに `templateUrl` によって参照される HTML ファイルで報告されます。
-
-エラー位置は、エラーのある補間式を含むテキストノードの始まりです。
-エラーが `[value]="person.address.street"`のような属性バインディングにある場合、
-エラーの場所はエラーを含む属性の場所です。
-
-検証では、TypeScript 型チェッカーと TypeScript コンパイラに提供されるオプションを使用して、
-型検証の詳細度を制御します。
-たとえば、`strictTypeChecks` が指定されている場合、上記のエラーメッセージと同様に、
-エラー  ```my.component.ts.MyComponent.html(1,1): : Object is possibly 'undefined'``` が報告されます。
-
-### タイプナローイング
-
-`ngIf` ディレクティブで使用されている式は、Angular Plantillasコンパイラで型候補を絞り込むために使用されます。
-これは、TypeScript で `if` 式が行うのと同じ方法です。
-たとえば、上のPlantillasで `Object is possibly 'undefined'` エラーになるのを避けるために、`person` の値が次のように初期化されている場合にのみ補間を実行するようにオブジェクトを修正します。
+For example, consider the following component:
 
 ```typescript
-@Component({
-  selector: 'my-component',
-  template: '<span *ngIf="person"> {{person.addresss.street}} </span>'
-})
-class MyComponent {
-  person?: Person;
-}
+  @Component({
+    selector: 'my-component',
+    template: '{{person.addresss.street}}'
+  })
+  class MyComponent {
+    person?: Person;
+  }
 ```
 
-`*ngIf` を使用すると、TypeScript コンパイラは、バインディング式で使用されている `person` が `undefined` になることはないと推測できます。
+This produces the following error:
+
+```
+  my.component.ts.MyComponent.html(1,1): : Property 'addresss' does not exist on type 'Person'. Did you mean 'address'?
+ ```
+
+The file name reported in the error message, `my.component.ts.MyComponent.html`, is a synthetic file
+generated by the template compiler that holds contents of the `MyComponent` class template.
+The compiler never writes this file to disk.
+The line and column numbers are relative to the template string in the `@Component` annotation of the class, `MyComponent` in this case.
+If a component uses `templateUrl` instead of `template`, the errors are reported in the HTML file referenced by the `templateUrl` instead of a synthetic file.
+
+The error location is the beginning of the text node that contains the interpolation expression with the error.
+If the error is in an attribute binding such as `[value]="person.address.street"`, the error
+location is the location of the attribute that contains the error.
+
+The validation uses the TypeScript type checker and the options supplied to the TypeScript compiler to control how detailed the type validation is.
+For example, if the `strictTypeChecks` is specified, the error
+```my.component.ts.MyComponent.html(1,1): : Object is possibly 'undefined'```
+is reported as well as the above error message.
+
+### Type narrowing
+
+The expression used in an `ngIf` directive is used to narrow type unions in the Angular
+template compiler, the same way the `if` expression does in TypeScript.
+For example, to avoid `Object is possibly 'undefined'` error in the template above, modify it to only emit the interpolation if the value of `person` is initialized as shown below:
+
+```typescript
+  @Component({
+    selector: 'my-component',
+    template: '<span *ngIf="person"> {{person.addresss.street}} </span>'
+  })
+  class MyComponent {
+    person?: Person;
+  }
+```
+
+Using `*ngIf` allows the TypeScript compiler to infer that the `person` used in the binding expression will never be `undefined`.
 
 For more information about input type narrowing, see [Input setter coercion](guide/template-typecheck#input-setter-coercion) and [Improving template type checking for custom directives](guide/structural-directives#directive-type-checks).
 
-### null 以外の型アサーション演算子
+### Non-null type assertion operator
 
-`*ngIf` を使用するのが不便な場合、またはバインディング式の補間時にコンポーネント内の制約によって式が常に NULL 以外になることが保証されている場合は、[非 null 型アサーション演算子](guide/template-syntax#non-null-assertion-operator)を使用して`Object is possibly 'undefined'` エラーを抑制します。
+Use the [non-null type assertion operator](guide/template-syntax#non-null-assertion-operator) to suppress the `Object is possibly 'undefined'` error when it is inconvenient to use `*ngIf` or when some constraint in the component ensures that the expression is always non-null when the binding expression is interpolated.
 
-次の例では、`person` プロパティと `address` プロパティは常に一緒に設定されているため、`person` が null 以外の場合、`address` は常に null 以外の値になります。
-TypeScript やPlantillasコンパイラにこの制約を記述するのに便利な方法はありませんが、この例では `address!.street` を使用してエラーを抑制しています。
+In the following example, the `person` and `address` properties are always set together, implying that `address` is always non-null if `person` is non-null.
+There is no convenient way to describe this constraint to TypeScript and the template compiler, but the error is suppressed in the example by using `address!.street`.
 
 ```typescript
-@Component({
-  selector: 'my-component',
-  template: '<span *ngIf="person"> {{person.name}} lives on {{address!.street}} </span>'
-})
-class MyComponent {
-  person?: Person;
-  address?: Address;
+  @Component({
+    selector: 'my-component',
+    template: '<span *ngIf="person"> {{person.name}} lives on {{address!.street}} </span>'
+  })
+  class MyComponent {
+    person?: Person;
+    address?: Address;
 
-  setData(person: Person, address: Address) {
-    this.person = person;
-    this.address = address;
+    setData(person: Person, address: Address) {
+      this.person = person;
+      this.address = address;
+    }
   }
-}
 ```
 
-コンポーネントのリファクタリングはこの制約を破る可能性があるため、非 null アサーション演算子は控えめに使用してください。
+The non-null assertion operator should be used sparingly as refactoring of the component might break this constraint.
 
-この例では、次に示すように`*ngIf` に `address` のチェックを含めることをお勧めします:
+In this example it is recommended to include the checking of `address` in the `*ngIf` as shown below:
 
 ```typescript
-@Component({
-  selector: 'my-component',
-  template: '<span *ngIf="person && address"> {{person.name}} lives on {{address.street}} </span>'
-})
-class MyComponent {
-  person?: Person;
-  address?: Address;
+  @Component({
+    selector: 'my-component',
+    template: '<span *ngIf="person && address"> {{person.name}} lives on {{address.street}} </span>'
+  })
+  class MyComponent {
+    person?: Person;
+    address?: Address;
 
-  setData(person: Person, address: Address) {
-    this.person = person;
-    this.address = address;
+    setData(person: Person, address: Address) {
+      this.person = person;
+      this.address = address;
+    }
   }
-}
 ```

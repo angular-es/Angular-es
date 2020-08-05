@@ -1,21 +1,21 @@
-# TypeScriptの設定
+# TypeScript configuration
 
-TypeScriptは、Angularアプリケーション開発の主要言語です。
-これはJavaScriptのスーパーセットで、型安全性とツールのための設計時サポートを備えています。
+TypeScript is a primary language for Angular application development.
+It is a superset of JavaScript with design-time support for type safety and tooling.
 
-ブラウザはTypeScriptを直接実行できません。
-TypeScriptは、*tsc*コンパイラを使用してJavaScriptに "変換"する必要があります。そのためにはいくつか設定が必要です。
+Browsers can't execute TypeScript directly.
+Typescript must be "transpiled" into JavaScript using the *tsc* compiler, which requires some configuration.
 
-このページでは、Angular開発者にとって重要なTypeScriptの構成と環境について、
-主に次のファイルの詳細を説明します。
+This page covers some aspects of TypeScript configuration and the TypeScript environment
+that are important to Angular developers, including details about the following files:
 
-* [tsconfig.json](guide/typescript-configuration#tsconfig)&mdash;TypeScriptコンパイラの設定。
-* [typings](guide/typescript-configuration#typings)&mdash;TypesScriptの宣言ファイル。
+* [tsconfig.json](guide/typescript-configuration#tsconfig)&mdash;TypeScript compiler configuration.
+* [typings](guide/typescript-configuration#typings)&mdash;TypesScript declaration files.
 
 
 {@a tsconfig}
 
-## 構成ファイル
+## Configuration files
 
 A given Angular workspace contains several TypeScript configuration files.
 At the root level, there are two main TypeScript configuration files: a `tsconfig.json` file and a `tsconfig.base.json` file.
@@ -47,6 +47,7 @@ The `tsconfig.base.json` file specifies the base TypeScript and Angular compiler
 
 The TypeScript and Angular have a wide range of options which can be used to configure type-checking features and generated output.
 For more information, see the [Configuration inheritance with extends](https://www.typescriptlang.org/docs/handbook/tsconfig-json.html#configuration-inheritance-with-extends) section of the TypeScript documentation.
+
 <div class="alert is-helpful">
 
 For more information TypeScript configuration files, see the official [TypeScript wiki](http://www.typescriptlang.org/docs/handbook/tsconfig-json.html)
@@ -54,9 +55,9 @@ For details about configuration inheritance, see the [Configuration inheritance 
 
 </div>
 
-Angular アプリケーションの最初の `tsconfig.base.json` は通常、次の例のようになります：
+The initial `tsconfig.base.json` for an Angular workspace typically looks like the following example.
 
-<code-example lang="json" header="tsconfig.json" linenums="false">
+<code-example lang="json" header="tsconfig.base.json" linenums="false">
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -78,7 +79,6 @@ Angular アプリケーションの最初の `tsconfig.base.json` は通常、�
 }
 </code-example>
 
-
 ### Strict mode
 
 When you create new workspaces and projects, you have the option to use Angular's strict mode, which can help you write better, more maintainable code.
@@ -86,26 +86,26 @@ For more information, see [Strict mode](/guide/strict-mode).
 
 {@a noImplicitAny}
 
-### *noImplicitAny* と *suppressImplicitAnyIndexErrors*
+### *noImplicitAny* and *suppressImplicitAnyIndexErrors*
 
-TypeScriptの開発者は、`noImplicitAny`フラグを`true`または`false`にするかどうかについては同意しません。
-この問題に正解はなく、あとでフラグを変更することができます。
-しかし、この選択は大規模プロジェクトにおいて大きな影響を与える可能性があるので、議論に値します。
+TypeScript developers disagree about whether the `noImplicitAny` flag should be `true` or `false`.
+There is no correct answer and you can change the flag later.
+But your choice now can make a difference in larger projects, so it merits discussion.
 
-`noImplicitAny`フラグが`false`（デフォルト）のとき、
-コンパイラが変数の型を自動推論できなかった場合は、
-型を`any`にデフォルト設定します。それは*暗黙の`any`*とみなされます。
+When the `noImplicitAny` flag is `false` (the default), and if
+the compiler cannot infer the variable type based on how it's used,
+the compiler silently defaults the type to `any`. That's what is meant by *implicit `any`*.
 
-`noImplicitAny`フラグが`true`で、TypeScriptコンパイラが型を推論できない場合でも、
-JavaScriptファイルは生成されますが、**エラーも出力されます**。
-これはより厳格な型チェックとなりますが、コンパイル時に型チェックが意図していないエラーをキャッチできるので、
-多くのベテラン開発者が好む傾向にあります。
+When the `noImplicitAny` flag is `true` and the TypeScript compiler cannot infer
+the type, it still generates the JavaScript files, but it also **reports an error**.
+Many seasoned developers prefer this stricter setting because type checking catches more
+unintentional errors at compile time.
 
-`noImplicitAny`フラグが`true`の場合でも、変数の型を`any`に設定することが可能です。
+You can set a variable's type to `any` even when the `noImplicitAny` flag is `true`.
 
-`noImplicitAny`フラグが`true`の場合、*暗黙のインデックスエラー*も発生する可能性があります。
-ほとんどの開発者は、*この特定のエラー*が役立つよりも迷惑であると感じています。
-次の追加フラグを使用してそれらを制御することができます：
+When the `noImplicitAny` flag is `true`, you may get *implicit index errors* as well.
+Most developers feel that *this particular error* is more annoying than helpful.
+You can suppress them with the following additional flag:
 
 <code-example>
 
@@ -115,61 +115,61 @@ JavaScriptファイルは生成されますが、**エラーも出力されま�
 
 <div class="alert is-helpful">
 
-TypeScriptの構成がコンパイルに与える影響の詳細については、 [Angular コンパイラオプション](guide/angular-compiler-options) および [Template の型チェック](guide/template-typecheck) を参照してください。
+For more information about how the TypeScript configuration affects compilation, see [Angular Compiler Options](guide/angular-compiler-options) and [Template Type Checking](guide/template-typecheck).
 
 </div>
 
 
 {@a typings}
 
-## TypeScriptの型定義
+## TypeScript typings
 
-jQuery・Jasmineテストライブラリ・Angularなどの多くのJavaScriptライブラリは、
-TypeScriptコンパイラが認識できない機能と構文を用いて
-JavaScript環境を拡張しています。
-コンパイラが何かを認識できないと、エラーをスローします。
+Many JavaScript libraries, such as jQuery, the Jasmine testing library, and Angular,
+extend the JavaScript environment with features and syntax
+that the TypeScript compiler doesn't recognize natively.
+When the compiler doesn't recognize something, it throws an error.
 
-TypeScriptの[型定義ファイル](https://www.typescriptlang.org/docs/handbook/writing-declaration-files.html)（d.tsファイル）を用いて、読み込んだライブラリについてコンパイラに指示します。
+Use [TypeScript type definition files](https://www.typescriptlang.org/docs/handbook/writing-declaration-files.html)&mdash;`d.ts files`&mdash;to tell the compiler about the libraries you load.
 
-TypeScript対応エディタは、これらの型定義ファイルを活用して、ライブラリ機能の型情報を表示します。
+TypeScript-aware editors leverage these same definition files to display type information about library features.
 
-多くのライブラリには型定義ファイルが含まれており、TypeScriptコンパイラとエディタはそれらを見つけることができます。
-Angularはこのようなライブラリの1つです。
-Angularアプリケーションの `node_modules/@angular/core/`フォルダには、Angularのcore部分を記述するいくつかの `d.ts`ファイルが含まれています。
+Many libraries include definition files in their npm packages where both the TypeScript compiler and editors
+can find them. Angular is one such library.
+The `node_modules/@angular/core/` folder of any Angular application contains several `d.ts` files that describe parts of Angular.
 
 <div class="alert is-helpful">
 
-`d.ts`ファイルを含む *typings* ファイルは、すでにAngularパッケージに含まれていますので、
-追加作業を行う必要はありません。
+You don't need to do anything to get *typings* files for library packages that include `d.ts` files.
+Angular packages include them already.
 
 </div>
 
 ### lib.d.ts
 
-TypeScriptには、 `lib.d.ts`という特別な型定義ファイルが含まれています。このファイルには、JavaScriptのランタイムとDOMに存在するさまざまな一般的なJavaScript構文のアンビエント宣言が含まれています。
+TypeScript includes a special declaration file called `lib.d.ts`. This file contains the ambient declarations for various common JavaScript constructs present in JavaScript runtimes and the DOM.
 
-TypeScriptは`--target`の値に基づいて、ターゲットが`es6`なら`Promise`のような
-_追加の_アンビエント宣言を追加します。
+Based on the `--target`, TypeScript adds _additional_ ambient declarations
+like `Promise` if the target is `es6`.
 
-デフォルトのターゲットは`es2015`です。もし`es5`をターゲットにしていれば、新しい型定義を宣言ファイルリストに含める必要があります。
+By default, the target is `es2015`. If you are targeting `es5`, you still have newer type declarations due to the list of declaration files included:
 
 <code-example path="getting-started/tsconfig.0.json" header="tsconfig.json (lib excerpt)" region="lib"></code-example>
 
-### 型定義ファイルのインストール
+### Installable typings files
 
-多くのライブラリ（jQuery、Jasmine、Lodashなど）は、npmパッケージに`d.ts`ファイルが *含まれていません。*
-しかし幸いにも、著者やコミュニティのコントリビューターがこれらのライブラリ用の`d.ts`ファイルを作成し、
-公開しています。
+Many libraries&mdash;jQuery, Jasmine, and Lodash among them&mdash;do *not* include `d.ts` files in their npm packages.
+Fortunately, either their authors or community contributors have created separate `d.ts` files for these libraries and
+published them in well-known locations.
 
-これらの型定義ファイルは、
-[`@types/*` スコープ化パッケージ](http://www.typescriptlang.org/docs/handbook/declaration-files/consumption.html)を使って`npm`でインストールすることができ、
-TypeScript 2.0以降では自動認識されます。
+You can install these typings via `npm` using the
+[`@types/*` scoped package](http://www.typescriptlang.org/docs/handbook/declaration-files/consumption.html)
+and Typescript, starting at 2.0, automatically recognizes them.
 
-たとえば`jasmine`の型定義ファイルをインストールするには、`npm install @types/jasmine --save-dev`を実行します。
+For instance, to install typings for `jasmine` you run `npm install @types/jasmine --save-dev`.
 
 
 {@a target}
 
 ### *target*
 
-デフォルトでは、ターゲットは`es2015`です。これはモダンブラウザでのみサポートされています。特別にレガシーブラウザをサポートするためにターゲットを`es5`に設定することができます。 [Differential loading](guide/deployment#differential-loading)もAngular CLIによって提供され、分離されたバンドルによって最新とレガシー、両方のブラウザをサポートします。
+By default, the target is `es2015`, which is supported only in modern browsers. You can configure the target to `es5` to specifically support legacy browsers. [Differential loading](guide/deployment#differential-loading) is also provided by the Angular CLI to support modern, and legacy browsers with separate bundles.

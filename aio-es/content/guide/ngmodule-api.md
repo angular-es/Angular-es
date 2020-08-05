@@ -1,43 +1,43 @@
 # NgModule API
 
-大まかにいうと、
-NgModuleはAngularアプリケーションを整理する方法で、
-`@NgModule`デコレーター内のメタデータを通して実現します。
-メタデータは3つのカテゴリーに分類されます:
+At a high level, NgModules are a way to organize Angular apps
+and they accomplish this through the metadata in the `@NgModule`
+decorator.
+The metadata falls into three categories:
 
-* **静的:** コンパイラーの設定。ディレクティブのセレクターと、Plantillas内のディレクティブがセレクターのマッチングを通してどれに適用すべきかをコンパイラーに知らせます。これは`declarations`配列によって設定されます。
-* **ランタイム:** `providers`配列経由でのインジェクターの設定。
-* **コンポーザビリティ/グルーピング:** `imports`、`exports`配列経由でNgModuleをまとめて、利用可能にします。
+* **Static:** Compiler configuration which tells the compiler about directive selectors and where in templates the directives should be applied through selector matching. This is configured via the `declarations` array.
+* **Runtime:** Injector configuration via the `providers` array.
+* **Composability/Grouping:** Bringing NgModules together and making them available via the `imports` and `exports` arrays.
 
 ```typescript
 @NgModule({
-  // 静的な、つまりコンパイラーの設定です
-  declarations: [], // セレクターを設定します
-  entryComponents: [], // ホストファクトリーを生成します
+  // Static, that is compiler configuration
+  declarations: [], // Configure the selectors
+  entryComponents: [], // Generate the host factory
 
-  // ランタイム、あるいはインジェクターの設定
-  providers: [], // ランタイムインジェクター設定
+  // Runtime, or injector configuration
+  providers: [], // Runtime injector configuration
 
-  // コンポーザビリティ / グルーピング
-  imports: [], // NgModuleをまとめて組み込みます
-  exports: [] // NgModuleをアプリケーションの他の部分で利用可能にします
+  // Composability / Grouping
+  imports: [], // composing NgModules together
+  exports: [] // making NgModules available to other parts of the app
 })
 ```
 
-## `@NgModule` メタデータ
+## `@NgModule` metadata
 
-次の表は`@NgModule`メタデータのプロパティをまとめたものです。
+The following table summarizes the `@NgModule` metadata properties.
 
 <table>
 
   <tr>
 
     <th>
-      プロパティ
+      Property
     </th>
 
     <th>
-      説明
+      Description
     </th>
 
   </tr>
@@ -50,23 +50,23 @@ NgModuleはAngularアプリケーションを整理する方法で、
 
     <td>
 
-      _このモジュールに属している_[宣言](guide/ngmodule-faq#q-declarable)クラス
-      (*コンポーネント*、*ディレクティブ*、および*パイプ*)のリスト。
+      A list of [declarable](guide/ngmodule-faq#q-declarable) classes,
+      (*components*, *directives*, and *pipes*) that _belong to this module_.
 
       <ol>
-        <li>Plantillasをコンパイルするときは、対応するディレクティブを動作させるために使用するセレクターのセットを決定する必要があります。</li>
+        <li>When compiling a template, you need to determine a set of selectors which should be used for triggering their corresponding directives.</li>
         <li>
-          Plantillasは、Plantillasのコンポーネントが宣言されているNgModuleのコンテキスト内でコンパイルされます。セレクターのセットは次のルールで決定されます:
+          The template is compiled within the context of an NgModule&mdash;the NgModule within which the template's component is declared&mdash;which determines the set of selectors using the following rules:
           <ul>
-            <li><code>declarations</code>配列内のディレクティブのセレクターすべて</li>
-            <li>インポートしたNgModuleがエクスポートしているディレクティブのセレクターすべて</li>
+            <li>All selectors of directives listed in `declarations`.</li>
+            <li>All selectors of directives exported from imported NgModules.</li>
           </ul>
         </li>
       </ol>
 
-      コンポーネント、ディレクティブ、およびパイプは、_厳密_に1つのモジュールに属している必要があります。
-      複数のモジュールで同じクラスを宣言しようとすると、コンパイラでエラーが発生します。
-      別のモジュールから直接的または間接的にインポートされたクラスを再宣言しないように注意してください。
+      Components, directives, and pipes must belong to _exactly_ one module.
+      The compiler emits an error if you try to declare the same class in more than one module. Be careful not to re-declare a class that is imported
+      directly or indirectly from another module.
 
     </td>
 
@@ -80,24 +80,24 @@ NgModuleはAngularアプリケーションを整理する方法で、
 
     <td>
 
-      Inyección de dependenciaのプロバイダーのリスト。
+      A list of dependency-injection providers.
 
-      AngularはこれらのプロバイダーをNgModuleのインジェクターに登録します。
-      それがブートストラップに使用されているNgModuleの場合は、ルートインジェクターに登録されます。
+      Angular registers these providers with the NgModule's injector.
+      If it is the NgModule used for bootstrapping then it is the root injector.
 
-      これらのサービスはこのインジェクターの子供である任意のコンポーネント、ディレクティブ、パイプ、またはサービスに注入できるようになります。
+      These services become available for injection into any component, directive, pipe or service which is a child of this injector.
 
-      遅延ロードしたモジュールは自身のインジェクターを持ち、
-      それは通常はアプリケーションのルートインジェクターの子供です。
+      A lazy-loaded module has its own injector which
+      is typically a child of the application root injector.
 
-      遅延ロードしたサービスは遅延ロードしたモジュールのインジェクターのスコープで管理されます。
-      遅延ロードしたモジュールが`UserService`を提供していた場合、
-      そのモジュールのコンテキストで(たとえばルーターのナビゲーションによって)作成された任意のコンポーネントは、ルートインジェクター内のインスタンスではなく、
-      サービスのローカルインスタンスを取得します。
+      Lazy-loaded services are scoped to the lazy module's injector.
+      If a lazy-loaded module also provides the `UserService`,
+      any component created within that module's context (such as by router navigation)
+      gets the local instance of the service, not the instance in the root application injector.
 
-      外部モジュール内のコンポーネントはそれぞれのインジェクターが提供するインスタンスを受け取り続けます。
+      Components in external modules continue to receive the instance provided by their injectors.
 
-      注入の階層やスコーピングの詳細については[プロバイダー](guide/providers)や[DIガイド](guide/dependency-injection)を参照してください。
+      For more information on injector hierarchy and scoping, see [Providers](guide/providers) and the [DI Guide](guide/dependency-injection).
 
     </td>
 
@@ -111,21 +111,21 @@ NgModuleはAngularアプリケーションを整理する方法で、
 
     <td>
 
-      このモジュールに畳み込まれるべきモジュールのリスト。
-      畳み込むとは、すべてのインポートしたNgModuleがエクポートしているプロパティがあたかもここで宣言したかのようにするという意味です。
+      A list of modules which should be folded into this module. Folded means it is
+      as if all the imported NgModule's exported properties were declared here.
 
-      具体的には、
-      コンポーネント、ディレクティブ、またはパイプをエクスポートしているモジュールのリストが、このモジュールで宣言したかのようにコンポーネントのPlantillasから参照されます。
+      Specifically, it is as if the list of modules whose exported components, directives, or pipes
+      are referenced by the component templates were declared in this module.
 
-      コンポーネントのPlantillasが他のコンポーネント、ディレクティブ、およびパイプを[参照](guide/ngmodule-faq#q-template-reference)できるのは、
-      その参照がこのモジュールで宣言されているか、もしくはインポートしたモジュールがエクスポートしているときです。
-      たとえば、コンポーネントはモジュールがAngularの`CommonModule`をインポートするだけ(おそらく`BrowserModule`をインポートすることで間接的にインポートされます)で
-      `NgIf`や`NgFor`ディレクティブを使用できます。
+      A component template can [reference](guide/ngmodule-faq#q-template-reference) another component, directive, or pipe
+      when the reference is declared in this module or if the imported module has exported it.
+      For example, a component can use the `NgIf` and `NgFor` directives only if the
+      module has imported the Angular `CommonModule` (perhaps indirectly by importing `BrowserModule`).
 
-      多くの標準ディレクティブを`CommonModule`からインポートできます。
-      しかし、いくつかのおなじみのディレクティブは他のモジュールに属しています。
-      たとえば、
-      Angularの`FormsModule`をインポートしたあとにのみ`[(ngModel)]`を使用できます。
+      You can import many standard directives from the `CommonModule`
+      but some familiar directives belong to other modules.
+      For example, you can use `[(ngModel)]` only
+      after importing the Angular `FormsModule`.
 
     </td>
 
@@ -139,27 +139,27 @@ NgModuleはAngularアプリケーションを整理する方法で、
 
     <td>
 
-      宣言(*コンポーネント*、*ディレクティブ*、および*パイプ*のクラス)のリスト。
-      インポートするモジュールがこれを使用できます。
+      A list of declarations&mdash;*component*, *directive*, and *pipe* classes&mdash;that
+      an importing module can use.
 
-      エクスポートした宣言はモジュールの_公開API_となります。
-      他のモジュール内のコンポーネントが、_この_モジュールの`UserComponent`を[使用](guide/ngmodule-faq#q-template-reference)できるのは、
-      このモジュールをインポートし、かつ、このモジュールが`UserComponent`をエクスポートする場合です。
+      Exported declarations are the module's _public API_.
+      A component in another module can [use](guide/ngmodule-faq#q-template-reference) _this_
+      module's `UserComponent` if it imports this module and this module exports `UserComponent`.
 
-      宣言はデフォルトでは非公開です。
-      このモジュールが`UserComponent`をエクスポート_しない_場合
-      _この_モジュール内のコンポーネントだけが`UserComponent`を使用できます。
+      Declarations are private by default.
+      If this module does _not_ export `UserComponent`, then only the components within _this_
+      module can use `UserComponent`.
 
-      モジュールをインポートしても、インポートしたモジュールのインポートを自動的に再エクスポート_しません_。
-      モジュール'B'は、`CommonModule`をインポートするモジュール'A'をインポートしただけでは、`ngIf`を使用できません。
-      モジュール'B'は`CommonModule`を自身でインポートする必要があります。
+      Importing a module does _not_ automatically re-export the imported module's imports.
+      Module 'B' can't use `ngIf` just because it imported module 'A' which imported `CommonModule`.
+      Module 'B' must import `CommonModule` itself.
 
-      モジュールは他のモジュールを自身の`exports`配列に追加できます。
-      その場合、そのモジュールの公開のコンポーネント、ディレクティブ、およびパイプすべてがエクスポートされます。
+      A module can list another module among its `exports`, in which case
+      all of that module's public components, directives, and pipes are exported.
 
-      [再エクスポート](guide/ngmodule-faq#q-reexport)はモジュールの推移性を明示的にします。
-      モジュール'A'が`CommonModule`を再エクスポートし、モジュール'B'がモジュール'A'をインポートする場合、
-      モジュール'B'のコンポーネントは、'B'自身が`CommonModule`をインポートせずとも`ngIf`を使用できます。
+      [Re-export](guide/ngmodule-faq#q-reexport) makes module transitivity explicit.
+      If Module 'A' re-exports `CommonModule` and Module 'B' imports Module 'A',
+      Module 'B' components can use `ngIf` even though 'B' itself didn't import `CommonModule`.
 
     </td>
 
@@ -173,14 +173,14 @@ NgModuleはAngularアプリケーションを整理する方法で、
 
     <td>
 
-      自動でブートストラップされるコンポーネントのリスト。
+      A list of components that are automatically bootstrapped.
 
-      通常、このリストにはアプリケーションの _ルートコンポーネント_ 1つだけが配置されます
+      Usually there's only one component in this list, the _root component_ of the application.
 
-      Angularは複数のブートストラップコンポーネント
-      (ホストウェブページ内のそれぞれ自身のコンポーネントが配置された場所)で起動できます。
+      Angular can launch with multiple bootstrap components,
+      each with its own location in the host web page.
 
-      ブートストラップコンポーネントは自動的に`entryComponents`に追加されます。
+      A bootstrap component is automatically added to `entryComponents`.
 
     </td>
 
@@ -194,24 +194,24 @@ NgModuleはAngularアプリケーションを整理する方法で、
 
     <td>
 
-      ビューに動的にロードできるコンポーネントのリスト。
+      A list of components that can be dynamically loaded into the view.
 
-      デフォルトでは、Angularアプリケーションは常に少なくとも1つのエントリーコンポーネントを持ちます(ルートコンポーネントである`AppComponent`)。その目的はアプリケーションへのエントリーポイントとして機能することで、つまり、アプリケーションを起動するためにそれをブートストラップします。
+      By default, an Angular app always has at least one entry component, the root component, `AppComponent`. Its purpose is to serve as a point of entry into the app, that is, you bootstrap it to launch the app.
 
-      ルーテッドコンポーネントも動的にロードする必要があるため、_エントリーコンポーネント_になります。
-      ルーターはそれを生成して、`<router-outlet>`付近のDOMに配置します。
+      Routed components are also _entry components_ because they need to be loaded dynamically.
+      The router creates them and drops them into the DOM near a `<router-outlet>`.
 
-      ブートストラップするコンポーネントとルーテッドコンポーネントは_エントリーコンポーネント_ですが、
-      これは暗黙的に追加されるので
-      `entryComponents`配列に追加する必要はありません。
+      While the bootstrapped and routed components are _entry components_,
+      you don't have to add them to a module's `entryComponents` list,
+      as they are added implicitly.
 
-      Angularはモジュールの`bootstrap`とルート定義内のコンポーネントを`entryComponents`配列に自動的に追加します。
+      Angular automatically adds components in the module's `bootstrap` and route definitions into the `entryComponents` list.
 
-      これでは、[`ViewComponentRef.createComponent()`](api/core/ViewContainerRef#createComponent)のような命令的なTécnicaのひとつを使ってブートストラップされるコンポーネントを検出できないままです。
+      That leaves only components bootstrapped using one of the imperative techniques, such as [`ViewComponentRef.createComponent()`](api/core/ViewContainerRef#createComponent) as undiscoverable.
 
-      動的なコンポーネントのロードはルーター以外のほとんどのアプリケーションで一般的ではありません。動的にコンポーネントをロードしたい場合は、`entryComponents`配列に手動でコンポーネントを追加する必要があります。
+      Dynamic component loading is not common in most apps beyond the router. If you need to dynamically load components, you must add these components to the `entryComponents` list yourself.
 
-      詳細については[エントリーコンポーネント](guide/entry-components)を参照してください。
+      For more information, see [Entry Components](guide/entry-components).
 
     </td>
 
@@ -222,10 +222,10 @@ NgModuleはAngularアプリケーションを整理する方法で、
 
 <hr />
 
-## NgModuleの詳細
+## More on NgModules
 
-あなたはこちらにも興味があるかもしれません:
-* [フィーチャーモジュール](guide/feature-modules)
-* [エントリーコンポーネント](guide/entry-components)
-* [プロバイダー](guide/providers)
-* [Tipo de módulo de funciones](guide/module-types)
+You may also be interested in the following:
+* [Feature Modules](guide/feature-modules).
+* [Entry Components](guide/entry-components).
+* [Providers](guide/providers).
+* [Types of Feature Modules](guide/module-types).

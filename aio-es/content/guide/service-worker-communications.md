@@ -1,62 +1,62 @@
-# Service Workerと通信する
+# Service worker communication
 
-`AppModule`に`ServiceWorkerModule`をインポートしたら、Service Workerを登録するだけではなく、Service Workerと対話してアプリケーションのキャッシュを制御するためのサービスも使えるようになります。
+Importing `ServiceWorkerModule` into your `AppModule` doesn't just register the service worker, it also provides a few services you can use to interact with the service worker and control the caching of your app.
 
-#### 前提条件
+#### Prerequisites
 
-次の基本的理解があること
-* [Service Workerを始める](guide/service-worker-getting-started)
+A basic understanding of the following:
+* [Getting Started with Service Workers](guide/service-worker-getting-started).
 
 <hr />
 
 
-## `SwUpdate`サービス
+## `SwUpdate` service
 
-`SwUpdate`サービスは、Service Workerがあなたのアプリケーションで利用可能なアップデートを発見したとき、またはそのアップデートをアクティブにしたときを示すイベントへのアクセスを提供します。
+The `SwUpdate` service gives you access to events that indicate when the service worker has discovered an available update for your app or when it has activated such an update&mdash;meaning it is now serving content from that update to your app.
 
-`SwUpdate`サービスは4つの操作をサポートします。
-* *利用可能*なアップデートの通知を受け取る。これらは、ページが更新されたときに読み込まれる新しいバージョンのアプリケーションです。
-* *アクティブ化*したアップデートの通知を受け取る。これは、Service Workerがすぐに新しいバージョンのアプリケーションのサービスを開始するときです。
-* 新しい更新のためにサーバーをチェックするようにService Workerに依頼する。
-* 現在のタブの最新バージョンのアプリケーションを有効にするようにService Workerに依頼する。
+The `SwUpdate` service supports four separate operations:
+* Getting notified of *available* updates. These are new versions of the app to be loaded if the page is refreshed.
+* Getting notified of update *activation*. This is when the service worker starts serving a new version of the app immediately.
+* Asking the service worker to check the server for new updates.
+* Asking the service worker to activate the latest version of the app for the current tab.
 
-### 利用可能でアクティブ化したアップデート
+### Available and activated updates
 
-`available`と`activated`の2つのアップデートイベントは、`SwUpdate`の`Observable`プロパティです。
+The two update events, `available` and `activated`, are `Observable` properties of `SwUpdate`:
 
 <code-example path="service-worker-getting-started/src/app/log-update.service.ts" header="log-update.service.ts" region="sw-update"></code-example>
 
 
-これらのイベントを使用して、保留中のアップデートをユーザーに通知したり、実行中のコードが古い場合にページを更新したりすることができます。
+You can use these events to notify the user of a pending update or to refresh their pages when the code they are running is out of date.
 
-### アップデートをチェックする
+### Checking for updates
 
-Service Workerに、サーバーにDesplegarされたアップデートがあるかどうかを確認させることができます。
+It's possible to ask the service worker to check if any updates have been deployed to the server.
 The service worker checks for updates during initialization and on each navigation request&mdash;that is, when the user navigates from a different address to your app.
 However, you might choose to manually check for updates if you have a site that changes frequently or want updates to happen on a schedule.
 
-`checkForUpdate()`メソッドで行います。
+Do this with the `checkForUpdate()` method:
 
 <code-example path="service-worker-getting-started/src/app/check-for-update.service.ts" header="check-for-update.service.ts"></code-example>
 
-このメソッドは、更新チェックが正常に完了したことを示すPromiseを返しますが、チェックの結果アップデートが検出されたかどうかは示しません。アップデートが見つかったとしても、Service Workerは変更されたファイルを正常にダウンロードする必要があり、まだ失敗する可能性があるからです。成功した場合、availableイベントが、新しいバージョンのアプリケーションが使用可能になったことを示します。
+This method returns a `Promise` which indicates that the update check has completed successfully, though it does not indicate whether an update was discovered as a result of the check. Even if one is found, the service worker must still successfully download the changed files, which can fail. If successful, the `available` event will indicate availability of a new version of the app.
 
 <div class="alert is-important">
 
-In order to avoid negatively affecting the initial rendering of the page, `ServiceWorkerModule` waits for up to 30 seconds by default for the app to stabilize, before registering the Service Worker script.
-Constantly polling for updates, for example, with [setInterval()](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval) or RxJS' [interval()](https://rxjs.dev/api/index/function/interval), will prevent the app from stabilizing and the Service Worker script will not be registered with the browser until the 30 seconds upper limit is reached.
+In order to avoid negatively affecting the initial rendering of the page, `ServiceWorkerModule` waits for up to 30 seconds by default for the app to stabilize, before registering the ServiceWorker script.
+Constantly polling for updates, for example, with [setInterval()](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setInterval) or RxJS' [interval()](https://rxjs.dev/api/index/function/interval), will prevent the app from stabilizing and the ServiceWorker script will not be registered with the browser until the 30 seconds upper limit is reached.
 
 Note that this is true for any kind of polling done by your application.
 Check the {@link ApplicationRef#isStable isStable} documentation for more information.
 
 You can avoid that delay by waiting for the app to stabilize first, before starting to poll for updates, as shown in the example above.
-Alternatively, you might want to define a different {@link SwRegistrationOptions#registrationStrategy registration strategy} for the Service Worker.
+Alternatively, you might want to define a different {@link SwRegistrationOptions#registrationStrategy registration strategy} for the ServiceWorker.
 
 </div>
 
-### アップデートのアクティブ化を強制する
+### Forcing update activation
 
-現在のタブを最新のアプリケーションバージョンに直ちに更新する必要がある場合は、`activateUpdate()`メソッドを使用して要求することができます。
+If the current tab needs to be updated to the latest app version immediately, it can ask to do so with the `activateUpdate()` method:
 
 <code-example path="service-worker-getting-started/src/app/prompt-update.service.ts" header="prompt-update.service.ts" region="sw-activate"></code-example>
 
@@ -67,7 +67,7 @@ Therefore, it is recommended to reload the page once the promise returned by `ac
 
 </div>
 
-## もっとAngular Service Workerを知りたい
+## More on Angular service workers
 
-次の記事がお勧めです。
-* [プロダクション環境のService Worker](guide/service-worker-devops).
+You may also be interested in the following:
+* [Service Worker in Production](guide/service-worker-devops).

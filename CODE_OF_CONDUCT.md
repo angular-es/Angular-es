@@ -14,4 +14,4 @@ Si experimenta algún comportamiento inaceptable, testigo o cualquier otra inqui
 
 ---
 
-Este documento es una traducción al español de [angular / code-of-conduct / CODE_OF_CONDUCT.md] (https://github.com/angular/code-of-conduct/blob/master/CODE_OF_CONDUCT.md).
+Este documento es una traducción al español de [angular/code-of-conduct/CODE_OF_CONDUCT.md](https://github.com/angular/code-of-conduct/blob/master/CODE_OF_CONDUCT.md).

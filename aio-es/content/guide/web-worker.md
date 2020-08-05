@@ -1,30 +1,30 @@
-# Web workers を使用したバックグラウンド処理
+# Background processing using web workers
 
-[Web Workers](https://developer.mozilla.org/ja/docs/Web/API/Web_Workers_API) を使用すると、CPU 集中型の計算をバックグラウンドスレッドで実行し、
-メインスレッドを解放してユーザーインターフェースを更新できます。
-アプリケーションが CAD 図面の生成や幾何学的な重い計算などの多くの計算を実行している場合、 Web Workers を使用すると、アプリケーションのパフォーマンスを向上させることができます。
+[Web workers](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API) allow you to run CPU-intensive computations in a background thread,
+freeing the main thread to update the user interface.
+If you find your application performs a lot of computations, such as generating CAD drawings or doing heavy geometrical calculations, using web workers can help increase your application's performance.
 
 <div class="alert is-helpful">
 
-CLI は、Web worker での Angular 自体の実行をサポートしていません。
+The CLI does not support running Angular itself in a web worker.
 
 </div>
 
-## Web worker を追加する
+## Adding a web worker
 
-Web Worker を既存のプロジェクトに追加するには、 Angular CLI の `ng generate` コマンドを使用します。
+To add a web worker to an existing project, use the Angular CLI `ng generate` command.
 
 `ng generate web-worker` *location*
 
-アプリケーションのどこにでも Web worker を追加できます。
-たとえば、ルートコンポーネント `src/app/app.component.ts` に Web worker を追加するには、次のコマンドを実行します。
+You can add a web worker anywhere in your application.
+For example, to add a web worker to the root component, `src/app/app.component.ts`, run the following command.
 
 `ng generate web-worker app`
 
-このコマンドは次のアクションを実行します。
+The command performs the following actions.
 
-- まだ使用していない場合、 Web workers を使用するようにプロジェクトを構成します。
-- 次の雛形のコードを `src/app/app.worker.ts` に追加してメッセージを受信します。
+- Configures your project to use web workers, if it isn't already.
+- Adds the following scaffold code to `src/app/app.worker.ts` to  receive messages.
 
   <code-example language="typescript" header="src/app/app.worker.ts">
   addEventListener('message', ({ data }) => {
@@ -33,7 +33,7 @@ Web Worker を既存のプロジェクトに追加するには、 Angular CLI �
   });
  </code-example>
 
-- 次の雛形のコードを worker を使用するために `src/app/app.component.ts` に追加します。
+- Adds the following scaffold code to `src/app/app.component.ts` to use the worker.
 
   <code-example language="typescript" header="src/app/app.component.ts">
   if (typeof Worker !== 'undefined') {
@@ -49,10 +49,10 @@ Web Worker を既存のプロジェクトに追加するには、 Angular CLI �
   }
   </code-example>
 
-この初期の雛形を生成した後、 worker との間でメッセージを送受信して、 Web worker を使用するようにコードをリファクタリングする必要があります。
+After you generate this initial scaffold, you must refactor your code to use the web worker by sending messages to and from the worker.
 
 <div class="alert is-important">
 
-[サーバサイドレンダリング](guide/universal) で使用される `@angular/platform-server` などの一部の環境またはプラットフォームは、 Web workers をサポートしていません。 アプリケーションがこれらの環境で確実に機能するようにするには、 worker が実行するはずの計算を実行するフォールバックメカニズムを提供する必要があります。
+Some environments or platforms, such as `@angular/platform-server` used in [Server-side Rendering](guide/universal), don't support web workers. To ensure that your application will work in these environments, you must provide a fallback mechanism to perform the computations that the worker would otherwise perform.
 
 </div>

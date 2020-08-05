@@ -1,423 +1,423 @@
-# NgModuleのFAQ
+# NgModule FAQ
 
-NgModuleは機能の密なブロックにアプリケーションを整理するのに役立ちます。
+NgModules help organize an application into cohesive blocks of functionality.
 
-このページでは NgModule のデザインや実装についての多くの開発者の質問に回答します。
+This page answers the questions many developers ask about NgModule design and implementation.
 
 
-## どのクラスを`declarations`配列に追加すべきですか?
+## What classes should I add to the `declarations` array?
 
-[宣言](guide/bootstrapping#the-declarations-array)クラス(コンポーネント、ディレクティブ、またはパイプ)を`declarations`配列に追加してください。
+Add [declarable](guide/bootstrapping#the-declarations-array) classes&mdash;components, directives, and pipes&mdash;to a `declarations` list.
 
-これらのクラスはアプリケーション内で_ただ1つ_のモジュールだけで宣言してください。
-特定のモジュールに属している場合にはそのモジュール内で宣言してください。
+Declare these classes in _exactly one_ module of the application.
+Declare them in a module if they belong to that particular module.
 
 <hr/>
 
 {@a q-declarable}
 
-## _宣言_とは何ですか?
+## What is a _declarable_?
 
-宣言とはモジュールの`declarations`配列に追加できるクラス型
-(コンポーネント、ディレクティブ、パイプ)です。
-宣言だけが、`declarations`に追加できるクラスです。
-
-<hr/>
-
-## どのクラスを`declarations`配列に追加すべきでは_ない_ですか?
-
-[宣言](guide/bootstrapping#the-declarations-array)クラスだけを1つのNgModuleの`declarations`配列に追加してください。
-
-次のような場合は宣言*しない*でください:
-
-* アプリケーションモジュール、@NgModule、もしくはサードパーティのモジュールであろうとなかろうと、他のモジュールで宣言されているクラス。
-* 他のモジュールからインポートされているディレクティブの配列。
-  たとえば、`@angular/forms`の`FORMS_DIRECTIVES`を宣言してはいけません。`FormsModule`ですでに宣言しています。
-
-* モジュールクラス。
-* サービスクラス。
-* Angularと無関係なクラスやオブジェクト。
-たとえば文字列、数値、関数、エンティティーモデル、設定、ビジネスロジック、ヘルパークラスなどです。
+Declarables are the class types&mdash;components, directives, and pipes&mdash;that
+you can add to a module's `declarations` list.
+They're the only classes that you can add to `declarations`.
 
 <hr/>
 
+## What classes should I _not_ add to `declarations`?
 
-## 複数の`NgModule`プロパティに同じコンポーネントが存在するのはなぜですか?
+Add only [declarable](guide/bootstrapping#the-declarations-array) classes to an NgModule's `declarations` list.
 
-`AppComponent`はよく`declarations`、`bootstrap`配列の両方に追加されています。
-あなたは同じコンポーネントが`declarations`、`exports`や`entryComponents`に追加されているのを見かけるかもしれません。
+Do *not* declare the following:
 
-冗長にみえるかもしれませんが、個々のプロパティは別の機能を持っています。
-1つのリスト内のメンバーであるということは、他のリストのメンバーであることを意味するものではありません。
+* A class that's already declared in another module, whether an app module, @NgModule, or third-party module.
+* An array of directives imported from another module.
+For example, don't declare `FORMS_DIRECTIVES` from `@angular/forms` because the `FormsModule` already declares it.
 
-* `AppComponent`は、このモジュールで宣言されていても、ブートストラップはされていないかもしれません。
-* `AppComponent`は、このモジュールでブートストラップされていても、別のフィーチャーモジュールで宣言されているかもしれません。
-* コンポーネントは、他のアプリケーションモジュールからインポートしつつ(だからあなたは宣言できません)、このモジュールによって再エクスポートされているかもしれません。
-* コンポーネントは、外部コンポーネントのPlantillasに含めるためにエクスポートされ、
-同様にポップアップダイアログで動的にロードされるかもしれません。
+* Module classes.
+* Service classes.
+* Non-Angular classes and objects, such as
+strings, numbers, functions, entity models, configurations, business logic, and helper classes.
 
 <hr/>
 
-## "Can't bind to 'x' since it isn't a known property of 'y'" とはどういう意味ですか?
 
-このエラーの多くはディレクティブ"x"が宣言されていない、
-または"x"が属しているNgModuleがインポートされていないことを意味します。
+## Why list the same component in multiple `NgModule` properties?
+
+`AppComponent` is often listed in both `declarations` and `bootstrap`.
+You might see the same component listed in `declarations`, `exports`, and `entryComponents`.
+
+While that seems redundant, these properties have different functions.
+Membership in one list doesn't imply membership in another list.
+
+* `AppComponent` could be declared in this module but not bootstrapped.
+* `AppComponent` could be bootstrapped in this module but declared in a different feature module.
+* A component could be imported from another app module (so you can't declare it) and re-exported by this module.
+* A component could be exported for inclusion in an external component's template
+as well as dynamically loaded in a pop-up dialog.
+
+<hr/>
+
+## What does "Can't bind to 'x' since it isn't a known property of 'y'" mean?
+
+This error often means that you haven't declared the directive "x"
+or haven't imported the NgModule to which "x" belongs.
 
 <div class="alert is-helpful">
 
-アプリケーション内のサブモジュールで"x"を宣言してはいますが、それをエクスポートし忘れている可能性があります。
-"x"クラスは`exports`配列に追加しない限り、他のモジュールからは参照できません。
+Perhaps you declared "x" in an application sub-module but forgot to export it.
+The "x" class isn't visible to other modules until you add it to the `exports` list.
 
 </div>
 
 <hr/>
 
-## 何をインポートすべきですか?
+## What should I import?
 
-モジュールのコンポーネントのPlantillasから参照する必要があるときに公開(エクスポート)された[宣言クラス](guide/bootstrapping#the-declarations-array)
-をもつNgModuleをインポートしてください。
+Import NgModules whose public (exported) [declarable classes](guide/bootstrapping#the-declarations-array)
+you need to reference in this module's component templates.
 
-これは`NgIf`や`NgFor`などのAngularディレクティブにアクセスしたいときは常に
-`@angular/common`から`CommonModule`をインポートすることを意味します。
-直接、またはそれを[再エクスポート](guide/ngmodule-faq#q-reexport)している他のNgModuleからインポートできます。
+This always means importing `CommonModule` from `@angular/common` for access to
+the Angular directives such as `NgIf` and `NgFor`.
+You can import it directly or from another NgModule that [re-exports](guide/ngmodule-faq#q-reexport) it.
 
-コンポーネントで`[(ngModel)]`双方向バインディング式を使用している場合は
-`@angular/forms`から`FormsModule`をインポートしてください。
+Import `FormsModule` from `@angular/forms`
+if your components have `[(ngModel)]` two-way binding expressions.
 
-このモジュールのコンポーネントが_共有モジュール_、
-_フィーチャーモジュール_のコンポーネント、ディレクティブやパイプを組み込むときにそれをインポートしてください。
+Import _shared_ and _feature_ modules when this module's components incorporate their
+components, directives, and pipes.
 
-[BrowserModule](guide/ngmodule-faq#q-browser-vs-common-module)はRaíz`AppModule`でのみインポートしてください。
+Import [BrowserModule](guide/ngmodule-faq#q-browser-vs-common-module) only in the root `AppModule`.
 
 <hr/>
 
 {@a q-browser-vs-common-module}
 
-## `BrowserModule`と`CommonModule`のどちらをインポートすべきですか?
+## Should I import `BrowserModule` or `CommonModule`?
 
-ほぼすべてのブラウザアプリケーションでは、
-ルートアプリケーションモジュールである`AppModule`で`@angular/platform-browser`から`BrowserModule`をインポートすべきです。
+The root application module, `AppModule`, of almost every browser application
+should import `BrowserModule` from `@angular/platform-browser`.
 
-`BrowserModule`はブラウザアプリケーションの起動と実行に不可欠なサービスを提供します。
+`BrowserModule` provides services that are essential to launch and run a browser app.
 
-`BrowserModule`は`@angular/common`から`CommonModule`を再エクスポートもしています。
-これは`AppModule`内のコンポーネントが`NgIf`や`NgFor`のような、
-すべてのアプリケーションで必要なAngularディレクティブにアクセスできることを意味します。
+`BrowserModule` also re-exports `CommonModule` from `@angular/common`,
+which means that components in the `AppModule` module also have access to
+the Angular directives every app needs, such as `NgIf` and `NgFor`.
 
-`BrowserModule`を他のモジュールからインポートしてはいけません。
-*フィーチャーモジュール*と*遅延ロードするモジュール*では、かわりに`CommonModule`をインポートすべきです。
-これらは共通のディレクティブが必要で、アプリケーション全体のプロバイダーを再インストールする必要はありません。
+Do not import `BrowserModule` in any other module.
+*Feature modules* and *lazy-loaded modules* should import `CommonModule` instead.
+They need the common directives. They don't need to re-install the app-wide providers.
 
-また、`CommonModule`をインポートすることで、フィーチャーモジュールをブラウザだけでなく _あらゆる_ 対象のプラットフォームでも使えるようにします。
+Importing `CommonModule` also frees feature modules for use on _any_ target platform, not just browsers.
 
 <hr/>
 
 {@a q-reimport}
 
-## 同じモジュールを2回インポートするとどうなりますか?
+## What if I import the same module twice?
 
-問題ありません。3つのモジュールがすべてモジュール'A'をインポートすると、
-Angularは最初の一度だけモジュール'A'を評価して、再度評価することはありません。
+That's not a problem. When three modules all import Module 'A',
+Angular evaluates Module 'A' once, the first time it encounters it, and doesn't do so again.
 
-これはインポートされたNgModule内のどのレベルで`A`が現れても真です。
-モジュール'B'がモジュール'A'をインポートし、モジュール'C'がモジュール'B'をインポートし、そしてモジュール'D'が`[C, B, A]`をインポートしたとき、
-'D'は'C'の評価をトリガーします。'C'は'B'の評価をトリガーし、'B'は'A'を評価します。
-Angularが'D'内の'B'と'A'を取得したとき、それらはすでにキャッシュされていて準備は完了しています。
+That's true at whatever level `A` appears in a hierarchy of imported NgModules.
+When Module 'B' imports Module 'A', Module 'C' imports 'B', and Module 'D' imports `[C, B, A]`,
+then 'D' triggers the evaluation of 'C', which triggers the evaluation of 'B', which evaluates 'A'.
+When Angular gets to the 'B' and 'A' in 'D', they're already cached and ready to go.
 
-Angularは循環参照しているNgModuleを受け付けません。モジュール'A'がモジュール'B'をインポートして、モジュール'B'がモジュール'A'をインポートするようにしないようにしてください。
+Angular doesn't like NgModules with circular references, so don't let Module 'A' import Module 'B', which imports Module 'A'.
 
 <hr/>
 
 {@a q-reexport}
 
-## 何をエクスポートすべきですか?
+## What should I export?
 
-[宣言](guide/bootstrapping#the-declarations-array)クラスをエクスポートしてください。
-それを、_他_のNgModule内のコンポーネントがPlantillasにて参照できます。これが_公開_クラスです。
-宣言クラスをエクポートしない場合、それは_非公開_のままとなり、
-同一NgModule内の他のコンポーネントでのみ参照できます。
+Export [declarable](guide/bootstrapping#the-declarations-array) classes that components in _other_ NgModules
+are able to reference in their templates. These are your _public_ classes.
+If you don't export a declarable class, it stays _private_, visible only to other components
+declared in this NgModule.
 
-このNgModule内、
-もしくはインポートしたNgModule内で宣言されている任意の宣言クラス(コンポーネント、ディレクティブ、またはパイプ)をエクスポート_できます_。
+You _can_ export any declarable class&mdash;components, directives, and pipes&mdash;whether
+it's declared in this NgModule or in an imported NgModule.
 
-インポートしたNgModule全体を再エクスポートすることが_できます_。それらがエクスポートしているクラス全体を効果的に再エクスポートします。
-NgModuleはインポートしていないモジュールをエクスポートすることもできます。
-
-<hr/>
-
-## 何をエクスポートすべきでは*ない*ですか?
-
-次のようなものはエクスポートしてはいけません:
-
-* 対象のNgModuleで宣言したコンポーネント内でのみ必要な、非公開のコンポーネント、ディレクティブ、およびパイプ。
-他のNgModuleに見せたくなければ、エクスポートしてはいけません。
-* 宣言ではないオブジェクト、たとえば、サービス、関数、設定やエンティティーモデルなどです。
-* ルーターから動的にロードされる、またはブートストラップにだけ使用されるコンポーネント。
-そのような[エントリーコンポーネント](guide/ngmodule-faq#q-entry-component-defined)は他のコンポーネントのPlantillasから選択されることは決してありません。
-エクスポートすることに害はありませんが、利益もありません。
-* 公開(エクスポート)している宣言をもたない純粋なサービスモジュール。
-たとえば、`HttpClientModule`は何もエクスポートしているものがないので再エクスポートする意味はありません。
-その唯一の目的はHTTPサービスプロバイダーをアプリケーション全体に追加することです。
-
-
+You _can_ re-export entire imported NgModules, which effectively re-exports all of their exported classes.
+An NgModule can even export a module that it doesn't import.
 
 <hr/>
 
-## クラスやモジュールを再エクスポートできますか?
+## What should I *not* export?
 
-もちろんできます。
+Don't export the following:
 
-NgModuleは他のNgModuleから選択的にクラスを集約したり、
-それらを統合した便利なモジュールに再エクスポートする素晴らしい方法の1つです。
+* Private components, directives, and pipes that you need only within components declared in this NgModule.
+If you don't want another NgModule to see it, don't export it.
+* Non-declarable objects such as services, functions, configurations, and entity models.
+* Components that are only loaded dynamically by the router or by bootstrapping.
+Such [entry components](guide/ngmodule-faq#q-entry-component-defined) can never be selected in another component's template.
+While there's no harm in exporting them, there's also no benefit.
+* Pure service modules that don't have public (exported) declarations.
+For example, there's no point in re-exporting `HttpClientModule` because it doesn't export anything.
+Its only purpose is to add http service providers to the application as a whole.
 
-NgModuleはNgModule全体を再エクスポートできます。エクスポートされたクラス全体を効果的に再エクスポートします。
-Angular自身の`BrowserModule`は次のような2つのNgModuleをエクスポートします:
+<hr/>
+
+
+
+## Can I re-export classes and modules?
+
+Absolutely.
+
+NgModules are a great way to selectively aggregate classes from other NgModules and
+re-export them in a consolidated, convenience module.
+
+An NgModule can re-export entire NgModules, which effectively re-exports all of their exported classes.
+Angular's own `BrowserModule` exports a couple of NgModules like this:
 
 ```typescript
-exports: [CommonModule, ApplicationModule];
+  exports: [CommonModule, ApplicationModule]
 ```
 
-NgModuleは自身がもつ宣言、選択したインポートしたクラス、インポートしたNgModuleを組み合わせてエクスポートできます。
+An NgModule can export a combination of its own declarations, selected imported classes, and imported NgModules.
 
-純粋なサービスモジュールの再エクスポートで悩まないでください。
-純粋なサービスモジュールは他のNgModuleで使用できる[宣言](guide/bootstrapping#the-declarations-array)クラスをエクスポートしません。
-たとえば、`HttpClientModule`は何もエクスポートしないので、再エクスポートする必要はありません。
-その唯一の目的は、HTTPサービスプロバイダーをアプリケーション全体に追加することです。
-
-
-<hr/>
-
-
-## `forRoot()`メソッドとは何ですか?
-
-`forRoot()`静的メソッドは、開発者がシングルトンであることを意図したサービスとプロバイダーを簡単に設定できるようにするための規約です。`forRoot()`の良い例は、`RouterModule.forRoot()`メソッドです。
-
-アプリケーションはアプリケーション全体の`Router`サービスを設定するために`RouterModule.forRoot()`に`Routes`オブジェクトを渡します。
-`RouterModule.forRoot()`は[ModuleWithProviders](api/core/ModuleWithProviders)を返します。
-Raíz`AppModule`の`imports`配列にその結果を追加します。
-
-`forRoot()`の結果はルートアプリケーションモジュールである`AppModule`でだけ実行してインポートしてください。
-他のモジュール、特に遅延ロードされるモジュールでインポートしないでください。
-詳細については[Servicio Singleton](guide/singleton-services) の [`forRoot()` パターン](guide/singleton-services#the-forroot-pattern) セクションを参照してください。
-
-サービスについては、`forRoot()`を使用するかわりにサービスの`@Injectable()`デコレーターに`providedIn: 'root'`を指定してください。
-これはサービスを自動的にアプリケーション全体で有効にし、この結果としてデフォルトでシングルトンになります。
-
-`RouterModule`は遅延ロードするモジュールのルーティングを設定するために `forChild()` 静的メソッドも提供しています。
-
-`forRoot()`と`forChild()`は、それぞれルートモジュールとフィーチャーモジュールで
-サービスの設定を行うメソッドのための慣例的な名前です。
-
-サービスプロバイダーを設定可能な類似のモジュールを書くときは、この規約にしたがってください。
+Don't bother re-exporting pure service modules.
+Pure service modules don't export [declarable](guide/bootstrapping#the-declarations-array) classes that another NgModule could use.
+For example, there's no point in re-exporting `HttpClientModule` because it doesn't export anything.
+Its only purpose is to add http service providers to the application as a whole.
 
 
 <hr/>
 
 
-## フィーチャーモジュールで提供されるサービスがどこでも見えるのはなぜですか?
+## What is the `forRoot()` method?
 
-ブートストラップされるモジュールの`@NgModule.providers`に並んだプロバイダーは、アプリケーションのスコープをもちます。
-`@NgModule.providers`にサービスプロバイダー追加することはアプリケーション全体に効果的にサービスを公開します。
+The `forRoot()` static method is a convention that makes it easy for developers to configure services and providers that are intended to be singletons. A good example of `forRoot()` is the `RouterModule.forRoot()` method.
 
-1つのNgModuleをインポートしたとき、
-Angularはモジュールのサービスプロバイダー(`providers`配列の内容)を
-アプリケーションのルートインジェクターに追加します。
+Apps pass a `Routes` object to `RouterModule.forRoot()` in order to configure the app-wide `Router` service with routes.
+`RouterModule.forRoot()` returns a [ModuleWithProviders](api/core/ModuleWithProviders).
+You add that result to the `imports` list of the root `AppModule`.
 
-これにより、プロバイダーのルックアップトークンや、名前を知っているアプリケーション内のすべてのクラスでプロバイダーが参照できるようになります。
+Only call and import a `forRoot()` result in the root application module, `AppModule`.
+Avoid importing it in any other module, particularly in a lazy-loaded module. For more
+information on `forRoot()` see [the `forRoot()` pattern](guide/singleton-services#the-forroot-pattern) section of the [Singleton Services](guide/singleton-services) guide.
 
-NgModuleのインポートによる拡張性はNgModuleシステムの第一の目標です。
-アプリケーションインジェクターにNgModuleのプロバイダーをマージすることで、
-新しいサービスでアプリケーション全体を豊かにすることが、モジュールライブラリにとって簡単になります。
-`HttpClientModule`を1回追加することにより、すべてのアプリケーションのコンポーネントはHTTPリクエストできるようになります。
+For a service, instead of using `forRoot()`,  specify `providedIn: 'root'` on the service's `@Injectable()` decorator, which
+makes the service automatically available to the whole application and thus singleton by default.
 
-しかしながらこれは、フィーチャーモジュールで宣言したコンポーネントだけにモジュールのサービスを見せたい場合は、
-歓迎されないサプライズとなるでしょう。
-もし`HeroModule`が`HeroService`を提供していて、Raíz`AppModule`が`HeroModule`をインポートする場合、
-`HeroModule`内で宣言したクラスだけでなく、
-`HeroService`の_型_を知っている任意のクラスでそのサービスを注入できます。
+`RouterModule` also offers a `forChild()` static method for configuring the routes of lazy-loaded modules.
 
-サービスへのアクセスを制限するには、そのサービスを提供するNgModuleを遅延ロードすることを検討してください。詳細は[どのようにサービスのスコープをモジュールに制限しますか?](guide/ngmodule-faq#service-scope)を参照してください。
+`forRoot()` and `forChild()` are conventional names for methods that
+configure services in root and feature modules respectively.
+
+Follow this convention when you write similar modules with configurable service providers.
+
+
+<hr/>
+
+
+## Why is a service provided in a feature module visible everywhere?
+
+Providers listed in the `@NgModule.providers` of a bootstrapped module have application scope.
+Adding a service provider to `@NgModule.providers` effectively publishes the service to the entire application.
+
+When you import an NgModule,
+Angular adds the module's service providers (the contents of its `providers` list)
+to the application root injector.
+
+This makes the provider visible to every class in the application that knows the provider's lookup token, or name.
+
+Extensibility through NgModule imports is a primary goal of the NgModule system.
+Merging NgModule providers into the application injector
+makes it easy for a module library to enrich the entire application with new services.
+By adding the `HttpClientModule` once, every application component can make HTTP requests.
+
+However, this might feel like an unwelcome surprise if you expect the module's services
+to be visible only to the components declared by that feature module.
+If the `HeroModule` provides the `HeroService` and the root `AppModule` imports `HeroModule`,
+any class that knows the `HeroService` _type_ can inject that service,
+not just the classes declared in the `HeroModule`.
+
+To limit access to a service, consider lazy loading the NgModule that provides that service. See [How do I restrict service scope to a module?](guide/ngmodule-faq#service-scope) for more information.
 
 <hr/>
 
 {@a q-lazy-loaded-module-provider-visibility}
 
-## なぜ遅延ロードしたモジュールで提供されるサービスはそのモジュールだけで参照できるのですか?
+## Why is a service provided in a lazy-loaded module visible only to that module?
 
-起動時にロードするモジュールのプロバイダーとは異なり、
-遅延ロードするモジュールのプロバイダーは*モジュールにスコープされます*。
+Unlike providers of the modules loaded at launch,
+providers of lazy-loaded modules are *module-scoped*.
 
-Angularルーターがモジュールを遅延ロードするとき、新しい実行コンテキストを作成します。
-その[コンテキストは自身のインジェクターを持ちます](guide/ngmodule-faq#q-why-child-injector "Why Angular creates a child injector")。
-これはアプリケーションインジェクターの直接の子供になります。
+When the Angular router lazy-loads a module, it creates a new execution context.
+That [context has its own injector](guide/ngmodule-faq#q-why-child-injector "Why Angular creates a child injector"),
+which is a direct child of the application injector.
 
-ルーターは遅延ロードしたモジュールのプロバイダーとそれがインポートしているNgModuleのプロバイダーをこの子インジェクターに追加します。
+The router adds the lazy module's providers and the providers of its imported NgModules to this child injector.
 
-これらのプロバイダーは同じルックアップトークンをもつアプリケーションプロバイダーの変更から隔離されます。
-ルーターが遅延ロードしたコンテキスト内でコンポーネントを作成するとき、
-Angularはアプリケーションのルートインジェクターのサービスインスタンスよりもこれらのプロバイダーが作成したサービスインスタンスを優先します。
+These providers are insulated from changes to application providers with the same lookup token.
+When the router creates a component within the lazy-loaded context,
+Angular prefers service instances created from these providers to the service instances of the application root injector.
 
 <hr/>
 
 
-## 2つのモジュールが同じサービスを提供するとどうなりますか?
+## What if two modules provide the same service?
 
-2つのモジュールをインポートして、同時にロードし、同じトークンでプロバイダーを追加したとき、
-2つ目のモジュールのプロバイダーが"勝ち"ます。両方のプロバイダーが同じインジェクターに追加されるからです。
+When two imported modules, loaded at the same time, list a provider with the same token,
+the second module's provider "wins". That's because both providers are added to the same injector.
 
-Angularがそのトークンのサービスを注入するとき、
-2つ目のプロバイダーから作成されたインスタンスを配信します。
+When Angular looks to inject a service for that token,
+it creates and delivers the instance created by the second provider.
 
-このサービスを注入する_すべて_のクラスは2つ目のプロバイダーによって作成されたインスタンスを取得します。
-1つ目のモジュールで宣言されたクラスであっても、2つ目のプロバイダーによって作成されたインスタンスを取得します。
+_Every_ class that injects this service gets the instance created by the second provider.
+Even classes declared within the first module get the instance created by the second provider.
 
-NgModule Aがトークン'X'のサービスを提供していて、こちらもトークン'X'のサービスを提供するNgModule Bをインポートしている場合、
-NgModule Aのサービス定義が"勝ち"ます。
+If NgModule A provides a service for token 'X' and imports an NgModule B
+that also provides a service for token 'X', then NgModule A's service definition "wins".
 
-Raíz`AppModule`が提供するサービスはインポートしたNgModuleが提供するサービスよりも優先されます。
-`AppModule`が常に勝ちます。
+The service provided by the root `AppModule` takes precedence over services provided by imported NgModules.
+The `AppModule` always wins.
 
 <hr/>
 
 {@a service-scope}
 
-## どのようにサービスのスコープをモジュールに制限しますか?
+## How do I restrict service scope to a module?
 
-モジュールがアプリケーションの起動時にロードされたとき、
-その`@NgModule.providers`は*アプリケーション全体のスコープ*を持ちます。
-つまり、アプリケーション全体に注入できます。
+When a module is loaded at application launch,
+its `@NgModule.providers` have *application-wide scope*;
+that is, they are available for injection throughout the application.
 
-インポートしたプロバイダーは、他のインポートしたNgModuleからのプロバイダーによって簡単に置き換えられます。
-そのような置き換えは意図的なものかもしれません。意図的でなく、悪影響を及ぼすかもしれません。
+Imported providers are easily replaced by providers from another imported NgModule.
+Such replacement might be by design. It could be unintentional and have adverse consequences.
 
-原則として、プロバイダーをもつモジュールは、できれば、アプリケーションの_ルートモジュール_内で_1回だけ_インポートしてください。
-ルートモジュールは通常、プロバイダーを設定、ラップ、オーバーライドするのに最適な場所です。
+As a general rule, import modules with providers _exactly once_, preferably in the application's _root module_.
+That's also usually the best place to configure, wrap, and override them.
 
-あるモジュールが、すべてのHTTPリクエストに特別なヘッダーを追加する、カスタマイズされた`HttpBackend`を必要とすると仮定します。
-アプリケーションの他のところで別のモジュールが、同じく`HttpBackend`をカスタマイズしたり、単純に`HttpClientModule`をインポートしたりする場合、
-それがこのモジュールの`HttpBackend`プロバイダーをオーバーライドして、
-特別なヘッダーが失われる可能性があります。サーバーはこのモジュールからのHTTPリクエストを拒否するでしょう。
+Suppose a module requires a customized `HttpBackend` that adds a special header for all Http requests.
+If another module elsewhere in the application also customizes `HttpBackend`
+or merely imports the `HttpClientModule`, it could override this module's `HttpBackend` provider,
+losing the special header. The server will reject http requests from this module.
 
-この問題を回避するためには、アプリケーションの_ルートモジュール_である`AppModule`でのみ`HttpClientModule`をインポートしてください。
+To avoid this problem, import the `HttpClientModule` only in the `AppModule`, the application _root module_.
 
-このような"プロバイダーの破損"を防ぐ必要がある場合は、*起動時のモジュールの`providers`に依存してはいけません*。
+If you must guard against this kind of "provider corruption", *don't rely on a launch-time module's `providers`.*
 
-できるならモジュールを遅延ロードしてください。
-Angularは[遅延ロードするモジュール](guide/ngmodule-faq#q-lazy-loaded-module-provider-visibility)に自身の子インジェクターを与えます。
-モジュールのプロバイダーはこのインジェクターで作成されたコンポーネントツリー内だけで参照できます。
+Load the module lazily if you can.
+Angular gives a [lazy-loaded module](guide/ngmodule-faq#q-lazy-loaded-module-provider-visibility) its own child injector.
+The module's providers are visible only within the component tree created with this injector.
 
-もしもアプリケーションを開始するときに、モジュールを事前読み込みしなければならない場合は、
-*代わりにコンポーネント内でサービスを提供してください*。
+If you must load the module eagerly, when the application starts,
+*provide the service in a component instead.*
 
-同じ例で続けます。モジュールのコンポーネントが本当にプライベートなカスタム`HttpBackend`を必要とすると仮定してください。
+Continuing with the same example, suppose the components of a module truly require a private, custom `HttpBackend`.
 
-そのモジュールのすべてのコンポーネントの、ルートとして機能する"トップコンポーネント"を作成します。
-カスタム`HttpBackend`プロバイダーをモジュールの`providers`ではなくトップコンポーネントの`providers`配列に追加してください。
-Angularはコンポーネントインスタンスごとに子インジェクターを作成し、
-そのインジェクターにコンポーネント自身のプロバイダーを追加する、ということを覚えていてください。
+Create a "top component" that acts as the root for all of the module's components.
+Add the custom `HttpBackend` provider to the top component's `providers` list rather than the module's `providers`.
+Recall that Angular creates a child injector for each component instance and populates the injector
+with the component's own providers.
 
-コンポーネントの子供が`HttpBackend`サービスを呼び出すとき、
-Angularはアプリケーションのルートインジェクターに提供されたものではなく、
-ローカルの`HttpBackend`サービスを提供します。
-他のモジュールが`HttpBackend`に何をしても、子コンポーネントは適切なHTTPリクエストを行います。
+When a child of this component asks for the `HttpBackend` service,
+Angular provides the local `HttpBackend` service,
+not the version provided in the application root injector.
+Child components make proper HTTP requests no matter what other modules do to `HttpBackend`.
 
-このモジュールのトップコンポーネントの子としてモジュールコンポーネントを作成してください。
+Be sure to create module components as children of this module's top component.
 
-子コンポーネントをトップコンポーネントのPlantillasに埋め込むことができます。
-別の方法として、そこに`<router-outlet>`を指定することで、トップコンポーネントをルーティングホストにできます。
-子ルーティングを定義して、ルーターにモジュールのコンポーネントをそのアウトレットにロードさせます。
+You can embed the child components in the top component's template.
+Alternatively, make the top component a routing host by giving it a `<router-outlet>`.
+Define child routes and let the router load module components into that outlet.
 
-遅延ロードしたモジュールか、コンポーネント内でサービスを提供することでアクセスを制限できますが、コンポーネント内でサービスを提供することでそれらのサービスのインスタンスが複数作成される可能性があります。したがって、遅延ロードのほうがより好ましい方法です。
+Though you can limit access to a service by providing it in a lazy loaded module or providing it in a component, providing services in a component can lead to multiple instances of those services. Thus, the lazy loading is preferable.
 
 <hr/>
 
 {@a q-root-component-or-module}
 
 
-## Raíz`AppModule`とRaíz`AppComponent`のどちらにアプリケーション全体のプロバイダーを追加すべきですか?
+## Should I add application-wide providers to the root `AppModule` or the root `AppComponent`?
 
-アプリケーション全体のプロバイダーはその`@Injectable()`デコレーター(サービスの場合は)に`providedIn: 'root'`を指定することか、`InjectionToken`構文(トークンが提供された場合)で定義してください。この方法で自動的に作成されたプロバイダーはアプリケーション全体で有効になり、どのモジュール内にも追加する必要はありません。
+ Define application-wide providers by specifying `providedIn: 'root'` on its `@Injectable()` decorator (in the case of services) or at `InjectionToken` construction (in the case where tokens are provided). Providers that are created this way automatically are made available to the entire application and don't need to be listed in any module.
 
-プロバイダーをこの方法で設定できない場合は(おそらくは妥当なデフォルト値をもたない)、アプリケーション全体のプロバイダーをRaíz`AppModule`内に登録してください。`AppComponent`内ではありません。
+If a provider cannot be configured in this way (perhaps because it has no sensible default value), then register application-wide providers in the root `AppModule`, not in the `AppComponent`.
 
-遅延ロードするモジュールとそのコンポーネントは`AppModule`のサービスを注入できます。
-`AppComponent`のサービスを注入することはできません。
+Lazy-loaded modules and their components can inject `AppModule` services;
+they can't inject `AppComponent` services.
 
-サービスを`AppComponent`ツリーの外側のコンポーネントから隠す必要がある場合に_のみ_、`AppComponent`のプロバイダーにサービスを登録してください。
-これはレアなユースケースです。
+Register a service in `AppComponent` providers _only_ if the service must be hidden
+from components outside the `AppComponent` tree. This is a rare use case.
 
-より一般的に、コンポーネントよりも[NgModule内にプロバイダーを登録することをおすすめします](guide/ngmodule-faq#q-component-or-module)。
+More generally, [prefer registering providers in NgModules](guide/ngmodule-faq#q-component-or-module) to registering in components.
 
-<h3 class="no-toc">ディスカッション</h3>
+<h3 class="no-toc">Discussion</h3>
 
-Angularはアプリケーションのルートインジェクターにすべてのスタートアップのモジュールプロバイダーを登録します。
-ルートインジェクターのプロバイダーが作成するサービスは、アプリケーションのスコープをもちます。
-これは、アプリケーション全体でそれらが有効であることを意味します。
+Angular registers all startup module providers with the application root injector.
+The services that root injector providers create have application scope, which
+means they are available to the entire application.
 
-`Router`などの特定のサービスはそれらをアプリケーションのルートインジェクターに登録するときにのみ機能します。
+Certain services, such as the `Router`, only work when you register them in the application root injector.
 
-一方、Angularは`AppComponent`自身のインジェクターに`AppComponent`のプロバイダーを登録します。
-`AppComponent`のサービスはそのコンポーネントとコンポーネントツリーでのみ有効になります。
-それらはコンポーネントスコープをもちます。
+By contrast, Angular registers `AppComponent` providers with the `AppComponent`'s own injector.
+`AppComponent` services are available only to that component and its component tree.
+They have component scope.
 
-`AppComponent`のインジェクターはインジェクターの階層が一段下であるルートインジェクターの子供です。
-ルーターを使用しないアプリケーションの場合は、ほとんどすべてのアプリケーションに該当します。
-しかし、ルーティングされたアプリケーションではルーティングは
-`AppComponent`サービスが存在しない場所のルートレベルで動作します。
-これは遅延ロードするモジュールがそれらにリーチできないことを意味します。
+The `AppComponent`'s injector is a child of the root injector, one down in the injector hierarchy.
+For applications that don't use the router, that's almost the entire application.
+But in routed applications, routing operates at the root level
+where `AppComponent` services don't exist.
+This means that lazy-loaded modules can't reach them.
 
 <hr/>
 
 {@a q-component-or-module}
 
-## 他のプロバイダーをモジュールやコンポーネントに追加すべきですか?
+## Should I add other providers to a module or a component?
 
-プロバイダーは`@Injectable`構文を使用して設定すべきです。もし可能ならば、アプリケーションルート(`providedIn: 'root'`)に提供すべきです。この方法で設定されたサービスは遅延ロードされたコンテキストでのみ使用される場合に遅延ロードされます。
+Providers should be configured using `@Injectable` syntax. If possible, they should be provided in the application root (`providedIn: 'root'`). Services that are configured this way are lazily loaded if they are only used from a lazily loaded context.
 
-プロバイダーがアプリケーション全体で利用可能かどうかをプロバイダーの利用者が判断する場合、
-コンポーネント内(`@Component.providers`)に登録するかわりにモジュール内(`@NgModule.providers`)にプロバイダーを登録してください。
+If it's the consumer's decision whether a provider is available application-wide or not,
+then register providers in modules (`@NgModule.providers`) instead of registering in components (`@Component.providers`).
 
-対象のコンポーネントとそのコンポーネントツリーにサービスのインスタンスのスコープを制限する*必要がある*とき、
-コンポーネントにプロバイダーを登録してください。
-ディレクティブにプロバイダーを登録するときも同じ理由を適用してください。
+Register a provider with a component when you _must_ limit the scope of a service instance
+to that component and its component tree.
+Apply the same reasoning to registering a provider with a directive.
 
-たとえば、
-キャッシュしたサービスのプライベートコピーが必要なエディタのようなコンポーネントはコンポーネントにサービスを登録すべきです。
-個々のコンポーネントの新しいインスタンスは各自キャッシュされたサービスのインスタンスを取得します。
-エディタがそのサービスで行う変更は、アプリケーション内の他のインスタンスには影響を及ぼしません。
+For example, an editing component that needs a private copy of a caching service should register
+the service with the component.
+Then each new instance of the component gets its own cached service instance.
+The changes that editor makes in its service don't touch the instances elsewhere in the application.
 
-[常にRaíz`AppModule`に_アプリケーション全体_のサービスを登録してください](guide/ngmodule-faq#q-root-component-or-module)、
-Raíz`AppComponent`ではありません。
+[Always register _application-wide_ services with the root `AppModule`](guide/ngmodule-faq#q-root-component-or-module),
+not the root `AppComponent`.
 
 <hr/>
 
 {@a q-why-bad}
 
 
-## なぜ共有モジュールが遅延ロードするモジュールにサービスを提供することが悪いことなのですか?
+## Why is it bad if a shared module provides a service to a lazy-loaded module?
 
-### 事前ロードでのシナリオ
-事前ロードするモジュールがサービスを提供するとき、たとえば`UserService`というサービスがあったとします、そのサービスはアプリケーション全体で有効になります。
-ルートモジュールが`UserService`を提供していて、同じ`UserService`を提供する別のモジュールをインポートしている場合、
-Angularはそれらのうち1つをルートアプリケーションインジェクターに登録します([同じモジュールを2回インポートするとどうなりますか?](guide/ngmodule-faq#q-reimport)を参照してください)。
+### The eagerly loaded scenario
+When an eagerly loaded module provides a service, for example a `UserService`, that service is available application-wide. If the root module provides `UserService` and
+imports another module that provides the same `UserService`, Angular registers one of
+them in the root app injector (see [What if I import the same module twice?](guide/ngmodule-faq#q-reimport)).
 
-そのあと、コンポーネントが`UserService`を注入したとき、Angularはルートアプリケーションインジェクター内からそれをみつけて、
-アプリケーション全体でシングルトンなサービスを渡します。問題ありません。
+Then, when some component injects `UserService`, Angular finds it in the app root injector,
+and delivers the app-wide singleton service. No problem.
 
-### 遅延ロードでのシナリオ
+### The lazy loaded scenario
 
-次に、同じく`UserService`と呼ばれるサービスを提供する遅延ロードモジュールを考えてみましょう。
+Now consider a lazy loaded module that also provides a service called `UserService`.
 
-ルーターがモジュールを遅延ロードするとき、それは子インジェクターを作成して、その子インジェクターに`UserService`プロバイダーを登録します。
-子インジェクターはルートインジェクターでは_ありません_。
+When the router lazy loads a module, it creates a child injector and registers the `UserService`
+provider with that child injector. The child injector is _not_ the root injector.
 
-Angularがそのモジュールの遅延コンポーネントを作成して`UserService`を注入するとき、
-それは遅延モジュールの_子インジェクター_内の`UserService`プロバイダーをみつけて、
-`UserService`の_新しい_インスタンスを生成します。
-これは、Angularが事前ロードしたコンポーネントで注入した、
-アプリケーション全体でシングルトンなバージョンとは完全に違う、`UserService`のインスタンスになります。
+When Angular creates a lazy component for that module and injects `UserService`,
+it finds a `UserService` provider in the lazy module's _child injector_
+and creates a _new_ instance of the `UserService`.
+This is an entirely different `UserService` instance
+than the app-wide singleton version that Angular injected in one of the eagerly loaded components.
 
-このシナリオでは、シングルトンを使用する代わりに、毎回新しいインスタンスが作成されます。
+This scenario causes your app to create a new instance every time, instead of using the singleton.
 <!--KW--What does this cause? I wasn't able to get the suggestion of this to work from
 the current FAQ:
 To demonstrate, run the <live-example name="ngmodule">live example</live-example>.
@@ -430,45 +430,45 @@ I'd like to see the error so I can include it.-->
 
 {@a q-why-child-injector}
 
-## なぜ遅延ロードは子インジェクターを作成するのですか?
+## Why does lazy loading create a child injector?
 
-NgModuleが遅延ロードされていない場合、Angularは`@NgModule.providers`をアプリケーションのルートインジェクターに追加します。
-遅延ロードするNgModuleでは、Angularは_子インジェクター_を作成して、モジュールのプロバイダーを子インジェクターに追加します。
+Angular adds `@NgModule.providers` to the application root injector, unless the NgModule is lazy-loaded.
+For a lazy-loaded NgModule, Angular creates a _child injector_ and adds the module's providers to the child injector.
 
-NgModuleが起動時にロードされるのか、遅延ロードされるのかによって動作が異なることを意味します。
-その違いを軽視すると、[悪影響](guide/ngmodule-faq#q-why-bad)につながる恐れがあります。
+This means that an NgModule behaves differently depending on whether it's loaded during application start
+or lazy-loaded later. Neglecting that difference can lead to [adverse consequences](guide/ngmodule-faq#q-why-bad).
 
-なぜAngularは事前ロードしたNgModule同様に、遅延ロードしたプロバイダーをアプリケーションのルートインジェクターに追加しないのでしょうか?
+Why doesn't Angular add lazy-loaded providers to the app root injector as it does for eagerly loaded NgModules?
 
-その答えは、AngularのInyección de dependenciaシステムの基本的な特性にもとづいています。
-インジェクターは_それがはじめて使用されるまで_プロバイダーを追加できます。
-インジェクターが一度サービスを作成して配送しはじめたら、そのプロバイダーのリストは固定されます。新しいプロバイダーは許容されません。
+The answer is grounded in a fundamental characteristic of the Angular dependency-injection system.
+An injector can add providers _until it's first used_.
+Once an injector starts creating and delivering services, its provider list is frozen; no new providers are allowed.
 
-アプリケーションが開始するとき、Angularは最初のコンポーネントの作成も提供されるいずれのサービスの注入もする_前に_、
-まずはルートインジェクターにすべての事前ロードしたNgModuleのプロバイダーを設定します。
-一度アプリケーションが起動したらアプリケーションのルートインジェクターは新しいプロバイダーを受け付けません。
+When an applications starts, Angular first configures the root injector with the providers of all eagerly loaded NgModules
+_before_ creating its first component and injecting any of the provided services.
+Once the application begins, the app root injector is closed to new providers.
 
-時間が経過して、アプリケーションのロジックがNgModuleの遅延ロードをトリガーします。
-Angularは、遅延ロードしたモジュールのプロバイダーをどこかのインジェクターに追加する必要があります。
-アプリケーションルートインジェクターは新しいプロバイダーを受け付けないためそこに追加することはできません。
-したがって、Angularは遅延ロードしたモジュールのコンテキストのための新しい子インジェクターを作成します。
+Time passes and application logic triggers lazy loading of an NgModule.
+Angular must add the lazy-loaded module's providers to an injector somewhere.
+It can't add them to the app root injector because that injector is closed to new providers.
+So Angular creates a new child injector for the lazy-loaded module context.
 
 <hr/>
 
 {@a q-is-it-loaded}
 
-## NgModule、またはサービスが以前にロードされたかどうかをどのように確認できますか?
+## How can I tell if an NgModule or service was previously loaded?
 
-いくつかのNgModuleとそれらのサービスはRaíz`AppModule`から一度だけロードする必要があります。
-遅延ロードするモジュールによってもう一度そのモジュールをインポートすることは、[誤ったふるまい](guide/ngmodule-faq#q-why-bad)を引き起こすことがあり、
-それはみつけて診断することが難しいでしょう。
+Some NgModules and their services should be loaded only once by the root `AppModule`.
+Importing the module a second time by lazy loading a module could [produce errant behavior](guide/ngmodule-faq#q-why-bad)
+that may be difficult to detect and diagnose.
 
-この問題を防ぐために、ルートアプリケーションインジェクターからモジュールまたはサービスを注入しようとするコンストラクターを書きましょう。
-注入が成功した場合、クラスは2回目にロードされたということです。
-エラーをスローしたり、他の是正措置を講じることができます。
+To prevent this issue, write a constructor that attempts to inject the module or service
+from the root app injector. If the injection succeeds, the class has been loaded a second time.
+You can throw an error or take other remedial action.
 
-特定の NgModule、たとえば`BrowserModule`のように、ガードを実装しましょう。
-ここには`GreetingModule`と呼ばれるNgModuleのためのカスタムコンストラクターがあります。
+Certain NgModules, such as `BrowserModule`, implement such a guard.
+Here is a custom constructor for an NgModule called `GreetingModule`.
 
 <code-example path="ngmodules/src/app/greeting/greeting.module.ts" region="ctor" header="src/app/greeting/greeting.module.ts (Constructor)"></code-example>
 
@@ -476,177 +476,177 @@ Angularは、遅延ロードしたモジュールのプロバイダーをどこ�
 
 {@a q-entry-component-defined}
 
-## _エントリーコンポーネント_とは何ですか?
+## What is an `entry component`?
 
-エントリーコンポーネントとは、Angularが型に基づいて_命令的に_ロードするコンポーネントのことです。
+An entry component is any component that Angular loads _imperatively_ by type.
 
-セレクター経由で*宣言的に*ロードされるコンポーネントは、エントリーコンポーネント_ではありません_。
+A component loaded _declaratively_ via its selector is _not_ an entry component.
 
-コンポーネントのセレクターがPlantillas内の要素に置かれているときにAngularは宣言的にコンポーネントをロードします。
-AngularはそのあとコンポーネントのHTML表現を作成して、選択した要素のDOMの中に挿入します。
-それらはエントリーコンポーネントではありません。
+Angular loads a component declaratively when
+using the component's selector to locate the element in the template.
+Angular then creates the HTML representation of the component and inserts it into the DOM at the selected element. These aren't entry components.
 
-ブートストラップしたRaíz`AppComponent`は_エントリーコンポーネント_です。
-実際は、そのセレクターは`index.html`内の要素タグにマッチします。
-しかし、`index.html`はコンポーネントPlantillasではなく、`AppComponent`
-のセレクターはどのコンポーネントPlantillas内の要素にもマッチしません。
+The bootstrapped root `AppComponent` is an _entry component_.
+True, its selector matches an element tag in `index.html`.
+But `index.html` isn't a component template and the `AppComponent`
+selector doesn't match an element in any component template.
 
-ルーティング定義内のコンポーネントも_エントリーコンポーネント_です。
-ルート定義はその_型_からコンポーネントを参照します。
-ルーターはルーテッドコンポーネントのセレクターを無視します(セレクターを持っていても)。
-そして`RouterOutlet`内に動的にコンポーネントをロードします。
+Components in route definitions are also _entry components_.
+A route definition refers to a component by its _type_.
+The router ignores a routed component's selector, if it even has one, and
+loads the component dynamically into a `RouterOutlet`.
 
-詳細については、[エントリーコンポーネント](guide/entry-components)を参照してください。
-
-<hr/>
-
-## _ブートストラップ_コンポーネントと_エントリーコンポーネント_の違いは何ですか?
-
-ブートストラップするコンポーネントとはAngularがブートストラッププロセス(アプリケーションの起動)中にDOMにロードする[エントリーコンポーネント](guide/ngmodule-faq#q-entry-component-defined)
-の1つです。
-他のエントリーコンポーネントは別の理由で動的にロードされます。たとえばルーターからロードされます。
-
-`@NgModule.bootstrap`プロパティはこれがエントリーコンポーネントで_かつ_
-このコンポーネントと共にアプリケーションをブートストラップするためのコードを生成すべきであるとコンパイラに教えます。
-
-コンポーネントを`bootstrap`、`entryComponents`配列両方に追加する必要はありません。
-ですが、追加しても無害です。
-
-詳細については[エントリーコンポーネント](guide/entry-components)を参照してください。
+For more information, see [Entry Components](guide/entry-components).
 
 <hr/>
 
-## どんな場合にコンポーネントを_entryComponents_に追加しますか?
+## What's the difference between a _bootstrap_ component and an _entry component_?
 
-ほとんどのアプリケーション開発者は`entryComponents`にコンポーネントを追加する必要はありません。
+A bootstrapped component _is_ an [entry component](guide/ngmodule-faq#q-entry-component-defined)
+that Angular loads into the DOM during the bootstrap process (application launch).
+Other entry components are loaded dynamically by other means, such as with the router.
 
-Angularは特定のコンポーネントを自動的に_エントリーコンポーネント_として追加します。
-`@NgModule.bootstrap`配列に追加したコンポーネントは自動的に追加されます。
-ルーター定義によって参照されるコンポーネントは自動的に追加されます。
-この2つのメカニズムによってほぼすべてのエントリーコンポーネントが占められます。
+The `@NgModule.bootstrap` property tells the compiler that this is an entry component _and_
+it should generate code to bootstrap the application with this component.
 
-もしもアプリケーションが他の方法で、ブートストラップしたりコンポーネントを_型に基づいて_動的にロードしたりする場合は、
-それを明示的に`entryComponents`に追加する必要があります。
+There's no need to list a component in both the `bootstrap` and `entryComponents` lists,
+although doing so is harmless.
 
-このリストにコンポーネントを追加することは無害ですが、
-本当に_エントリーコンポーネント_であるものだけを追加するのがベストです。
-他のコンポーネントのPlantillasで[参照される](guide/ngmodule-faq#q-template-reference)
-コンポーネントは含めないでください。
+For more information, see [Entry Components](guide/entry-components).
 
-詳細については[エントリーコンポーネント](guide/entry-components)を参照してください。
+<hr/>
+
+## When do I add components to _entryComponents_?
+
+Most application developers won't need to add components to the `entryComponents`.
+
+Angular adds certain components to _entry components_ automatically.
+Components listed in `@NgModule.bootstrap` are added automatically.
+Components referenced in router configuration are added automatically.
+These two mechanisms account for almost all entry components.
+
+If your app happens to bootstrap or dynamically load a component _by type_ in some other manner,
+you must add it to `entryComponents` explicitly.
+
+Although it's harmless to add components to this list,
+it's best to add only the components that are truly _entry components_.
+Don't include components that [are referenced](guide/ngmodule-faq#q-template-reference)
+in the templates of other components.
+
+For more information, see [Entry Components](guide/entry-components).
 
 <hr/>
 
 
-## なぜAngularは_entryComponents_が必要なのですか?
+## Why does Angular need _entryComponents_?
 
-_ツリーシェイキング_のためです。プロダクションのアプリケーションでは、可能な限り最小、最速のコードをロードしたいです。コードには実際に必要なクラスのみが含まれているべきです。
-そのコンポーネントが宣言されているかどうかにかかわらず、使用されていないコンポーネントは除外すべきです。
+The reason is _tree shaking_. For production apps you want to load the smallest, fastest code possible. The code should contain only the classes that you actually need.
+It should exclude a component that's never used, whether or not that component is declared.
 
-事実、多くのライブラリは使用されないであろうコンポーネントを宣言、エクスポートしています。
-それらを参照してない場合、ツリーシェイカーは最終的なコードパッケージからそれらのコンポーネントを除外します。
+In fact, many libraries declare and export components you'll never use.
+If you don't reference them, the tree shaker drops these components from the final code package.
 
-[Angular コンパイラ](guide/ngmodule-faq#q-angular-compiler)がすべての宣言したコンポーネントのコードを生成した場合、ツリーシェイカーの目的を破ってしまうでしょう。
+If the [Angular compiler](guide/ngmodule-faq#q-angular-compiler) generated code for every declared component, it would defeat the purpose of the tree shaker.
 
-かわりに、コンパイラは使用するコンポーネントのみのコードを生成する再帰的な戦略を採用しています。
+Instead, the compiler adopts a recursive strategy that generates code only for the components you use.
 
-コンパイラはエントリーコンポーネントから開始します。
-次に、宣言したコンポーネントをエントリーコンポーネントのPlantillas内から[探して](guide/ngmodule-faq#q-template-reference)コードを生成します。
-次に、さきほどコンパイルしたコンポーネントのPlantillas内でみつかった宣言されているコンポーネントについて繰り返します。
-プロセスの最後では、
-コンパイラはすべてのエントリーコンポーネントとエントリーコンポーネントから到達できるすべてのコンポーネントの生成されたコードをもっています。
+The compiler starts with the entry components,
+then it generates code for the declared components it [finds](guide/ngmodule-faq#q-template-reference) in an entry component's template,
+then for the declared components it discovers in the templates of previously compiled components,
+and so on. At the end of the process, the compiler has generated code for every entry component
+and every component reachable from an entry component.
 
-コンポーネントが_エントリーコンポーネント_でない、
-もしくはPlantillas内にない場合はコンパイラはそれを切り捨てます。
+If a component isn't an _entry component_ or wasn't found in a template,
+the compiler omits it.
 
 <hr/>
 
-## どのような種類のモジュールが必要ですか、どうすれば使用できますか?
+## What kinds of modules should I have and how should I use them?
 
-すべてのアプリケーションは違います。開発者たちはさまざまなレベルの経験を持ち、利用可能な選択肢に安心します。
-いくつかの提案とガイドラインには、幅広い魅力があります。
+Every app is different. Developers have various levels of experience and comfort with the available choices.
+Some suggestions and guidelines appear to have wide appeal.
 
 ### `SharedModule`
-`SharedModule`は、アプリケーション内のどこでも使用するコンポーネント、ディレクティブ、パイプをもつ`NgModule`の慣習的な名前です。
-このモジュールは完全に`declarations`で構成され、
-そのほとんどはエクスポートされます。
+`SharedModule` is a conventional name for an `NgModule` with the components, directives, and pipes that you use
+everywhere in your app. This module should consist entirely of `declarations`,
+most of them exported.
 
-`SharedModule`は`CommonModule`、`FormsModule`、
-幅広く使用するUIコントロールをもつNgModuleなどの他のウィジェットモジュールを再エクスポートできます。
+The `SharedModule` may re-export other widget modules, such as `CommonModule`,
+`FormsModule`, and NgModules with the UI controls that you use most widely.
 
-`SharedModule`は、[前に説明した](guide/ngmodule-faq#q-why-bad)理由のために`providers`をもつべきではありません。
-さらには、それがインポートしたか再エクスポートしたどんなモジュールも`providers`をもつべきではありません。
+The `SharedModule` should not have `providers` for reasons [explained previously](guide/ngmodule-faq#q-why-bad).
+Nor should any of its imported or re-exported modules have `providers`.
 
-アプリケーションの開始時にロードするものも、あとで遅延ロードするものも、どちらでも
-_フィーチャー_モジュールには`SharedModule`をインポートしてください。
+Import the `SharedModule` in your _feature_ modules,
+both those loaded when the app starts and those you lazy load later.
 
-### フィーチャーモジュール
+### Feature Modules
 
-フィーチャーモジュールとは、特定のアプリケーションのビジネスドメインやユーザーワークフロー、ユーティリティーコレクションに関して作成するモジュールのことです。それらは特定の機能を含むことによってアプリケーションをサポートします。
-たとえば、ルーティング、サービス、ウィジェット、などなどです。
-どのようなフィーチャーモジュールがあなたのアプリケーションにありえるかを概念化するために、
-検索のような、ある機能に関連したファイルをひとつのフォルダーに置いてみることを考察してください。
-そのフォルダーのコンテンツは`SearchModule`と呼ばれるフィーチャーモジュールとなるでしょう。
-それは検索機能を作るためのすべてのコンポーネント、ルーティング、およびPlantillasを含むでしょう。
+Feature modules are modules you create around specific application business domains, user workflows, and utility collections. They support your app by containing a particular feature,
+such as routes, services, widgets, etc. To conceptualize what a feature module might be in your
+app, consider that if you would put the files related to a certain functionality, like a search,
+in one folder, that the contents of that folder would be a feature module that you might call
+your `SearchModule`. It would contain all of the components, routing, and templates that
+would make up the search functionality.
 
-詳細については[フィーチャーモジュール](guide/feature-modules)と
-[モジュールの種類](guide/module-types)を参照してください。
+For more information, see [Feature Modules](guide/feature-modules) and
+[Module Types](guide/module-types)
 
 
 
-## NgModuleとJavaScriptのモジュールの違いは何ですか?
+## What's the difference between NgModules and JavaScript Modules?
 
-Angularアプリケーションでは、NgModuleとJavaScriptモジュールのどちらも一緒に働きます。
+In an Angular app, NgModules and JavaScript modules work together.
 
-モダンなJavaScriptではすべてのファイルはモジュールです
-(Exploring ES6ウェブサイトの[モジュール](http://exploringjs.com/es6/ch_modules.html)のページを参照してください)。
-モジュールの一部を公開するために個々のファイルで`export`文を書きます。
+In modern JavaScript, every file is a module
+(see the [Modules](http://exploringjs.com/es6/ch_modules.html) page of the Exploring ES6 website).
+Within each file you write an `export` statement to make parts of the module public.
 
-AngularのNgModuleは`@NgModule`デコレーター(JavaScriptモジュールは`@NgModule`デコレーターを持ちません)のついたクラスです。
-Angularの`NgModule`は`imports`、`exports`をもっていて、それらは似た目的で働きます。
+An Angular NgModule is a class with the `@NgModule` decorator&mdash;JavaScript modules
+don't have to have the `@NgModule` decorator. Angular's `NgModule` has `imports` and `exports` and they serve a similar purpose.
 
-エクスポートされたクラスをコンポーネントのPlantillas内で使用するため、他のNgModuleを_インポート_します。
-_他の_NgModuleのコンポーネントでインポートして使用するため、このNgModuleのクラスを_エクスポート_します。
+You _import_ other NgModules so you can use their exported classes in component templates.
+You _export_ this NgModule's classes so they can be imported and used by components of _other_ NgModules.
 
-詳細については[Módulo JavaScript y NgModule](guide/ngmodule-vs-jsmodule)を参照してください。
+For more information, see [JavaScript Modules vs. NgModules](guide/ngmodule-vs-jsmodule).
 
 <hr/>
 
 {@a q-template-reference}
 
-## AngularはどのようにしてPlantillas内からコンポーネント、ディレクティブやパイプを見つけ出すのですか?<br><i><b>Plantillas参照</b></i>とはなんですか?
+## How does Angular find components, directives, and pipes in a template?<br>What is a <i><b>template reference</b></i>?
 
-[Angularコンパイラ](guide/ngmodule-faq#q-angular-compiler)はコンポーネントのPlantillas内部の他のコンポーネント、ディレクティブ、およびパイプを探します。
-見つけたとき、それがPlantillas参照です。
+The [Angular compiler](guide/ngmodule-faq#q-angular-compiler) looks inside component templates
+for other components, directives, and pipes. When it finds one, that's a template reference.
 
-コンポーネントやディレクティブの*セレクター*がPlantillas内のどれかのHTMLとマッチする場合に、AngularコンパイラはコンポーネントやディレクティブをPlantillas内に見つけます。
+The Angular compiler finds a component or directive in a template when it can match the *selector* of that component or directive to some HTML in that template.
 
-パイプの*名前*がPlantillasHTMLのパイプ構文の中に現れたら、コンパイラはパイプを見つけます。
+The compiler finds a pipe if the pipe's *name* appears within the pipe syntax of the template HTML.
 
-Angularがマッチさせるセレクターとパイプ名は、このモジュールによって宣言されたクラスか、
-このモジュールがインポートするモジュールによってエクスポートされたクラスだけです。
+Angular only matches selectors and pipe names for classes that are declared by this module
+or exported by a module that this module imports.
 
 <hr/>
 
 {@a q-angular-compiler}
 
-## Angularコンパイラとは何ですか?
+## What is the Angular compiler?
 
-Angularコンパイラはあなたが書いたアプリケーションのコードをハイパフォーマンスなJavaScriptコードに変換します。
-`@NgModule`メタデータはコンパイルプロセスで重要な役割を果たします。
+The Angular compiler converts the application code you write into highly performant JavaScript code.
+The `@NgModule` metadata plays an important role in guiding the compilation process.
 
-あなたが書いたコードはすぐに実行可能ではありません。
-たとえば、コンポーネントはネイティブなHTMLではないカスタムエレメント、属性ディレクティブ、Angularのバインディング宣言、やその他特有の構文含むPlantillasをもちます。
+The code you write isn't immediately executable. For example, components have templates that contain custom elements, attribute directives, Angular binding declarations,
+and some peculiar syntax that clearly isn't native HTML.
 
-AngularコンパイラはPlantillasのマークアップを読んで、
-それを対応するコンポーネントクラスコードと結合して_コンポーネントファクトリー_を発行します。
+The Angular compiler reads the template markup,
+combines it with the corresponding component class code, and emits _component factories_.
 
-コンポーネントファクトリーは`@Component`メタデータ内の記述されたすべて
-(HTML、バインディングインストラクション、付与したスタイル)
-を組み込んだコンポーネントの100%純粋なJavaScript表現を作成します。
+A component factory creates a pure, 100% JavaScript representation
+of the component that incorporates everything described in its `@Component` metadata:
+the HTML, the binding instructions, the attached styles.
 
-ディレクティブとパイプはコンポーネントのPlantillas内に現れるため、
-Angularコンパイラはそれらもコンパイルしたコンポーネントコード内に組み込みます。
+Because directives and pipes appear in component templates,
+the Angular compiler incorporates them into compiled component code too.
 
-`@NgModule`メタデータはAngularコンパイラに対象のモジュールをコンパイルするために必要なコンポーネントと、
-このモジュールを他のモジュールとリンクする方法を知らせます。
+`@NgModule` metadata tells the Angular compiler what components to compile for this module and
+how to link this module with other modules.

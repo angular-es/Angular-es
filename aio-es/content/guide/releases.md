@@ -1,35 +1,35 @@
-# Angularのバージョンとリリース
+# Angular versioning and releases
 
-私たちはAngularフレームワークには安定性が必要であると認識しています。安定性によって、再利用可能なコンポーネントやライブラリ、Tutorial、ツール、学習されたプラクティスが予期せず時代遅れになることはありません。 Angularが発展するまわりのエコシステムには安定性が不可欠です。
+We recognize that you need stability from the Angular framework. Stability ensures that reusable components and libraries, tutorials, tools, and learned practices don't become obsolete unexpectedly. Stability is essential for the ecosystem around Angular to thrive.
 
-また、Angularが進化を続けたいという願望も共有しています。私たちは、あなたが構築している基盤が継続的に改善されていること、そしてその他のウェブ・エコシステムとユーザーのニーズを常に最新の状態に保てることを確実にするよう努めています。
+We also share with you the desire for Angular to keep evolving. We strive to ensure that the foundation on top of which you are building is continuously improving and enabling you to stay up-to-date with the rest of the web ecosystem and your user needs.
 
-このドキュメントには、安定性とバランスのとれた最先端のアプリケーション開発プラットフォームを提供するために私たちが従うプラクティスが含まれています。私たちは将来の変化が常に予測可能な方法で導入されるように努めています。 Angularに依存しているすべての人に、新しい機能が追加される時期と方法を知り、時代遅れの機能が削除されたときに十分に準備されることを願っています。
+This document contains the practices that we follow to provide you with a leading-edge app development platform, balanced with stability. We strive to ensure that future changes are always introduced in a predictable way. We want everyone who depends on Angular to know when and how new features are added, and to be well-prepared when obsolete ones are removed.
 
 
 <div class="alert is-helpful">
 
-このドキュメントで説明するプラクティスは、Angular 2.0以降に適用されます。現在AngularJSを使用している場合は、[AngularJSからのアップグレード](guide/upgrade "Upgrading from Angular JS")を参照してください。 _AngularJS_はすべてのv1.xバージョンのAngularの名前です。
+The practices described in this document apply to Angular 2.0 and later. If you are currently using AngularJS, see [Upgrading from AngularJS](guide/upgrade "Upgrading from Angular JS"). _AngularJS_ is the name for all v1.x versions of Angular.
 
 </div>
 
 
 {@a versioning}
-## Angularのバージョニング
+## Angular versioning
 
-Angularのバージョン番号は、リリースで導入された変更のレベルを示します。この[セマンティックバージョン](https://semver.org/ "Semantic Versioning Specification")管理を使用すると、新しいバージョンへの更新の潜在的な影響を理解するのに役立ちます。
+Angular version numbers indicate the level of changes that are introduced by the release. This use of [semantic versioning](https://semver.org/ "Semantic Versioning Specification") helps you understand the potential impact of updating to a new version.
 
-Angularのバージョン番号には3つの部分があります: `major.minor.patch`。たとえば、バージョン7.2.11は、メジャーバージョン7、マイナーバージョン2、およびパッチバージョン11を示します。
+Angular version numbers have three parts: `major.minor.patch`. For example, version 7.2.11 indicates major version 7, minor version 2, and patch level 11.
 
-バージョン番号は、リリースに含まれる変更のレベルに基づいて増えていきます。
+The version number is incremented based on the level of change included in the release.
 
-* **メジャーリリース** には重要な新機能が含まれていますが、更新には最小限の開発者の協力が求められます。新しいメジャーリリースにアップデートするときは、アップデートスクリプト、リファクタリングコード、追加テストの実行、新しいAPIの学習が必要な場合があります。
-
-
-* **マイナーリリース** には新しい小さな機能が含まれています。マイナーリリースは完全に後方互換性があります。アップデート中に開発者の協力は必要ありませんが、リリースで追加された新しいAPI、機能、および機能を使用するようにアプリケーションやライブラリを修正することもできます。サポートされているバージョンを拡張することで、マイナーバージョンのピア依存関係を更新しますが、プロジェクトにこれらの依存関係を更新を求めることはありません。
+* **Major releases** contain significant new features, some but minimal developer assistance is expected during the update. When updating to a new major release, you may need to run update scripts, refactor code, run additional tests, and learn new APIs.
 
 
-* **パッチリリース** は低リスクなバグ修正リリースです。更新中に開発者の協力は求められません。
+* **Minor releases** contain new smaller features. Minor releases are fully backward-compatible; no developer assistance is expected during update, but you can optionally modify your apps and libraries to begin using new APIs, features, and capabilities that were added in the release. We update peer dependencies in minor versions by expanding the supported versions, but we do not require projects to update these dependencies.
+
+
+* **Patch releases** are low risk, bug fix releases. No developer assistance is expected during update.
 
 <div class="alert is-helpful">
 
@@ -38,110 +38,111 @@ Angularのバージョン番号には3つの部分があります: `major.minor.
 </div>
 
 {@a updating}
-### サポートされているアップデートパス
+### Supported update paths
 
-上記のバージョン管理体系に沿って、次のアップデートパスをサポートすることを約束します。
+In alignment with the versioning scheme described above, we commit to support the following update paths:
 
-* **同じメジャーバージョン** 内で更新する場合は、中間バージョンをスキップしてターゲットバージョンに直接更新することができます。たとえば、7.0.0から7.2.11に更新する場合は、直接更新できます。7.2.11にアップデートする前に7.0.0から7.1.0に更新する必要はありません。
-
-* **メジャーバージョンを別のメジャーバージョンに** 更新する場合は、 **メジャーバージョンをスキップしない** ことをお勧めします。手順にしたがって、次のメジャーバージョンに段階的に更新し、各ステップでテストし、検証します。たとえば、バージョン6.x.xからバージョン8.x.xに更新する場合は、まず最新の7.x.xリリースに更新することをお勧めします。7.x.xに正常に更新した後には、8.x.xに更新できます
+* If you are updating within the **same major version,** then you can skip any intermediate versions and update directly to the targeted version. For example, you can update directly from 7.0.0 to 7.2.11.
 
 
-Angularプロジェクトを最新バージョンにアップデートする方法の詳細については、[最新に保つ](guide/updating "Updating your projects")を参照してください。
+* If you are updating from **one major version to another,** then we recommend that you **don't skip major versions.** Follow the instructions to incrementally update to the next major version, testing and validating at each step. For example, if you want to update from version 6.x.x to version 8.x.x, we recommend that you update to the latest 7.x.x release first. After successfully updating to 7.x.x, you can then update to 8.x.x.
+
+
+See [Keeping Up-to-Date](guide/updating "Updating your projects") for more information about updating your Angular projects to the most recent version.
 
 
 {@a previews}
-### プレビューリリース
+### Preview releases
 
-個々のメジャーリリースとマイナーリリースごとに、"Next"リリースとリリース候補版（`rc`）を提供することで、今後の展開を先取りできるようにしています。
+We let you preview what's coming by providing "Next" and Release Candidates (`rc`) pre-releases for each major and minor release:
 
-* **Next:** 活発な開発とテストの下にあるリリース。ベータリリースは、`8.0.0-beta.0` のように `beta` 識別子を付加したリリースタグで示されます。
+* **Next:** The release that is under active development and testing. The next release is indicated by a release tag appended with the  `-next` identifier, such as  `8.1.0-next.0`.
 
-* **リリース候補:** 機能が完成し最終テストが行​​われているプレリリース。リリース候補版は、バージョン `8.1.0-rc` のように、`rc` 識別子が付加されたリリースタグで示されます。
+* **Release candidate:** A release that is feature complete and in final testing. A release candidate is indicated by a release tag appended with the `-rc` identifier, such as version `8.1.0-rc.0`.
 
-次期バージョンのドキュメントは [next.angular.io](https://next.angular.io) から入手できます。これには、ベータ版またはリリース候補の機能およびAPIに関するすべての資料が含まれます。
+The latest `next` or `rc` pre-release version of the documentation is available at [next.angular.io](https://next.angular.io).
 
 
 {@a frequency}
-## リリース周期
+## Release frequency
 
-定期的なリリーススケジュールに向けて作業を進めており、Angularの進化と共にアップデートを計画し、調整することができます。
+We work toward a regular schedule of releases, so that you can plan and coordinate your updates with the continuing evolution of Angular.
 
 <div class="alert is-helpful">
 
-免責事項：日付は一般的なガイダンスとして提供されており、必要に応じて高品質のプラットフォームの配信を確保するために調整されます。
+Disclaimer: Dates are offered as general guidance and will be adjusted by us when necessary to ensure delivery of a high-quality platform.
 
 </div>
 
-基本的に、次のリリースサイクルが予想されます。
+In general, you can expect the following release cycle:
 
-* 6か月ごとのメジャーリリース
+* A major release every 6 months
 
-* メジャーリリースごとに1回から3回のマイナーリリース
+* 1-3 minor releases for each major release
 
-* ほぼ毎週のパッチリリースとプレリリース（`next`または`rc`）
+* A patch release and pre-release (`next` or `rc`) build almost every week
 
-この一連のリリースにより、熱心な開発者は、十分に開発され、コードレビューおよび統合テストプロセスを経てすぐに新機能にアクセスできるようになります。プレリリースビルドを使用するGoogleおよびその他の開発者によって検証されています。
+This cadence of releases gives eager developers access to new features as soon as they are fully developed and pass through our code review and integration testing processes, while maintaining the stability and reliability of the platform for production users that prefer to receive features after they have been validated by Google and other developers that use the pre-release builds.
 
 
 
 {@a lts}
 {@a support}
-## サポートポリシーとスケジュール
+## Support policy and schedule
 
-メジャーリリースはすべて18か月間サポートされています。
+All of our major releases are supported for 18 months.
 
-* 上記の[リリース周期](#frequency "Release frequency")で説明したように、定期的にスケジュールされたアップデートとパッチがリリースされる、6ヶ月の*アクティブサポート*。
+* 6 months of *active support*, during which regularly-scheduled updates and patches are released.
 
-* 12ヶ月の*長期サポート（LTS）*。LTS期間中は、重要な修正とSeguridadパッチのみがリリースされます。
+* 12 months of *long-term support (LTS)*, during which only critical fixes and security patches are released.
 
-次の表は、サポート対象のAngularバージョンのステータスを示しています
+The following table provides the status for Angular versions under support.
 
 
-バージョン | 状態 | リリース     | アクティブの終了  | LTSの終了
-------- | ------ | ------------ | ------------ | ------------ 
+Version | Status | Released     | Active Ends  | LTS Ends
+------- | ------ | ------------ | ------------ | ------------
 ^10.0.0 | Active | Jun 24, 2020 | Dec 24, 2020 | Dec 24, 2021
 ^9.0.0  | Active | Feb 06, 2020 | Aug 06, 2020 | Aug 06, 2021
 ^8.0.0  | LTS    | May 28, 2019 | Nov 28, 2019 | Nov 28, 2020
 
-Angularバージョン ^4.0.0と ^5.0.0、 ^6.0.0、 ^7.0.0 のサポートは終了しました。
-
+Angular versions ^4.0.0, ^5.0.0, ^6.0.0 and ^7.0.0 are no longer under support.
 
 {@a deprecation}
-## 廃止のプラクティス {@a deprecation-practices}
+## Deprecation practices
 
 
-新しいベストプラクティスへの変更、依存関係の変更、（Web）プラットフォーム自体の変更と共に最新の状態に保つため、そして革新のために、ときには&quot;破壊的変更&quot;選択したAPIや機能のサポートの削除などが必要になります。
+Sometimes &quot;breaking changes&quot;, such as the removal of support for select APIs and features, are necessary to innovate and stay current with new best practices, changing dependencies, or changes in the (web) platform itself.
 
-これらの移行をできるだけ簡単にするために、私たちはこれらの約束をしています。
+To make these transitions as easy as possible, we make these commitments to you:
 
-* 私たちは、変化の激しさを最小限に抑え、可能な限り移行ツールを提供するために努めています。
+* We work hard to minimize the number of breaking changes and to provide migration tools when possible.
 
-* ここで説明している廃止方針に従い、アプリを最新のAPIとベストプラクティスに更新するための時間を確保します。
+* We follow the deprecation policy described here, so you have time to update your apps to the latest APIs and best practices.
 
-更新に十分な時間と明確なパスがあることを確認するための、非推奨化のポリシーはこちらです。
+To help ensure that you have sufficient time and a clear path to update, this is our deprecation policy:
 
-* **告知:** [チェンジログ](https://github.com/angular/angular/blob/master/CHANGELOG.md "Angular change log") に廃止予定のAPIおよび機能をお知らせします。廃止予定のAPIは、 [ドキュメンテーション](api?status=deprecated) に取り消し線付きで記載されています。廃止予定を発表した場合は、推奨されるアップデートパスも発表します。便利になるように、 [非推奨リスト](guide/deprecations) には廃止予定のAPIと機能の要約が含まれています。
-
-
-* **非推奨期間:** APIまたは機能が非推奨になっても、それは続く2つのメジャーリリースには引き続き存在します。その後、廃止予定のAPIおよび機能は削除の候補になります。廃止予定はどのリリースでも発表できますが、廃止予定のAPIまたは機能の削除はメジャーリリースでのみ発生します。廃止予定のAPIまたは機能が削除されるまで、LTSサポートポリシーにしたがって維持されます。つまり、重大な問題とSeguridadの問題のみが修正されます。
+* **Announcement:** We announce deprecated APIs and features in the [change log](https://github.com/angular/angular/blob/master/CHANGELOG.md "Angular change log"). Deprecated APIs appear in the [documentation](api?status=deprecated) with ~~strikethrough.~~ When we announce a deprecation, we also announce a recommended update path. For convenience,  [Deprecations](guide/deprecations) contains a summary of deprecated APIs and features.
 
 
-* **npm依存関係:** アプリの変更を必要とするnpm依存関係の更新は、メジャーリリースでのみ行います。マイナーリリースでは、サポートされているバージョンを拡張してピアの依存関係を更新しますが、これらの依存関係を更新するようにプロジェクトに要求することは将来のメジャーバージョンまでありません。つまり、Angularのマイナーリリースでは、Angularアプリケーションおよびライブラリ内のnpm依存関係の更新はオプションです。
+* **Deprecation period:** When an API or a feature is deprecated, it will still be present in the next two major releases. After that, deprecated APIs and features will be candidates for removal. A deprecation can be announced in any release, but the removal of a deprecated API or feature will happen only in major release. Until a deprecated API or feature is removed, it will be maintained according to the LTS support policy, meaning that only critical and security issues will be fixed.
+
+
+* **npm dependencies:** We only make npm dependency updates that require changes to your apps in a major release.
+In minor releases, we update peer dependencies by expanding the supported versions, but we do not require projects to update these dependencies until a future major version. This means that during minor Angular releases, npm dependency updates within Angular applications and libraries are optional.
 
 
 
 
 {@a public-api}
-## パブリックAPI
+## Public API surface
 
-Angularは、多くのパッケージ、サブプロジェクト、ツールのコレクションです。プライベートAPIの偶発的な使用を防ぐために&mdash;ここで説明するプラクティスの対象を明確に理解できるように&mdash;私たちはパブリックAPIと見なされるものとそうでないものを明文化します。詳細については、[AngularのサポートされたパブリックAPI](https://github.com/angular/angular/blob/master/docs/PUBLIC_API.md "Supported Public API Surface of Angular")を参照してください。
+Angular is a collection of many packages, sub-projects, and tools. To prevent accidental use of private APIs&mdash;and so that you can clearly understand what is covered by the practices described here&mdash;we document what is and is not considered our public API surface. For details, see [Supported Public API Surface of Angular](https://github.com/angular/angular/blob/master/docs/PUBLIC_API.md "Supported Public API Surface of Angular").
 
-パブリックAPIのあらゆる変更は、上述ののバージョニング、サポート、および非推奨化ポリシーが適用されます。
+Any changes to the public API surface will be done using the versioning, support, and depreciation policies describe above.
 
 {@a labs}
 ## Angular Labs
 
-Angular Labsは、新機能を開発して迅速にイテレーションするためのイニシアチブです。Angular Labsは、Angularチームによる探索と実験のための安全な場所を提供します。
+Angular Labs is an initiative to cultivate new features and iterate on them quickly. Angular Labs provides a safe place for exploration and experimentation by the Angular team.
 
-Angular Labsのプロジェクトはプロダクションで使用する準備ができておらず、プロダクションに持ち込むことを約束していません。このドキュメントで説明されているポリシーとプラクティスは、Angular Labsプロジェクトには適用されません。
+Angular Labs projects are not ready for production use, and no commitment is made to bring them to production. The policies and practices that are described in this document do not apply to Angular Labs projects.

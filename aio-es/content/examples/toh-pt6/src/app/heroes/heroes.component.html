@@ -5,7 +5,7 @@
   <label>Hero name:
     <input #heroName />
   </label>
-  <!-- (click) 入力値をadd()に渡したあと、入力をクリアする -->
+  <!-- (click) passes input value to add() and then clears the input -->
   <button (click)="add(heroName.value); heroName.value=''">
     add
   </button>
@@ -20,7 +20,7 @@
     </a>
     <!-- #docregion delete -->
     <button class="delete" title="delete hero"
-    (click)="delete(hero)">x</button>
+      (click)="delete(hero)">x</button>
     <!-- #enddocregion delete -->
   </li>
 </ul>

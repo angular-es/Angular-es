@@ -1,21 +1,21 @@
-# Angularワークスペースの設定
+# Angular workspace configuration
 
-Angular [ワークスペース](guide/glossary#workspace) のルート階層にある `angular.json` というファイルは、Angular CLIによって提供されるビルドおよび開発ツールに対して、ワークスペース全体およびプロジェクト固有のデフォルトの設定を提供します。
-設定の中で与えられたパスの値は、Raízワークスペースフォルダと関連しています。
+A file named `angular.json` at the root level of an Angular [workspace](guide/glossary#workspace) provides workspace-wide and project-specific configuration defaults for build and development tools provided by the Angular CLI.
+Path values given in the configuration are relative to the root workspace folder.
 
-## 全体的なJSONの構成
+## Overall JSON structure
 
-`angular.json` のトップ階層では、いくつかのプロパティからワークスペースを設定し、`projects` セクションにはプロジェクトごとのオプションを設定します。 ワークスペースレベルで設定されたCLIのデフォルトは、プロジェクトレベルで設定されたデフォルトによって上書きされ、プロジェクトレベルで設定されたデフォルトはコマンドラインで上書きされます。
+At the top level of `angular.json`, a few properties configure the workspace, and a `projects` section contains the remaining per-project configuration options. CLI defaults set at the workspace level can be overridden by defaults set at the project level, and defaults set at the project level can be overridden on the command line.
 
-ファイルの最上位にある次のプロパティは、ワークスペースを設定します。
+The following properties, at the top level of the file, configure the workspace.
 
-* `version`: 設定ファイルのバージョン
-* `newProjectRoot`: 新しいプロジェクトが作成されるパス。ワークスペースフォルダからの絶対パスもしくは相対パス
-* `defaultProject`: 引数として与えられていない場合にコマンドで使われる、デフォルトのプロジェクト名。新しいワークスペースに新しいアプリケーションを `ng new` で作成したとき、ここの値が変更されるまで、そのアプリはワークスペースのデフォルトプロジェクトになります
-* `schematics` : このワークスペースの `ng generate` サブコマンドオプションのデフォルトをカスタマイズする [schematics](guide/glossary#schematic) のセット。次の[Generation schematics](#schematics) を参照してください。
-* `projects` : ワークスペース内の各プロジェクト（ライブラリ、アプリ）のサブセクションと、プロジェクトごとの構成オプションが含まれます
+* `version`: The configuration-file version.
+* `newProjectRoot`: Path where new projects are created. Absolute or relative to the workspace folder.
+* `defaultProject`: Default project name to use in commands, where not provided as an argument. When you use `ng new` to create a new app in a new workspace, that app is the default project for the workspace until you change it here.
+* `schematics` : A set of [schematics](guide/glossary#schematic) that customize the `ng generate` sub-command option defaults for this workspace. See [Generation schematics](#schematics) below.
+* `projects` : Contains a subsection for each project (library or application) in the workspace, with the per-project configuration options.
 
-`ng new app_name` で作成した最初のアプリは "projects" の配下にあります。
+The initial app that you create with `ng new app_name` is listed under "projects":
 
 <code-example language="json">
 
@@ -28,16 +28,16 @@ Angular [ワークスペース](guide/glossary#workspace) のルート階層に�
 
 </code-example>
 
-`ng generate application` を使用して作成された追加の各アプリには、対応するエンドツーエンドのテストプロジェクトがあり、それぞれに独自の設定セクションがあります。
-`ng generate library` を使用してライブラリプロジェクトを作成すると、そのライブラリプロジェクトも `projects` セクションに追加されます。
+Each additional app that you create with `ng generate application` has a corresponding end-to-end test project, with its own configuration section.
+When you create a library project with `ng generate library`, the library project is also added to the `projects` section.
 
 <div class="alert is-helpful">
 
-  設定ファイルの `projects` セクションは、ワークスペースの構成ファイルとは正確には対応していないことに注意してください。
-  * `ng new` によって作成された最初のアプリは、ワークスペースのファイル構造のトップレベルにあります。
-  * 追加されたアプリ、そしてライブラリはワークスペース内の `projects` フォルダに入ります。
+  Note that the `projects` section of the configuration file does not correspond exactly to the workspace file structure.
+  * The initial app created by `ng new` is at the top level of the workspace file structure.
+  * Additional applications and libraries go into a `projects` folder in the workspace.
 
-  さらに詳しい情報は、[ワークスペースとプロジェクトのファイル構造](guide/file-structure) をご覧ください。
+  For more information, see [Workspace and project file structure](guide/file-structure).
 
 </div>
 
@@ -46,13 +46,13 @@ Angular [ワークスペース](guide/glossary#workspace) のルート階層に�
 When you create new workspaces and projects, you have the option to use Angular's strict mode, which can help you write better, more maintainable code.
 For more information, see [Strict mode](/guide/strict-mode).
 
-## プロジェクトの設定オプション
+## Project configuration options
 
-次のようなトップ階層の設定プロパティは、`projects:<project_name>` 配下の各プロジェクトで使用できます。
+The following top-level configuration properties are available for each project, under `projects:<project_name>`.
 
 <code-example language="json">
 
-    "my-v7-app": {
+    "my-app": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -63,46 +63,46 @@ For more information, see [Strict mode](/guide/strict-mode).
 
 </code-example>
 
-| プロパティ | 説明 |
+| PROPERTY | DESCRIPTION |
 | :-------------- | :---------------------------- |
-| `root`          | ワークスペースフォルダを基準とした、このプロジェクトのルートフォルダです。ワークスペースのトップ階層にある初期アプリでは空です。 |
-| `sourceRoot`    | このプロジェクトのソースファイルのルートフォルダです。 |
-| `projectType`   | "application" または "library" のいずれかです。application はブラウザ内で独立して実行できますが、libraryでは実行できません。 |
-| `prefix`        | Angular によって生成されたセレクターの先頭に追加される文字列です。アプリや機能単位でのカスタマイズができます。 |
-| `schematics`    | このワークスペースの `ng generate` サブコマンドオプションのデフォルトをカスタマイズする [schematics](guide/glossary#schematic) のセット。次の [Generation schematics](#schematics) を参照してください。 |
-| `architect`     | このプロジェクトで Architect が使用するビルダーのターゲットのためのデフォルト設定です。 |
+| `root`          | The root folder for this project's files, relative to the workspace folder. Empty for the initial app, which resides at the top level of the workspace. |
+| `sourceRoot`    | The root folder for this project's source files. |
+| `projectType`   | One of "application" or "library". An application can run independently in a browser, while a library cannot.|
+| `prefix`        | A string that Angular prepends to generated selectors. Can be customized to identify an app or feature area. |
+| `schematics`    | A set of schematics that customize the `ng generate` sub-command option defaults for this project. See [Generation schematics](#schematics) below.  |
+| `architect`     | Configuration defaults for Architect builder targets for this project. |
 
 {@a schematics}
 
-## 生成 schematics
+## Generation schematics
 
-Angularの生成 [schematics](guide/glossary#schematic) は、ファイルを追加するか既存のファイルを変更することによってプロジェクトを変更するための命令です。
-デフォルトの Angular CLI `ng generate` サブコマンドの個々のschematicsは、パッケージ `@angular` にまとめられています。
-サブコマンドの schematic の名称を、`schematic-package:schematic-name` の形式で指定します;
-たとえば、コンポーネントを生成するための schematic は `@angular:component` です。
+Angular generation [schematics](guide/glossary#schematic) are instructions for modifying a project by adding files or modifying existing files.
+Individual schematics for the default Angular CLI `ng generate` sub-commands are collected in the package `@angular`.
+Specify the schematic name for a subcommand in the format `schematic-package:schematic-name`;
+for example, the schematic for generating a component is `@angular:component`.
 
-プロジェクトおよびプロジェクトの一部を生成するために CLI によって使用されるデフォルトの schematics の JSON スキーマは、 [`@schematics/angular`](https://github.com/angular/angular-cli/blob/7.0.x/packages/schematics/angular/application/schema.json) パッケージに集められています。
-スキーマは、`--help` の出力に示されているように、各 `ng generate` サブコマンドに対して CLI で使用可能なオプションを記述したものです。
+The JSON schemas for the default schematics used by the CLI to generate projects and parts of projects are collected in the package [`@schematics/angular`](https://github.com/angular/angular-cli/blob/7.0.x/packages/schematics/angular/application/schema.json).
+The schema describes the options available to the CLI for each of the `ng generate` sub-commands, as shown in the `--help` output.
 
-スキーマに示されているフィールドは、CLI サブコマンドオプションの許容される引数の値、およびデフォルトに対応しています。
-ワークスペーススキーマファイルを更新して、サブコマンドオプションに別のデフォルトを設定できます。
+The fields given in the schema correspond to the allowed argument values and defaults for the CLI sub-command options.
+You can update your workspace schema file to set a different default for a sub-command option.
 
 {@a architect}
 
-## プロジェクトツールの設定オプション {@a project-tool-configuration-options}
+## Project tool configuration options
 
-Architect は、コンパイルやテスト実行などの複雑なタスクを実行するために CLI が使用するツールです。
-Architect は、[ターゲット](guide/glossary#target)構成にしたがって、指定された[builder](guide/glossary#builder) を実行して特定のタスクを実行するシェルです。
-新しい Builder とターゲットを定義および構成して、CLI を拡張できます。
-[Angular CLI Builders](guide/cli-builder) を参照してください。
+Architect is the tool that the CLI uses to perform complex tasks, such as compilation and test running.
+Architect is a shell that runs a specified [builder](guide/glossary#builder) to perform a given task, according to a [target](guide/glossary#target) configuration.
+You can define and configure new builders and targets to extend the CLI.
+See [Angular CLI Builders](guide/cli-builder).
 
 {@a default-build-targets}
 
-### デフォルトのビルドターゲット
+### Default Architect builders and targets
 
-Angular は、Architect ツールと `ng run` コマンドで使用するデフォルトビルダーを定義します。
-これらの各デフォルトビルダーのオプションとデフォルトを定義する JSON スキーマは、[`@angular-devkit/build-angular`](https://github.com/angular/angular-cli/blob/9.0.x/packages/angular/cli/lib/config/schema.json) パッケージに集められています。 
-スキーマは、次の Architect ビルドターゲットのオプションを構成します。
+Angular defines default builders for use with specific CLI commands, or with the general `ng run` command.
+The JSON schemas that the define the options and defaults for each of these default builders are collected in the [`@angular-devkit/build-angular`](https://github.com/angular/angular-cli/blob/8.0.x/packages/angular/cli/lib/config/schema.json) package.
+The schemas configure options for the following builders.
 
 * app-shell
 * browser
@@ -113,15 +113,15 @@ Angular は、Architect ツールと `ng run` コマンドで使用するデフ�
 * server
 * tslint
 
-### Builder ターゲットの構成
+### Configuring builder targets
 
-`architect` セクションには、一連の Architect ターゲットが含まれています。
-ターゲットの多くはそれらを実行する CLI コマンドに対応しています。
-`ng run` コマンドを使用することでいくつかの追加の定義済みターゲットを実行できますし、あなた自身のターゲットを定義することもできます。
+The `architect` section of `angular.json` contains a set of Architect targets.
+Many of the targets correspond to the CLI commands that run them.
+Some additional predefined targets can be run using the `ng run` command, and you can define your own targets.
 
-個々のターゲットのオブジェクトは、そのターゲットの `builder` を指定します。これは、Architect が実行するツールの npm パッケージです。
-さらに各ターゲットには、ターゲットのデフォルトオプションを設定する `options` セクションと、ターゲットの代替設定に名前をつけて指定する `configurations` セクションがあります。
-次の [ビルドのターゲット](#build-target) の例を参考にしてください。
+Each target object specifies the `builder` for that target, which is the npm package for the tool that Architect runs.
+In addition, each target has an `options` section that configures default options for the target, and a `configurations` section that names and specifies alternative configurations for the target.
+See the example in [Build target](#build-target) below.
 
 <code-example language="json">
 
@@ -138,84 +138,84 @@ Angular は、Architect ツールと `ng run` コマンドで使用するデフ�
 
 </code-example>
 
-* `architect/build` セクションでは `ng build` コマンドのデフォルトオプションを設定します。
-詳細は [ビルドのターゲット](#build-target) を参照してください。
+* The `architect/build` section configures defaults for options of the `ng build` command.
+See [Build target](#build-target) below for more information.
 
-* `architect/serve` セクションでは、ビルドのデフォルトを上書きし、 `ng serve` コマンドの追加のデフォルトを提供します。`ng build` コマンドで利用可能なオプションに加えて、アプリの提供に関連するオプションを提供します。
+* The `architect/serve` section overrides build defaults and supplies additional serve defaults for the `ng serve` command. In addition to the options available for the `ng build` command, it adds options related to serving the app.
 
-* `architect/e2e` セクションでは `ng e2e` コマンドを使用してエンドツーエンドテストアプリをビルドするための追加のビルドオプションのデフォルトを上書きます。
+* The `architect/e2e` section overrides build-option defaults for building end-to-end testing apps using the `ng e2e` command.
 
-* `architect/test` セクションでは、テストビルドのためのビルドオプションのデフォルトを上書きし、`ng test` コマンドの追加のデフォルトのテスト実行を提供します。
+* The `architect/test` section overrides build-option defaults for test builds and supplies additional test-running defaults for the `ng test` command.
 
-* `architect/lint` セクションでは、プロジェクトのソースファイルに対してコード解析を実行する `ng lint` コマンドのデフォルトオプションを設定します。Angularのデフォルトの静的解析ツールは [TSLint](https://palantir.github.io/tslint/) です。
+* The `architect/lint` section configures defaults for options of the `ng lint` command, which performs code analysis on project source files. The default linting tool for Angular is [TSLint](https://palantir.github.io/tslint/).
 
-* `architect/extract-i18n` セクションでは `ng xi18n` コマンドが使用する `ng-xi18n` ツールのデフォルトオプションを設定します。このコマンドは、マークされたメッセージ文字列をソースコードから抽出し、翻訳ファイルを出力します。
+* The `architect/extract-i18n` section configures defaults for options of the `ng-xi18n` tool used by the `ng xi18n` command, which extracts marked message strings from source code and outputs translation files.
 
-* `architect/server` セクションでは `ng run <project>:server` コマンドを使用してサーバーサイドレンダリングでUniversalアプリを作成する際のデフォルトを設定します。
+* The `architect/server` section configures defaults for creating a Universal app with server-side rendering, using the `ng run <project>:server` command.
 
-* `architect/app-shell` セクションでは `ng run <project>:app-shell` コマンドを使用して progressive web app (PWA)のための App Shell を作成する際のデフォルトを設定します。
+* The `architect/app-shell` section configures defaults for creating an app shell for a progressive web app (PWA), using the `ng run <project>:app-shell` command.
 
-一般的に、デフォルトが設定できるアプションは、各コマンドの [CLIリファレンス](cli) にリストされているコマンドオプションに対応しています。
-設定ファイル内のすべてのオプションは、ダッシュケースではなく [キャメルケース](guide/glossary#case-conventions) を使用しなければならないことに注意してください。
+In general, the options for which you can configure defaults correspond to the command options listed in the [CLI reference page](cli) for each command.
+Note that all options in the configuration file must use [camelCase](guide/glossary#case-conventions), rather than dash-case.
 
 {@a build-target}
 
-## ビルドのターゲット
+## Build target
 
-`architect/build` セクションは、`ng build` コマンドのためのデフォルトを設定します。次のトップ階層のプロパティがあります。
+The `architect/build` section configures defaults for options of the `ng build` command. It has the following top-level properties.
 
-| プロパティ | 説明 |
+| PROPERTY | DESCRIPTION |
 | :-------------- | :---------------------------- |
-| `builder`       | このターゲットの作成に使用されたビルドツールのnpmパッケージです。アプリケーションのデフォルトのビルダー (`ng build myApp`) は `@angular-devkit/build-angular:browser` で、[webpack](https://webpack.js.org/) パッケージバンドラーを使用します。ライブラリの構築 (`ng build myLib`) には別のビルダーが使用されることに注意してください。 |
-| `options`       | このセクションには、名前付けされた設定が指定されていない場合に使用される、デフォルトのビルドオプションが含まれています。詳しくは [デフォルトのビルドターゲット](#default-build-targets) をご覧ください。 |
-| `configurations`| このセクションには、異なる目的のための設定を定義して名前を付けます。それはそれぞれ名前付けされた、特定の環境のためのデフォルトオプションを設定するためのセクションを含みます。詳しくは [代替ビルドの構成](#build-configs) をご覧ください。 |
+| `builder`       | The npm package for the build tool used to create this target. The default builder for an application (`ng build myApp`) is `@angular-devkit/build-angular:browser`, which uses the [webpack](https://webpack.js.org/) package bundler. Note that a different builder is used for building a library (`ng build myLib`). |
+| `options`       | This section contains default build target options, used when no named alternative configuration is specified. See [Default build targets](#default-build-targets) below. |
+| `configurations`| This section defines and names alternative configurations for different intended destinations. It contains a section for each named configuration, which sets the default options for that intended environment. See [Alternate build configurations](#build-configs) below. |
 
 
 {@a build-configs}
 
-### 代替のビルド設定
+### Alternate build configurations
 
-デフォルトでは、`production` 設定が定義されており、`ng build` コマンドにはこの設定を使用してビルドする `--prod` オプションがあります。`production` 設定には、ファイルのバンドル、余分な空白の最小化、コメントやデッドコードの削除、短かくて暗号のような名前を用いたコードの書き換え ("minification") など、さまざまな方法でアプリを最適化するためのデフォルトを設定します。
+By default, a `production` configuration is defined, and the `ng build` command has `--prod` option that builds using this configuration. The `production` configuration sets defaults that optimize the app in a number of ways, such as bundling files, minimizing excess whitespace, removing comments and dead code, and rewriting code to use short, cryptic names ("minification").
 
-また、あなたの開発プロセスに適した追加の代替設定（インスタンスの `stage` など）を定義して名前を付けることもできます。さまざまな異なるビルド設定の例として、`stable` 、`archive` やAIO自体が使用する `next` 、ローカライズされたバージョンのアプリを構築するために必要なロケーション固有の設定があります。詳細については [国際化 (i18n)](guide/i18n#merge-aot) を参照してください。
+You can define and name additional alternate configurations (such as `stage`, for instance) appropriate to your development process. Some examples of different build configurations are `stable`, `archive` and `next` used by AIO itself, and the individual locale-specific configurations required for building localized versions of an app. For details, see [Internationalization (i18n)](guide/i18n#merge-aot).
 
-名前を `--configuration` コマンドラインフラグに渡すことで、代替設定を選択できます。
+You can select an alternate configuration by passing its name to the `--configuration` command line flag.
 
-複数の構成名をコンマ区切りリストとして渡すこともできます。たとえば、`stage` と `fr` の両方のビルド構成を適用するには、コマンド `ng build --configuration stage,fr` を使用します。この場合、コマンドは名前付き構成を左から右に解析します。複数の構成が同じ設定を変更する場合、最後に設定された値が最後の値となります。
+You can also pass in more than one configuration name as a comma-separated list. For example, to apply both `stage` and `fr` build configurations, use the command `ng build --configuration stage,fr`. In this case,  the command parses the named configurations from left to right. If multiple configurations change the same setting, the last-set value is the final one.
 
-`--prod` コマンドラインフラグも使用される場合、最初に適用され、その設定は `--configuration` フラグで指定された設定によって上書きできます。
+If the `--prod` command line flag is also used, it is applied first, and its settings can be overridden by any configurations specified via the `--configuration` flag.
 
 {@a build-props}
 
-### 追加のビルドとテストのオプション
+### Additional build and test options
 
-デフォルトまたはターゲットビルドに設定可能なオプションは、[`ng build`](cli/build) 、[`ng serve`](cli/serve) および [`ng test`](cli/test) コマンドに対応しています。これらのオプションと設定可能な値の詳細については [CLIリファレンス](cli) を参照してください。
+The configurable options for a default or targeted build generally correspond to the options available for the [`ng build`](cli/build), [`ng serve`](cli/serve), and [`ng test`](cli/test) commands. For details of those options and their possible values, see the [CLI Reference](cli).
 
-いくつかの追加のオプションは、直接編集もしくは [`ng config`](cli/config) コマンドを使用してのみ設定可能です。
+Some additional options can only be set through the configuration file, either by direct editing or with the [`ng config`](cli/config) command.
 
-| オプションのプロパティ | 説明 |
+| OPTIONS PROPERTIES | DESCRIPTION |
 | :------------------------- | :---------------------------- |
-| `assets`                   | プロジェクトのグローバルコンテキストに追加する静的アセットへのパスを含むオブジェクトです。デフォルトのパスは、プロジェクトのアイコンファイルとその `assets` を指しています。詳細については、次の [Assets configuration](#asset-config) を参照してください。 |
-| `styles`                   | プロジェクトのグローバルコンテキストに追加するスタイルファイルの配列です。Angular CLI は、CSS のインポートおよびすべての主要な CSS プリセッサをサポートしています: [sass/scss](http://sass-lang.com/)、[less](http://lesscss.org/) や [stylus](http://stylus-lang.com/)。詳細については、次の [スタイルとスクリプトの構成](#style-script-config) を参照してください。 |
-| `stylePreprocessorOptions` | スタイルプリプロセッサに渡すオプションと値のペアを含むオブジェクト。詳細については、次の [スタイルとスクリプトの構成](#style-script-config) を参照してください。 |
-| `scripts`                  | プロジェクトのグローバルコンテキストに追加する、JavaScript のスクリプトファイルを含むオブジェクトです。スクリプトはあたかもそれらが、`index.html` の中の `<script>` タグに記述されたかのように正確にロードします。 詳細については、次の [スタイルとスクリプトの構成](#style-script-config) を参照してください。 |
-| `budgets`                  | 出力が閾値のサイズに達っしたり越えたりしたときに、警告やエラーを報告するようにビルダーを設定することができます。[サイズ予算を設定する](guide/build#configure-size-budgets) を参照してください (`test` セクションにはありません)。 |
-| `fileReplacements`         | オブジェクトとそのコンパイル時間を書き換えを含むオブジェクトです。詳しくは、[ターゲット固有のファイル置換の構成](guide/build#configure-target-specific-file-replacements)を参照してください。 |
+| `assets`                   | An object containing paths to static assets to add to the global context of the project. The default paths point to the project's icon file and its `assets` folder. See more in [Assets configuration](#asset-config) below. |
+| `styles`                   | An array of style files to add to the global context of the project. Angular CLI supports CSS imports and all major CSS preprocessors: [sass/scss](http://sass-lang.com/), [less](http://lesscss.org/), and [stylus](http://stylus-lang.com/). See more in [Styles and scripts configuration](#style-script-config) below. |
+| `stylePreprocessorOptions` | An object containing option-value pairs to pass to style preprocessors. See more in [Styles and scripts configuration](#style-script-config) below. |
+| `scripts`                  | An object containing JavaScript script files to add to the global context of the project. The scripts are loaded exactly as if you had added them in a `<script>` tag inside `index.html`. See more in [Styles and scripts configuration](#style-script-config) below. |
+| `budgets`                  | Default size-budget type and threshholds for all or parts of your app. You can configure the builder to report a warning or an error when the output reaches or exceeds a threshold size. See [Configure size budgets](guide/build#configure-size-budgets). (Not available in `test` section.) |
+| `fileReplacements`         | An object containing files and their compile-time replacements. See more in [Configure target-specific file replacements](guide/build#configure-target-specific-file-replacements).|
 
 {@a complex-config}
 
-## 複雑な設定値
+## Complex configuration values
 
-オプションの `assets`、`styles`、および `scripts` には、単純なパス文字列値、または特定のフィールドをもつオブジェクト値を指定できます。
-`sourceMap` および `optimization` オプションは、コマンドフラグを使用して単純なブール値に設定できますが、設定ファイルを使用して複雑な値を指定することもできます。
-次のセクションでは、これらの複雑な値が各ケースでどのように使用されるかについて詳しく説明します。
+The options `assets`, `styles`, and `scripts` can have either simple path string values, or object values with specific fields.
+The `sourceMap` and `optimization` options can be set to a simple Boolean value with a command flag, but can also be given a complex value using the configuration file.
+The following sections provide more details of how these complex values are used in each case.
 
 {@a asset-config}
 
-## プロジェクトのアセットの設定
+### Assets configuration
 
-各 `build` ターゲット設定には、プロジェクトをビルドするときにそのままコピーするファイルまたはフォルダを一覧表示する `assets` 配列を含めることができます。
-デフォルトでは、 `src/assets/` フォルダーと `src/favicon.ico` がコピーされます。
+Each `build` target configuration can include an `assets` array that lists files or folders you want to copy as-is when building your project.
+By default, the `src/assets/` folder and `src/favicon.ico` are copied over.
 
 <code-example language="json">
 
@@ -226,29 +226,29 @@ Angular は、Architect ツールと `ng run` コマンドで使用するデフ�
 
 </code-example>
 
-アセットを除外するには、アセットの設定からそれを削除します。
+To exclude an asset, you can remove it from the assets configuration.
 
-ワークスペースのルートを基準にした単純なパスとしてではなく、アセットをオブジェクトとして指定することで、アセットをコピーするように構成できます。
-アセットを指定したオブジェクトは、次のフィールドをもつことができます。
+You can further configure assets to be copied by specifying assets as objects, rather than as simple paths relative to the workspace root.
+A asset specification object can have the following fields.
 
-* `glob`: `input` をベースディレクトリとして使用する [node-glob](https://github.com/isaacs/node-glob/blob/master/README.md) 。
-* `input`: ワークスペースのルートからの相対パス。
-* `output`: `outDir` からの相対パス（デフォルトは`dist/`*project-name*）。 Seguridadへの影響のため、CLIはプロジェクトの出力パスの外側にファイルを書き込むことはありません。
-* `ignore`: 除外するglobsのリスト。
+* `glob`:  A [node-glob](https://github.com/isaacs/node-glob/blob/master/README.md) using `input` as base directory.
+* `input`: A path relative to the workspace root.
+* `output`: A path relative to `outDir` (default is `dist/`*project-name*). Because of the security implications, the CLI never writes files outside of the project output path.
+* `ignore`: A list of globs to exclude.
 
-たとえば、デフォルトのアセットのパスは、次のオブジェクトを使用してより詳細に表すことができます。
+For example, the default asset paths can be represented in more detail using the following objects.
 
 <code-example language="json">
 
 "assets": [
   { "glob": "**/*", "input": "src/assets/", "output": "/assets/" },
-  { "glob": "favicon.ico", "input": "src/", "output": "/" },
+  { "glob": "favicon.ico", "input": "src/", "output": "/" }
 ]
 
 </code-example>
 
-この拡張構成を使用して、プロジェクトの外部からアセットをコピーすることができます。
-たとえば、次の設定は node package からアセットをコピーします:
+You can use this extended configuration to copy assets from outside your project.
+For example, the following configuration copies assets from a node package:
 
 <code-example language="json">
 
@@ -258,9 +258,9 @@ Angular は、Architect ツールと `ng run` コマンドで使用するデフ�
 
 </code-example>
 
-`node_modules/some-package/images/` の内容は `dist/some-package/` にあります。
+The contents of `node_modules/some-package/images/` will be available in `dist/some-package/`.
 
-次の例では、 `ignore` フィールドを使用して、アセットフォルダー内の特定のファイルをビルドへのコピーから除外します:
+The following example uses the `ignore` field to exclude certain files in the assets folder from being copied into the build:
 
 <code-example language="json">
 
@@ -272,14 +272,14 @@ Angular は、Architect ツールと `ng run` コマンドで使用するデフ�
 
 {@a style-script-config}
 
-### スタイルとスクリプトの構成
+### Styles and scripts configuration
 
-`styles` および `scripts` オプションの配列エントリは、単純なパス文字列、または追加のエントリポイントファイルを指すオブジェクトにすることができます。
-関連するビルダーは、ビルド中にそのファイルとその依存関係を別個のバンドルとしてロードします。
-設定オブジェクトでは、`bundleName` フィールドを使用して、エントリポイントのバンドルに名前を付けるオプションがあります。
+An array entry for the `styles` and `scripts` options can be a simple path string, or an object that points to an extra entry-point file.
+The associated builder will load that file and its dependencies as a separate bundle during the build.
+With a configuration object, you have the option of naming the bundle for the entry point, using a `bundleName` field.
 
-バンドルはデフォルトでインジェクトされますが、インジェクションからバンドルを除外するために `inject` を false に設定できます。
-たとえば、次のオブジェクトの値は、スタイルとスクリプトを含むバンドルを作成して名前を付け、インジェクションから除外します:
+The bundle is injected by default, but you can set `inject` to false to exclude the bundle from injection.
+For example, the following object values create and name a bundle that contains styles and scripts, and excludes it from injection:
 
 <code-example language="json">
 
@@ -292,7 +292,7 @@ Angular は、Architect ツールと `ng run` コマンドで使用するデフ�
 
 </code-example>
 
-スタイルとスクリプトの単純なファイル参照と複雑なファイル参照を混在させることができます。
+You can mix simple and complex file references for styles and scripts.
 
 <code-example language="json">
 
@@ -307,11 +307,11 @@ Angular は、Architect ツールと `ng run` コマンドで使用するデフ�
 
 {@a style-preprocessor}
 
-#### スタイルプリプロセッサオプション
+#### Style preprocessor options
 
-Sass と Stylus では、コンポーネントスタイルとグローバルスタイルの両方で `includePaths` 機能を利用できます。これにより、インポートのためにチェックされる追加のベースパスを追加できます。
+In Sass and Stylus you can make use of the `includePaths` functionality for both component and global styles, which allows you to add extra base paths that will be checked for imports.
 
-パスを追加するには、`stylePreprocessorOptions` オプションを使用します:
+To add paths, use the `stylePreprocessorOptions` option:
 
 <code-example language="json">
 
@@ -323,7 +323,7 @@ Sass と Stylus では、コンポーネントスタイルとグローバルス�
 
 </code-example>
 
-`src/style-paths/_variables.scss` のようなそのフォルダ内のファイルは、相対パスを必要とせずにプロジェクトのどこからでもインポートできます:
+Files in that folder, such as `src/style-paths/_variables.scss`, can be imported from anywhere in your project without the need for a relative path:
 
 ```ts
 // src/app/app.component.scss
@@ -333,18 +333,18 @@ Sass と Stylus では、コンポーネントスタイルとグローバルス�
 @import 'variables';
 ```
 
-ユニットテストに必要な場合は、`test` ビルダーにスタイルやスクリプトを追加する必要があることに注意してください。
-[アプリ内でのランタイムグローバルライブラリの使用](guide/using-libraries#using-runtime-global-libraries-inside-your-app)も参照してください。
+Note that you will also need to add any styles or scripts to the `test` builder if you need them for unit tests.
+See also [Using runtime-global libraries inside your app](guide/using-libraries#using-runtime-global-libraries-inside-your-app).
 
 
 {@a optimize-and-srcmap}
 
-### 最適化とソースマップの構成
+### Optimization and source map configuration
 
-`optimization` および `sourceMap` コマンドオプションは単純なブールフラグです。
-これらのいずれかの構成値としてオブジェクトを指定して、より詳細な指示を提供できます。
+The `optimization` and `sourceMap` command options are simple Boolean flags.
+You can supply an object as a configuration value for either of these to provide more detailed instruction.
 
-* フラグ `--optimization="true"` は、スクリプトとスタイルの両方に適用されます。次のような値を指定して、どちらかに最適化を適用できます:
+* The flag `--optimization="true"` applies to both scripts and styles. You can supply a value such as the following to apply optimization to one or the other:
 
 <code-example language="json">
 
@@ -352,10 +352,10 @@ Sass と Stylus では、コンポーネントスタイルとグローバルス�
 
 </code-example>
 
-* フラグ `--sourceMap="true"` は、スクリプトとスタイルの両方のソースマップを出力します。
-どちらかに適用するオプションを構成できます。
-非表示のソースマップを出力するか、ベンダーパッケージのソースマップを解決することもできます。
-たとえば:
+* The flag `--sourceMap="true"` outputs source maps for both scripts and styles.
+You can configure the option to apply to one or the other.
+You can also choose to output hidden source maps, or resolve vendor package source maps.
+For example:
 
 <code-example language="json">
 
@@ -365,11 +365,11 @@ Sass と Stylus では、コンポーネントスタイルとグローバルス�
 
 <div class="alert is-helpful">
 
-   非表示のソースマップを使用する場合、ソースマップはバンドルで参照されません。
-   これらは、ソースマップでエラー報告ツールのエラースタックトレースのみをマッピングするが、
-   ブラウザ開発者ツールでソースマップを公開したくない場合に役立ちます。
+   When using hidden source maps, source maps will not be referenced in the bundle.
+   These are useful if you only want source maps to map error stack traces in error reporting tools,
+   but don't want to expose your source maps in the browser developer tools.
 
-   [Universal](guide/glossary#universal) では、スタイルの最適化を `true` に、
-   スタイルのソースマップを `false` に設定することにより、HTML ページに表示されるコードを削減できます。
+   For [Universal](guide/glossary#universal), you can reduce the code rendered in the HTML page by
+   setting styles optimization to `true` and styles source maps to `false`.
 
 </div>

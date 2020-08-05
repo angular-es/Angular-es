@@ -1,62 +1,63 @@
-# Service Workerを始める
+# Getting started with service workers
 
 
-このドキュメントでは、[Angular CLI](cli)で作られたプロジェクトでAngular Service Workerのサポートを有効にする方法について説明します。次に、単純な例を使用して、Service Workerが実際に動作していることを示し、ロードと基本的なキャッシングを実演します。
+This document explains how to enable Angular service worker support in projects that you created with the [Angular CLI](cli). It then uses a simple example to show you a service worker in action, demonstrating loading and basic caching.
 
-#### 前提条件
+#### Prerequisites
 
-[Angular Service Worker Introducción](guide/service-worker-intro)への基本的な理解があること
+A basic understanding of the information in [Introduction to Angular service workers](guide/service-worker-intro).
 
 
-## アプリケーションにService Workerを追加する
+## Adding a service worker to your project
 
-プロジェクトでAngular Service Workerを設定するには、CLIコマンド`ng add @angular/pwa`を使用します。
-必要なサポートファイルの設定とともに`service-worker`パッケージを追加することで、Service Workerを使用するようにアプリを設定します。
+To set up the Angular service worker in your project, use the CLI command `ng add @angular/pwa`. It takes care of configuring your app to use service workers by adding the `service-worker` package along
+with setting up the necessary support files.
 
 ```sh
-ng add @angular/pwa --project *project-name* 
+ng add @angular/pwa --project *project-name*
 ```
 
-上記のコマンドを実行すると、次の操作が完了します。
+The above command completes the following actions:
 
-1. `@angular/service-worker`パッケージをプロジェクトに追加します。
-2. CLIでService Workerのビルドサポートを有効にします。
-3. アプリケーションモジュールにService Workerをインポートして登録します。
-4. `index.html`ファイルを更新します。
-    * `manifest.webmanifest`ファイルを追加するためのリンクを含めます。
-    * `theme=color`のメタタグを追加します。
-5. インストール可能なプログレッシブウェブアプリ（PWA）をサポートするアイコンファイルをインストールします。 
-6. [`ngsw-config.json`](/guide/service-worker-config)というService Worker構成ファイルを作成します。このファイルは、キャッシュの動作やその他の設定を指定します。
+1. Adds the `@angular/service-worker` package to your project.
+2. Enables service worker build support in the CLI.
+3. Imports and registers the service worker in the app module.
+4. Updates the `index.html` file:
+    * Includes a link to add the `manifest.webmanifest` file.
+    * Adds meta tags for `theme-color`.
+5. Installs icon files to support the installed Progressive Web App (PWA).
+6. Creates the service worker configuration file called [`ngsw-config.json`](/guide/service-worker-config), which specifies the caching behaviors and other settings.
 
 
-今度は、プロジェクトをビルドします。
+ Now, build the project:
 
 ```sh
 ng build --prod
 ```
 
-CLIプロジェクトはAngular Service Workerを使用するように設定されました。
+The CLI project is now set up to use the Angular service worker.
 
 
-## Service Workerを動かす: ツアー
+## Service worker in action: a tour
 
-このセクションでは、Aplicación de muestraケーションを使用して、Service Workerを実際に動かします。
+This section demonstrates a service worker in action,
+using an example application.
 
-### `http-server`を供給する
+### Serving with `http-server`
 
-`ng serve`はService Workerと連携しないので、プロジェクトをローカルでテストするためには、別のHTTPサーバーを使用する必要があります。任意のHTTPサーバーを使用できます。次の例では、npmから[http-server](https://www.npmjs.com/package/http-server)パッケージを使用しています。競合する可能性を減らし、古いコンテンツを配信することを避けるために、専用ポートでテストし、キャッシュを無効化してください。
+Because `ng serve` does not work with service workers, you must use a separate HTTP server to test your project locally. You can use any HTTP server. The example below uses the [http-server](https://www.npmjs.com/package/http-server) package from npm. To reduce the possibility of conflicts and avoid serving stale content, test on a dedicated port and disable caching.
 
-`http-server`でwebファイルを含むディレクトリを配信するために、次のコマンドを実行してください。
+To serve the directory containing your web files with `http-server`, run the following command:
 
 ```sh
 http-server -p 8080 -c-1 dist/<project-name>
 ```
 
-### 最初の読み込み
+### Initial load
 
-サーバーが稼動している状態なら、ブラウザでhttp://localhost:8080/を指定できます。アプリケーションは正常に読み込まれるでしょう。
+With the server running, you can point your browser at http://localhost:8080/. Your application should load normally.
 
-**Tip:** Angular Service Workerをテストするときは、ブラウザでシークレットウィンドウまたはプライベートウィンドウを使うことをお勧めします。以前の状態が残存していると、Service Workerが読み取ったときに予期しない動作を引き起こし終了する可能性があるからです。
+**Tip:** When testing Angular service workers, it's a good idea to use an incognito or private window in your browser to ensure the service worker doesn't end up reading from a previous leftover state, which can cause unexpected behavior.
 
 <div class="alert is-helpful">
 
@@ -65,102 +66,101 @@ If you are not using HTTPS, the service worker will only be registered when acce
 
 </div>
 
-### ネットワークの問題をシミュレートする
+### Simulating a network issue
 
-ネットワークの問題をシミュレートするには、アプリケーションのネットワーク操作を無効にします。Chromeの場合は次になります。
+To simulate a network issue, disable network interaction for your application. In Chrome:
 
-1. ツールバーの右にあるメニューから**その他のツール** > **デベロッパー ツール**を選びます。
-2. **Networkタブ**を選びます。
-3. **Offlineボックス**をチェックしてください。
+1. Select **Tools** > **Developer Tools** (from the Chrome menu located at the top right corner).
+2. Go to the **Network tab**.
+3. Check the **Offline box**.
 
 <div class="lightbox">
   <img src="generated/images/guide/service-worker/offline-checkbox.png" alt="The offline checkbox in the Network tab is checked">
 </div>
 
-これで、アプリケーションはネットワークにアクセスできなくなりました。
+Now the app has no access to network interaction.
 
-Angular Service Workerを使用しないアプリケーションの場合、リフレッシュすると「インターネット接続がありません」と記載されたChromeのインターネット切断ページが表示されます。
+For applications that do not use the Angular service worker, refreshing now would display Chrome's Internet disconnected page that says "There is no Internet connection".
 
-Angular Service Workerを追加すると、アプリケーションの動作が変更されます。リフレッシュ時に、ページが正常にロードされます。
+With the addition of an Angular service worker, the application behavior changes. On a refresh, the page loads normally.
 
-networkタブを見ると、Service Workerがアクティブであることを確認できます。
+If you look at the Network tab, you can verify that the service worker is active.
 
 <div class="lightbox">
-  <!-- textlint-disable prh --><img src="generated/images/guide/service-worker/sw-active.png" alt="Requests are marked as from ServiceWorker"><!-- textlint-enable prh -->
+  <img src="generated/images/guide/service-worker/sw-active.png" alt="Requests are marked as from ServiceWorker">
 </div>
 
-「サイズ」列の下にある要求状態は、<!-- textlint-disable prh -->(from ServiceWorker)<!-- textlint-enable prh -->となっていることに注目してください。これは、リソースがネットワークからロードされていないことを意味します。代わりに、Service Workerのキャッシュからロードされています。
+Notice that under the "Size" column, the requests state is `(from ServiceWorker)`. This means that the resources are not being loaded from the network. Instead, they are being loaded from the service worker's cache.
 
 
-### 何がキャッシュされているのか？
+### What's being cached?
 
-ブラウザがこのアプリケーションをレンダリングするために必要なすべてのファイルがキャッシュされていることに注意してください。`ngsw-config.json`のボイラープレート設定は、CLIが使用する特定のリソースをキャッシュするように設定されています。
+Notice that all of the files the browser needs to render this application are cached. The `ngsw-config.json` boilerplate configuration is set up to cache the specific resources used by the CLI:
 
-* `index.html`
-* `favicon.ico`
-* ビルド成果物（JSおよびCSSバンドル）
-* `assets`の下にあるもの
-* 設定された`outputPath`（デフォルトでは`./dist/<project-name>/`）または `resourcesOutputPath` の直下にある画像やフォント。これらのオプションの詳細については[`ng build`](cli/build)を参照してください。
+* `index.html`.
+* `favicon.ico`.
+* Build artifacts (JS and CSS bundles).
+* Anything under `assets`.
+* Images and fonts directly under the configured `outputPath` (by default `./dist/<project-name>/`) or `resourcesOutputPath`. See [`ng build`](cli/build) for more information about these options.
 
 
 <div class="alert is-helpful">
-2つのポイントに注意してください。
+Pay attention to two key points:
 
-1. 生成された `ngsw-config.json`はキャッシュ可能なフォントと画像の拡張子の限られたリストを含みます。場合によっては、ニーズに合わせてglobパターンを変更するでしょう。
+1. The generated `ngsw-config.json` includes a limited list of cacheable fonts and images extentions. In some cases, you might want to modify the glob pattern to suit your needs.
 
-1. 設定ファイルの生成後に `resourcesOutputPath`または` assets`パスが変更された場合は、 `ngsw-config.json` の中のパスを手動で変更する必要があります。
+1. If `resourcesOutputPath` or `assets` paths are modified after the generation of configuration file, you need to change the paths manually in `ngsw-config.json`.
 </div>
 
+### Making changes to your application
 
-### アプリケーションを変更する
+Now that you've seen how service workers cache your application, the
+next step is understanding how updates work.
 
-Service Workerがアプリケーションをキャッシュする方法を見てきました。
-Próximos pasosは、アップデートの仕組みを理解することです。
+1. If you're testing in an incognito window, open a second blank tab. This will keep the incognito and the cache state alive during your test.
 
-1. シークレットウィンドウでテストする場合は、2つ目のタブを空白で開きます。これにより、テスト中にシークレットとキャッシュの状態が維持されます。
+2. Close the application tab, but not the window. This should also close the Developer Tools.
 
-2. アプリケーションタブを閉じますが、ウィンドウは閉じません。これにより、開発者ツールも閉じる必要があります。
+3. Shut down `http-server`.
 
-3. `http-server`をシャットダウンします。
+4. Next, make a change to the application, and watch the service worker install the update.
 
-4. 次に、アプリケーションを変更して、Service Workerが更新プログラムをインストールするのを確認します。
+5. Open `src/app/app.component.html` for editing.
 
-5. 編集するために`src/app/app.component.html`を開きます。
+6. Change the text `Welcome to {{title}}!` to `Bienvenue à {{title}}!`.
 
-6. `Welcome to {{title}}!`のテキストを`Bienvenue à {{title}}!`に変えます。
-
-7. もう一度ビルドしてサーバーを起動します。
+7. Build and run the server again:
 
 ```sh
 ng build --prod
 http-server -p 8080 -c-1 dist/<project-name>
 ```
 
-### ブラウザでアプリケーションを更新する
+### Updating your application in the browser
 
-ブラウザとService Workerが、更新されたアプリケーションをどのように処理するかを見てみましょう。
+Now look at how the browser and service worker handle the updated application.
 
-1. 同じウィンドウでもう一度http://localhost:8080を開きます。何が起こりましたか?
+1. Open http://localhost:8080 again in the same window. What happens?
 
 <div class="lightbox">
   <img src="generated/images/guide/service-worker/welcome-msg-en.png" alt="It still says Welcome to Service Workers!">
 </div>
 
-何が駄目だったのでしょうか？実際には何も悪いことは起こっていません。Angular Service Workerは、利用可能なアップデートがあるにもかかわらず、**インストールされている**アプリケーションのバージョンを提供しています。速度の観点から、Service Workerは、キャッシュされたアプリケーションを提供する前に、更新の確認を待つことはありません。
+What went wrong? Nothing, actually. The Angular service worker is doing its job and serving the version of the application that it has **installed**, even though there is an update available. In the interest of speed, the service worker doesn't wait to check for updates before it serves the application that it has cached.
 
-`http-server`ログを見ると、`/ngsw.json`を要求しているService Workerを見ることができます。これは、Service Workerが更新をチェックする方法です。
+If you look at the `http-server` logs, you can see the service worker requesting `/ngsw.json`. This is how the service worker checks for updates.
 
-2. ページを再読み込みします。
+2. Refresh the page.
 
 <div class="lightbox">
   <img src="generated/images/guide/service-worker/welcome-msg-fr.png" alt="The text has changed to say Bienvenue à app!">
 </div>
 
-Service Workerは、あなたのアプリケーションの更新版を*バックグラウンドで*インストールし、次にページを読み込んだりリロードしたりすると、Service Workerは最新のバージョンに切り替わります。
+The service worker installed the updated version of your app *in the background*, and the next time the page is loaded or reloaded, the service worker switches to the latest version.
 
 <hr />
 
-## もっとAngular Service Workerを知りたい
+## More on Angular service workers
 
-次の記事がお勧めです。
-* [Service Workerと通信する](guide/service-worker-communications)
+You may also be interested in the following:
+* [Communicating with service workers](guide/service-worker-communications).

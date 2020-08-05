@@ -1,106 +1,106 @@
-# コンポーネントスタイル
+# Component styles
 
-Angularアプリケーションは、標準CSSでスタイルされます。これは、あなたが知っているCSSスタイルシート、
-セレクター、ルール、そしてメディアクエリーついてのすべてを Angularアプリケーションに直接
-適用できることを意味します。
+Angular applications are styled with standard CSS. That means you can apply
+everything you know about CSS stylesheets, selectors, rules, and media queries
+directly to Angular applications.
 
-加えて、Angularは、コンポーネントに標準スタイルシートでは無く、よりモジュールデザインを可能にする
-コンポーネントと共に *コンポーネントスタイル* をバンドルできます。
+Additionally, Angular can bundle *component styles*
+with components, enabling a more modular design than regular stylesheets.
 
-このページでは、これらのコンポーネントスタイルをどのように読み込み適用するのか説明します。
+This page describes how to load and apply these component styles.
 
-Stackblitz で <live-example></live-example> を実行でき、ここからコードをダウンロードできます。
+You can run the <live-example></live-example> in Stackblitz and download the code from there.
 
-## コンポーネントスタイルを使いましょう
+## Using component styles
 
-あなたが書くすべての Angular コンポーネントについて、HTMLPlantillasだけではなく、
-そのPlantillasに付随するCSSスタイルを定義し、必要な、あらゆるセレクター、ルール、
-そしてメディアクエリーを細く指定することなどを定義できます。
+For every Angular component you write, you may define not only an HTML template,
+but also the CSS styles that go with that template,
+specifying any selectors, rules, and media queries that you need.
 
-これを行うひとつの方法は、コンポーネントのメタデータに `styles` プロパティをセットすることです。
-`styles` プロパティは、CSSコードを含む文字列の配列を使います。
-通常は、次の例のようにひとつの文字列を与えます：
+One way to do this is to set the `styles` property in the component metadata.
+The `styles` property takes an array of strings that contain CSS code.
+Usually you give it one string, as in the following example:
 
 <code-example path="component-styles/src/app/hero-app.component.ts" header="src/app/hero-app.component.ts"></code-example>
 
-## スタイルのスコープ
+## Style scope
 
 <div class="alert is-critical">
 
-`@Component` メタデータで定義されたスタイルは、 _そのコンポーネントのPlantillas内でのみ適用されます_  。
+The styles specified in `@Component` metadata _apply only within the template of that component_.
 
 </div>
 
-Plantillas内にネストされたコンポーネント、コンポーネントに投影されたコンテントによって、_継承されることはありません_ 。
+They are _not inherited_ by any components nested within the template nor by any content projected into the component.
 
-この例では、 `h1` スタイルは `HeroAppComponent` にのみ適用され、
-ネストされた `HeroMainComponent` にもアプリケーションの他の場所の `<h1>` タグにも適用されません。
+In this example, the `h1` style applies only to the `HeroAppComponent`,
+not to the nested `HeroMainComponent` nor to `<h1>` tags anywhere else in the application.
 
-このスコープの制限は、 ***スタイルのモジュール性の機能*** です。
+This scoping restriction is a ***styling modularity feature***.
 
-* CSSクラス名とセレクターは、各コンポーネントの文脈でもっとも合理的に利用できます。
-
-
-* クラス名とセレクターは、コンポーネント内で局所的で、アプリケーションの他の場所で使われている
-  クラスやセレクターと衝突しません。
+* You can use the CSS class names and selectors that make the most sense in the context of each component.
 
 
-* スタイルの変更は、他の場所のアプリケーションのコンポーネントスタイルに影響しません。
+* Class names and selectors are local to the component and don't collide with
+  classes and selectors used elsewhere in the application.
 
 
-* 各コンポーネントのCSSコードをコンポーネントの TypeScript と HTMLコードと一緒に配置すると、
-  きちんと整理されたプロジェクト構造になります。
+* Changes to styles elsewhere in the application don't affect the component's styles.
 
 
-* アプリケーション全体を検索してコードが使用されている場所を見つけることなく、
-コンポーネントのCSSコードを変更または削除できます。
+* You can co-locate the CSS code of each component with the TypeScript and HTML code of the component,
+  which leads to a neat and tidy project structure.
+
+
+* You can change or remove component CSS code without searching through the
+  whole application to find where else the code is used.
 
 {@a special-selectors}
 
-## 特別なセレクター
+## Special selectors
 
-コンポーネントスタイルには、Shadow DOMスタイルスコーピング([W3C](https://www.w3.org) サイトの
-[CSS スコーピング モデル レベル 1](https://www.w3.org/TR/css-scoping-1) ページに記述されています)
-の世界からの特別な *セレクター* がいくつかあります。
-次のセクションでは、これらのセレクターについて説明します。
+Component styles have a few special *selectors* from the world of shadow DOM style scoping
+(described in the [CSS Scoping Module Level 1](https://www.w3.org/TR/css-scoping-1) page on the
+[W3C](https://www.w3.org) site).
+The following sections describe these selectors.
 
 ### :host
 
-`:host` 擬似クラスセレクターを使用して、(コンポーネントのPlantillasの *内部の* ターゲティング要素とは対象的に)
-コンポーネントを *ホスト* する要素のスタイルをターゲットにします。
+Use the `:host` pseudo-class selector to target styles in the element that *hosts* the component (as opposed to
+targeting elements *inside* the component's template).
 
 
 <code-example path="component-styles/src/app/hero-details.component.css" region="host" header="src/app/hero-details.component.css"></code-example>
 
-`:host` セレクターは、ホスト要素をターゲットにする唯一の方法です。
-コンポーネント自身のPlantillasの一部ではないため、他のセレクターを使用してコンポーネント内
-からホスト要素に到達することはできません。ホスト要素は、親コンポーネントのPlantillas内にあります。
+The `:host` selector is the only way to target the host element. You can't reach
+the host element from inside the component with other selectors because it's not part of the
+component's own template. The host element is in a parent component's template.
 
-*関数形式* を使用して、`:host` の後のカッコ内に別なセレクターを含むことで、
-ホストスタイルを条件付きで適用します。
+Use the *function form* to apply host styles conditionally by
+including another selector inside parentheses after `:host`.
 
-次の例では、ホスト要素を再びターゲットにしていますが、`active` CSS クラスも持っている場合に限ります。
+The next example targets the host element again, but only when it also has the `active` CSS class.
 
 <code-example path="component-styles/src/app/hero-details.component.css" region="hostfunction" header="src/app/hero-details.component.css"></code-example>
 
 ### :host-context
 
-場合によっては、コンポーネントのビューの *外* にある条件に基づいてスタイルを適用すると便利です。
-たとえば、CSSのテーマクラスをドキュメントの `<body>` 要素に適用すると、
-それに基づいてコンポーネントの外観を変更することができます。
+Sometimes it's useful to apply styles based on some condition *outside* of a component's view.
+For example, a CSS theme class could be applied to the document `<body>` element, and
+you want to change how your component looks based on that.
 
-`:host()` の関数形式と同じように動作する `:host-context()` 疑似クラスセレクターを使用します。
-`:host-context()` セレクターは、コンポーネントのホスト要素の先祖のうち、ドキュメントルートまでのCSSクラスを探します。
-`:host-context()` セレクターは、別のセレクターと組み合わせたときに便利です。
+Use the `:host-context()` pseudo-class selector, which works just like the function
+form of `:host()`. The `:host-context()` selector looks for a CSS class in any ancestor of the component host element,
+up to the document root. The `:host-context()` selector is useful when combined with another selector.
 
-次の例では、コンポーネント *内* のすべての `<h2>` 要素に `background-color`　のスタイルを適用します。
-ただし、一部の祖先要素にCSSクラス `theme-light` がある場合にのみ適用されます。
+The following example applies a `background-color` style to all `<h2>` elements *inside* the component, only
+if some ancestor element has the CSS class `theme-light`.
 
 <code-example path="component-styles/src/app/hero-details.component.css" region="hostcontext" header="src/app/hero-details.component.css"></code-example>
 
-### (非推奨) `/deep/` 、 `>>>` と `::ng-deep` {@a deprecated-deep--and-ng-deep}
+### (deprecated) `/deep/`, `>>>`, and `::ng-deep`
 
-コンポーネントスタイルは通常、コンポーネント自身のPlantillasのHTMLにのみ適用されます。
+Component styles normally apply only to the HTML in the component's own template.
 
 Applying the `::ng-deep` pseudo-class to any CSS rule completely disables view-encapsulation for
 that rule. Any style with `::ng-deep` applied becomes a global style. In order to scope the specified style
@@ -108,67 +108,67 @@ to the current component and all its descendants, be sure to include the `:host`
 `::ng-deep`. If the `::ng-deep` combinator is used without the `:host` pseudo-class selector, the style
 can bleed into other components.
 
-次の例では、ホスト要素からこのコンポーネントを経由してDOM内のすべての子要素に至るまで、
-すべての `<h3>` 要素を対象としています。
+The following example targets all `<h3>` elements, from the host element down
+through this component to all of its child elements in the DOM.
 
 <code-example path="component-styles/src/app/hero-details.component.css" region="deep" header="src/app/hero-details.component.css"></code-example>
 
-`/deep/` コンビネーターには、別名 `>>>`　と `::ng-deep` があります。
+The `/deep/` combinator also has the aliases `>>>`, and `::ng-deep`.
 
 <div class="alert is-important">
 
-`/deep/`、 `>>>` および `::ng-deep` は、 *エミュレートされた* ビューカプセル化でのみ使用してください。
-Emulatedは、デフォルトでもっともよく使用されるビューカプセル化です。
-詳細については、[ビューのカプセル化の制御](guide/component-styles#view-encapsulation) セクションを参照してください。
+Use `/deep/`, `>>>` and `::ng-deep` only with *emulated* view encapsulation.
+Emulated is the default and most commonly used view encapsulation. For more information, see the
+[Controlling view encapsulation](guide/component-styles#view-encapsulation) section.
 
 </div>
 
 <div class="alert is-important">
 
-shadow-piercing子孫コンビネータは廃止され、主要なツールや[ブラウザからサポートが削除されています](https://www.chromestatus.com/features/6750456638341120) 。
-そのため、Angular (`/deep/`、 `>>>` および `::ng-deep` の3つすべて) のサポートを落とす予定です。
-それまでは、ツールの幅広い互換性のために、`::ng-deep` を選択すべきです。
+The shadow-piercing descendant combinator is deprecated and [support is being removed from major browsers](https://www.chromestatus.com/features/6750456638341120) and tools.
+As such we plan to drop support in Angular (for all 3 of `/deep/`, `>>>` and `::ng-deep`).
+Until then `::ng-deep` should be preferred for a broader compatibility with the tools.
 
 </div>
 
 {@a loading-styles}
 
-## コンポーネントスタイルの読み込み
+## Loading component styles
 
-コンポーネントにスタイルを追加する方法は、いくつかあります。
+There are several ways to add styles to a component:
 
-* `styles` または `styleUrls` メタデータの設定
-* HTML Plantillas内のインライン
-* CSS のインポート
+* By setting `styles` or `styleUrls` metadata.
+* Inline in the template HTML.
+* With CSS imports.
 
-前に概説した範囲指定のルールは、これらの読み込みパターンのそれぞれに適用されます。 
+The scoping rules outlined earlier apply to each of these loading patterns.
 
-### コンポーネントメタデータ内のスタイル
+### Styles in component metadata
 
-`styles` 配列プロパティを `@Component` デコレーター に追加できます。
+You can add a `styles` array property to the `@Component` decorator.
 
-配列の各文字列は、このコンポーネントのCSSを定義します。
+Each string in the array defines some CSS for this component.
 
 <code-example path="component-styles/src/app/hero-app.component.ts" header="src/app/hero-app.component.ts (CSS inline)">
 </code-example>
 
 <div class="alert is-critical">
 
-注意： これらのスタイルは、 _このコンポーネントにのみ_ 適用されます。
-Plantillas内にネストされたコンポーネントやコンポーネントに投影されたコンテンツによって _継承されることはありません_ 。
+Reminder: these styles apply _only to this component_.
+They are _not inherited_ by any components nested within the template nor by any content projected into the component.
 
 </div>
 
-Angular CLIコマンド [`ng generate component`](cli/generate) は、 `--inline-style` フラグを使用してコンポーネントを作成するときに空の `styles` 配列を定義します。
+The Angular CLI command [`ng generate component`](cli/generate) defines an empty `styles` array when you create the component with the `--inline-style` flag.
 
 <code-example language="sh" class="code-shell">
 ng generate component hero-app --inline-style
 </code-example>
 
-### コンポーネントメタデータ内のスタイルファイル
+### Style files in component metadata
 
-コンポーネントの `@Component` デコレーターに `styleUrls` プロパティを追加すると、
-外部CSSファイルからスタイルをロードできます。
+You can load styles from external CSS files by adding a `styleUrls` property
+to a component's `@Component` decorator:
 
 <code-tabs>
   <code-pane header="src/app/hero-app.component.ts (CSS in file)" path="component-styles/src/app/hero-app.component.1.ts"></code-pane>
@@ -177,71 +177,72 @@ ng generate component hero-app --inline-style
 
 <div class="alert is-critical">
 
-注意： スタイルファイルのスタイルは、 _このコンポーネントにのみ_ 適用されます。
-Plantillas内にネストされたコンポーネントやコンポーネントに投影されたコンテンツによって _継承されることはありません_ 。
+Reminder: the styles in the style file apply _only to this component_.
+They are _not inherited_ by any components nested within the template nor by any content projected into the component.
 
 </div>
 
 <div class="alert is-helpful">
 
-  複数のスタイルファイル、または `styles` と `styleUrls` の組み合わせを指定することもできます。
+  You can specify more than one styles file or even a combination of `styles` and `styleUrls`.
 
 </div>
 
-Angular CLIコマンド [`ng generate component`](cli/generate) を `--inline-style` フラグなしで使用すると、空のスタイルファイルを生成し、コンポーネントの生成された `styleUrls` で参照します。
+When you use the Angular CLI command [`ng generate component`](cli/generate) without the `--inline-style` flag, it creates an empty styles file for you and references that file in the component's generated `styleUrls`.
 
 <code-example language="sh" class="code-shell">
 ng generate component hero-app
 </code-example>
 
-### インラインスタイルPlantillas
+### Template inline styles
 
-`<style>` タグの中に入れることで、
-CSSスタイルをHTMLPlantillasに直接埋め込むことができます。
+You can embed CSS styles directly into the HTML template by putting them
+inside `<style>` tags.
 
 <code-example path="component-styles/src/app/hero-controls.component.ts" region="inlinestyles" header="src/app/hero-controls.component.ts">
 </code-example>
 
-### リンクタグPlantillas
+### Template link tags
 
-コンポーネントのHTMLPlantillasに `<link>` タグを記述することもできます。
+You can also write `<link>` tags into the component's HTML template.
 
 <code-example path="component-styles/src/app/hero-team.component.ts" region="stylelink" header="src/app/hero-team.component.ts">
 </code-example>
 
 <div class="alert is-critical">
 
-CLIを使用して構築する場合は、[CLI wiki](https://github.com/angular/angular-cli/wiki/stories-asset-configuration) の説明にしたがって、リンクされたスタイルファイルをアセットに含めてサーバーにコピーしてください。
+When building with the CLI, be sure to include the linked style file among the assets to be copied to the server as described in the [CLI wiki](https://github.com/angular/angular-cli/wiki/stories-asset-configuration).
 <!-- 2018-10-16: The link above is still the best source for this information. -->
 
-リンクタグのhref URLがアプリケーションルートまたはコンポーネントファイルのどちらへの相対パスであっても、CLIはスタイルシートを取り込みます。
+Once included, the CLI will include the stylesheet, whether the link tag's href URL is relative to the application root or the component file.
 
 </div>
 
 ### CSS @imports
 
-標準のCSS `@import` ルールを使用して CSSファイルを CSSファイルにインポートすることもできます。
-詳細は、[MDN](https://developer.mozilla.org/ja) サイトの
-[`@import`](https://developer.mozilla.org/ja/docs/Web/CSS/@import) を参照してください。
+You can also import CSS files into the CSS files using the standard CSS `@import` rule.
+For details, see [`@import`](https://developer.mozilla.org/en/docs/Web/CSS/@import)
+on the [MDN](https://developer.mozilla.org) site.
 
-この場合、インポートするファイルの URL は、CSSファイルに対して相対指定です。
+In this case, the URL is relative to the CSS file into which you're importing.
 
 <code-example path="component-styles/src/app/hero-details.component.css" region="import" header="src/app/hero-details.component.css (excerpt)">
 </code-example>
 
-### 外部およびグローバルスタイルファイル
+### External and global style files
 
-CLIを使用して構築する場合、外部スタイルファイルを含む _すべての外部アセット_ を含めるように `angular.json` を設定する必要があります。
+When building with the CLI, you must configure the `angular.json` to include _all external assets_, including external style files.
 
-デフォルトでグローバルな `styles.css` ファイルを事前設定している `styles` セクションに、 **グローバル** スタイルファイルを登録します。
+Register **global** style files in the `styles` section which, by default, is pre-configured with the global `styles.css` file.
 
-もっと学びたい場合は、 [CLI wiki](https://github.com/angular/angular-cli/wiki/stories-global-styles) を参照してください。
+See the [CLI wiki](https://github.com/angular/angular-cli/wiki/stories-global-styles) to learn more.
 <!-- 2018-10-16: The link above is still the best source for this information. -->
 
-### CSS以外のスタイルファイル
 
-CLIを使用して構築する場合、
-スタイルファイルを、次の例のように、 [sass](http://sass-lang.com/)、 [less](http://lesscss.org/)、または[stylus](http://stylus-lang.com/) に書き込んで、 `@Component.styleUrls` メタデータに適切な拡張子 (`.scss`, `.less`, `.styl`) をもつファイルを次のように指定できます：
+### Non-CSS style files
+
+If you're building with the CLI,
+you can write style files in [sass](http://sass-lang.com/), [less](http://lesscss.org/), or [stylus](http://stylus-lang.com/) and specify those files in the `@Component.styleUrls` metadata with the appropriate extensions (`.scss`, `.less`, `.styl`) as in the following example:
 
 <code-example>
 @Component({
@@ -252,68 +253,69 @@ CLIを使用して構築する場合、
 ...
 </code-example>
 
-CLIビルドプロセスは、適切なCSSプリプロセッサを実行します。
+The CLI build process runs the pertinent CSS preprocessor.
 
-`ng generate component` を使用してコンポーネントファイルを生成する場合、CLI は、デフォルトで空の CSS　スタイルファイル(`.css`)を生成します。
-[CLI wiki](https://github.com/angular/angular-cli/wiki/stories-css-preprocessors
-"CSS Preprocessor integration") 
-で説明されているように、CLIのデフォルトのプリプロセッサを設定することができます。
+When generating a component file with `ng generate component`, the CLI emits an empty CSS styles file (`.css`) by default.
+You can configure the CLI to default to your preferred CSS preprocessor
+as explained in the [CLI wiki](https://github.com/angular/angular-cli/wiki/stories-css-preprocessors
+"CSS Preprocessor integration").
 <!-- 2018-10-16: The link above is still the best source for this information. -->
+
 
 <div class="alert is-important">
 
-CLIはインラインスタイルにプリプロセッサを適用できないため、`@Component.styles` 配列に追加されたスタイル文字列は _CSSで記述する必要があります_ 。
+Style strings added to the `@Component.styles` array _must be written in CSS_ because the CLI cannot apply a preprocessor to inline styles.
 
 </div>
 
 {@a view-encapsulation}
 
-## ビューのカプセル化
+## View encapsulation
 
-前に説明したように、コンポーネントのCSSスタイルはコンポーネントのビューにカプセル化され、
-アプリケーションの残りの部分には影響しません。
+As discussed earlier, component CSS styles are encapsulated into the component's view and don't
+affect the rest of the application.
 
-このカプセル化が *コンポーネントごとに* どのように行われるかを制御するには、
-コンポーネントのメタデータに *ビューのカプセル化モード* を設定します。
-次のモードから選択してください：
+To control how this encapsulation happens on a *per
+component* basis, you can set the *view encapsulation mode* in the component metadata.
+Choose from the following modes:
 
-* `ShadowDom` ビューカプセル化では、ブラウザのネイティブShadow DOM実装
-（[MDN](https://developer.mozilla.org/ja/)サイトの
-[Shadow DOM](https://developer.mozilla.org/ja/docs/Web/Web_Components/Using_shadow_DOM)を参照）を使用して、
-Shadow DOMをコンポーネントのホスト要素にアタッチし、
-そのShadow DOM内にコンポーネントビューを配置します。コンポーネントのスタイルは、Shadow DOM内に含まれています。
+* `ShadowDom` view encapsulation uses the browser's native shadow DOM implementation (see
+  [Shadow DOM](https://developer.mozilla.org/en-US/docs/Web/Web_Components/Shadow_DOM)
+  on the [MDN](https://developer.mozilla.org) site)
+  to attach a shadow DOM to the component's host element, and then puts the component
+  view inside that shadow DOM. The component's styles are included within the shadow DOM.
 
-* `Native` ビューカプセル化は、ブラウザのネイティブShadow DOM実装の非推奨バージョンを使用します。 - [この変更について学びましょう](https://hayato.io/2016/shadowdomv1/).
+* `Native` view encapsulation uses a now deprecated version of the browser's native shadow DOM implementation - [learn about the changes](https://hayato.io/2016/shadowdomv1/).
 
-* `Emulated` ビューカプセル化（デフォルト）は、CSSコードを事前処理（および名前変更）して、
-Shadow DOMの動作をエミュレートし、CSSをコンポーネントのビューに効果的に適用します。
-  詳細は、[付録1](guide/component-styles#inspect-generated-css) を参照してください。
+* `Emulated` view encapsulation (the default) emulates the behavior of shadow DOM by preprocessing
+  (and renaming) the CSS code to effectively scope the CSS to the component's view.
+  For details, see [Inspecting generated CSS](guide/component-styles#inspect-generated-css) below.
 
-* `None` は、Angularビューカプセル化を行わないことを意味します。
-AngularはCSSをグローバルスタイルに追加します。
-先に説明したスコープのルール、隔離および保護は適用されません。
-これは、コンポーネントのスタイルをHTMLに貼り付けるのと本質的に同じです。
+* `None` means that Angular does no view encapsulation.
+  Angular adds the CSS to the global styles.
+  The scoping rules, isolations, and protections discussed earlier don't apply.
+  This is essentially the same as pasting the component's styles into the HTML.
 
-コンポーネントのカプセル化モードを設定するには、コンポーネントメタデータ内の `encapsulation` プロパティを使用します：
+To set the components encapsulation mode, use the `encapsulation` property in the component metadata:
 
 <code-example path="component-styles/src/app/quest-summary.component.ts" region="encapsulation.native" header="src/app/quest-summary.component.ts"></code-example>
 
-`ShadowDom` ビューカプセル化は、Shadow DOM をネイティブサポートしているブラウザでのみ機能します
-( [Can I use](http://caniuse.com) サイトの
-[Shadow DOM v1](http://caniuse.com/#feat=shadowdomv1) を参照)。サポートは未だ限定的です。
-そのため、`Emulated`ビューカプセル化がデフォルトモードであり、
-ほとんどの場合に推奨されます。
+`ShadowDom` view encapsulation only works on browsers that have native support
+for shadow DOM (see [Shadow DOM v1](https://caniuse.com/#feat=shadowdomv1) on the
+[Can I use](http://caniuse.com) site). The support is still limited,
+which is why `Emulated` view encapsulation is the default mode and recommended
+in most cases.
 
 {@a inspect-generated-css}
 
-## 生成されたCSSの検査
+## Inspecting generated CSS
 
-エミュレートされたビューカプセル化を使用する場合、Angularはすべてのコンポーネントスタイルを前処理して、
-標準的なShadow CSSスコープルールに近似させます。
+When using emulated view encapsulation, Angular preprocesses
+all component styles so that they approximate the standard shadow CSS scoping rules.
 
-エミュレートされたビューカプセル化が有効になっている
-実行中のAngularアプリケーションのDOMでは、
-各DOM要素にはいくつかの特別な属性が付加されています：
+In the DOM of a running Angular application with emulated view
+encapsulation enabled, each DOM element has some extra attributes
+attached to it:
 
 <code-example format="">
   &lt;hero-details _nghost-pmm-5>
@@ -325,16 +327,16 @@ AngularはCSSをグローバルスタイルに追加します。
 
 </code-example>
 
-生成される属性には2種類あります。：
+There are two kinds of generated attributes:
 
-* ネイティブのカプセル化でShadow DOMのホストになる要素には、生成された`_nghost`属性があります。
-これは、一般的にコンポーネントのホスト要素のケースです。
-* コンポーネントのビュー内の要素には、この要素がどのホストのエミュレートされたShadow DOMに
-属するかを識別する`_ngcontent`属性があります。
+* An element that would be a shadow DOM host in native encapsulation has a
+  generated `_nghost` attribute. This is typically the case for component host elements.
+* An element within a component's view has a `_ngcontent` attribute
+that identifies to which host's emulated shadow DOM this element belongs.
 
-これらの属性の正確な値は重要ではありません。
-それらは自動的に生成され、アプリケーションコードで参照することはありません。
-しかし、生成されたコンポーネントスタイルは、DOMの`<head>`セクションにあります。
+The exact values of these attributes aren't important. They are automatically
+generated and you never refer to them in application code. But they are targeted
+by the generated component styles, which are in the `<head>` section of the DOM:
 
 <code-example format="">
   [_nghost-pmm-5] {
@@ -348,6 +350,6 @@ AngularはCSSをグローバルスタイルに追加します。
   }
 </code-example>
 
-これらのスタイルは後処理され、
-各セレクターに`_nghost`または`_ngcontent`属性セレクターが追加されます。
-これらの追加のセレクターは、このページで説明しているスコープルールを有効にします。
+These styles are post-processed so that each selector is augmented
+with `_nghost` or `_ngcontent` attribute selectors.
+These extra selectors enable the scoping rules described in this page.

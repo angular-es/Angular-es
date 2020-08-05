@@ -1,151 +1,179 @@
-# 属性ディレクティブ
+# Attribute directives
 
-**属性**ディレクティブは、DOM要素の見た目や動作を変更します。
+An **Attribute** directive changes the appearance or behavior of a DOM element.
 
-<live-example header="Attribute Directive example"></live-example>を実行してください。
+Try the <live-example title="Attribute Directive example"></live-example>.
 
 {@a directive-overview}
 
-## ディレクティブの概要
+## Directives overview
 
-Angularには、3つのディレクティブがあります。
+There are three kinds of directives in Angular:
 
-1. コンポーネント(Components)&mdash;Plantillas付きディレクティブ
-1. 構造ディレクティブ(Structural directives)&mdash;DOM要素を追加、削除してDOMレイアウトを変更するディレクティブ
-1. 属性ディレクティブ(Attribute directives)&mdash;要素やコンポーネント、別のディレクティブの見た目や動作を変更するディレクティブ
+1. Components&mdash;directives with a template.
+1. Structural directives&mdash;change the DOM layout by adding and removing DOM elements.
+1. Attribute directives&mdash;change the appearance or behavior of an element, component, or another directive.
 
-*コンポーネント*は、3つのディレクティブのうち、もっとも一般的なものです。
-[入門](start "Getting Started with Angular") Tutorialでコンポーネントをはじめて見たはずです。
+*Components* are the most common of the three directives.
+You saw a component for the first time in the [Getting Started](start "Getting Started with Angular") tutorial.
 
-*構造ディレクティブ*は、ビューの構造を変更します。
-2つの例としては、[NgFor](guide/template-syntax#ngFor)と[NgIf](guide/template-syntax#ngIf)です。
-それらについては[構造ディレクティブ](guide/structural-directives)ガイドで学んでください。
+*Structural Directives* change the structure of the view.
+Two examples are [NgFor](guide/template-syntax#ngFor) and [NgIf](guide/template-syntax#ngIf).
+Learn about them in the [Structural Directives](guide/structural-directives) guide.
 
-*属性ディレクティブ*は、要素の属性として扱われます。
-たとえば、[Plantillasシンタックス](guide/template-syntax)ガイドの組み込みの
-[NgStyle](guide/template-syntax#ngStyle)ディレクティブは、
-同時に複数の要素のスタイルを変更することができます。
+*Attribute directives* are used as attributes of elements.
+The built-in [NgStyle](guide/template-syntax#ngStyle) directive in the
+[Template Syntax](guide/template-syntax) guide, for example,
+can change several element styles at the same time.
 
-## シンプルな属性ディレクティブを作成する
+## Build a simple attribute directive
 
-属性ディレクティブは、最低限`@Directive`でアノテートされたコントローラークラスを作成する必要があり、それには属性を識別するセレクターを指定します。コントローラークラスには、必要なディレクティブの動作を実装します。
+An attribute directive minimally requires building a controller class annotated with
+`@Directive`, which specifies the selector that identifies
+the attribute.
+The controller class implements the desired directive behavior.
 
-このページでは、ユーザーがその要素の上を移動したときに、要素の背景色を設定するシンプルな _appHighlight_ 属性ディレクティブを作成する方法を示します。これは次のように書くことができます。
+This page demonstrates building a simple _appHighlight_ attribute
+directive to set an element's background color
+when the user hovers over that element. You can apply it like this:
 
 <code-example path="attribute-directives/src/app/app.component.1.html" header="src/app/app.component.html (applied)" region="applied"></code-example>
 
 {@a write-directive}
 
-ディレクティブは名前空間をサポートしないことに注意してください。
+Please note that directives _do not_ support namespaces.
 
 <code-example path="attribute-directives/src/app/app.component.avoid.html" header="src/app/app.component.avoid.html (unsupported)" region="unsupported"></code-example>
 
-### ディレクティブのコードを書く
+### Write the directive code
 
-CLIコマンド [`ng generate directive`](cli/generate) をターミナル画面に入力して、ディレクティブクラスを作成します。
+Create the directive class file in a terminal window with the CLI command [`ng generate directive`](cli/generate).
 
 <code-example language="sh" class="code-shell">
 ng generate directive highlight
 </code-example>
 
-CLIは、`src/app/highlight.directive.ts`と対応するテストファイル `src/app/highlight.directive.spec.ts` を作成し、Raíz`AppModule`にディレクティブのクラスを _宣言_ します。
+The CLI creates `src/app/highlight.directive.ts`, a corresponding test file `src/app/highlight.directive.spec.ts`, and _declares_ the directive class in the root `AppModule`.
 
 <div class="alert is-helpful">
 
-_ディレクティブ_ は、 _コンポーネント_ と同じ方法で[Angularモジュール](guide/ngmodules)で宣言する必要があります。
+_Directives_ must be declared in [Angular Modules](guide/ngmodules) in the same manner as _components_.
 
 </div >
 
-生成された`src/app/highlight.directive.ts`は次のとおりです。
+The generated `src/app/highlight.directive.ts` is as follows:
 
 <code-example path="attribute-directives/src/app/highlight.directive.0.ts" header="src/app/highlight.directive.ts"></code-example>
 
-インポートされた`Directive`シンボルは、Angularの`@Directive`デコレーターを提供します。
+The imported `Directive` symbol provides Angular the `@Directive` decorator.
 
-`@Directive`デコレーターの唯一の設定プロパティは、ディレクティブの[CSS属性セレクタ](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors)`[appHighlight]`を指定します。
+The `@Directive` decorator's lone configuration property specifies the directive's
+[CSS attribute selector](https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors), `[appHighlight]`.
 
-属性セレクターとして扱うには、角括弧（`[]`）を使います。Angularは、Plantillas内の`appHighlight`という名前の属性をもつ各要素を見つけ、その要素にこのディレクティブのロジックを適用します。
+It's the brackets (`[]`) that make it an attribute selector.
+Angular locates each element in the template that has an attribute named `appHighlight` and applies the logic of this directive to that element.
 
-_属性セレクタ_ パターンは、この種のディレクティブの名前を説明します。
+The _attribute selector_ pattern explains the name of this kind of directive.
 
 <div class="alert is-helpful">
 
-#### なぜ、highlightではないのか？
+#### Why not "highlight"?
 
-*highlight*は、*appHightlight*よりも簡潔なセレクター名で正常に動作しますが、接頭辞をつけることで、標準のHTML属性と競合しないようにすることをお勧めします。これにより、サードパーティのディレクティブ名と衝突するリスクも抑えることができます。CLIは、`app`接頭辞を付与することで衝突を避けています。
+Though *highlight* would be a more concise selector than *appHighlight* and it would work,
+the best practice is to prefix selector names to ensure
+they don't conflict with standard HTML attributes.
+This also reduces the risk of colliding with third-party directive names.
+The CLI added the `app` prefix for you.
 
-`highlight`ディレクティブの名前には、`ng`をつけないようにします。その接頭辞は、Angularの予約語であり、これを使ってしまうと調査が困難な不具合が発生する恐れがあります。
+Make sure you do **not** prefix the `highlight` directive name with **`ng`** because
+that prefix is reserved for Angular and using it could cause bugs that are difficult to diagnose.
 
 </div>
 
-`@Directive`メタデータの後には、ディレクティブのコントローラークラス(`HighlightDirective`)がきます。このクラスには、ディレクティブの(現在は空の)ロジックが含まれています。`HighlightDirective`をエクスポートすると、このディレクティブにアクセスできるようになります。
+After the `@Directive` metadata comes the directive's controller class,
+called `HighlightDirective`, which contains the (currently empty) logic for the directive.
+Exporting `HighlightDirective` makes the directive accessible.
 
-生成された`src/app/highlight.directive.ts`を次のように編集します。
+Now edit the generated `src/app/highlight.directive.ts` to look as follows:
 
 <code-example path="attribute-directives/src/app/highlight.directive.1.ts" header="src/app/highlight.directive.ts"></code-example>
 
-`import`ステートメントは、Angularの`core`ライブラリから追加の`ElementRef`シンボルを指定します。
+The `import` statement specifies an additional `ElementRef` symbol from the Angular `core` library:
 
-ディレクティブのコンストラクター内で`ElementRef`を使用して、`appHighlight`を適用したDOM要素への参照を[注入](guide/dependency-injection)します。
+You use the `ElementRef` in the directive's constructor
+to [inject](guide/dependency-injection) a reference to the host DOM element,
+the element to which you applied `appHighlight`.
 
-`ElementRef`は、`nativeElement`プロパティを使用して、ホストDOM要素へ直接アクセスすることができます。
+`ElementRef` grants direct access to the host DOM element
+through its `nativeElement` property.
 
-この最初の実装では、ホスト要素の背景色を黄色に設定します。
+This first implementation sets the background color of the host element to yellow.
 
 {@a apply-directive}
 
-## 属性ディレクティブを適用する
+## Apply the attribute directive
 
-新しい`HighlightDirective`を使用するには、ルートである`AppComponent`のPlantillasへ段落(`<p>`)要素を追加し、属性としてディレクティブを適用します。
+To use the new `HighlightDirective`, add a paragraph (`<p>`) element to the template of the root `AppComponent` and apply the directive as an attribute.
 
 <code-example path="attribute-directives/src/app/app.component.1.html" header="src/app/app.component.html" region="applied"></code-example>
 
-次に、アプリケーションを起動して`HighlightDirective`の挙動を確認します。
+Now run the application to see the `HighlightDirective` in action.
+
 
 <code-example language="sh" class="code-shell">
 ng serve
 </code-example>
 
-要約すると、Angularは**ホスト**`<p>`要素の`appHighlight`属性を見つけました。`HighlightDirective`クラスのインスタンスを作成し、`<p>`要素の背景スタイルを黄色に設定するディレクティブのコンストラクターに`<p>`要素への参照を注入しました。
+To summarize, Angular found the `appHighlight` attribute on the **host** `<p>` element.
+It created an instance of the `HighlightDirective` class and
+injected a reference to the `<p>` element into the directive's constructor
+which sets the `<p>` element's background style to yellow.
 
 {@a respond-to-user}
 
-## ユーザーが開始したイベントに対応する
+## Respond to user-initiated events
 
-現在、`appHighlight`は単に要素の色を設定します。ディレクティブは、よりダイナミックな動作になる可能性があります。ユーザーの要素への出入りを検出し、ハイライトカラーを設定またはクリアすることによって、応答することができます。
+Currently, `appHighlight` simply sets an element color.
+The directive could be more dynamic.
+It could detect when the user mouses into or out of the element
+and respond by setting or clearing the highlight color.
 
-まず、インポートされたシンボルのリストに`HostListener`を追加します。
+Begin by adding `HostListener` to the list of imported symbols.
 
 <code-example path="attribute-directives/src/app/highlight.directive.2.ts" header="src/app/highlight.directive.ts (imports)" region="imports"></code-example>
 
-次に、マウスの出入りに応答する2つのイベントハンドラーを追加します。個々のイベントハンドラーは、`HostListener`デコレーターによって装飾されます。
+Then add two event handlers that respond when the mouse enters or leaves,
+each adorned by the `HostListener` decorator.
 
 <code-example path="attribute-directives/src/app/highlight.directive.2.ts" header="src/app/highlight.directive.ts (mouse-methods)" region="mouse-methods"></code-example>
 
-`@HostListener`デコレーターは、属性ディレクティブをホストする要素（この場合は`<p>`）DOM要素のイベントに登録することができます。
+The `@HostListener` decorator lets you subscribe to events of the DOM
+element that hosts an attribute directive, the `<p>` in this case.
 
 <div class="alert is-helpful">
 
-もちろん、標準のJavaScriptを使用してDOMへアクセスし、イベントリスナーを手動でアタッチすることもできます。そのアプローチには少なくとも3つの問題があります。
+Of course you could reach into the DOM with standard JavaScript and attach event listeners manually.
+There are at least three problems with _that_ approach:
 
-1. リスナーを正しく記述する必要があります
-1. メモリリークを避けるために、ディレクティブが破棄された時にリスナーを*デタッチ*する必要があります
-1. DOM APIを直接扱うことはベストプラクティスではありません
+1. You have to write the listeners correctly.
+1. The code must *detach* the listener when the directive is destroyed to avoid memory leaks.
+1. Talking to DOM API directly isn't a best practice.
 
 </div>
 
-ハンドラーは、ホストのDOM要素である`el`の色を設定するヘルパーメソッドに委譲します。
+The handlers delegate to a helper method that sets the color on the host DOM element, `el`.
 
-ヘルパーメソッドである`highlight`がコンストラクターから抽出されました。
-改訂されたコンストラクターは、単に注入された`el: ElementRef`を宣言します。
+The helper method, `highlight`, was extracted from the constructor.
+The revised constructor simply declares the injected `el: ElementRef`.
 
 <code-example path="attribute-directives/src/app/highlight.directive.2.ts" header="src/app/highlight.directive.ts (constructor)" region="ctor"></code-example>
 
-更新されたディレクティブは、すべてここにあります。
+Here's the updated directive in full:
 
 <code-example path="attribute-directives/src/app/highlight.directive.2.ts" header="src/app/highlight.directive.ts"></code-example>
 
-アプリケーションを起動し、ポインターがパラグラフ要素の上へホバーするときに背景色が表示され、ポインターが離れると消えていることを確認します。
+Run the app and confirm that the background color appears when
+the pointer hovers over the paragraph element and disappears as the pointer moves out.
 
 <div class="lightbox">
   <img src="generated/images/guide/attribute-directives/highlight-directive-anim.gif" alt="Second Highlight">
@@ -153,88 +181,95 @@ ng serve
 
 {@a bindings}
 
-## _@Input_ データバインディングでディレクティブへ値を渡す
+## Pass values into the directive with an _@Input_ data binding
 
-現在、ハイライト表示の色は、ディレクティブ _内_ でハードコードされていますが、これでは柔軟性に欠けてしまいます。このセクションでは、ディレクティブを適用しながら、ハイライトカラーを設定する方法を開発者へ示します。
+Currently the highlight color is hard-coded _within_ the directive. That's inflexible.
+In this section, you give the developer the power to set the highlight color while applying the directive.
 
-`@angular/core`からインポートされたシンボルのリストに`Input`を追加することから始めてください。
+Begin by adding `Input` to the list of symbols imported from `@angular/core`.
 <code-example path="attribute-directives/src/app/highlight.directive.3.ts" header="src/app/highlight.directive.ts (imports)" region="imports"></code-example>
 
-次のように、ディレクティブクラスに`highlightColor`プロパティを追加します。
+Add a `highlightColor` property to the directive class like this:
 
 <code-example path="attribute-directives/src/app/highlight.directive.2.ts" header="src/app/highlight.directive.ts (highlightColor)" region="color"></code-example>
 
 {@a input}
 
-### `@Input`プロパティへのバインド
+### Binding to an _@Input_ property
 
-`@Input`デコレーターに注目してください。ディレクティブの`highlightColor`プロパティをバインディングに使用できるように、クラスへメタデータを追加します。
+Notice the `@Input` decorator. It adds metadata to the class that makes the directive's `highlightColor` property available for binding.
 
-*input*プロパティと呼ばれるのは、データがバインディング式からディレクティブ _へ_ 流れるためです。その入力メタデータがなければ、Angularは、バインディング拒否します。詳細は[以下](guide/attribute-directives#why-input "なぜ、@Inputを追加するのか？")を参照してください。
+It's called an *input* property because data flows from the binding expression _into_ the directive.
+Without that input metadata, Angular rejects the binding; see [below](guide/attribute-directives#why-input "Why add @Input?") for more about that.
 
-`AppComponent`のPlantillasに次のバリエーションを追加してみてください。
+Try it by adding the following directive binding variations to the `AppComponent` template:
 
 <code-example path="attribute-directives/src/app/app.component.1.html" header="src/app/app.component.html (excerpt)" region="color-1"></code-example>
 
-`AppComponent`に`color`プロパティを追加してください。
+Add a `color` property to the `AppComponent`.
 
 <code-example path="attribute-directives/src/app/app.component.1.ts" header="src/app/app.component.ts (class)" region="class"></code-example>
 
-プロパティバインディングでハイライトの色を制御します。
+Let it control the highlight color with a property binding.
 
 <code-example path="attribute-directives/src/app/app.component.1.html" header="src/app/app.component.html (excerpt)" region="color-2"></code-example>
 
-ディレクティブを同時に適用し、このような _同じ属性_ に色を設定するとよりよいでしょう。
+That's good, but it would be nice to _simultaneously_ apply the directive and set the color _in the same attribute_ like this.
 
 <code-example path="attribute-directives/src/app/app.component.html" header="src/app/app.component.html (color)" region="color"></code-example>
 
-`[appHighlight]`属性バインディングが、`<p>`要素へハイライト表示ディレクティブを適用し、プロパティバインディングでディレクティブのハイライトカラーを設定します。
-両方の作業を行うには、ディレクティブの属性セレクター(`[appHighlight]`)を再利用しており、これは明快でコンパクトな構文です。
+The `[appHighlight]` attribute binding both applies the highlighting directive to the `<p>` element
+and sets the directive's highlight color with a property binding.
+You're re-using the directive's attribute selector (`[appHighlight]`) to do both jobs.
+That's a crisp, compact syntax.
 
-カラーのプロパティバインディングの名前になったため、ディレクティブの`highlightColor`プロパティの名前を`appHighlight`に変更する必要があります。
+You'll have to rename the directive's `highlightColor` property to `appHighlight` because that's now the color property binding name.
 
 <code-example path="attribute-directives/src/app/highlight.directive.2.ts" header="src/app/highlight.directive.ts (renamed to match directive selector)" region="color-2"></code-example>
 
-`appHighlight`という単語は恐ろしいプロパティ名であり、プロパティの意図を伝えていないので、これでは不愉快です。
+This is disagreeable. The word, `appHighlight`, is a terrible property name and it doesn't convey the property's intent.
 
 {@a input-alias}
 
-### @Inputエイリアスにバインドする
+### Bind to an _@Input_ alias
 
-幸いなことに、ディレクティブのプロパティに任意の名前をつけ、バインディングのために _エイリアス_ をつけることができます。
+Fortunately you can name the directive property whatever you want _and_ **_alias it_** for binding purposes.
 
-元のプロパティ名を復元し、セレクターを`@Input`の引数のエイリアスとして指定します。
+Restore the original property name and specify the selector as the alias in the argument to `@Input`.
 
 <code-example path="attribute-directives/src/app/highlight.directive.ts" header="src/app/highlight.directive.ts (color property with alias)" region="color"></code-example>
 
-このディレクティブの _内部_ では、プロパティは`highlightColor`として知られています。
-このディレクティブの _外部_ では、バインド先は`appHighlight`と呼ばれています。
+_Inside_ the directive the property is known as `highlightColor`.
+_Outside_ the directive, where you bind to it, it's known as `appHighlight`.
 
-これにより、望むプロパティ名とバインディング構文との、両方のベストな世界を得ます。
+You get the best of both worlds: the property name you want and the binding syntax you want:
 
 <code-example path="attribute-directives/src/app/app.component.html" header="src/app/app.component.html (color)" region="color"></code-example>
 
-エイリアスを介して`highlightColor`へバインディングするので、`onMouseEnter()`メソッドをそのプロパティを使用するために修正してください。誰かが`appHighlightColor`へのバインディングを怠ると、ホスト要素を赤でハイライトします。
+Now that you're binding via the alias to the `highlightColor`, modify the `onMouseEnter()` method to use that property.
+If someone neglects to bind to `appHighlight`, highlight the host element in red:
 
 <code-example path="attribute-directives/src/app/highlight.directive.3.ts" header="src/app/highlight.directive.ts (mouse enter)" region="mouse-enter"></code-example>
 
-ここに、ディレクティブのクラスの最新バージョンがあります。
+Here's the latest version of the directive class.
 
 <code-example path="attribute-directives/src/app/highlight.directive.3.ts" header="src/app/highlight.directive.ts (excerpt)"></code-example>
 
-## 試すためのハーネスを書く
+## Write a harness to try it
 
-このディレクティブが実際のどのように動作するかを想像することは難しいかもしれません。このセクションでは、`AppComponent`をハーネスに変換して、ラジオボタンからハイライトカラーを選択し、ディレクティブへ選択した色をバインドするようにします。
+It may be difficult to imagine how this directive actually works.
+In this section, you'll turn `AppComponent` into a harness that
+lets you pick the highlight color with a radio button and bind your color choice to the directive.
 
-次のように<code>app.component.html</code>を更新します。
+Update <code>app.component.html</code> as follows:
 
 <code-example path="attribute-directives/src/app/app.component.html" header="src/app/app.component.html (v2)" region="v2"></code-example>
 
-初期値を持たないように`AppComponent.color`を修正してください。
+Revise the `AppComponent.color` so that it has no initial value.
 
 <code-example path="attribute-directives/src/app/app.component.ts" header="src/app/app.component.ts (class)" region="class"></code-example>
 
-ここにハーネスとディレクティブの動作するものがあります。
+Here are the harness and directive in action.
 
 <div class="lightbox">
   <img src="generated/images/guide/attribute-directives/highlight-directive-v2-anim.gif" alt="Highlight v.2">
@@ -242,46 +277,50 @@ ng serve
 
 {@a second-property}
 
-## 2番目のプロパティへバインドする
+## Bind to a second property
 
-ハイライトディレクティブには、カスタマイズ可能なプロパティが1つあります。実際のアプリケーションでは、もっと必要な場合があります。
+This highlight directive has a single customizable property. In a real app, it may need more.
 
-現時点では、デフォルトの色は(ユーザーがハイライトカラーを選択するまで)「赤」としてハードコードされています。Plantillas開発者にデフォルトの色を設定させます。
+At the moment, the default color&mdash;the color that prevails until
+the user picks a highlight color&mdash;is hard-coded as "red".
+Let the template developer set the default color.
 
-`HighlightDirective`へ`defaultColor`と呼ばれる2番目の**input**プロパティを追加します。
+Add a second **input** property to `HighlightDirective` called `defaultColor`:
 
 <code-example path="attribute-directives/src/app/highlight.directive.ts" header="src/app/highlight.directive.ts (defaultColor)" region="defaultColor"></code-example>
 
-ディレクティブの`onMouseEnter`を改訂して、最初に`highlightColor`でハイライトし、次に`defaultColor`でハイライトし、どちらのプロパティも未定義の場合は「赤」に戻します。
+Revise the directive's `onMouseEnter` so that it first tries to highlight with the `highlightColor`,
+then with the `defaultColor`, and falls back to "red" if both properties are undefined.
 
 <code-example path="attribute-directives/src/app/highlight.directive.ts" header="src/app/highlight.directive.ts (mouse-enter)" region="mouse-enter"></code-example>
 
-すでに`appHighlight`属性へバインドしているとき、2番目のプロパティへどのようにバインドしますか？
+How do you bind to a second property when you're already binding to the `appHighlight` attribute name?
 
-コンポーネントの場合と同様に、必要に応じてPlantillas内で文字列を並べることで、多くのディレクティブプロパティバインディングを追加できます。
-
-開発者は、次のPlantillasHTMLを書くことができ、どちらも`AppComponent.color`へバインドします。デフォルトの色として「紫」に戻ります。
+As with components, you can add as many directive property bindings as you need by stringing them along in the template.
+The developer should be able to write the following template HTML to both bind to the `AppComponent.color`
+and fall back to "violet" as the default color.
 
 <code-example path="attribute-directives/src/app/app.component.html" header="src/app/app.component.html (defaultColor)" region="defaultColor"></code-example>
 
-Angularは、`@Input`デコレーターで _パブリック_ にしたため、`defaultColor`が`HighlightDirective`に属していることを知っています。
+Angular knows that the `defaultColor` binding belongs to the `HighlightDirective`
+because you made it _public_ with the `@Input` decorator.
 
-コーディングが完了したら、ハーネスがどのように機能するかを次に示します。
+Here's how the harness should work when you're done coding.
 
 <div class="lightbox">
   <img src="generated/images/guide/attribute-directives/highlight-directive-final-anim.gif" alt="Final Highlight">
 </div>
 
-## サマリー
+## Summary
 
-このページでは以下をカバーしました。
+This page covered how to:
 
-* 要素の動作を変更する[**属性ディレクティブ**を作成](guide/attribute-directives#write-directive)する。
-* Plantillas内の要素へ[ディレクティブを適用](guide/attribute-directives#apply-directive)する。
-* ディレクティブの動作を変更する[イベントに**応答**](guide/attribute-directives#respond-to-user)する。
-* [ディレクティブへ値をバインド](guide/attribute-directives#bindings)する。
+* [Build an **attribute directive**](guide/attribute-directives#write-directive) that modifies the behavior of an element.
+* [Apply the directive](guide/attribute-directives#apply-directive) to an element in a template.
+* [Respond to **events**](guide/attribute-directives#respond-to-user) that change the directive's behavior.
+* [**Bind** values to the directive](guide/attribute-directives#bindings).
 
-最終的なソースコードは次のとおりです。
+The final source code follows:
 
 <code-tabs>
   <code-pane header="app/app.component.ts" path="attribute-directives/src/app/app.component.ts"></code-pane>
@@ -293,39 +332,58 @@ Angularは、`@Input`デコレーターで _パブリック_ にしたため、`
 </code-tabs>
 
 
-また、<live-example header="Attribute Directive example"></live-example>を体験、ダウンロードすることもできます。
+
+You can also experience and download the <live-example title="Attribute Directive example"></live-example>.
 
 {@a why-input}
 
-### Appendix(付録): なぜ、 _@Input_ を追加するのか？
+### Appendix: Why add _@Input_?
 
-このデモでは、`highlightColor`プロパティは、`HighlightDirective`の***input***プロパティです。エイリアスなしで適用されたことがわかりました。
+In this demo, the `highlightColor` property is an ***input*** property of
+the `HighlightDirective`. You've seen it applied without an alias:
 
 <code-example path="attribute-directives/src/app/highlight.directive.2.ts" header="src/app/highlight.directive.ts (color)" region="color"></code-example>
 
-エイリアスありで適用されたこともわかりました。
+You've seen it with an alias:
 
 <code-example path="attribute-directives/src/app/highlight.directive.ts" header="src/app/highlight.directive.ts (color)" region="color"></code-example>
 
-どちらも場合でも、`@Input`デコレーターは、Angularにこのプロパティが _パブリック_ であり、親コンポーネントによるバインドが可能であることを伝えています。`@Input`がなければ、Angularはプロパティへバインドすることを拒否します。
+Either way, the `@Input` decorator tells Angular that this property is
+_public_ and available for binding by a parent component.
+Without  `@Input`, Angular refuses to bind to the property.
 
-PlantillasHTMLをコンポーネントへバインドしてから、`@Input`を使用したことはありません。
-その違いは何でしょうか？
+You've bound template HTML to component properties before and never used `@Input`.
+What's different?
 
-違いは、信頼の問題です。Angularは、コンポーネントのPlantillasをコンポーネントに属するものとして扱います。コンポーネントとそのPlantillasは、暗黙のうちに互いに信頼し合います。したがって、コンポーネントの独自のPlantillasは、`@Input`デコレーターの有無にかかわらず、そのコンポーネントの任意のプロパティへバインドすることができます。
+The difference is a matter of trust.
+Angular treats a component's template as _belonging_ to the component.
+The component and its template trust each other implicitly.
+Therefore, the component's own template may bind to _any_ property of that component,
+with or without the `@Input` decorator.
 
-しかし、コンポーネントやディレクティブは、他のコンポーネントやディレクティブを盲目的に信頼するべきではありません。コンポーネントやディレクティブのプロパティは、デフォルトではバインディングから隠されています。それらは、Angularのバインディング機構からは _プライベート_ です。`@Input`デコレーターで装飾されると、プロパティはAngularのバインディング機構から _パブリック_ になります。その後、他のコンポーネントやディレクティブへバインドすることができます。
+But a component or directive shouldn't blindly trust _other_ components and directives.
+The properties of a component or directive are hidden from binding by default.
+They are _private_ from an Angular binding perspective.
+When adorned with the `@Input` decorator, the property becomes _public_ from an Angular binding perspective.
+Only then can it be bound by some other component or directive.
 
-バインディング内のプロパティ名の位置によって`@Input`が必要かどうかを知ることができます。
+You can tell if `@Input` is needed by the position of the property name in a binding.
 
-* 等式(=)の右側のPlantillas式に表示されている場合、それはPlantillasのコンポーネントに属し、`@Input`デコレーターは必要ありません。
+* When it appears in the template expression to the ***right*** of the equals (=),
+  it belongs to the template's component and does not require the `@Input` decorator.
 
-* 等式(=)の左側に角括弧([])で表示されている場合、それは _他_ のコンポーネントやディレクティブに属し、そのプロパティは、`@Input`デコレーターで飾らなければなりません。
+* When it appears in **square brackets** ([ ]) to the **left** of the equals (=),
+  the property belongs to some _other_ component or directive;
+  that property must be adorned with the `@Input` decorator.
 
-次に、その理屈を次の例に適用します。
+Now apply that reasoning to the following example:
 
 <code-example path="attribute-directives/src/app/app.component.html" header="src/app/app.component.html (color)" region="color"></code-example>
 
-* 右側の式の`color`プロパティは、Plantillasのコンポーネントに属します。Plantillasとそのコンポーネントは、お互いを信頼します。`color`プロパティは`@Input`デコレーターを必要としません。
+* The `color` property in the expression on the right belongs to the template's component.
+  The template and its component trust each other.
+  The `color` property doesn't require the `@Input` decorator.
 
-* 左側の`appHighlight`プロパティは、Plantillasのコンポーネントのプロパティではなく、`HighlightDirective`のエイリアス化されたプロパティを参照しています。これには信頼の問題があります。したがって、ディレクティブのプロパティは、`@Input`デコレーターを持っている必要があります。
+* The `appHighlight` property on the left refers to an _aliased_ property of the `HighlightDirective`,
+  not a property of the template's component. There are trust issues.
+  Therefore, the directive property must carry the `@Input` decorator.

@@ -27,9 +27,9 @@ Setting up a new project on your machine is quick and easy with the [QuickStart 
 
 
 {@a clone}
-## クローン
+## Clone
 
-次のコマンドを使って、_クローンから起動まで_を実行します。
+Perform the _clone-to-launch_ steps with these terminal commands.
 
 
 <code-example language="sh" class="code-shell">
@@ -46,7 +46,7 @@ Setting up a new project on your machine is quick and easy with the [QuickStart 
 
 
 
-Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windows_では`npm start`が失敗します。
+`npm start` fails in _Bash for Windows_ in versions earlier than the Creator's Update (April 2017).
 
 
 </div>
@@ -56,9 +56,9 @@ Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windo
 {@a download}
 
 
-## ダウンロード
-<a href="https://github.com/angular/quickstart/archive/master.zip" title="クイックスタートシードリポジトリをダウンロード">クイックスタートシードをダウンロード</a>
-し、あなたのプロジェクトフォルダーの中に解凍します。そして残りのステップを次のターミナルコマンドで実行します。
+## Descargar
+<a href="https://github.com/angular/quickstart/archive/master.zip" title="Descargar the QuickStart seed repository">Descargar the QuickStart seed</a>
+and unzip it into your project folder. Then perform the remaining steps with these terminal commands.
 
 
 <code-example language="sh" class="code-shell">
@@ -74,7 +74,7 @@ Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windo
 
 
 
-Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windows_では`npm start`が失敗します。
+`npm start` fails in _Bash for Windows_ in versions earlier than the Creator's Update (April 2017).
 
 
 </div>
@@ -85,23 +85,24 @@ Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windo
 
 
 
-## _必要ではない_ファイルの削除 (任意)
+## Delete _non-essential_ files (optional)
 
-テストに関するファイルとクリックスタートのリポジトリ管理のためのファイル(`.git`フォルダと`.gitignore`のような***git関連のアーティファクトを含みます。***)はすぐに削除できます。
+You can quickly delete the _non-essential_ files that concern testing and QuickStart repository maintenance
+(***including all git-related artifacts*** such as the `.git` folder and `.gitignore`!).
 
 
 <div class="alert is-important">
 
 
 
-あなた自身のテストやgitprepararを誤って削除しないようにprepararの開始時にだけ行ってください！
+Do this only in the beginning to avoid accidentally deleting your own tests and git setup!
 
 
 </div>
 
 
 
-プロジェクトフォルダでターミナルを開いて、次のコマンドを環境に合わせて実行してください。
+Open a terminal window in the project folder and enter the following commands for your environment:
 
 ### OS/X (bash)
 
@@ -129,18 +130,20 @@ Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windo
 
 
 
-## クイックスタートのシードには何が入っているでしょうか？
+## What's in the QuickStart seed?
 
 
 
-**クイックスタートシード** は、基本的なクイックスタートプレイグラウンドのアプリケーションと、ローカル開発に必要なその他のファイルを提供します。そのため、あなたのマシンのプロジェクトフォルダにはたくさんのファイルがあり、それらのほとんどは　[あとで学ぶ](guide/file-structure)　ことができます。
+The **QuickStart seed** provides a basic QuickStart playground application and other files necessary for local development.
+Consequently, there are many files in the project folder on your machine,
+most of which you can [learn about later](guide/file-structure).
 
 
 
 {@a app-files}
 
 
-**`/src`**フォルダ内の次の3つのTypeScript (`.ts`) ファイルに注目しましょう。
+Focus on the following three TypeScript (`.ts`) files in the **`/src`** folder.
 
 
 <div class='filetree'>
@@ -195,16 +198,17 @@ Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windo
 
 
 
-すべてのガイドとクックブックは_少なくともこのコアファイル_を持っています。
-個々のファイルは個々の目的があり、アプリケーションが成長するにつれ独立して発達していきます。
+All guides and cookbooks have _at least these core files_.
+Each file has a distinct purpose and evolves independently as the application grows.
 
-`src/`の外側にあるファイルはビルド、Desplegar、そしてテストに関するものです。
-それらは設定ファイルや外部の依存です。
+Files outside `src/` concern building, deploying, and testing your app.
+They include configuration files and external dependencies.
 
-`src/`内のファイルはあなたのアプリに属します。
-特に指示がない限り、新規のTypeScript, HTML, CSSファイルは`src/`ディレクトリ、ほとんどは`src/app`に追加します。
+Files inside `src/` "belong" to your app.
+Add new Typescript, HTML and CSS files inside the `src/` directory, most of them inside `src/app`,
+unless told to do otherwise.
 
-次のファイルはすべて`src/`内にあります。
+The following are all in `src/`
 
 
 <style>
@@ -244,8 +248,9 @@ Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windo
     <td>
 
 
-      クイックスタートプレイグラウンドのものと同じ`AppComponent`を定義しています。
-      これはアプリが成長するにつれてコンポーネントの入れ子の木のルートコンポーネントになります。
+      Defines the same `AppComponent` as the one in the QuickStart playground.
+      It is the **root** component of what will become a tree of nested components
+      as the application evolves.
     </td>
 
   </tr>
@@ -259,9 +264,9 @@ Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windo
     <td>
 
 
-      Angularにどのようにアプリケーションを組み立てるのかを伝える[ルートモジュール](guide/bootstrapping "AppModule: ルートモジュール") `AppModule`を定義します。
-      いま時点では、`AppComponent`のみを宣言しています。
-      すぐに他のコンポーネントも定義することになります。
+      Defines `AppModule`, the  [root module](guide/bootstrapping "AppModule: the root module") that tells Angular how to assemble the application.
+      Right now it declares only the `AppComponent`.
+      Soon there will be more components to declare.
     </td>
 
   </tr>
@@ -275,11 +280,12 @@ Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windo
     <td>
 
 
-      アプリケーションをブラウザで実行するために、アプリケーションを[JITコンパイラ](guide/glossary#jit)でコンパイルし、
-      メインモジュール(`AppModule`)を[ブートストラップ](guide/bootstrapping)します。
-      JITコンパイラはほとんどのプロジェクトの開発期間中には現実的な選択であり、
-      Stackblitzのようにサンプルを実行する_ライブコーディング_環境ではただひとつの実行可能な選択です。
-      別のコンパイルと[Desplegar](guide/deployment)の選択肢についてはこのドキュメントの後半で学びます。
+      Compiles the application with the [JIT compiler](guide/glossary#jit) and
+      [bootstraps](guide/bootstrapping)
+      the application's main module (`AppModule`) to run in the browser.
+      The JIT compiler is a reasonable choice during the development of most projects and
+      it's the only viable choice for a sample running in a _live-coding_ environment like Stackblitz.
+      You'll learn about alternative compiling and [deployment](guide/deployment) options later in the documentation.
 
     </td>
 
@@ -293,9 +299,9 @@ Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windo
 
 
 
-### Próximos pasos
+### Next Step
 
-もしAngularになじみがないのであれば、この[Tutorial](tutorial "ツアー・オブ・ヒーローズ Tutorial")に進むことをお勧めします。
+If you're new to Angular, we recommend you follow the [tutorial](tutorial "Tour of Heroes tutorial").
 
 
 </div>
@@ -306,43 +312,41 @@ Creator's Update (2017年4月) よりも前のバージョンの _Bash for Windo
 
 
 
-## 付録: Node.jsとnpm
+## Appendix: Node.js and npm
 
 
-[Node.js](https://nodejs.org/ja/)と[npm](https://www.npmjs.com/)パッケージマネージャーはAngularと他のプラットフォームを使ってモダンなWeb開発をするにあたり不可欠なものです。
-Node.jsはクライアント開発とビルドツールを供給します。
-_npm_ パッケージマネージャーは、それ自身が _Node.js_ アプリケーションであり、JavaScriptのライブラリをインストールします。
+[Node.js](https://nodejs.org/en/) and the [npm](https://www.npmjs.com/) package manager are essential to modern web development with Angular and other platforms.
+Node.js powers client development and build tools.
+The _npm_ package manager, which is itself a _Node.js_ application, installs JavaScript libraries.
 
-もしまだマシン上にインストールされていない場合は<a href="https://docs.npmjs.com/getting-started/installing-node" target="_blank" title="Node.jsをインストール、npmをアップデートしましょう">
-いますぐ手に入れましょう。</a>
+<a href="https://docs.npmjs.com/getting-started/installing-node" target="_blank" title="Installing Node.js and updating npm">
+Get them now</a> if they're not already installed on your machine.
 
-ターミナル/コンソール上で`node -v`と`npm -v`を実行して、
-**Node.js `v8.x` 以上とnpm `5.x`以上で実行していることを確認してください。**
-古いバージョンではエラーになります。
+**Verify that you are running Node.js `v8.x` or higher and npm `5.x` or higher**
+by running the commands `node -v` and `npm -v` in a terminal/console window.
+Older versions produce errors.
 
-我々はNode.jsとnpmの複数バージョンを管理するために[nvm](https://github.com/creationix/nvm)を使用することを推奨しています。
-もしあなたのマシン上で古いバージョンのNode.jsとnpmで動作するプロジェクトがある場合には[nvm](https://github.com/creationix/nvm)が必要になるでしょう。
-
-
-
-## 付録: IEを使ったローカル開発
-
-`ng serve` を使ってローカルでAngular開発をする際、自動的にブラウザとローカル開発サーバーとの間で`websocket` 接続がprepararされるためコードが変更されると、ブラウザは自動的にリフレッシュします。
-
-Windowsではデフォルトではアプリケーションは6つの接続しかできません。
-<a href="https://msdn.microsoft.com/library/ee330736%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396#websocket_maxconn" title="MSDN WebSocket settings">MSDN WebSocket Settings</a>.
-なので、IEが手動または`ng serve`によって自動的にリフレッシュされると、たまに、websocketが適切に切断されず、websocketの接続が限度を超えると、`SecurityError`が投げられます。このエラーはAngularアプリケーションに影響しません。このエラーをクリアするためにはIEを再起動するか、またはwindowsのレジストリを書き換えて限度数を更新します。
+We recommend [nvm](https://github.com/creationix/nvm) for managing multiple versions of Node.js and npm.
+You may need [nvm](https://github.com/creationix/nvm) if you already have projects running on your machine that use other versions of Node.js and npm.
 
 
-## 付録: `fakeAsync()/async()` を使ったテスト　{@a appendix-test-using-fakeasyncasync}
 
-もしユニットテストを実行するために `fakeAsync()/async()` ヘルパー関数を使う場合 （詳細は[テスティングガイド](guide/testing#async-test-with-fakeasync)を参照してください。) は、`zone.js/dist/zone-testing` をテストのprepararファイルでインポートしなければなりません。
+## Appendix: Develop locally with IE
+
+If you develop angular locally with `ng serve`, a `websocket` connection is set up automatically between browser and local dev server, so when your code changes, the browser can automatically refresh.
+
+In Windows, by default, one application can only have 6 websocket connections, <a href="https://msdn.microsoft.com/library/ee330736%28v=vs.85%29.aspx?f=255&MSPPError=-2147217396#websocket_maxconn" title="MSDN WebSocket settings">MSDN WebSocket Settings</a>.
+So when IE is refreshed (manually or automatically by `ng serve`), sometimes the websocket does not close properly. When websocket connections exceed the limitations, a `SecurityError` will be thrown. This error will not affect the angular application, you can just restart IE to clear this error, or modify the windows registry to update the limitations.
+
+## Appendix: Test using `fakeAsync()/async()`
+
+If you use the `fakeAsync()/async()` helper function to run unit tests (for details, read the [Testing guide](guide/testing#async-test-with-fakeasync)), you need to import `zone.js/dist/zone-testing` in your test setup file.
 
 <div class="alert is-important">
-もし Angular CLIを使ってプロジェクトを作っていれば、すでに `src/test.ts` の中でインポートされています。
+If you create project with `Angular/CLI`, it is already imported in `src/test.ts`.
 </div>
 
-そしてAngularの古いバージョンでは、次のファイルがインポートされるか、HTMLファイルに追加されていました。
+And in the earlier versions of `Angular`, the following files were imported or added in your html file:
 
 ```
 import 'zone.js/dist/long-stack-trace-zone';
@@ -353,4 +357,4 @@ import 'zone.js/dist/async-test';
 import 'zone.js/dist/fake-async-test';
 ```
 
-これらを個別に読み込むこともまだできますが、しかしその順序が重要であり、 `proxy` は `sync-test`や`async-test`、`fake-async-test`、`jasmine-patch`の前に読み込まなければなりません。そしてまた　`sync-test` は `jasmine-patch`の前にインポートする必要があります。なので、個別に読み込むよりも `zone-testing` だけを読み込むことを推奨します。
+You can still load those files separately, but the order is important, you must import `proxy` before `sync-test`, `async-test`, `fake-async-test` and `jasmine-patch`. And you also need to import `sync-test` before `jasmine-patch`, so it is recommended to just import `zone-testing` instead of loading those separated files.

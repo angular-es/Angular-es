@@ -1,16 +1,16 @@
-# ライブラリを作成する
+# Creating libraries
 
-Angular の機能を拡張するために新しいライブラリを作成して公開することができます。同じ問題を複数のアプリで解決する必要があると判断した場合 (または他の開発者と解決策を共有したい場合)、それはライブラリの候補となります。
+You can create and publish new libraries to extend Angular functionality. If you find that you need to solve the same problem in more than one app (or want to share your solution with other developers), you have a candidate for a library.
 
-簡単な例としては、会社の Web サイトにユーザーを送信するボタンがあります。これは、会社が構築するすべてのアプリに含まれています。
+A simple example might be a button that sends users to your company website, that would be included in all apps that your company builds.
 
 <div class="alert is-helpful">
-     <p>ライブラリプロジェクトの構造の詳細については、<a href="guide/file-structure#library-project-files">ライブラリプロジェクトファイル</a>を参照してください。</p>
+     <p>For more details on how a library project is structured you can refer the <a href="guide/file-structure#library-project-files">Library Project Files</a></p>
 </div>
 
-## はじめに
+## Getting started
 
-Angular CLI を使用して次のコマンドで新しいライブラリスケルトンを生成します。
+Use the Angular CLI to generate a new library skeleton with the following command:
 
 <code-example language="bash">
  ng new my-workspace --create-application=false
@@ -22,8 +22,8 @@ Angular CLI を使用して次のコマンドで新しいライブラリスケ�
      <p>You can use the monorepo model to use the same workspace for multiple projects. See <a href="guide/file-structure#multiple-projects">Setting up for a multi-project workspace</a>.</p>
 </div>
 
-これはあなたのワークスペースに `projects/my-lib` フォルダを作成します。そこには NgModule 内のコンポーネントとサービスが含まれています。
-ワークスペースの設定ファイル `angular.json` は、タイプ 'library' のプロジェクトで更新されています。
+This creates the `projects/my-lib` folder in your workspace, which contains a component and a service inside an NgModule.
+The workspace configuration file, `angular.json`, is updated with a project of type 'library'.
 
 <code-example format="json">
 "projects": {
@@ -39,7 +39,7 @@ Angular CLI を使用して次のコマンドで新しいライブラリスケ�
         ...
 </code-example>
 
-CLI コマンドを使用してプロジェクトをビルド、テスト、およびチェックすることができます:
+You can build, test, and lint the project with CLI commands:
 
 <code-example language="bash">
  ng build my-lib
@@ -47,69 +47,69 @@ CLI コマンドを使用してプロジェクトをビルド、テスト、お�
  ng lint my-lib
 </code-example>
 
-プロジェクト用に構成されたビルダーは、アプリプロジェクト用のデフォルトのビルダーとは異なることに注意してください。
-このビルダーは、とりわけ、`--prod` フラグを指定する必要はなく、ライブラリーがいつも [AoT コンパイラー](guide/aot-compiler)でビルドされることを保証します。
+Notice that the configured builder for the project is different from the default builder for app projects.
+This builder, among other things, ensures that the library is always built with the [AOT compiler](guide/aot-compiler), without the need to specify the `--prod` flag.
 
-ライブラリコードを再利用可能にするには、そのためのパブリック API を定義する必要があります。この「ユーザー層」はライブラリの使用者が使用できるものを定義します。ライブラリのユーザーは、単一のインポートパスを通してパブリック機能 (NgModules、サービスプロバイダー、一般的なユーティリティ機能など) にアクセス可能であるべきです。
+To make library code reusable you must define a public API for it. This "user layer" defines what is available to consumers of your library. A user of your library should be able to access public functionality (such as NgModules, service providers and general utility functions) through a single import path.
 
-ライブラリのパブリック API は、ライブラリフォルダの `public-api.ts` ファイルで管理されています。
-このファイルからエクスポートされたものはすべて、ライブラリがアプリケーションにインポートされたときに公開されます。
-NgModule を使用してサービスとコンポーネントを公開します。
+The public API for your library is maintained in the `public-api.ts` file in your library folder.
+Anything exported from this file is made public when your library is imported into an application.
+Use an NgModule to expose services and components.
 
-ライブラリはインストールとメンテナンスのためにドキュメンテーション (通常は README ファイル) を提供するべきです。
+Your library should supply documentation (typically a README file) for installation and maintenance.
 
-## アプリの一部をライブラリにリファクタリングする
+## Refactoring parts of an app into a library
 
-ソリューションを再利用可能にするには、それがアプリ固有のコードに依存しないように調整する必要があります。
-アプリケーション機能をライブラリに移行する際に考慮すべき点がいくつかあります。
+To make your solution reusable, you need to adjust it so that it does not depend on app-specific code.
+Here are some things to consider in migrating application functionality to a library.
 
-* コンポーネントやパイプなどの宣言はステートレスとして設計する必要があります。つまり、外部変数に依存したり変わったりすることはありません。状態に依存している場合は、すべてのケースを評価し、それがアプリケーションの状態か、ライブラリが管理する状態かを判断する必要があります。
+* Declarations such as components and pipes should be designed as stateless, meaning they don’t rely on or alter external variables. If you do rely on state, you need to evaluate every case and decide whether it is application state or state that the library would manage.
 
-* コンポーネントが内部的にサブスクライブしている Observable は、それらのコンポーネントのライフサイクル中にクリーンアップされ、除去されるべきです。
+* Any observables that the components subscribe to internally should be cleaned up and disposed of during the lifecycle of those components.
 
-* コンポーネントは、コンテキストを提供するための入力、およびイベントを他のコンポーネントに伝達するための出力を介してそれらの相互作用を公開する必要があります。
+* Components should expose their interactions through inputs for providing context, and outputs for communicating events to other components.
 
-* サービスは (NgModule やコンポーネントでプロバイダーを宣言するのではなく) 独自のプロバイダーを宣言する必要があります。そのため、それらは*ツリーシェイク可能*です。これにより、ライブラリをインポートするアプリケーションにサービスがインジェクトされることがない場合、コンパイラはサービスをバンドルから除外することができます。これについて詳しくは、[ツリーシェイク可能プロバイダ](guide/dependency-injection-providers#tree-shakable-providers) を参照してください。
+* Services should declare their own providers (rather than declaring providers in the NgModule or a component), so that they are *tree-shakable*. This allows the compiler to leave the service out of the bundle if it never gets injected into the application that imports the library. For more about this, see [Tree-shakable providers](guide/dependency-injection-providers#tree-shakable-providers).
 
-* グローバルサービスプロバイダーを登録したり、複数の NgModule にわたってプロバイダーを共有したりする場合は、[RouterModule](api/router/RouterModule)で提供されている [`forRoot()` および `forChild()` パターン](guide/singleton-services) を使用してください。
+* If you register global service providers or share providers across multiple NgModules, use the [`forRoot()` and `forChild()` patterns](guide/singleton-services) provided by the [RouterModule](api/router/RouterModule).
 
-* すべての内部依存関係を確認してください。
-   * コンポーネントまたはサービスで使用されるカスタムクラスまたはインターフェースの場合は、それらも移行が必要な追加のクラスまたはインターフェースに依存しているかどうかを確認します。
-   * 同様に、ライブラリコードがサービスに依存している場合は、そのサービスを移行する必要があります。
-   * ライブラリコードまたはそのPlantillasが他のライブラリ (Angular Material など) に依存している場合は、それらの依存関係を使用してライブラリを構成する必要があります。
+* Check all internal dependencies.
+   * For custom classes or interfaces used in components or service, check whether they depend on additional classes or interfaces that also need to be migrated.
+   * Similarly, if your library code depends on a service, that service needs to be migrated.
+   * If your library code or its templates depend on other libraries (such a Angular Material, for instance), you must configure your library with those dependencies.
 
-## 再利用可能なコードと schematics
+## Reusable code and schematics
 
-ライブラリには通常、コンポーネント、サービス、およびプロジェクトにインポートするだけのその他の Angular アーティファクト (パイプ、ディレクティブなど) を定義する再利用可能なコードが含まれています。
-ライブラリーは、公開および共有のために npm パッケージにパッケージ化されており、このパッケージには、CLI が `ng generate component` を使用して汎用スケルトンアプリケーションを作成するのと同じ方法で、プロジェクト内で直接コードを生成または変換するための手順を提供する [schematics](guide/glossary#schematic) を含めることもできます。
-ライブラリと組み合わせた schematics は、たとえば Angular CLI にそのライブラリで定義された特定のコンポーネントを生成するために必要な情報を提供することができます。
+A library typically includes *reusable code* that defines components, services, and other Angular artifacts (pipes, directives, and so on) that you simply import into a project.
+A library is packaged into an npm package for publishing and sharing, and this package can also include [schematics](guide/glossary#schematic) that provide instructions for generating or transforming code directly in your project, in the same way that the CLI creates a generic skeleton app with `ng generate component`.
+A schematic that is combined with a library can, for example, provide the Angular CLI with the information it needs to generate a particular component defined in that library.
 
-ライブラリーに含めるものは、実現したいタスクの種類によって決まります。
-たとえば、データをドロップダウンしてアプリに追加する方法を示すために、ライブラリに作成する schematic を定義することができます。
-毎回異なる渡された値を含むドロップダウンのようなコンポーネントの場合は、それを共有ライブラリのコンポーネントとして指定できます。
+What you include in your library is determined by the kind of task you are trying to accomplish.
+For example, if you want a dropdown with some canned data to show how to add it to your app, your library could define a schematic to create it.
+For a component like a dropdown that would contain different passed-in values each time, you could provide it as a component in a shared library.
 
-設定ファイルを読み、その設定に基づいてフォームを生成したいとしましょう。
-そのフォームがユーザーによる追加のカスタマイズを必要とするならば、それは schematic としてもっともうまくいくかもしれません。
-ただし、フォームが常に同じで開発者がそれほどカスタマイズする必要がない場合は、構成を取得してフォームを生成する動的コンポーネントを作成できます。
-一般に、カスタマイズが複雑になればなるほど、schematic アプローチはより有用になります。
+Suppose you want to read a configuration file and then generate a form based on that configuration.
+If that form will need additional customization by the user, it might work best as a schematic.
+However, if the forms will always be the same and not need much customization by developers, then you could create a dynamic component that takes the configuration and generates the form.
+In general, the more complex the customization, the more useful the schematic approach.
 
 {@a integrating-with-the-cli}
 
-## CLI との統合
+## Integrating with the CLI
 
-ライブラリには、Angular CLI と統合するための [schematics](guide/glossary#schematic) を含めることができます。
+A library can include [schematics](guide/glossary#schematic) that allow it to integrate with the Angular CLI.
 
-* `ng add` がライブラリをプロジェクトに追加できるようにインストール用の schematic を含めてください。
+* Include an installation schematic so that `ng add` can add your library to a project.
 
-* `ng generate` がプロジェクト内の定義済みの成果物 (コンポーネント、サービス、テストなど) に雛形を生成することができるように、生成用の schematics を含めます。
+* Include generation schematics in your library so that `ng generate` can scaffold your defined artifacts (components, services, tests, and so on) in a project.
 
-* `ng update` がライブラリの依存関係を更新し、新しいリリースでの破壊的変更の移行を提供できるように、更新 schematic を含めてください。
+* Include an update schematic so that `ng update` can update your library’s dependencies and provide migrations for breaking changes in new releases.
 
-詳細については、[Schematics の概要](guide/schematics) および [ライブラリの Schematics](guide/schematics-for-libraries) を参照してください。
+To learn more, see [Schematics Overview](guide/schematics) and [Schematics for Libraries](guide/schematics-for-libraries).
 
-## ライブラリを公開する {@a publishing-your-library}
+## Publishing your library
 
-Angular CLI と npm パッケージマネージャーを使用して、ライブラリを npm パッケージとしてビルドおよび公開します。
+Use the Angular CLI and the npm package manager to build and publish your library as an npm package. 
 
 Before publishing a library to NPM, build it using the `--prod` flag which will use the older compiler and runtime known as View Engine instead of Ivy.
 
@@ -119,7 +119,7 @@ cd dist/my-lib
 npm publish
 </code-example>
 
-これまでに npm でパッケージを公開したことがない場合は、ユーザーアカウントを作成する必要があります。[npm パッケージの公開](https://docs.npmjs.com/getting-started/publishing-npm-packages)で詳細を読んでください。
+If you've never published a package in npm before, you must create a user account. Read more in [Publishing npm Packages](https://docs.npmjs.com/getting-started/publishing-npm-packages).
 
 <div class="alert is-important">
 
@@ -141,26 +141,26 @@ You can use this feature when your library needs to publish optional theming fil
 * Learn more about how to use the tool to [embed assets in CSS](https://github.com/ng-packagr/ng-packagr/blob/master/docs/embed-assets-css.md).
 
 
-## リンクライブラリ
+## Linked libraries
 
-公開されているライブラリで作業している間は、すべてのビルドでライブラリを再インストールしないように [npm link](https://docs.npmjs.com/cli/link) を使用できます。
+While working on a published library, you can use [npm link](https://docs.npmjs.com/cli/link) to avoid reinstalling the library on every build.
 
-ライブラリはすべての変更ごとに再ビルドする必要があります。
-ライブラリをリンクするときは、ビルドステップが監視モードで実行されていること、およびライブラリの `package.json` 設定が正しいエントリポイントを指していることを確認してください。
-たとえば、`main` は TypeScript ファイルではなく JavaScript ファイルを指す必要があります。
+The library must be rebuilt on every change.
+When linking a library, make sure that the build step runs in watch mode, and that the library's `package.json` configuration points at the correct entry points.
+For example, `main` should point at a JavaScript file, not a TypeScript file.
 
-## ピア依存関係に TypeScript パスマッピングを使用する
+## Use TypeScript path mapping for peer dependencies
 
-Angular ライブラリはすべての `@angular/*` 依存関係をピア依存関係として一覧にするべきです。
-これは、モジュールが Angular を要求したときに、それらがすべてまったく同じモジュールを取得することを保証します。
-ライブラリが `peerDependencies` の代わりに `dependencies` に `@angular/core` をリストしていると、代わりに別の Angular モジュールを取得するかもしれず、それはアプリケーションを壊すでしょう。
+Angular libraries should list all `@angular/*` dependencies as peer dependencies.
+This ensures that when modules ask for Angular, they all get the exact same module.
+If a library lists `@angular/core` in `dependencies` instead of `peerDependencies`, it might get a different Angular module instead, which would cause your application to break.
 
-ライブラリを開発している間、ライブラリが正しくコンパイルされることを保証するために `devDependencies` を通してすべてのピア依存関係をインストールしなければなりません。
-リンクされたライブラリは、それ自身の `node_modules` フォルダにある、構築に使用する独自の Angular ライブラリのセットを持ちます。
-ただし、これはアプリケーションのビルド中または実行中に問題を引き起こす可能性があります。
+While developing a library, you must install all peer dependencies through `devDependencies` to ensure that the library compiles properly.
+A linked library will then have its own set of Angular libraries that it uses for building, located in its `node_modules` folder.
+However, this can cause problems while building or running your application.
 
-この問題を回避するには、TypeScript パスマッピングを使用して、特定の場所からモジュールを読み込むように TypeScript に指示します。
-ライブラリが TypeScript 設定ファイル `./tsconfig.json` の中で使用しているすべてのピア依存関係をリストアップし、それらをアプリケーションの `node_modules` フォルダの中のローカルコピーを指すようにしてください。
+To get around this problem you can use TypeScript path mapping to tell TypeScript that it should load some modules from a specific location.
+List all the peer dependencies that your library uses in the workspace TypeScript configuration file `./tsconfig.json`, and point them at the local copy in the app's `node_modules` folder.
 
 ```
 {
@@ -176,47 +176,47 @@ Angular ライブラリはすべての `@angular/*` 依存関係をピア依存�
 }
 ```
 
-このマッピングにより、ライブラリは常に必要なモジュールのローカルコピーをロードするようになります。
+This mapping ensures that your library always loads the local copies of the modules it needs.
 
 
-## アプリで自身のライブラリを使う
+## Using your own library in apps
 
-自分のアプリケーションでライブラリを使用するためにライブラリを npm パッケージマネージャーに公開する必要はありませんが、最初にビルドする必要があります。
+You don't have to publish your library to the npm package manager in order to use it in your own apps, but you do have to build it first.
 
-アプリで独自のライブラリを使用するには：
+To use your own library in an app:
 
-* ライブラリをビルドします。 ライブラリをビルドする前に使用することはできません。
+* Build the library. You cannot use a library before it is built.
  <code-example language="bash">
  ng build my-lib
  </code-example>
 
-* アプリ内で、名前でライブラリからインポートします。
+* In your apps, import from the library by name:
  ```
  import { myExport } from 'my-lib';
  ```
 
-### ライブラリのビルドと再ビルド
+### Building and rebuilding your library
 
-ライブラリを npm パッケージとして公開してから npm からアプリケーションにインストールし直していない場合は、ビルド手順が重要です。
-たとえば、git リポジトリを複製して `npm install` を実行した場合、まだライブラリを構築していなければ、エディタは `my-lib` インポートが見つからないと表示します。
+The build step is important if you haven't published your library as an npm package and then installed the package back into your app from npm.
+For instance, if you clone your git repository and run `npm install`, your editor will show the `my-lib` imports as missing if you haven't yet built your library.
 
 <div class="alert is-helpful">
 
-Angular アプリでライブラリから何かをインポートすると、Angular はライブラリ名とディスク上の場所の間のマッピングを探します。
-ライブラリパッケージをインストールすると、マッピングは `node_modules` フォルダにあります。自身のライブラリを構築するとき、それは `tsconfig` パスでマッピングを見つけなければなりません。
+When you import something from a library in an Angular app, Angular looks for a mapping between the library name and a location on disk.
+When you install a library package, the mapping is in the `node_modules` folder. When you build your own library, it has to find the mapping in your `tsconfig` paths.
 
-Angular CLI でライブラリを生成すると自動的にそのパスが  `tsconfig` ファイルに追加されます。
-Angular CLI は `tsconfig` パスを使用してビルドシステムにライブラリの場所を伝えます。
+Generating a library with the Angular CLI automatically adds its path to the `tsconfig` file.
+The Angular CLI uses the `tsconfig` paths to tell the build system where to find the library.
 
 </div>
 
-ライブラリへの変更がアプリに反映されていないことが判明した場合、アプリはおそらくライブラリの古いビルドを使用しています。
+If you find that changes to your library are not reflected in your app, your app is probably using an old build of the library.
 
-ライブラリを変更するときはいつでもライブラリを再ビルドできますが、この追加の手順には時間がかかります。
-*インクリメンタルビルド*機能はライブラリ開発の経験を向上させます。
-ファイルが変更されるたびに、修正されたファイルを出力する部分ビルドが実行されます。
+You can rebuild your library whenever you make changes to it, but this extra step takes time.
+*Incremental builds* functionality improves the library-development experience.
+Every time a file is changed a partial build is performed that emits the amended files.
 
-開発環境では、インクリメンタルビルドをバックグラウンドプロセスとして実行することができます。この機能を利用するには、build コマンドに `--watch` フラグを追加してください。
+Incremental builds can be run as a background process in your dev environment. To take advantage of this feature add the `--watch` flag to the build command:
 
 <code-example language="bash">
 ng build my-lib --watch
@@ -226,7 +226,7 @@ ng build my-lib --watch
 
 The CLI `build` command uses a different builder and invokes a different build tool for libraries than it does for applications.
 
-* The  build system for apps, `@angular-devkit/build-angular`, is based on `webpack`, and is included in all new Angular CLI projects.
+* The build system for apps, `@angular-devkit/build-angular`, is based on `webpack`, and is included in all new Angular CLI projects.
 * The build system for libraries is based on `ng-packagr`. It is only added to your dependencies when you add a library using `ng generate library my-lib`.
 
 The two build systems support different things, and even where they support the same things, they do those things differently.

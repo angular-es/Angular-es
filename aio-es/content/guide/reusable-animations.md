@@ -1,38 +1,38 @@
-# 再利用可能なanimación
+# Reusable animations
 
-#### 前提
+#### Prerequisites
 
-次の概念への基本的な理解:
+A basic understanding of the following concepts:
 
-* [Angularanimación・Introducción](guide/animations)
-* [animaciónの遷移とトリガー](guide/transition-and-triggers)
+* [Introduction to Angular animations](guide/animations)
+* [Transition and triggers](guide/transition-and-triggers)
 
 <hr>
 
-Angularanimaciónの[AnimationOptions](api/animations/AnimationOptions)インターフェースを使用すると、異なるコンポーネント間で再利用できるanimaciónを作成できます。
+The [AnimationOptions](api/animations/AnimationOptions) interface in Angular animations enables you to create animations that you can reuse across different components.
 
-## 再利用可能なanimaciónの作成
+## Creating reusable animations
 
-再利用可能なanimaciónを作成するには、[`animation()`](api/animations/animation)メソッドを使用してanimaciónを別の`.ts`ファイルに定義し、このanimación定義を`const`のexport変数として宣言します。 このanimaciónは、[`useAnimation()`](api/animations/useAnimation)APIを使用して任意のコンポーネントでimportすると再利用できます。
+To create a reusable animation, use the [`animation()`](api/animations/animation) method to define an animation in a separate `.ts` file and declare this animation definition as a `const` export variable. You can then import and reuse this animation in any of your app components using the [`useAnimation()`](api/animations/useAnimation) API.
 
 <code-example path="animations/src/app/animations.ts" header="src/app/animations.ts" region="reusable" language="typescript"></code-example>
 
-上記のコードスニペットでは、`transAnimation`がexport変数として宣言されているので再利用可能です。
+In the above code snippet, `transAnimation` is made reusable by declaring it as an export variable.
 
 <div class="alert is-helpful">
 
-**Note:** `height`、`opacity`、`backgroundColor`、および`time`の値は、実行時に置き換えられます。
+**Note:** The `height`, `opacity`, `backgroundColor`, and `time` inputs are replaced during runtime.
 </div>
 
-`transAnimation`変数をコンポーネントクラスにインポートすると、次に示された`useAnimation()`を用いる方法で再利用することができます。
+You can import the reusable `transAnimation` variable in your component class and reuse it using the `useAnimation()` method as shown below.
 
 <code-example path="animations/src/app/open-close.component.3.ts" header="src/app/open-close.component.ts" region="reusable" language="typescript"></code-example>
 
-## Angularanimaciónの詳細
+## More on Angular animations
 
-あなたは次に興味があるかもしれません:
+You may also be interested in the following:
 
-* [Angularanimación・Introducción](guide/animations)
-* [animaciónの遷移とトリガー](guide/transition-and-triggers)
-* [複雑なanimaciónシーケンス](guide/complex-animation-sequences)
-* [ルーティング遷移のanimación](guide/route-animations)
+* [Introduction to Angular animations](guide/animations)
+* [Transition and triggers](guide/transition-and-triggers)
+* [Complex animation Sequences](guide/complex-animation-sequences)
+* [Route transition animations](guide/route-animations)

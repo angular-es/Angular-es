@@ -1,12 +1,12 @@
-# フィーチャーモジュールの遅延ロード
+# Lazy-loading feature modules
 
-デフォルトでは、NgModuleは即時にロードされます。つまり、アプリがロードされるとすぐに、すぐに必要であるかどうかにかかわらず、すべてのNgModuleがロードされます。多数のルートをもつ大規模なアプリケーションの場合は、遅延ロード（必要に応じてNgModuleをロードする設計パターン）を検討してください。
-遅延ロードは、初期バンドルサイズを小さく保つのに役立ち、これによりロード時間が短縮されます。
+By default, NgModules are eagerly loaded, which means that as soon as the app loads, so do all the NgModules, whether or not they are immediately necessary. For large apps with lots of routes, consider lazy loading&mdash;a design pattern that loads NgModules as needed. Lazy loading helps keep initial
+bundle sizes smaller, which in turn helps decrease load times.
 
 <div class="alert is-helpful">
 
-このページで説明する2つの遅延ロードされたモジュールをもつ最終的なサンプルについては
-<live-example></live-example>を参照してください。
+For the final sample app with two lazy-loaded modules that this page describes, see the
+<live-example></live-example>.
 
 </div>
 
@@ -50,47 +50,47 @@ For step-by-step instructions on lazy loading modules, continue with the followi
 
 ## Step-by-step setup
 
-遅延ロードするフィーチャーモジュールをprepararするための主なステップが2つあります:
+There are two main steps to setting up a lazy-loaded feature module:
 
-1. CLIで `--route` フラグを使ってフィーチャーモジュールを作成する
-1. ルート(route)を設定する
+1. Create the feature module with the CLI, using the `--route` flag.
+1. Configure the routes.
 
-### アプリケーションをprepararする
+### Set up an app
 
-まだアプリケーションを作成していない場合、Próximos pasosにしたがってCLIを使用してアプリケーションを作成してください。
-すでに作成している場合は[ルート(route)を設定する](#config-routes)に進んでください。
-次のコマンドを実行してください。
-ここでの`customer-app`はアプリケーション名です。
+If you don’t already have an app, you can follow the steps below to
+create one with the CLI. If you already have an app, skip to
+[Configure the routes](#config-routes). Enter the following command
+where `customer-app` is the name of your app:
 
 <code-example language="bash">
 ng new customer-app --routing
 </code-example>
 
-これにより、`customer-app`というアプリケーションが作成され、さらに`--routing`フラグによって
-`app-routing.module.ts`というファイルが生成されます。
-このファイルはフィーチャーモジュールの遅延ロードをprepararするために必要なファイルの1つです。
-コマンド`cd customer-app`を実行してプロジェクトに移動してください。
+This creates an app called `customer-app` and the `--routing` flag
+generates a file called `app-routing.module.ts`, which is one of
+the files you need for setting up lazy loading for your feature module.
+Navigate into the project by issuing the command `cd customer-app`.
 
 <div class="alert is-helpful">
 
-`--routing`オプションはAngular/CLI 8.1以上で有効です。
-[プロジェクトの更新](guide/updating)を参照してください。
+The `--routing` option requires Angular/CLI version 8.1 or higher.
+See [Keeping Up to Date](guide/updating).
 
 </div>
 
-### ルーティングをもつフィーチャーモジュールを作成する
+### Create a feature module with routing
 
-次に、ルーティングするためのコンポーネントとフィーチャーモジュールが必要になります。
-作成するために、ターミナルで次のコマンドを実行してください。`customers`はフィーチャーモジュールの名前です。`customers`フィーチャーモジュールをロードするパスもまた`--route`オプションを使用して`customers`に指定します。
+Next, you’ll need a feature module with a component to route to.
+To make one, enter the following command in the terminal, where `customers` is the name of the feature module. The path for loading the `customers` feature modules is also `customers` because it is specified with the `--route` option:
 
 <code-example language="bash">
 ng generate module customers --route customers --module app.module
 </code-example>
 
-これにより、`customers.module.ts`ファイルで定義された新しい遅延ロード可能なモジュール`CustomersModule`をもつ、`customers`フォルダーが作成されます。コマンドは`CustomersComponent`を新しいフィーチャーモジュール内に自動的に宣言します。
+This creates a `customers` folder with the new lazy-loadable module `CustomersModule` defined in the `customers.module.ts` file. The command automatically declares the `CustomersComponent` inside the new feature module.
 
-新しいモジュールは遅延ロードされることを意図しているため、コマンドは新しいフィーチャーモジュールへの参照をルートアプリケーションモジュールの`app.module.ts`ファイルに追加「しません」。
-代わりに、`--module`オプションで指定したモジュール内の`routes`配列に、宣言したルート(route)`customers`を追加します。
+Because the new module is meant to be lazy-loaded, the command does NOT add a reference to the new feature module in the application's root module file, `app.module.ts`.
+Instead, it adds the declared route, `customers` to the `routes` array declared in the module provided as the `--module` option.
 
 <code-example
   header="src/app/app-routing.module.ts"
@@ -98,19 +98,19 @@ ng generate module customers --route customers --module app.module
   region="routes-customers">
 </code-example>
 
-遅延ロード構文では、関数が後ろに続く`loadChildren`を使うことに注目してください。関数はブラウザ組み込みの動的インポート用の`import('...')`構文を用います。
-インポートのパスはそのモジュールへの相対パスです。
+Notice that the lazy-loading syntax uses `loadChildren` followed by a function that uses the browser's built-in `import('...')` syntax for dynamic imports.
+The import path is the relative path to the module.
 
-#### もう1つのフィーチャーモジュールを追加する
+#### Add another feature module
 
-同じコマンドを使って、2つ目の遅延ロードのフィーチャーモジュールとルーティングとそのスタブコンポーネントを作成します。
+Use the same command to create a second lazy-loaded feature module with routing, along with its stub component.
 
 <code-example language="bash">
 ng generate module orders --route orders --module app.module
 </code-example>
 
-これにより、`OrdersModule`と`OrdersRoutingModule`と、新しい`OrdersComponent`ソースファイルが含まれる、`orders`という新しいフォルダーが作成されます。
-`--routes`オプションを使用して指定した`orders`ルート(route)は、遅延ロード構文を使用して`app-routing.module.ts`ファイル内の`routes`配列に追加されます。
+This creates a new folder called `orders` containing the `OrdersModule` and `OrdersRoutingModule`, along with the new `OrdersComponent` source files.
+The `orders` route, specified with the `--route` option, is added to the `routes` array inside the `app-routing.module.ts` file, using the lazy-loading syntax.
 
 <code-example
   header="src/app/app-routing.module.ts"
@@ -118,72 +118,72 @@ ng generate module orders --route orders --module app.module
   region="routes-customers-orders">
 </code-example>
 
-### UIをprepararする
+### Set up the UI
 
-アドレスバーにURLを入力することもできますが、ナビゲーションUIのほうがユーザーにとって簡単でより一般的です。
-`app.component.html`のデフォルトのプレースホルダーマークアップをカスタムナビゲーションに置き換えて、
-ブラウザ内でモジュールに簡単にナビゲートすることができるようにしてみましょう:
+Though you can type the URL into the address bar, a navigation UI is easier for the user and more common.
+Replace the default placeholder markup in `app.component.html` with a custom nav
+so you can easily navigate to your modules in the browser:
 
 <code-example path="lazy-loading-ngmodules/src/app/app.component.html" header="app.component.html" region="app-component-template" header="src/app/app.component.html"></code-example>
 
-今まであなたが作成したアプリをブラウザで確認するために、ターミナルで次のコマンドを入力してください:
+To see your app in the browser so far, enter the following command in the terminal window:
 
 <code-example language="bash">
 ng serve
 </code-example>
 
-そのあとに`localhost:4200`にアクセスしてみましょう。“customer-app” という文字列と3つのボタンが表示されているはずです。
+Then go to `localhost:4200` where you should see “customer-app” and three buttons.
 
 <div class="lightbox">
   <img src="generated/images/guide/lazy-loading-ngmodules/three-buttons.png" width="300" alt="three buttons in the browser">
 </div>
 
-これらのボタンは機能します。なぜならCLIが、フィーチャーモジュールへのルート(route)を`app.module.ts`内の`routes`配列に自動的に追加したからです。
+These buttons work, because the CLI automatically added the routes to the feature modules to the `routes` array in `app.module.ts`.
 
 {@a config-routes}
 
-### インポートとルート(route)設定
+### Imports and route configuration
 
-CLIは各フィーチャーモジュールをアプリケーションレベルでのルート(route)マップへ自動的に追加します。
-デフォルトのルート(route)を追加してこれを完成させましょう。`app-routing.module.ts`ファイル内の`routes`配列を次のように更新してください:
+The CLI automatically added each feature module to the routes map at the application level.
+Finish this off by adding the default route. In the `app-routing.module.ts` file, update the `routes` array with the following:
 
 <code-example path="lazy-loading-ngmodules/src/app/app-routing.module.ts" id="app-routing.module.ts" region="const-routes" header="src/app/app-routing.module.ts"></code-example>
 
-最初の2つのパスは`CustomersModule`と`OrdersModule`へのルート(route)です。
-最後のエントリーはデフォルトのルート(route)です。空のパスは、それまでのパスにマッチしないものすべてにマッチします。
+The first two paths are the routes to the `CustomersModule` and the `OrdersModule`.
+The final entry defines a default route. The empty path matches everything that doesn't match an earlier path.
 
 
-### フィーチャーモジュールの内部
+### Inside the feature module
 
-次に、`customers.module.ts`ファイルを見てください。もしあなたがCLIを使用していて、このページに記載されている手順にしたがっている場合は、ここで何もする必要はありません。
+Next, take a look at the `customers.module.ts` file. If you’re using the CLI and following the steps outlined in this page, you don’t have to do anything here.
 
 <code-example path="lazy-loading-ngmodules/src/app/customers/customers.module.ts" id="customers.module.ts" region="customers-module" header="src/app/customers/customers.module.ts"></code-example>
 
-`customers.module.ts`ファイルでは、`customers-routing.module.ts`と`customers.component.ts`をインポートします。`CustomersModule`が自分自身のルーティングモジュールにアクセスするために`@NgModule`の`imports`配列に`CustomersRoutingModule`を追加します。そして、`CustomersComponent`は`declarations`配列に配置されます。これは`CustomersComponent`が`CustomersModule`に属することを意味します。
+The `customers.module.ts` file imports the `customers-routing.module.ts` and `customers.component.ts` files. `CustomersRoutingModule` is listed in the `@NgModule` `imports` array giving `CustomersModule` access to its own routing module. `CustomersComponent` is in the `declarations` array, which means `CustomersComponent` belongs to the `CustomersModule`.
 
 
-次に、`app-routing.module.ts`はフィーチャーモジュール`customers.module.ts`をJavaScriptの動的インポートを使用してインポートします。
+The `app-routing.module.ts` then imports the feature module, `customers.module.ts` using JavaScript's dynamic import.
 
-フィーチャー固有のルート定義ファイル`customers-routing.module.ts`はJavaScriptのインポート文を使用して、`customers.component.ts`内で定義された自身のフィーチャーコンポーネントをインポートします。それから`CustomersComponent`に空のパスをマップします。
+The feature-specific route definition file `customers-routing.module.ts` imports its own feature component defined in the `customers.component.ts` file, along with the other JavaScript import statements. It then maps the empty path to the `CustomersComponent`.
 
 <code-example path="lazy-loading-ngmodules/src/app/customers/customers-routing.module.ts" id="customers-routing.module.ts" region="customers-routing-module" header="src/app/customers/customers-routing.module.ts"></code-example>
 
-`AppRoutingModule`内のパスがすでに`customers`に設定されているため、ここの`path`には空文字列が設定されています。つまり、この`CustomersRoutingModule`内のルート(route)はすでに`customers`コンテキスト内にあります。このルーティングモジュール内のすべてのルート(route)は、子ルートとなります。
+The `path` here is set to an empty string because the path in `AppRoutingModule` is already set to `customers`, so this route in the `CustomersRoutingModule`, is already within the `customers` context. Every route in this routing module is a child route.
 
-他のフィーチャーモジュールがもつルーティングモジュールも同様に設定されます。
+The other feature module's routing module is configured similarly.
 
 <code-example path="lazy-loading-ngmodules/src/app/orders/orders-routing.module.ts" id="orders-routing.module.ts" region="orders-routing-module-detail" header="src/app/orders/orders-routing.module.ts (excerpt)"></code-example>
 
-### 動作の確認をする
+### Verify lazy loading
 
-モジュールが実際に遅延ロードされていることをChromeの開発者ツールで確認することができます。Macの場合は`Cmd+Option+i`、PCの場合は`Ctrl+Shift+j`を押して開発者ツールを開き、ネットワークタブに移動してください。
+You can check to see that a module is indeed being lazy loaded with the Chrome developer tools. In Chrome, open the dev tools by pressing `Cmd+Option+i` on a Mac or `Ctrl+Shift+j` on a PC and go to the Network Tab.
 
 <div class="lightbox">
   <img src="generated/images/guide/lazy-loading-ngmodules/network-tab.png" width="600" alt="lazy loaded modules diagram">
 </div>
 
 
-OrdersまたはCustomersボタンをクリックしてください。もしチャンクが表示されていたら、すべてが適切に接続され、フィーチャーモジュールが遅延ロードされているということです。チャンクはOrdersとCustomersに対応して表示されますが、それぞれ1回のみ表示されます。
+Click on the Orders or Customers button. If you see a chunk appear, everything is wired up properly and the feature module is being lazy loaded. A chunk should appear for Orders and for Customers but will only appear once for each.
 
 
 <div class="lightbox">
@@ -191,29 +191,29 @@ OrdersまたはCustomersボタンをクリックしてください。もしチ�
 </div>
 
 
-もう一度見たり、プロジェクトで作業した後にテストするには、ネットワークタブの左上にある斜線がついた丸をクリックして、すべてをクリアしてください:
+To see it again, or to test after working in the project, clear everything out by clicking the circle with a line through it in the upper left of the Network Tab:
 
 <div class="lightbox">
   <img src="generated/images/guide/lazy-loading-ngmodules/clear.gif" width="200" alt="lazy loaded modules diagram">
 </div>
 
 
-そのあとでプラットフォームに応じて、`Cmd+r`または`Ctrl+r`でリロードしてください。
+Then reload with `Cmd+r` or `Ctrl+r`, depending on your platform.
 
-## `forRoot()`と`forChild()`
+## `forRoot()` and `forChild()`
 
-あなたはCLIが`RouterModule.forRoot(routes)`を `AppRoutingModule` の`imports`配列に追加したことに気づいたかもしれません。これにより、Angularは`AppRoutingModule`がルーティングモジュールであることと、
-`forRoot()`によってルート(root)のルーティングモジュールであることを認識します。これは渡したすべてのルート(route)を設定して、
-ルーターディレクティブへアクセスできるようにし、`Router`サービスを登録します。
-`forRoot()`は`AppRoutingModule`の中で、アプリケーション内で1回だけ使用してください。
+You might have noticed that the CLI adds `RouterModule.forRoot(routes)` to the `AppRoutingModule` `imports` array.
+This lets Angular know that the `AppRoutingModule` is a routing module and `forRoot()` specifies that this is the root routing module.
+It configures all the routes you pass to it, gives you access to the router directives, and registers the `Router` service.
+Use `forRoot()` only once in the application, inside the `AppRoutingModule`.
 
-CLIは、フィーチャールーティングモジュールにも`RouterModule.forChild(routes)`を追加します。
-これにより、Angularはそのルート(route)リストが追加のルート(route)の提供のみに責任をもつことと、フィーチャーモジュールを対象としていることを認識します。
-`forChild()`は複数のモジュールで使用することができます。
+The CLI also adds `RouterModule.forChild(routes)` to feature routing modules.
+This way, Angular knows that the route list is only responsible for providing additional routes and is intended for feature modules.
+You can use `forChild()` in multiple modules.
 
-`forRoot()`メソッドはRouterのための*グローバルな*インジェクター設定を管理します。
-`forChild()`メソッドはインジェクター設定を持ちません。それは`RouterOutlet`や`RouterLink`のようなディレクティブを使います。
-詳しくは、 [Servicio Singleton](guide/singleton-services) ガイドの中の [`forRoot()` パターン](guide/singleton-services#forRoot) セクションを参照してください。
+The `forRoot()` method takes care of the *global* injector configuration for the Router.
+The `forChild()` method has no injector configuration. It uses directives such as `RouterOutlet` and `RouterLink`.
+For more information, see the [`forRoot()` pattern](guide/singleton-services#forRoot) section of the [Singleton Services](guide/singleton-services) guide.
 
 {@a preloading}
 
@@ -316,11 +316,11 @@ For more information with a working example, see the [routing tutorial section o
 
 <hr>
 
-## NgModuleとルーティングの詳細
+## More on NgModules and routing
 
-あなたはこちらにも興味があるかもしれません:
-* [ルーティングとナビゲーション](guide/router)
-* [プロバイダー](guide/providers)
-* [Tipo de módulo de funciones](guide/module-types)
+You may also be interested in the following:
+* [Routing and Navigation](guide/router).
+* [Providers](guide/providers).
+* [Types of Feature Modules](guide/module-types).
 * [Route-level code-splitting in Angular](https://web.dev/route-level-code-splitting-in-angular/)
 * [Route preloading strategies in Angular](https://web.dev/route-preloading-in-angular/)

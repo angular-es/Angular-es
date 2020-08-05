@@ -1,6 +1,6 @@
-# リアクティブフォーム
+# Reactive forms
 
-リアクティブフォームは、時間とともに値が変化するフォーム入力を処理するためのモデル駆動型アプローチを提供します。このガイドでは、基本的なフォームコントロールを作成および更新する方法、グループ内で複数のコントロールを使用する方法、フォームの値を検証する方法、実行時にコントロールを追加または削除できる動的フォームを作成する方法について説明します。
+Reactive forms provide a model-driven approach to handling form inputs whose values change over time. This guide shows you how to create and update a basic form control, progress to using multiple controls in a group, validate form values, and create dynamic forms where you can add or remove controls at run time.
 
 <div class="alert is-helpful">
 
@@ -18,11 +18,11 @@ Before going further into reactive forms, you should have a basic understanding 
 
 {@a intro}
 
-## リアクティブフォームの概要
+## Overview of reactive forms
 
-リアクティブフォームは明示的でイミュータブルなアプローチを用い、特定の時点におけるフォームの状態を管理します。フォームの状態への変更の度に、変更間でのモデルの整合性を維持する新しい状態を返します。リアクティブフォームは[Observable](guide/glossary#observable "Observable definition.")ストリームを中心に構築されており、フォーム入力や値は入力値のストリームとして提供され、同期的にアクセスができます。
+Reactive forms use an explicit and immutable approach to managing the state of a form at a given point in time. Each change to the form state returns a new state, which maintains the integrity of the model between changes. Reactive forms are built around [observable](guide/glossary#observable "Observable definition.") streams, where form inputs and values are provided as streams of input values, which can be accessed synchronously.
 
-またリアクティブフォームでは、リクエストのデータには一貫性があり予測性が保証されているので、テストが簡単に行えます。すべてのストリームの利用者は、データに安全にアクセスし操作することができます。
+Reactive forms also provide a straightforward path to testing because you are assured that your data is consistent and predictable when requested. Any consumers of the streams have access to manipulate that data safely.
 
 Reactive forms differ from [template-driven forms](guide/forms "Template-driven forms guide") in distinct ways. Reactive forms provide more predictability with synchronous access to the data model, immutability with observable operators, and change tracking through observable streams.
 
@@ -60,27 +60,27 @@ To register a single form control, import the `FormControl` class and create a n
 
 <code-example path="reactive-forms/src/app/name-editor/name-editor.component.ts" region="create-control" header="src/app/name-editor/name-editor.component.ts"></code-example>
 
-`FormControl`のコンストラクターを使い、初期値を設定します。この場合は空文字を設定しています。このコントロールをコンポーネントクラスに作ることで、フォーム入力の状態の監視、更新、バリデーションを行うことができます。
+Use the constructor of `FormControl` to set its initial value, which in this case is an empty string. By creating these controls in your component class, you get immediate access to listen for, update, and validate the state of the form input.
 
 **Register the control in the template**
 
-コンポーネントクラスにコントロールを作成した後は、Plantillas内のフォームコントロール要素へ紐付ける必要があります。 `ReactiveFormsModule`内の`FormControlDirective`が提供する`formControl`バインディングを使い、フォームコントロールとともにPlantillasを更新します。
+After you create the control in the component class, you must associate it with a form control element in the template. Update the template with the form control using the `formControl` binding provided by `FormControlDirective`, which is also included in the `ReactiveFormsModule`.
 
 <code-example path="reactive-forms/src/app/name-editor/name-editor.component.html" region="control-binding" header="src/app/name-editor/name-editor.component.html"></code-example>
 
 <div class="alert is-helpful">
 
-* `ReactiveFormsModule`が提供するクラスやディレクティブの概要は、[Reactive forms API](#reactive-forms-api "API summary.")を参照してください。
+* For a summary of the classes and directives provided by `ReactiveFormsModule`, see the [Reactive forms API](#reactive-forms-api "API summary.") section below.
 
 * For complete syntax details of these classes and directives, see the API reference documentation for the [Forms package](api/forms "API reference.").
 
 </div>
 
-Plantillasバインディング構文を使うことで、フォームコントロールはPlantillas内の`name`入力要素に登録されました。フォームコントロールとDOM要素は相互に作用します。画面にモデルの変更を反映し、画面での変更をモデルに反映します。
+Using the template binding syntax, the form control is now registered to the `name` input element in the template. The form control and DOM element communicate with each other: the view reflects changes in the model, and the model reflects changes in the view.
 
 **Display the component**
 
-`name`が割り当てられたフォームコントロールは、コンポーネントがPlantillasに追加すると表示されます。
+The form control assigned to `name` is displayed when the component is added to a template.
 
 <code-example path="reactive-forms/src/app/app.component.1.html" region="app-name-editor" header="src/app/app.component.html (name editor)"></code-example>
 
@@ -90,40 +90,40 @@ Plantillasバインディング構文を使うことで、フォームコント�
 
 {@a display-value}
 
-### フォームコントロール値の表示
+### Displaying a form control value
 
-次の手順で値の表示を行います:
+You can display the value in the following ways.
 
-* Plantillasの`AsyncPipe`またはコンポーネントクラスの`subscribe()`メソッドを使い、`valueChanges`を介してフォームの値の変更を監視することができます。
+* Through the `valueChanges` observable where you can listen for changes in the form's value in the template using `AsyncPipe` or in the component class using the `subscribe()` method.
 
-* `value`プロパティから現在の値のスナップショットを表示します。
+* With the `value` property, which gives you a snapshot of the current value.
 
-次の例では、Plantillasの補間を使ってどのように現在の値を表示するのかを示します。
+The following example shows you how to display the current value using interpolation in the template.
 
 <code-example path="reactive-forms/src/app/name-editor/name-editor.component.html" region="display-value" header="src/app/name-editor/name-editor.component.html (control value)"></code-example>
 
-フォームコントロール要素を更新することで、表示されている値が変更されます。
+The displayed value changes as you update the form control element.
 
-リアクティブフォームでは、各インスタンスが提供するプロパティやメソッドからコントロールへの詳細情報にアクセスすることができます。
-基底となっている[AbstractControl](api/forms/AbstractControl "API reference.")クラスのプロパティやメソッドは、フォームの状態を制御し、バリデーションのメッセージを表示するタイミングを決めるのに使われています。さらに詳しい情報は、後述の[Simple form validation](#basic-form-validation "Learn more about validating form input.")を参照してください。
+Reactive forms provide access to information about a given control through properties and methods provided with each instance.
+These properties and methods of the underlying [AbstractControl](api/forms/AbstractControl "API reference.") class are used to control form state and determine when to display messages when handling [input validation](#basic-form-validation "Learn more about validating form input.").
 
-`FormControl`の他のプロパティやメソッドについては、[APIリファレンス](api/forms/FormControl "Detailed syntax reference.")の項目をご覧ください。
+Read about other `FormControl` properties and methods in the [API Reference](api/forms/FormControl "Detailed syntax reference.").
 
-### コントロール値の置き換え
+### Replacing a form control value
 
-リアクティブフォームには、コントロールの値をプログラムから変更するメソッドがあり、ユーザー操作なしにコントロールの値を柔軟に更新することができます。フォームコントロールのインスタンスは`setValue()`メソッドを提供しており、フォームコントロールの値の更新や、コントロールの構造に対して与えられた値の構造の検証を行います。たとえば、バックエンドのAPIやサービスからフォームのデータを受け取った時、`setValue()`メソッドを使いコントロールを新しい値に更新し、古い値を完全に置き換えます。
+Reactive forms have methods to change a control's value programmatically, which gives you the flexibility to update the value without user interaction. A form control instance provides a `setValue()` method that updates the value of the form control and validates the structure of the value provided against the control's structure. For example, when retrieving form data from a backend API or service, use the `setValue()` method to update the control to its new value, replacing the old value entirely.
 
-次の例では、コンポーネントクラスにメソッドを追加し、`setValue()`メソッドを使ってコントロールの値を*Nancy*へ更新します。
+The following example adds a method to the component class to update the value of the control to *Nancy* using the `setValue()` method.
 
-<code-example path="reactive-forms/src/app/name-editor/name-editor.component.ts" region="update-value" header="src/app/name-editor/name-editor.component.ts (値の更新)">
+<code-example path="reactive-forms/src/app/name-editor/name-editor.component.ts" region="update-value" header="src/app/name-editor/name-editor.component.ts (update value)">
 
 </code-example>
 
-Plantillasを更新して、名前の更新をシミュレートするボタンをつけます。**Update Name** ボタンをクリックすると、フォームコントロール要素に入力されている値が現在の値として反映されます。
+Update the template with a button to simulate a name update. When you click the **Update Name** button, the value entered in the form control element is reflected as its current value.
 
 <code-example path="reactive-forms/src/app/name-editor/name-editor.component.html" region="update-value" header="src/app/name-editor/name-editor.component.html (update value)"></code-example>
 
-フォームモデルはコントロールのデータ源なので、ボタンをクリックするとコンポーネントクラス内で入力の値が変更され、現在の値も上書きされます。
+The form model is the source of truth for the control, so when you click the button, the value of the input is changed within the component class, overriding its current value.
 
 <div class="lightbox">
   <img src="generated/images/guide/reactive-forms/name-editor-2.png" alt="Name Editor Update">
@@ -131,20 +131,20 @@ Plantillasを更新して、名前の更新をシミュレートするボタン�
 
 <div class="alert is-helpful">
 
-**注:** この例では、単一のコントロールを扱っています。 `setValue()`メソッドを[フォームグループ](#grouping-form-controls "Learn more about form groups.")や[フォーム配列](#creating-dynamic-forms "Learn more about dynamic forms.")のインスタンスに使用した場合には、値はグループか配列の構造に合わせる必要があります。
+**Note:** In this example, you're using a single control. When using the `setValue()` method with a [form group](#grouping-form-controls "Learn more about form groups.") or [form array](#creating-dynamic-forms "Learn more about dynamic forms.") instance, the value needs to match the structure of the group or array.
 
 </div>
 
-## フォームコントロールのグループ化 {@a grouping-form-controls}
+## Grouping form controls
 
 Forms typically contain several related controls. Reactive forms provide two ways of grouping multiple related controls into a single input form.
 
 * A form *group* defines a form with a fixed set of controls that you can manage together. Form group basics are discussed in this section. You can also [nest form groups](#nested-groups "See more about nesting groups.") to create more complex forms.
 * A form *array* defines a dynamic form, where you can add and remove controls at run time. You can also nest form arrays to create more complex forms. For more about this option, see [Creating dynamic forms](#dynamic-forms "See more about form arrays.") below.
 
-フォームコントロールのインスタンスが単一の入力欄を制御したように、フォームグループのインスタンスはフォームコントロールのインスタンスのグループ（たとえばフォームなど）の状態を管理します。フォームグループインスタンス内の個々のコントロールは、フォームグループを作る時に名前で管理されます。次の例では、どのように複数のフォームコントロールインスタンスをひとつのグループで管理するのかを示します。
+Just as a form control instance gives you control over a single input field, a form group instance tracks the form state of a group of form control instances (for example, a form). Each control in a form group instance is tracked by name when creating the form group. The following example shows how to manage multiple form control instances in a single group.
 
-`ProfileEditor`コンポーネントを生成し、`FormGroup` と `FormControl`クラスを`@angular/forms`パッケージからインポートします。
+Generate a `ProfileEditor` component and import the `FormGroup` and `FormControl` classes from the `@angular/forms` package.
 
 <code-example language="sh" class="code-shell">
 
@@ -164,57 +164,57 @@ To add a form group to this component, take the following steps.
 
 **Create a FormGroup instance**
 
-コンポーネントクラス内に`profileForm`という名前でプロパティを作成し、新しいフォームグループのインスタンスを設定します。フォームグループを初期化するには、名前付けされたキーとコントロールがマップされたオブジェクトをコンストラクターに渡します。
+Create a property in the component class named `profileForm` and set the property to a new form group instance. To initialize the form group, provide the constructor with an object of named keys mapped to their control.
 
-プロフィールのフォームには、`firstName` と `lastName`という名前のふたつのフォームコントロールのインスタンスを追加します。
+For the profile form, add two form control instances with the names `firstName` and `lastName`.
 
-<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.1.ts" region="formgroup" header="src/app/profile-editor/profile-editor.component.ts (フォームグループ)">
+<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.1.ts" region="formgroup" header="src/app/profile-editor/profile-editor.component.ts (form group)">
 
 </code-example>
 
-各コントロールはグループ内にいます。`FormGroup`インスタンスは、グループ内のコントロールの値をまとめたオブジェクトを、自身のモデルの値として提供します。フォームグループのインスタンスはフォームコントロールと同じプロパティ（`value` や `untouched`）、同じメソッド（`setValue()`など）を持っています。
+The individual form controls are now collected within a group. A `FormGroup` instance provides its model value as an object reduced from the values of each control in the group. A form group instance has the same properties (such as `value` and `untouched`) and methods (such as `setValue()`) as a form control instance.
 
-**FormGroupモデルとビューの紐付け**
+**Associate the FormGroup model and view**
 
-フォームグループは個々のコントロールの状態と変更を監視しているので、ひとつのコントロールに変更があれば、親のコントロールも新しい状態や値変更を発行します。グループのモデルはメンバーによって維持されています。モデルを定義した後、モデルをビューに反映させるようにPlantillasを更新する必要があります。
+A form group tracks the status and changes for each of its controls, so if one of the controls changes, the parent control also emits a new status or value change. The model for the group is maintained from its members. After you define the model, you must update the template to reflect the model in the view.
 
 <code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.1.html" region="formgroup" header="src/app/profile-editor/profile-editor.component.html (template form group)"></code-example>
 
-フォームグループがコントロールのグループをもつように、*profile form* の`FormGroup`は`form`要素の`FormGroup`ディレクティブとバインドされ、モデルとフォームがもつinputとの間に通信レイヤーが作られることに注意してください。 `FormControlName`ディレクティブが提供する`formControlName`は、各inputと `FormGroup`内に定義されたフォームコントロールをバインドします。フォームコントロールは個々の紐付けられた要素と通信します。また、フォームグループのインスタンスへの変更のやりとりも行います。
+Note that just as a form group contains a group of controls, the *profile form* `FormGroup` is bound to the `form` element with the `FormGroup` directive, creating a communication layer between the model and the form containing the inputs. The `formControlName` input provided by the `FormControlName` directive binds each individual input to the form control defined in `FormGroup`. The form controls communicate with their respective elements. They also communicate changes to the form group instance, which provides the source of truth for the model value.
 
-**フォームデータの保存**
+**Save form data**
 
-`ProfileEditor`コンポーネントはユーザーから入力を受けますが、実際のシナリオでは、フォーム値を受け取りコンポーネントの外で利用したいことがあります。`FormGroup`ディレクティブは、`form`要素が発行した`submit`イベントを監視し、コールバック関数にバインドできる`ngSubmit`イベントを発行します。
+The `ProfileEditor` component accepts input from the user, but in a real scenario you want to capture the form value and make available for further processing outside the component. The `FormGroup` directive listens for the `submit` event emitted by the `form` element and emits an `ngSubmit` event that you can bind to a callback function.
 
-`form`タグに`ngSubmit`イベントリスナーを`onSubmit()`コールバックメソッドとあわせて追加します。
+Add an `ngSubmit` event listener to the `form` tag with the `onSubmit()` callback method.
 
 <code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.html" region="ng-submit" header="src/app/profile-editor/profile-editor.component.html (submit event)"></code-example>
 
-`ProfileEditor`コンポーネント内の`onSubmit()`メソッドは、現在の`profileForm`の値を取得します。フォームをカプセル化したままコンポーネントの外へフォームの値を提供するには、`EventEmitter`を使用します。次の例では`console.warn`を使い、ブラウザのコンソールにメッソージを記録します。
+The `onSubmit()` method in the `ProfileEditor` component captures the current value of `profileForm`. Use `EventEmitter` to keep the form encapsulated and to provide the form value outside the component. The following example uses `console.warn` to log a message to the browser console.
 
-<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.ts" region="on-submit" header="src/app/profile-editor/profile-editor.component.ts (送信メソッド)">
+<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.ts" region="on-submit" header="src/app/profile-editor/profile-editor.component.ts (submit method)">
 
 </code-example>
 
-`submit`イベントはネイティブDOMイベントを使って`form`タグから発行されます。`submit`タイプのボタンをクリックすることでイベントを発火します。**Enter** キーを押して入力完了したフォームを送信することもできます。
+The `submit` event is emitted by the `form` tag using the native DOM event. You trigger the event by clicking a button with `submit` type. This allows the user to press the **Enter** key to submit the completed form.
 
-`button`要素を使って、フォームの下にボタンを追加してフォーム送信を発火します。
+Use a `button` element to add a button to the bottom of the form to trigger the form submission.
 
 <code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.html" region="submit-button" header="src/app/profile-editor/profile-editor.component.html (submit button)"></code-example>
 
 <div class="alert is-helpful">
 
-**注:** 上のスニペット内のボタンは、`profileForm`が無効なときにボタンを非活性にする`disabled`バインディングが付与されています。まだバリデーションを行っていないので、ボタンは常に活性になっています。単一フォームのバリデーションは、[Validating form input](#basic-form-validation "Basic form validation.")のセクションを参照してください。
+**Note:** The button in the snippet above also has a `disabled` binding attached to it to disable the button when `profileForm` is invalid. You aren't performing any validation yet, so the button is always enabled. Basic form validation is covered in the [Validating form input](#basic-form-validation "Basic form validation.") section.
 
 </div>
 
-**コンポーネントの表示**
+**Display the component**
 
-フォームを含む`ProfileEditor`コンポーネントを表示するために、コンポーネントPlantillasへ追加します。
+To display the `ProfileEditor` component that contains the form, add it to a component template.
 
 <code-example path="reactive-forms/src/app/app.component.1.html" region="app-profile-editor" header="src/app/app.component.html (profile editor)"></code-example>
 
-`ProfileEditor`は、フォームグループインスタンス内の`firstName`と`lastName`のフォームコントロールインスタンスを管理できます。
+`ProfileEditor` allows you to manage the form control instances for the `firstName` and `lastName` controls within the form group instance.
 
 <div class="lightbox">
   <img src="generated/images/guide/reactive-forms/profile-editor-1.png" alt="Profile Editor">
@@ -222,7 +222,7 @@ To add a form group to this component, take the following steps.
 
 {@a nested-groups}
 
-### ネストしたフォームグループの作成
+### Creating nested form groups
 
 Form groups can accept both individual form control instances and other form group instances as children. This makes composing complex form models easier to maintain and logically group together.
 
@@ -241,17 +241,17 @@ To create a nested group in `profileForm`, add a nested `address` element to the
 
 <code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.1.ts" region="nested-formgroup" header="src/app/profile-editor/profile-editor.component.ts (nested form group)"></code-example>
 
-この例では、`address group`は、既存の`firstName`と`lastName`のコントロールを、新しく`street`、`city`、 `state`、`zip`のコントロールと組み合わせます。フォームグループ内の`address`要素はフォームグループ内の`profileForm` 要素の子であっても、値や状態変更に同じルールが適用されます。ネストしたグループからの状態や値の変更は親のフォームグループに伝播し、モデル全体の一貫性を維持します。
+In this example, `address group` combines the current `firstName` and `lastName` controls with the new `street`, `city`, `state`, and `zip` controls. Even though the `address` element in the form group is a child of the overall `profileForm` element in the form group, the same rules apply with value and status changes. Changes in status and value from the nested form group propagate to the parent form group, maintaining consistency with the overall model.
 
-**Plantillas内のネストしたフォームのグループ化**
+**Group the nested form in the template**
 
-コンポーネントクラス内のモデルを更新した後、フォームグループインスタンスと入力要素をつなげるためにPlantillasを更新します。
+After you update the model in the component class, update the template to connect the form group instance and its input elements.
 
-`street` 、 `city` 、`state` 、 `zip` フィールドを含む`address`フォームグループを`ProfileEditor`Plantillasに追加します。
+Add the `address` form group containing the `street`, `city`, `state`, and `zip` fields to the `ProfileEditor` template.
 
 <code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.1.html" region="formgroupname" header="src/app/profile-editor/profile-editor.component.html (template nested form group)"></code-example>
 
-`ProfileEditor`フォームはひとつのグループとして表示されますが、モデルは論理グループ領域を表すためにさらに分解されます。
+The `ProfileEditor` form is displayed as one group, but the model is broken down further to represent the logical grouping areas.
 
 <div class="lightbox">
   <img src="generated/images/guide/reactive-forms/profile-editor-2.png" alt="Profile Editor Update">
@@ -259,37 +259,37 @@ To create a nested group in `profileForm`, add a nested `address` element to the
 
 <div class="alert is-helpful">
 
-**注:** フォームグループインスンタンスの値をコンポーネントPlantillas内で表示するには、`value` プロパティと `JsonPipe`を使用します。
+**Tip** Display the value for the form group instance in the component template using the `value` property and `JsonPipe`.
 
 </div>
 
 ### Updating parts of the data model
 
-複数のコントロールを含んだフォームグループインスタンスの値を更新する時、モデルの一部分のみを更新することができます。このセクションでは、フォームコントロールのデータモデルの特定部分を更新する方法を説明します。
+When updating the value for a form group instance that contains multiple controls, you may only want to update parts of the model. This section covers how to update specific parts of a form control data model.
 
-モデルの更新にはふたつの方法があります。
+There are two ways to update the model value:
 
-* `setValue()`メソッドを使い、個々のコントロールに新しい値を設定します。`setValue()`メソッドはフォームグループの構造にとても厳格で、コントロールの値全体を置き換えます。
+* Use the `setValue()` method to set a new value for an individual control. The `setValue()` method strictly adheres to the structure of the form group and replaces the entire value for the control.
 
-* `patchValue()`メソッドを使い、オブジェクトに定義されているプロパティの中でフォームモデルに変更のあったプロパティを置き換えます。
+* Use the `patchValue()` method to replace any properties defined in the object that have changed in the form model.
 
-`setValue()`の厳格なチェックは、複雑なフォーム内のネストしたエラーを捕捉するのに役立ちます。一方、 `patchValue()`はそのエラーがあった場合には静かに失敗します。
+The strict checks of the `setValue()` method help catch nesting errors in complex forms, while `patchValue()` fails silently on those errors.
 
-`ProfileEditorComponent`では、下の例にある`updateProfile`メソッドを使いfirst nameとstreet addressを更新します。
+In `ProfileEditorComponent`, use the `updateProfile` method with the example below to update the first name and street address for the user.
 
-<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.1.ts" region="patch-value" header="src/app/profile-editor/profile-editor.component.ts (値のパッチ)">
+<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.1.ts" region="patch-value" header="src/app/profile-editor/profile-editor.component.ts (patch value)">
 
 </code-example>
 
-ユーザープロフィールをオンデマンドで更新するためにPlantillasにボタンを追加して、更新をシミュレートします。
+Simulate an update by adding a button to the template to update the user profile on demand.
 
 <code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.1.html" region="patch-value" header="src/app/profile-editor/profile-editor.component.html (update value)"></code-example>
 
-ユーザーがボタンをクリックすると、`profileForm`モデルは新しい`firstName` と `street`に更新されます。`street`は`address`プロパティ内のオブジェクトとして提供されていることに注意してください。`patchValue()`メソッドはモデル構造に沿って更新が適用されるので、これが必要です。`patchValue()`はフォームモデルに定義されたプロパティのみを更新します。
+When a user clicks the button, the `profileForm` model is updated with new values for `firstName` and `street`. Notice that `street` is provided in an object inside the `address` property. This is necessary because the `patchValue()` method applies the update against the model structure. `PatchValue()` only updates properties that the form model defines.
 
-## FormBuilderを使ったフォームコントロールの作成
+## Using the FormBuilder service to generate controls
 
-フォームコントロールインスタンスを手動で作成するのは、複数のフォームを扱う時は反復的になることがあります。`FormBuilder`サービスはコントロールを作成するのに便利なメソッドを提供します。
+Creating form control instances manually can become repetitive when dealing with multiple forms. The `FormBuilder` service provides convenient methods for generating controls.
 
 Use the following steps to take advantage of this service.
 
@@ -301,48 +301,47 @@ The following examples show how to refactor the `ProfileEditor` component to use
 
 **Import the FormBuilder class**
 
-`@angular/forms`パッケージから`FormBuilder`クラスをインポートします。
+Import the `FormBuilder` class from the `@angular/forms` package.
 
-<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.2.ts" region="form-builder-imports" header="src/app/profile-editor/profile-editor.component.ts (インポート)">
-
-</code-example>
-
-**FormBuilderサービスの注入**
-
-`FormBuilder`サービスは、リアクティブフォームモジュールが提供する注入できるプロバイダーです。コンポーネントのコンスタラクターに追加することで依存性を注入します。
-
-<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.2.ts" region="inject-form-builder" header="src/app/profile-editor/profile-editor.component.ts (コンストラクター)">
+<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.2.ts" region="form-builder-imports" header="src/app/profile-editor/profile-editor.component.ts (import)">
 
 </code-example>
 
-**フォームコントロールの作成**
+**Inject the FormBuilder service**
 
-`FormBuilder`は三つのメソッドを提供します: `control()`、`group()`、 `array()`。
-これらは、フォームコントロール、フォームグループ、フォーム配列を含むコンポーネントクラスにインスタンスを作成するファクトリメソッドです。
+The `FormBuilder` service is an injectable provider that is provided with the reactive forms module. Inject this dependency by adding it to the component constructor.
 
-`group`メソッドを使い、`profileForm`コントロールを作成します。
-
-<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.2.ts" region="form-builder" header="src/app/profile-editor/profile-editor.component.ts (フォームビルダー)">
+<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.2.ts" region="inject-form-builder" header="src/app/profile-editor/profile-editor.component.ts (constructor)">
 
 </code-example>
 
-上記の例では、`group()`メソッドを使いモデル内のプロパティを定義しています。各コントロール名の値は配列になっており、配列の最初が初期値となっています。
+**Generate form controls**
+
+The `FormBuilder` service has three methods: `control()`, `group()`, and `array()`. These are factory methods for generating instances in your component classes including form controls, form groups, and form arrays.
+
+Use the `group` method to create the `profileForm` controls.
+
+<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.2.ts" region="form-builder" header="src/app/profile-editor/profile-editor.component.ts (form builder)">
+
+</code-example>
+
+In the example above, you use the `group()` method with the same object to define the properties in the model. The value for each control name is an array containing the initial value as the first item in the array.
 
 <div class="alert is-helpful">
 
-**注:** コントロールを初期値と合わせて定義できますが、コントロールに同期または非同期のバリデーションが必要な場合には、同期または非同期バリデーターを配列の2つ目と3つ目の項目に追加します。
+**Tip** You can define the control with just the initial value, but if your controls need sync or async validation, add sync and async validators as the second and third items in the array.
 
 </div>
 
-フォームビルダーを使用する方法と、手動でインスタンスを作成する方法を比較します。
+Compare using the form builder to creating the instances manually.
 
 <code-tabs>
 
-  <code-pane path="reactive-forms/src/app/profile-editor/profile-editor.component.1.ts" region="formgroup-compare" header="src/app/profile-editor/profile-editor.component.ts (インスタンス)">
+  <code-pane path="reactive-forms/src/app/profile-editor/profile-editor.component.1.ts" region="formgroup-compare" header="src/app/profile-editor/profile-editor.component.ts (instances)">
 
   </code-pane>
 
-  <code-pane path="reactive-forms/src/app/profile-editor/profile-editor.component.2.ts" region="formgroup-compare" header="src/app/profile-editor/profile-editor.component.ts (フォームビルダー)">
+  <code-pane path="reactive-forms/src/app/profile-editor/profile-editor.component.2.ts" region="formgroup-compare" header="src/app/profile-editor/profile-editor.component.ts (form builder)">
 
   </code-pane>
 
@@ -362,39 +361,39 @@ Use the following steps to add form validation.
 
 The most common validation is making a field required. The following example shows how to add a required validation to the `firstName` control and display the result of validation.
 
-**バリデーター関数のインポート**
+**Import a validator function**
 
-リアクティブフォームは、一般的な用途に使えるバリデーター関数のセットを含んでいます。これらの関数は、コントロールを受けてバリデーションを行い、バリデーション結果に応じてエラーオブジェクトかnullを返します。
+Reactive forms include a set of validator functions for common use cases. These functions receive a control to validate against and return an error object or a null value based on the validation check.
 
-`@angular/forms`パッケージから`Validators`クラスをインポートします。
+Import the `Validators` class from the `@angular/forms` package.
 
-<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.ts" region="validator-imports" header="src/app/profile-editor/profile-editor.component.ts (インポート)">
-
-</code-example>
-
-**必須フィールドを作成する**
-
-`ProfileEditor`コンポーネント内で、静的な`Validators.required`メソッドを`firstName`コントロールの配列の2つ目の項目に追加します。
-
-<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.ts" region="required-validator" header="src/app/profile-editor/profile-editor.component.ts (必須バリデーター)">
+<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.ts" region="validator-imports" header="src/app/profile-editor/profile-editor.component.ts (import)">
 
 </code-example>
 
-HTML5には、`required`、`minlength`、`maxlength`などのネイティブバリデーションとして使用できるビルトイン属性があります。これらのオプション属性はフォーム入力要素で使用できます。`required`属性を`firstName`入力要素に追加します。
+**Make a field required**
+
+In the `ProfileEditor` component, add the `Validators.required` static method as the second item in the array for the `firstName` control.
+
+<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.ts" region="required-validator" header="src/app/profile-editor/profile-editor.component.ts (required validator)">
+
+</code-example>
+
+HTML5 has a set of built-in attributes that you can use for native validation, including `required`, `minlength`, and `maxlength`. You can take advantage of these optional attributes on your form input elements. Add the `required` attribute to the `firstName` input element.
 
 <code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.html" region="required-attribute" header="src/app/profile-editor/profile-editor.component.html (required attribute)"></code-example>
 
 <div class="alert is-important">
 
-**注:** これらのHTML5バリデーション属性は、Angularのリアクティブフォームが提供するビルトインバリデーターと*組み合わせて*使用してください。これらを組み合わせて使用することで、Plantillasがチェックされた後に式が変更された時のエラーを防ぐことができます。
+**Caution:** Use these HTML5 validation attributes *in combination with* the built-in validators provided by Angular's reactive forms. Using these in combination prevents errors when the expression is changed after the template has been checked.
 
 </div>
 
-**フォームのステータスを表示する**
+**Display form status**
 
-必須フィールドをフォームコントロールに追加すると、初期ステータスはinvalidになります。invalidステータスは親のフォームグループ要素に伝播し、ステータスがinvalidになります。現在のフォームグループインスタンスのステータスは、`status`プロパティからアクセスします。
+When you add a required field to the form control, its initial status is invalid. This invalid status propagates to the parent form group element, making its status invalid. Access the current status of the form group instance through its `status` property.
 
-補間を使用して現在の`profileForm`のステータスを表示させます。
+Display the current status of `profileForm` using interpolation.
 
 <code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.html" region="display-status" header="src/app/profile-editor/profile-editor.component.html (display status)"></code-example>
 
@@ -402,9 +401,9 @@ HTML5には、`required`、`minlength`、`maxlength`などのネイティブバ�
   <img src="generated/images/guide/reactive-forms/profile-editor-3.png" alt="Profile Editor Validation">
 </div>
 
-`profileForm`が`firstName`フォームコントロールの必須によってinvalidになっているため、**Submit** ボタンは非活性になっています。`firstName`を入力すると、フォームはvalidになり　**Submit** ボタンは活性になります。
+The **Submit** button is disabled because `profileForm` is invalid due to the required `firstName` form control. After you fill out the `firstName` input, the form becomes valid and the **Submit** button is enabled.
 
-フォームバリデーションについて詳細は、[フォームバリデーション](guide/form-validation "All about form validation.")ガイドを参照してください。
+For more on form validation, visit the [Form Validation](guide/form-validation "All about form validation.") guide.
 
 {@a dynamic-forms}
 
@@ -421,97 +420,98 @@ To define a dynamic form, take the following steps.
 
 The following example shows you how to manage an array of *aliases* in `ProfileEditor`.
 
-**フォーム配列クラスのインポート**
+**Import the FormArray class**
 
-`@angular/forms`から`FormArray`クラスをインポートして、型情報として使用します。`FormBuilder`から`FormArray`インスタンスを作成することもできます。
+Import the `FormArray` class from `@angular/forms` to use for type information. The `FormBuilder` service is ready to create a `FormArray` instance.
 
-<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.2.ts" region="form-array-imports" header="src/app/profile-editor/profile-editor.component.ts (インポート)">
-
-</code-example>
-
-**フォーム配列コントロールを定義する**
-
-フォーム配列は、0から多数の任意の数のコントロールを配列内で定義して初期化することができます。フォーム配列を定義するために、`aliases`プロパティを`profileForm`に追加します。
-
-`FormBuilder.array()`メソッドを使い配列を定義し、`FormBuilder.control()`メソッドで配列に初期コントロールを設定します。
-
-<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.ts" region="aliases" header="src/app/profile-editor/profile-editor.component.ts (エイリアスフォーム配列)">
+<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.2.ts" region="form-array-imports" header="src/app/profile-editor/profile-editor.component.ts (import)">
 
 </code-example>
 
-フォームグループインスタンス内のエイリアスコントロールは、動的に追加されるまでは単一のコントロールが設定されています。
+**Define a FormArray control**
 
-**フォーム配列コントロールへのアクセス**
+You can initialize a form array with any number of controls, from zero to many, by defining them in an array. Add an `aliases` property to the form group instance for `profileForm` to define the form array.
 
-`profileForm.get()`メソッドで繰り返し各インスタンスから取得するより、ゲッターを使う方がフォーム配列インスタンス内のエイリアスに簡単にアクセスすることができます。フォーム配列インスタンスは配列内に不特定多数のコントロールを持っています。コントロールにアクセスするにはゲッターが便利です。このアプローチは追加のコントロールについて繰り返すのも簡単です。
+Use the `FormBuilder.array()` method to define the array, and the `FormBuilder.control()` method to populate the array with an initial control.
 
-ゲッター構文を使用して、親のフォームグループからエイリアスのフォーム配列コントロールを取得する`aliases`クラスプロパティを作ります。
+<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.ts" region="aliases" header="src/app/profile-editor/profile-editor.component.ts (aliases form array)">
 
-<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.ts" region="aliases-getter" header="src/app/profile-editor/profile-editor.component.ts (エイリアス ゲッター)">
+</code-example>
+
+The aliases control in the form group instance is now populated with a single control until more controls are added dynamically.
+
+**Access the FormArray control**
+
+A getter provides easy access to the aliases in the form array instance compared to repeating the `profileForm.get()` method to get each instance. The form array instance represents an undefined number of controls in an array. It's convenient to access a control through a getter, and this approach is easy to repeat for additional controls.
+
+Use the getter syntax to create an `aliases` class property to retrieve the alias's form array control from the parent form group.
+
+<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.ts" region="aliases-getter" header="src/app/profile-editor/profile-editor.component.ts (aliases getter)">
 
 </code-example>
 
 <div class="alert is-helpful">
 
-**注:** 返されたコントロールは`AbstractControl`型なので、フォーム配列インスタンスのメソッド構文にアクセスするには、明確な型を指定する必要があります。
+**Note:** Because the returned control is of the type `AbstractControl`, you need to provide an explicit type to access the method syntax for the form array instance.
 
 </div>
 
-動的にエイリアスコントロールをエイリアスのフォーム配列へ追加するメソッドを定義します。
-`FormArray.push()`メソッドは、配列へコントロールを新しいアイテムとして挿入します。
+Define a method to dynamically insert an alias control into the alias's form array.
+The `FormArray.push()` method inserts the control as a new item in the array.
 
-<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.ts" region="add-alias" header="src/app/profile-editor/profile-editor.component.ts (エイリアスの追加)">
+<code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.ts" region="add-alias" header="src/app/profile-editor/profile-editor.component.ts (add alias)">
 
 </code-example>
 
-Plantillasでは、各コントロールは別々の入力フィールドとして表示されます。
+In the template, each control is displayed as a separate input field.
 
-**Plantillasにフォーム配列を表示する**
+**Display the form array in the template**
 
-フォームモデルからエイリアスを付与するには、Plantillasに追加する必要があります。`FormGroupNameDirective`が提供する`formGroupName`のように、`FormArrayNameDirective`の`formArrayName`でフォーム配列インスタンスとPlantillasへの通信をバインドします。
+To attach the aliases from your form model, you must add it to the template. Similar to the `formGroupName` input provided by `FormGroupNameDirective`, `formArrayName` binds communication from the form array instance to the template with `FormArrayNameDirective`.
 
-下のPlantillasHTMLを`formGroupName`要素の`<div>`閉じタグの後に追加してください。
+Add the template HTML below after the `<div>` closing the `formGroupName` element.
 
 <code-example path="reactive-forms/src/app/profile-editor/profile-editor.component.html" region="formarrayname" header="src/app/profile-editor/profile-editor.component.html (aliases form array template)"></code-example>
 
-`*ngFor`ディレクティブはエイリアスフォーム配列インスタンス内の各コントロールインスタンスを反復します。フォーム配列要素は名前がついていないため、`i`変数にインデックスを割り当て、各コントロールに渡して`formControlName`にバインドします。
+The `*ngFor` directive iterates over each form control instance provided by the aliases form array instance. Because form array elements are unnamed, you assign the index to the `i` variable and pass it to each control to bind it to the `formControlName` input.
 
 <div class="lightbox">
   <img src="generated/images/guide/reactive-forms/profile-editor-4.png" alt="Profile Editor Aliases">
 </div>
 
-新しいエイリアスインスタンスが追加される度に、新しいフォーム配列インスタンスがインデックスに応じて制御されます。これにより、ルートコントロールの状態や値を計算する時に、個々のコントロールを追跡することができます。
+Each time a new alias instance is added, the new form array instance is provided its control based on the index. This allows you to track each individual control when calculating the status and value of the root control.
 
-**エイリアスを追加する**
+**Add an alias**
 
-最初は、フォームにはひとつの`Alias`フィールドのみです。別フィールドを追加するには **Add Alias** ボタンをクリックします。Plantillasの下の`Form Value`に表示されているフォームモデルにあるエイリアス配列のバリデーションもできます。
+Initially, the form contains one `Alias` field. To add another field, click the **Add Alias** button. You can also validate the array of aliases reported by the form model displayed by `Form Value` at the bottom of the template.
 
 <div class="alert is-helpful">
 
-**注:** 各エイリアスのフォームコントロールインスタンスの代わりに、追加フィールドをもつ別のフォームグループを作成することもできます。各アイテムのコントロールを定義するプロセスは同じです。
+**Note:** Instead of a form control instance for each alias, you can compose another form group instance with additional fields. The process of defining a control for each item is the same.
 
 </div>
 
 
+
 {@a reactive-forms-api}
 
-### リアクティブフォーム APIの概要
+## Reactive forms API summary
 
 The following table lists the base classes and services used to create and manage reactive form controls.
 For complete syntax details, see the API reference documentation for the [Forms package](api/forms "API reference.").
 
-#### クラス
+#### Classes
 
 <table>
 
   <tr>
 
     <th>
-      クラス
+      Class
     </th>
 
     <th>
-      詳細
+      Description
     </th>
 
   </tr>
@@ -524,7 +524,7 @@ For complete syntax details, see the API reference documentation for the [Forms 
 
     <td>
 
-      具象フォームコントロールクラスである`FormControl` と `FormGroup`、`FormArray`の抽象基底クラスです。共通のふるまいやプロパティを提供します。
+      The abstract base class for the concrete form control classes `FormControl`, `FormGroup`, and `FormArray`. It provides their common behaviors and properties.
 
     </td>
 
@@ -538,7 +538,7 @@ For complete syntax details, see the API reference documentation for the [Forms 
 
     <td>
 
-      各フォームコントロールの値とステータスの有効性を管理します。`<input>` や `<select>`などのHTMLフォームコントロールに対応します。
+      Manages the value and validity status of an individual form control. It corresponds to an HTML form control such as `<input>` or `<select>`.
 
     </td>
 
@@ -552,7 +552,7 @@ For complete syntax details, see the API reference documentation for the [Forms 
 
     <td>
 
-      `AbstractControl`インスタンスのグーループの値とステータスの有効性を管理します。グループのプロパティは子のコントロールを含んでいます。`FormGroup`がコンポーネントのトップレベルのフォームです。
+      Manages the value and validity state of a group of `AbstractControl` instances. The group's properties include its child controls. The top-level form in your component is `FormGroup`.
 
     </td>
 
@@ -566,7 +566,7 @@ For complete syntax details, see the API reference documentation for the [Forms 
 
     <td>
 
-    `AbstractControl`インスタンスをインデックスした配列の値とステータスの有効性を管理します。
+    Manages the value and validity state of a numerically indexed array of `AbstractControl` instances.
 
     </td>
 
@@ -580,26 +580,26 @@ For complete syntax details, see the API reference documentation for the [Forms 
 
     <td>
 
-      コントロールインスタンスを作成するファクトリーメソッドを提供するインジェクト可能なサービスです。
+      An injectable service that provides factory methods for creating control instances.
 
     </td>
 
-  </tr>  
+  </tr>
 
 </table>
 
-#### ディレクティブ
+#### Directives
 
 <table>
 
   <tr>
 
     <th>
-      ディレクティブ
+      Directive
     </th>
 
     <th>
-      詳細
+      Description
     </th>
 
   </tr>
@@ -612,7 +612,7 @@ For complete syntax details, see the API reference documentation for the [Forms 
 
     <td>
 
-      スタンドアローンな`FormControl`インスタンスとフォームコントロール要素を同期させます。
+      Syncs a standalone `FormControl` instance to a form control element.
 
     </td>
 
@@ -626,7 +626,7 @@ For complete syntax details, see the API reference documentation for the [Forms 
 
     <td>
 
-      `FormGroup`インスタンス内の`FormControl`とフォームコントロール要素を名前を使って同期させます。
+      Syncs `FormControl` in an existing `FormGroup` instance to a form control element by name.
 
     </td>
 
@@ -640,7 +640,7 @@ For complete syntax details, see the API reference documentation for the [Forms 
 
     <td>
 
-      `FormGroup`とDOM要素を同期させます。
+      Syncs an existing `FormGroup` instance to a DOM element.
 
     </td>
 
@@ -654,7 +654,7 @@ For complete syntax details, see the API reference documentation for the [Forms 
 
     <td>
 
-      ネストした`FormGroup`インスタンスとDOM要素と同期させます。
+      Syncs a nested `FormGroup` instance to a DOM element.
 
     </td>
 
@@ -668,7 +668,7 @@ For complete syntax details, see the API reference documentation for the [Forms 
 
     <td>
 
-      ネストした`FormArray`インスタンスとDOM要素を同期させます。
+      Syncs a nested `FormArray` instance to a DOM element.
 
     </td>
 

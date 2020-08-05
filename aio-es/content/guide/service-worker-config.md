@@ -1,54 +1,55 @@
-# Service Workerの設定
+# Service worker configuration
 
-#### 前提条件
+#### Prerequisites
 
-次の基本的理解があること
-* [プロダクションにおけるService Worker](guide/service-worker-devops)
+A basic understanding of the following:
+* [Service Worker in Production](guide/service-worker-devops).
 
 <hr />
 
-`ngsw-config.json`設定ファイルは、
-Angular Service WorkerがキャッシュすべきファイルとデータのURLと、
-キャッシュされたファイルとデータをどのように更新すべきかを指定します。[Angular CLI](cli)は`ng build --prod`中に設定ファイルを作成します。
-手動で`ngsw-config`ツールで作成することもできます。(`<project-name>` にはビルドしているプロジェクトの名前が入ります)
+The `ngsw-config.json` configuration file specifies which files and data URLs the Angular service
+worker should cache and how it should update the cached files and data. The [Angular CLI](cli)
+processes the configuration file during `ng build --prod`. Manually, you can process it with the
+`ngsw-config` tool (where `<project-name>` is the name of the project being built):
 
 <code-example language="sh">
 ./node_modules/.bin/ngsw-config ./dist/&lt;project-name&gt; ./ngsw-config.json [/base/href]
 </code-example>
 
-設定ファイルはJSON形式を使用します。すべてのファイルパスは`/`で始まらなければなりません。
-これはCLIプロジェクトでの展開ディレクトリに対応し、通常は `dist/<project-name>`です。
+The configuration file uses the JSON format. All file paths must begin with `/`, which corresponds
+to the deployment directory&mdash;usually `dist/<project-name>` in CLI projects.
 
 {@a glob-patterns}
-特に指定のない限り、パターンは制限されたglobフォーマットを使います。
+Unless otherwise noted, patterns use a limited glob format:
 
-* `**`は、0個以上のパスセグメントに一致します。
-* `*`は、厳密に0個以上の`/`を除く文字に一致します。
-* `?` は、厳密に1個の`/`を除く文字に一致します。
-* `!`接頭辞は、パターンを否定的なものとしてマークします。つまり、パターンに一致しないファイルのみが含まれます。
+* `**` matches 0 or more path segments.
+* `*` matches 0 or more characters excluding `/`.
+* `?` matches exactly one character excluding `/`.
+* The `!` prefix marks the pattern as being negative, meaning that only files that don't match the pattern will be included.
 
-パターン例
+Example patterns:
 
-* `/**/*.html`は、すべてのHTMLファイルを指定します。
-* `/*.html`は、RaízHTMLファイルのみを指定します。
-* `!/**/*.map`は、すべてのソースマップを除外します。
+* `/**/*.html` specifies all HTML files.
+* `/*.html` specifies only HTML files in the root.
+* `!/**/*.map` exclude all sourcemaps.
 
-設定ファイルの各セクションについて後述します。
+Each section of the configuration file is described below.
 
 ## `appData`
 
-このセクションでは、この特定のバージョンのアプリケーションを記述するために、任意のデータを渡すことができます。`SwUpdate`サービスは、更新通知にそのデータを含めます。このセクションを使用して、UIポップアップの表示のための追加情報を提供し、ユーザーに利用可能なアップデートを通知します。
+This section enables you to pass any data you want that describes this particular version of the app.
+The `SwUpdate` service includes that data in the update notifications. Many apps use this section to provide additional information for the display of UI popups, notifying users of the available update.
 
 {@a index-file}
 ## `index`
 
-ナビゲーション要求を満たすためにインデックスページとして機能するファイルを指定します。通常これは`/index.html`です。
+Specifies the file that serves as the index page to satisfy navigation requests. Usually this is `/index.html`.
 
 ## `assetGroups`
 
-*Assets*は、アプリケーションとともに更新される、アプリケーションバージョンの一部であるリソースです。ページのオリジンドメインからロードされたリソースだけでなく、CDNや他の外部URLからロードされたサードパーティのリソースを含めることができます。ビルド時にこのような外部URLをすべて知っているわけではないので、URLパターンを照合することができます。
+*Assets* are resources that are part of the app version that update along with the app. They can include resources loaded from the page's origin as well as third-party resources loaded from CDNs and other external URLs. As not all such external URLs may be known at build time, URL patterns can be matched.
 
-このフィールドには、アセットリソースのセットとそれらがキャッシュされるポリシーを定義する、一連のアセットグループが含まれます。
+This field contains an array of asset groups, each of which defines a set of asset resources and the policy by which they are cached.
 
 ```json
 {
@@ -60,9 +61,9 @@ Angular Service WorkerがキャッシュすべきファイルとデータのURL�
 }
 ```
 
-各アセットグループには、リソースグループとそれらを管理するポリシーの両方を指定します。このポリシーは、リソースがフェッチされるタイミングと、変更が検出されたときに発生する振る舞いを決定します。
+Each asset group specifies both a group of resources and a policy that governs them. This policy determines when the resources are fetched and what happens when changes are detected.
 
-アセットグループは、ここに示すTypeScriptインターフェースに従います。
+Asset groups follow the Typescript interface shown here:
 
 ```typescript
 interface AssetGroup {
@@ -81,36 +82,36 @@ interface AssetGroup {
 
 ### `name`
 
-`name`は必須です。これにより設定のバージョン間で特定のアセットグループを識別します。
+A `name` is mandatory. It identifies this particular group of assets between versions of the configuration.
 
 ### `installMode`
 
-`installMode`は、これらのリソースが最初にどのようにキャッシュされるかを決定します。`installMode`は次の2つの値のいずれかです。
+The `installMode` determines how these resources are initially cached. The `installMode` can be either of two values:
 
-* `prefetch`は、AngularService Workerに、現在のバージョンのアプリケーションをキャッシュしている間にリストされたすべてのリソースをフェッチするように指示します。これは帯域幅を大量に消費しますが、ブラウザが現在オフラインであっても、要求されたときはいつでもリソースを利用できるようにします。
+* `prefetch` tells the Angular service worker to fetch every single listed resource while it's caching the current version of the app. This is bandwidth-intensive but ensures resources are available whenever they're requested, even if the browser is currently offline.
 
-* `lazy`はフロントにリソースをキャッシュしません。代わりに、Angular Service Workerはリクエストを受け取ったリソースのみをキャッシュします。これはオンデマンドキャッシングモードです。要求されないリソースはキャッシュされません。これは異なる解像度のイメージのようなものに役立ちます。そのため、Service Workerは特定の画面と向きの正しいアセットだけをキャッシュします。
+* `lazy` does not cache any of the resources up front. Instead, the Angular service worker only caches resources for which it receives requests. This is an on-demand caching mode. Resources that are never requested will not be cached. This is useful for things like images at different resolutions, so the service worker only caches the correct assets for the particular screen and orientation.
 
-デフォルトでは `prefetch` です。
+Defaults to `prefetch`.
 
 ### `updateMode`
 
-すでにキャッシュにあるリソースの場合、`updateMode`は新しいバージョンのアプリケーションが発見されたときのキャッシングの動作を決定します。以前のバージョン以降に変更されたグループ内のリソースは、`updateMode`にしたがって更新されます。
+For resources already in the cache, the `updateMode` determines the caching behavior when a new version of the app is discovered. Any resources in the group that have changed since the previous version are updated in accordance with `updateMode`.
 
-* `prefetch`は、変更されたリソースをすぐにダウンロードしてキャッシュするようにService Workerに指示します。
+* `prefetch` tells the service worker to download and cache the changed resources immediately.
 
-* `lazy`は、Service Workerにそれらのリソースをキャッシュしないように指示します。代わりに、再度それらがリクエストされるまで、それらは要求されていないものとして扱われ、アップデートを待機します。`lazy`の`updateMode`は、`installMode`も`lazy`になっている場合にのみ有効です。
+* `lazy` tells the service worker to not cache those resources. Instead, it treats them as unrequested and waits until they're requested again before updating them. An `updateMode` of `lazy` is only valid if the `installMode` is also `lazy`.
 
-デフォルトでは `installMode` と同じです。
+Defaults to the value `installMode` is set to.
 
 ### `resources`
 
-このセクションでは、キャッシュするリソースを次のグループに分けて説明します。
+This section describes the resources to cache, broken up into the following groups:
 
-* `files`は、配布ディレクトリ内のファイルと一致するパターンをリストします。これらは、単一のファイルまたは複数のファイルに一致するglobのようなパターンです。
+* `files` lists patterns that match files in the distribution directory. These can be single files or glob-like patterns that match a number of files.
 
-* `urls`は、実行時に照合されるURLとURLパターンの両方が含まれます。これらのリソースは直接取得されず、コンテンツハッシュもありませんが、HTTPヘッダーにしたがってキャッシュされます。これは、Google FontsサービスなどのCDNでもっとも便利です。<br>
-_(否定のglobパターンはサポートされず、?は文字通り一致します。つまり、?以外の文字は一致しません)_
+* `urls` includes both URLs and URL patterns that will be matched at runtime. These resources are not fetched directly and do not have content hashes, but they will be cached according to their HTTP headers. This is most useful for CDNs such as the Google Fonts service.<br>
+  _(Negative glob patterns are not supported and `?` will be matched literally; i.e. it will not match any character other than `?`.)_
 
 ### `cacheQueryOptions`
 
@@ -120,9 +121,9 @@ These options are used to modify the matching behavior of requests. They are pas
 
 ## `dataGroups`
 
-アセットリソースとは異なり、データリクエストはアプリケーションとともにバージョン管理されません。これらは、手動で構成されたポリシーにしたがってキャッシュされます。このポリシーは、API要求やその他のデータの依存関係などの状況に役立ちます。
+Unlike asset resources, data requests are not versioned along with the app. They're cached according to manually-configured policies that are more useful for situations such as API requests and other data dependencies.
 
-データグループはこのTypeScriptインターフェースに従います。
+Data groups follow this Typescript interface:
 
 ```typescript
 export interface DataGroup {
@@ -142,7 +143,7 @@ export interface DataGroup {
 ```
 
 ### `name`
-`assetGroups`と同様に、すべてのデータグループはそれを一意に識別する`name`を持っています。
+Similar to `assetGroups`, every data group has a `name` which uniquely identifies it.
 
 ### `urls`
 A list of URL patterns. URLs that match these patterns are cached according to this data group's policy. Only non-mutating requests (GET and HEAD) are cached.
@@ -150,20 +151,20 @@ A list of URL patterns. URLs that match these patterns are cached according to t
  * `?` is matched literally; that is, it matches *only* the character `?`.
 
 ### `version`
-時には、APIは下位互換性のない形式でフォーマットを変更します。新しいバージョンのアプリケーションは古いAPI形式と互換性がなく、そのAPIの既存のキャッシュされたリソースと互換性がない可能性があります。
+Occasionally APIs change formats in a way that is not backward-compatible. A new version of the app may not be compatible with the old API format and thus may not be compatible with existing cached resources from that API.
 
-`version`は、キャッシュされているリソースが下位互換性のない方法で更新されたこと、古いキャッシュエントリ(以前のバージョンからのキャッシュエントリ）を破棄するべきであることを示すためのメカニズムを提供します。
+`version` provides a mechanism to indicate that the resources being cached have been updated in a backwards-incompatible way, and that the old cache entries&mdash;those from previous versions&mdash;should be discarded.
 
-`version`は、整数フィールドで、デフォルトは `1` です。
+`version` is an integer field and defaults to `1`.
 
 ### `cacheConfig`
-このセクションでは、一致したリクエストをキャッシュするポリシーを定義します。
+This section defines the policy by which matching requests will be cached.
 
 #### `maxSize`
-（必須）キャッシュ内のエントリまたはレスポンスの最大数。オープンエンドのキャッシュは無限に成長しますが、最終的にはストレージクォータを超えたら、ストレージから追い出します。
+(required) The maximum number of entries, or responses, in the cache. Open-ended caches can grow in unbounded ways and eventually exceed storage quotas, calling for eviction.
 
 #### `maxAge`
-（必須）`maxAge`パラメータは、レスポンスが無効であるとみなされる前にキャッシュに残ることが許される期間を示します。`maxAge`は、次の単位接尾辞を使用した継続時間文字列です。
+(required) The `maxAge` parameter indicates how long responses are allowed to remain in the cache before being considered invalid and evicted. `maxAge` is a duration string, using the following unit suffixes:
 
 * `d`: days
 * `h`: hours
@@ -171,26 +172,27 @@ A list of URL patterns. URLs that match these patterns are cached according to t
 * `s`: seconds
 * `u`: milliseconds
 
-たとえば、文字列 `3d12h`はコンテンツを3日半までキャッシュします。
+For example, the string `3d12h` will cache content for up to three and a half days.
 
 #### `timeout`
-この継続時間文字列は、ネットワークタイムアウトを指定します。ネットワークのタイムアウトは、キャッシュされたレスポンスが構成されている場合に、キャッシュされたレスポンスを使用する前にAngular Service Workerがネットワークが応答するまで待機する時間です。`timeout`は期間文字列で、次の単位接尾辞を使います。
+This duration string specifies the network timeout. The network timeout is how long the Angular service worker will wait for the network to respond before using a cached response, if configured to do so. `timeout` is a duration string, using the following unit suffixes:
 
-* `d`: 日
-* `h`: 時間
-* `m`: 分
-* `s`: 秒
-* `u`: ミリ秒
+* `d`: days
+* `h`: hours
+* `m`: minutes
+* `s`: seconds
+* `u`: milliseconds
 
-たとえば、文字列 `5s30u` は、5秒と30ミリ秒のネットワークタイムアウトに変換されます。
+For example, the string `5s30u` will translate to five seconds and 30 milliseconds of network timeout.
 
 #### `strategy`
 
-Angular Service Workerは、データリソース用の2つのキャッシング戦略のいずれかを使用できます。
+The Angular service worker can use either of two caching strategies for data resources.
 
-* デフォルトの`performance`はできるだけ速いレスポンスのために最適化します。リソースがキャッシュに存在する場合、キャッシュされたバージョンが使用され、ネットワークリクエストは作られません。これにより、よりよいパフォーマンスと引き換えに、maxAgeに依存して多少の古さを許容します。これは頻繁に変更されないリソースに適しています。たとえば、ユーザーのアバター画像です。
+* `performance`, the default, optimizes for responses that are as fast as possible. If a resource exists in the cache, the cached version is used, and no network request is made. This allows for some staleness, depending on the `maxAge`, in exchange for better performance. This is suitable for resources that don't change often; for example, user avatar images.
 
-* `freshness`は、データをリアルタイム性で最適化し、ネットワークから要求されたデータを優先的に取り出します。`timeout`にしたがってネットワークがタイムアウトした場合にのみ、要求はキャッシュにフォールバックされます。これは、頻繁に変更されるリソースに役立ちます。たとえば、勘定残高などです。
+* `freshness` optimizes for currency of data, preferentially fetching requested data from the network. Only if the network times out, according to `timeout`, does the request fall back to the cache. This is useful for resources that change frequently; for example, account balances.
+
 
 <div class="alert is-helpful">
 
@@ -212,37 +214,36 @@ See [assetGroups](#assetgroups) for details.
 
 ## `navigationUrls`
 
-このオプションのセクションでは、インデックスファイルにリダイレクトされるURLのカスタムリストを指定できます。
+This optional section enables you to specify a custom list of URLs that will be redirected to the index file.
 
-### ナビゲーションリクエストの処理
+### Handling navigation requests
 
-Service Workerは、`asset`または`data`グループと一致しないナビゲーションリクエストを指定された[index file](#index-file)にリダイレクトします。次の場合、リクエストはナビゲーション要求とみなされます。
+The ServiceWorker will redirect navigation requests that don't match any `asset` or `data` group to the specified [index file](#index-file). A request is considered to be a navigation request if:
 
+1. Its [mode](https://developer.mozilla.org/en-US/docs/Web/API/Request/mode) is `navigation`.
+2. It accepts a `text/html` response (as determined by the value of the `Accept` header).
+3. Its URL matches certain criteria (see below).
 
-1. [mode](https://developer.mozilla.org/en-US/docs/Web/API/Request/mode)が`navigation`である。
-2. `text/html`レスポンスを受け入れている（`Accept`ヘッダーの値によって決定されます）。
-3. URLが特定の基準に一致する（下記参照)。
+By default, these criteria are:
 
-デフォルトでは、これらの基準は次のとおりです。
+1. The URL must not contain a file extension (i.e. a `.`) in the last path segment.
+2. The URL must not contain `__`.
 
-1. URLの最後のパスセグメントにファイル拡張子（`.`）が含まれていないこと。
-2. URLに`__`を含まれていないこと。
+### Matching navigation request URLs
 
-### ナビゲーションリクエストURLのマッチング
+While these default criteria are fine in most cases, it is sometimes desirable to configure different rules. For example, you may want to ignore specific routes (that are not part of the Angular app) and pass them through to the server.
 
-ほとんどの場合、これらのデフォルト基準は問題ありませんが、異なるルールを設定することが望ましい場合があります。たとえば、Angularアプリの一部ではない特定のルートを無視して、それらをサーバーに渡すことができます。
+This field contains an array of URLs and [glob-like](#glob-patterns) URL patterns that will be matched at runtime. It can contain both negative patterns (i.e. patterns starting with `!`) and non-negative patterns and URLs.
 
-このフィールドには、実行時に照合されるURLの配列と[glob-like](#glob-patterns) URLパターンが含まれます。それには、ネガティブパターン（`!`で始まるパターン）とネガティブでないパターンの両方を含めることができます。
+Only requests whose URLs match _any_ of the non-negative URLs/patterns and _none_ of the negative ones will be considered navigation requests. The URL query will be ignored when matching.
 
-URLがネガティブでないURL/パターンの _いずれか_ と一致し、ネガティブなURL/パターンと _ひとつも_ 一致しないリクエストのみがナビゲーションリクエストとみなされます。一致するとURLクエリは無視されます。
-
-フィールドが省略された場合、デフォルトは次のようになります。
+If the field is omitted, it defaults to:
 
 ```ts
 [
-  '/**',           // すべてのURLを含める。
-  '!/**/*.*',      // ファイルへのリクエストを除外する。
-  '!/**/*__*',     // 最後のセグメントに`__`を含むURLを除外する
-  '!/**/*__*/**',  // その他のセグメントに`__`を含むURLを除外する
+  '/**',           // Include all URLs.
+  '!/**/*.*',      // Exclude URLs to files.
+  '!/**/*__*',     // Exclude URLs containing `__` in the last segment.
+  '!/**/*__*/**',  // Exclude URLs containing `__` in any other segment.
 ]
 ```

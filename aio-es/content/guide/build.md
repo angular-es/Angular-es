@@ -1,21 +1,21 @@
-# Angularアプリのビルドとサーブ
+# Building and serving Angular apps
 
-このページではAngularプロジェクトのビルド固有の設定オプションを取り上げます。
+This page discusses build-specific configuration options for Angular projects.
 
 {@a app-environments}
 
-## アプリケーション環境の設定
+## Configuring application environments
 
-*stage*や*production*など、さまざまなデフォルト設定を持ったさまざまな名前付きビルド設定をプロジェクトに定義することができます。
+You can define different named build configurations for your project, such as *stage* and *production*, with different defaults.
 
-それぞれの名前付き設定は、`build`、`serve`や`test`など、さまざまな[builderターゲット](guide/glossary#target)に適用されるオプションすべてについてデフォルト設定をもつことができます。[Angular CLI](cli)の`build`、`serve`、そして`test`コマンドは、ファイルを目的のターゲット環境に適したバージョンに置き換えることができます。
+Each named configuration can have defaults for any of the options that apply to the various [builder targets](guide/glossary#target), such as `build`, `serve`, and `test`. The [Angular CLI](cli) `build`, `serve`, and `test` commands can then replace files with appropriate versions for your intended target environment.
 
-### 環境固有のデフォルトの設定
+### Configure environment-specific defaults
 
-プロジェクトの`src/environment/`フォルダにはデフォルト環境を提供する基本設定ファイル`environment.ts`が含まれています。
-ターゲット固有の設定ファイルを追加すれば、本番やステージングなどの環境用にデフォルト設定をオーバーライドすることができます。
+A project's `src/environments/` folder contains the base configuration file, `environment.ts`, which provides a default environment.
+You can add override defaults for additional environments, such as production and staging, in target-specific configuration files.
 
-例:
+For example:
 
 ```
 └──myProject/src/environments/
@@ -24,7 +24,7 @@
                    └──environment.stage.ts
 ```
 
-基本ファイル`environment.ts`には、デフォルトの環境設定が含まれています。例:
+The base file `environment.ts`, contains the default environment settings. For example:
 
 ```
 export const environment = {
@@ -32,9 +32,9 @@ export const environment = {
 };
 ```
 
-環境が指定されない場合、`build`コマンドはこれをビルドターゲットとして使用します。
-環境オブジェクトの追加プロパティとして、あるいは個別のオブジェクトとして、さらに変数を追加することができます。
-たとえば、次はデフォルト環境に変数のデフォルト値を追加しています:
+The `build` command uses this as the build target when no environment is specified.
+You can add further variables, either as additional properties on the environment object, or as separate objects.
+For example, the following adds a default for a variable to the default environment:
 
 ```
 export const environment = {
@@ -43,8 +43,8 @@ export const environment = {
 };
 ```
 
-`environment.prod.ts`のようなターゲット固有の設定ファイルを追加することができます。
-次の内容は本番ビルドターゲットのデフォルト値を設定しています:
+You can add target-specific configuration files, such as `environment.prod.ts`.
+The following sets content sets default values for the production build target:
 
 ```
 export const environment = {
@@ -53,9 +53,9 @@ export const environment = {
 };
 ```
 
-### アプリで環境固有の変数の使用
+### Using environment-specific variables in your app
 
-次のアプリケーション構造は本番環境およびステージング環境用のビルドターゲットを設定しています:
+The following application structure configures build targets for production and staging environments:
 
 ```
 └── src
@@ -68,15 +68,15 @@ export const environment = {
         └── environment.ts
 ```
 
-定義した環境設定を使用するには、コンポーネントでオリジナルの環境ファイルをインポートしなければなりません:
+To use the environment configurations you have defined, your components must import the original environments file:
 
 ```
 import { environment } from './../environments/environment';
 ```
 
-これによりbuildコマンドとserveコマンドが特定のビルドターゲット用の設定を見つけることができるようになります。
+This ensures that the build and serve commands can find the configurations for specific build targets.
 
-次のコンポーネントファイル(`app.component.ts`)の中のコードは設定ファイルで定義された環境変数を使用しています。
+The following code in the component file (`app.component.ts`) uses an environment variable defined in the configuration files.
 
 ```
 import { Component } from '@angular/core';
@@ -96,14 +96,14 @@ export class AppComponent {
 ```
 {@a file-replacement}
 
-## ターゲット固有ファイルの置換の設定 {@a configure-target-specific-file-replacements}
+## Configure target-specific file replacements
 
-メインのCLI設定ファイル`angular.json`には、各ビルドターゲットの設定に`fileReplacements`セクションが含まれており、これにより任意のファイルをターゲット固有バージョンのものに置き換えることができます。
-これは本番やステージングなどの固有の環境をターゲットとするビルドにおいて、ターゲット固有のコードや変数を含めるのに便利です。
+The main CLI configuration file, `angular.json`, contains a `fileReplacements` section in the configuration for each build target, which allows you to replace any file with a target-specific version of that file.
+This is useful for including target-specific code or variables in a build that targets a specific environment, such as production or staging.
 
-デフォルトではファイルは置き換えられません。
-固有のビルドターゲット用のファイルの置き換えを追加することができます。
-例:
+By default no files are replaced.
+You can add file replacements for specific build targets.
+For example:
 
 ```
 "configurations": {
@@ -117,9 +117,9 @@ export class AppComponent {
     ...
 ```
 
-これは（`ng build --prod`または`ng build --configuration=production`を使って）本番設定をビルドするとき、`src/environment/environment.ts`ファイルはターゲット固有バージョンの`src/environment/environment.prod.ts`ファイルに置き換えられることを意味します。
+This means that when you build your production configuration (using `ng build --prod` or `ng build --configuration=production`), the `src/environments/environment.ts` file is replaced with the target-specific version of the file, `src/environments/environment.prod.ts`.
 
-必要に応じてさらに設定を追加することができます。ステージング環境を追加するには、`src/environments/environment.ts`をコピーして`src/environments/environment.staging.ts`を作り、それから`staging`設定を`angular.json`に追加してください:
+You can add additional configurations as required. To add a staging environment, create a copy of `src/environments/environment.ts` called `src/environments/environment.staging.ts`, then add a `staging` configuration to `angular.json`:
 
 ```
 "configurations": {
@@ -135,16 +135,16 @@ export class AppComponent {
 }
 ```
 
-このターゲット環境にもさらに設定オプションを追加することができます。
-ビルドでサポートされているオプションはすべてビルドターゲット設定でオーバーライドすることができます。
+You can add more configuration options to this target environment as well.
+Any option that your build supports can be overridden in a build target configuration.
 
-ステージング設定を使ってビルドするには、次のコマンドを実行してください:
+To build using the staging configuration, run the following command:
 
 <code-example language="sh" class="code-shell">
  ng build --configuration=staging
 </code-example>
 
-もし`angular.json`の"serve:configurations"セクションにターゲットとなるビルド設定を追加すれば、それを使用するように`serve`コマンドを設定することもできます:
+You can also configure the `serve` command to use the targeted build configuration if you add it to the "serve:configurations" section of `angular.json`:
 
 ```
 "serve": {
@@ -166,12 +166,12 @@ export class AppComponent {
 {@a size-budgets}
 {@a configure-size-budgets}
 
-## サイズ予算の設定 {@a configuring-size-budgets}
+## Configuring size budgets
 
-アプリケーションの機能性が増すにつれて、それらのサイズも大きくなります。
-CLIを使用すると、サイズにしきい値を設定してアプリケーションの一部が定義したサイズ境界内に収まるようにすることができます。
+As applications grow in functionality, they also grow in size.
+The CLI allows you to set size thresholds in your configuration to ensure that parts of your application stay within size boundaries that you define.
 
-CLI設定ファイル（`angular.json`）内の、各[環境設定](#app-environments)用の`budgets`セクションで、サイズの境界を定義してください。
+Define your size boundaries in the CLI configuration file, `angular.json`, in a `budgets` section for each [configured environment](#app-environments).
 
 ```
 {
@@ -185,79 +185,79 @@ CLI設定ファイル（`angular.json`）内の、各[環境設定](#app-environ
 }
 ```
 
-アプリケーション全体、および特定の部分に対して、サイズ予算を指定することができます。
-各予算エントリは、特定の種類の予算を設定します。
-次の形式でサイズ値を指定してください:
+You can specify size budgets for the entire app, and for particular parts.
+Each budget entry configures a budget of a given type.
+Specify size values in the following formats:
 
-* 123 or 123b: バイト単位のサイズ
+* 123 or 123b: Size in bytes
 
-* 123kb: キロバイト単位のサイズ
+* 123kb: Size in kilobytes
 
-* 123mb: メガバイト単位のサイズ
+* 123mb: Size in megabytes
 
-* 12%: ベースラインに対するサイズの割合。（ベースライン値には無効）
+* 12%: Percentage of size relative to baseline. (Not valid for baseline values.)
 
-予算を設定した場合、アプリの特定の部分が設定した境界サイズに達するか超えた際に、ビルドシステムによって警告または報告が行われ、エラーが発生します。
+When you configure a budget, the build system warns or reports an error when a given part of the app reaches or exceeds a boundary size that you set.
 
-各予算エントリは、次のプロパティをもつJSONオブジェクトです:
+Each budget entry is a JSON object with the following properties:
 
 <table>
   <tr>
-    <th>プロパティ</th>
-    <th>値</th>
+    <th>Property</th>
+    <th>Value</th>
   </tr>
 
   <tr>
     <td>type</td>
     <td>
-    
-    予算の種類。次のうちどれか:
 
-* `bundle` - 特定のバンドルのサイズ。
-* `initial` - アプリの初期サイズ。
-* `allScript` - 全スクリプトのサイズ。
-* `all` - アプリ全体のサイズ。
-* `anyComponentStyle` - いずれか1つのコンポーネントのスタイルシートのサイズ。
-* `anyScript` - いずれか1つのスクリプトのサイズ。
-* `any` - いずれかのファイルのサイズ。
+    The type of budget. One of:
+
+* `bundle` - The size of a specific bundle.
+* `initial` - The initial size of the app.
+* `allScript` - The size of all scripts.
+* `all` - The size of the entire app.
+* `anyComponentStyle` - This size of any one component stylesheet.
+* `anyScript` - The size of any one script.
+* `any` - The size of any file.
 
     </td>
   </tr>
    <tr>
     <td>name</td>
     <td>
-    
-    バンドルの名前（`type=bundle`の場合）。
-    
+
+    The name of the bundle (for `type=bundle`).
+
     </td>
   </tr>
   <tr>
     <td>baseline</td>
-    <td>比較のためのベースラインサイズ。</td>
+    <td>The baseline size for comparison.</td>
   </tr>
   <tr>
     <td>maximumWarning</td>
-    <td>ベースラインに対する警告の最大しきい値。</td>
+    <td>The maximum threshold for warning relative to the baseline.</td>
   </tr>
   <tr>
     <td>maximumError</td>
-    <td>ベースラインに対するエラーの最大しきい値。</td>
+    <td>The maximum threshold for error relative to the baseline.</td>
   </tr>
   <tr>
     <td>minimumWarning</td>
-    <td>ベースラインに対する警告の最小しきい値。</td>
+    <td>The minimum threshold for warning relative to the baseline.</td>
   </tr>
   <tr>
     <td>minimumError</td>
-    <td>ベースラインに対するエラーの最小しきい値。</td>
+    <td>The minimum threshold for error relative to the baseline.</td>
   </tr>
   <tr>
     <td>warning</td>
-    <td>ベースラインに対する警告のしきい値（最小および最大）。</td>
+    <td>The threshold for warning relative to the baseline (min & max).</td>
   </tr>
   <tr>
     <td>error</td>
-    <td>ベースラインに対するエラーのしきい値（最小および最大）。</td>
+    <td>The threshold for error relative to the baseline (min & max).</td>
   </tr>
 
  </table>
@@ -292,16 +292,16 @@ To disable these warnings, you can add the CommonJS module name to `allowedCommo
 
 {@a browser-compat}
 
-## ブラウザ互換性の設定
+## Configuring browser compatibility
 
-CLIは[Autoprefixer](https://github.com/postcss/autoprefixer)を使ってさまざまなブラウザやブラウザバージョンとの互換性を保証しています。
-特定のブラウザをターゲットにしたり、特定のブラウザバージョンをビルドから除外したりする必要が出てくるかもしれません。
+The CLI uses [Autoprefixer](https://github.com/postcss/autoprefixer) to ensure compatibility with different browser and browser versions.
+You may find it necessary to target specific browsers or exclude certain browser versions from your build.
 
-内部的には、Autoprefixerは[Browserslist](https://github.com/browserslist/browserslist)というライブラリに頼り、どのブラウザを接頭辞付きでサポートするかを判断しています。
-Browserlistはパッケージ設定ファイルの`browserslist`プロパティ、または`.browserslistrc`という名前の設定ファイルから設定オプションを探します。
-AutoprefixerはCSSに接頭辞をつける際に`browserslist`の設定を探します。
+Internally, Autoprefixer relies on a library called [Browserslist](https://github.com/browserslist/browserslist) to figure out which browsers to support with prefixing.
+Browserlist looks for configuration options in a `browserslist` property of the package configuration file, or in a configuration file named `.browserslistrc`.
+Autoprefixer looks for the `browserslist` configuration when it prefixes your CSS.
 
-* パッケージ設定ファイル`package.json`にbrowserslistプロパティを追加することで、どのブラウザをターゲットにするかをAutoprefixerに伝えることができます:
+* You can tell Autoprefixer what browsers to target by adding a browserslist property to the package configuration file, `package.json`:
 ```
  "browserslist": [
    "> 1%",
@@ -309,18 +309,18 @@ AutoprefixerはCSSに接頭辞をつける際に`browserslist`の設定を探し
  ]
 ```
 
-* あるいは、新しいファイル`.browserslistrc`をプロジェクトディレクトリに追加して、サポートしたいブラウザを指定することもできます:
+* Alternatively, you can add a new file, `.browserslistrc`, to the project directory, that specifies browsers you want to support:
 ```
  ### Supported Browsers
  > 1%
  last 2 versions
 ```
 
-特定のブラウザとバージョンをターゲットにする方法の例については[browserslistのリポジトリ](https://github.com/browserslist/browserslist)を参照してください。
+See the [browserslist repo](https://github.com/browserslist/browserslist) for more examples of how to target specific browsers and versions.
 
 ### Backward compatibility with Lighthouse
 
-もしプログレッシブウェブアプリを作成したくてプロジェクト評価に[Lighthouse](https://developers.google.com/web/tools/lighthouse/)を使用したい場合は、[古いFlexbox](https://developers.google.com/web/tools/lighthouse/audits/old-flexbox)の接頭辞を削除するために、次の`browserslist`エントリを`package.json`に追加してください:
+If you want to produce a progressive web app and are using [Lighthouse](https://developers.google.com/web/tools/lighthouse/) to grade the project, add the following `browserslist` entry to your `package.json` file, in order to eliminate the [old flexbox](https://developers.google.com/web/tools/lighthouse/audits/old-flexbox) prefixes:
 
 ```
 "browserslist": [
@@ -350,14 +350,14 @@ For more information, see [Autoprefixer documentation](https://autoprefixer.gith
 
 {@a proxy}
 
-## バックエンドサーバーへのプロキシ
+## Proxying to a backend server
 
-`--proxy-config`ビルドオプションにファイルを渡すことで、`webpack dev server`の[プロキシサポート](https://webpack.js.org/configuration/dev-server/#devserverproxy)を使って、特定のURLをバックエンドサーバーに転送することができます。
-たとえば、`http://localhost:4200/api`に対するすべての要求を`http://localhost:3000/api`で実行しているサーバーに転送するには、次の手順を実行してください。
+You can use the [proxying support](https://webpack.js.org/configuration/dev-server/#devserverproxy) in the `webpack` dev server to divert certain URLs to a backend server, by passing a file to the `--proxy-config` build option.
+For example, to divert all calls for `http://localhost:4200/api` to a server running on `http://localhost:3000/api`, take the following steps.
 
-1. `proxy.conf.json` ファイルを、 `package.json` と同じディレクトリにある `src/` フォルダの中に作成します。
+1. Create a file `proxy.conf.json` in your project's `src/` folder.
 
-2. 次のコンテンツを新しいプロキシファイルに追加します:
+1. Add the following content to the new proxy file:
     ```
     {
       "/api": {
@@ -367,7 +367,7 @@ For more information, see [Autoprefixer documentation](https://autoprefixer.gith
     }
     ```
 
-3. CLI設定ファイル`angular.json`の中で, `serve`ターゲットに`proxyConfig`オプションを追加します:
+1. In the CLI configuration file, `angular.json`, add the `proxyConfig` option to the `serve` target:
     ```
     ...
     "architect": {
@@ -380,17 +380,17 @@ For more information, see [Autoprefixer documentation](https://autoprefixer.gith
     ...
     ```
 
-4. このプロキシ設定で開発サーバーを起動するには、`ng serve`を実行します。
+1. To run the dev server with this proxy configuration, call `ng serve`.
 
-プロキシ設定ファイルを編集して設定オプションを追加することができます。次にいくつか例を示します。
-すべてのオプションの説明については、[webpack DevServer ドキュメンテーション](https://webpack.js.org/configuration/dev-server/#devserverproxy)を参照してください。
+You can edit the proxy configuration file to add configuration options; some examples are given below.
+For a description of all options, see [webpack DevServer documentation](https://webpack.js.org/configuration/dev-server/#devserverproxy).
 
-プロキシ設定ファイルを編集した場合、変更を有効にするために`ng serve`プロセスを再起動する必要があることに注意してください。
+Note that if you edit the proxy configuration file, you must relaunch the `ng serve` process to make your changes effective.
 
-### URLパスの書き換え
+### Rewrite the URL path
 
-`pathRewrite`プロキシ設定オプションを使って実行時にURLパスを書き換えることができます。 
-たとえば、次の`pathRewrite`値をプロキシ設定に指定してパスの末尾から"api"を削除することができます。
+The `pathRewrite` proxy configuration option lets you rewrite the URL path at run time.
+For example, you can specify the following `pathRewrite` value to the proxy configuration to remove "api" from the end of a path.
 
 ```
 {
@@ -404,7 +404,7 @@ For more information, see [Autoprefixer documentation](https://autoprefixer.gith
 }
 ```
 
-`localhost`上にないバックエンドにアクセスする必要がある場合は、`changeOrigin`オプションも設定してください。例：
+If you need to access a backend that is not on `localhost`, set the `changeOrigin` option as well. For example:
 
 ```
 {
@@ -419,7 +419,7 @@ For more information, see [Autoprefixer documentation](https://autoprefixer.gith
 }
 ```
 
-プロキシが意図したとおりに動作しているかどうかを判断しやすくするためには、`logLevel`オプションを設定してください。例:
+To help determine whether your proxy is working as intended, set the `logLevel` option. For example:
 
 ```
 {
@@ -434,13 +434,13 @@ For more information, see [Autoprefixer documentation](https://autoprefixer.gith
 }
 ```
 
-プロキシのログレベルは`info`（デフォルト）、 `debug`、`warn`、`error`、そして`silent`です。
+Proxy log levels are `info` (the default), `debug`, `warn`, `error`, and `silent`.
 
-### 複数エントリのプロキシ
+### Proxy multiple entries
 
-JavaScriptで設定を定義することで、同じターゲットに対して複数のエントリをプロキシすることができます。
+You can proxy multiple entries to the same target by defining the configuration in JavaScript.
 
-（`proxy.conf.json`の代わりに）`proxy.conf.js`にプロキシ設定を用意し、次の例のように設定ファイルを指定してください。
+Set the proxy configuration file to `proxy.conf.js` (instead of `proxy.conf.json`), and specify configuration files as in the following example.
 
 ```
 const PROXY_CONFIG = [
@@ -462,7 +462,7 @@ const PROXY_CONFIG = [
 module.exports = PROXY_CONFIG;
 ```
 
-CLI設定ファイル`angular.json`で、JavaScriptプロキシ設定ファイルを指定してください。
+In the CLI configuration file, `angular.json`, point to the JavaScript proxy configuration file:
 
 ```
 ...
@@ -476,9 +476,9 @@ CLI設定ファイル`angular.json`で、JavaScriptプロキシ設定ファイ�
 ...
 ```
 
-### プロキシのバイパス
+### Bypass the proxy
 
-必要に応じてプロキシをバイパスする必要がある場合、または送信前にリクエストを動的に変更する必要がある場合は、このJavaScriptの例に示すように、bypassオプションを追加してください。
+If you need to optionally bypass the proxy, or dynamically change the request before it's sent, add the bypass option, as shown in this JavaScript example.
 
 ```
 const PROXY_CONFIG = {
@@ -498,18 +498,18 @@ const PROXY_CONFIG = {
 module.exports = PROXY_CONFIG;
 ```
 
-### コーポレートプロキシの使用
+### Using corporate proxy
 
-もしコーポレートプロキシの背後で作業している場合は、ローカルネットワークの外部にあるURLへの要求はバックエンドが直接プロキシできません。
-この場合、エージェントを使用してコーポレートプロキシを介して要求をリダイレクトするようにバックエンドプロキシを設定することができます:
+If you work behind a corporate proxy, the backend cannot directly proxy calls to any URL outside your local network.
+In this case, you can configure the backend proxy to redirect calls through your corporate proxy using an agent:
 
 <code-example language="none" class="code-shell">
 npm install --save-dev https-proxy-agent
 </code-example>
 
-環境変数`http_proxy`または`HTTP_PROXY`を定義した場合、`npm start`を実行した際にエージェントが自動的に追加されコーポレートプロキシを介して要求を渡します。
+When you define an environment variable `http_proxy` or `HTTP_PROXY`, an agent is automatically added to pass calls through your corporate proxy when running `npm start`.
 
-JavaScript設定ファイルで次の内容を使用してください。
+Use the following content in the JavaScript configuration file.
 
 ```
 var HttpsProxyAgent = require('https-proxy-agent');

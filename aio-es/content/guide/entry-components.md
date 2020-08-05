@@ -1,25 +1,25 @@
-# エントリーコンポーネント
+# Entry components
 
-エントリーコンポーネントは、Angularが型に基づいて命令的にロードするコンポーネント(つまり、そのコンポーネントはPlantillasで参照していないことを意味します)です。 エントリーコンポーネントは、NgModuleでブートストラップするか、ルーティング定義に含めることで指定します。
+An entry component is any component that Angular loads imperatively, (which means you’re not referencing it in the template), by type. You specify an entry component by bootstrapping it in an NgModule, or including it in a routing definition.
 
 <div class="alert is-helpful">
 
-2つのコンポーネントのタイプについて対比してみましょう。Plantillasに含まれるコンポーネントは宣言的なコンポーネントになります。さらに、命令的にロードされるコンポーネントがあり、それがエントリーコンポーネントになります。
+To contrast the two types of components, there are components which are included in the template, which are declarative. Additionally, there are components which you load imperatively; that is, entry components.
 
 </div>
 
 
-エントリーコンポーネントは主に2つ種類に分かれます:
+There are two main kinds of entry components:
 
-* ブートストラップするルートコンポーネント.
-* ルーティング定義で指定されたコンポーネント
-
-
-## ブートストラップするエントリーコンポーネント
+* The bootstrapped root component.
+* A component you specify in a route definition.
 
 
-次は、
-基本的な`app.module.ts`で`AppComponent`をブートストラップするコンポーネントとして指定する例です:
+## A bootstrapped entry component
+
+
+The following is an example of specifying a bootstrapped component,
+`AppComponent`, in a basic `app.module.ts`:
 
 ```typescript
 @NgModule({
@@ -33,32 +33,32 @@
     AppRoutingModule
   ],
   providers: [],
-  bootstrap: [AppComponent] // ブートストラップするエントリーコンポーネント
+  bootstrap: [AppComponent] // bootstrapped entry component
 })
 ```
 
-ブートストラップするコンポーネントはエントリーコンポーネントの1つで、
-ブートストラッププロセス(アプリケーションの起動)中にAngularによってDOMにロードされます。
-他のエントリーコンポーネントは、ルーターなどの他の手段によって動的にロードされます。
+A bootstrapped component is an entry component
+that Angular loads into the DOM during the bootstrap process (application launch).
+Other entry components are loaded dynamically by other means, such as with the router.
 
-Raíz`AppComponent`が`@NgModule.bootstrap`に型でリストされているため、Angularはそれを動的にロードします。
+Angular loads a root `AppComponent` dynamically because it's listed by type in `@NgModule.bootstrap`.
 
 <div class="alert is-helpful">
 
-コンポーネントは、モジュールの`ngDoBootstrap()`メソッドで命令的にブートストラップすることもできます。
-`@NgModule.bootstrap`プロパティは、これがエントリーコンポーネントであることと、
-このコンポーネントを使用してアプリケーションをブートストラップするコードを生成する必要があることをコンパイラに知らせます。
+A component can also be bootstrapped imperatively in the module's `ngDoBootstrap()` method.
+The `@NgModule.bootstrap` property tells the compiler that this is an entry component and
+it should generate code to bootstrap the application with this component.
 
 </div>
 
 
-ブートストラップは命令的なプロセスなので、ブートストラップするコンポーネントは必然的にエントリーコンポーネントになり、結果として、エントリーコンポーネントが一個は必要になります。
+A bootstrapped component is necessarily an entry component because bootstrapping is an imperative process, thus it needs to have an entry component.
 
-## ルーティング定義で指定されたエントリーコンポーネント
+## A routed entry component
 
 
-2つ目の種類のエントリーコンポーネントは、
-次のようなルーティング定義で見ることができます:
+The second kind of entry component occurs in a route definition like
+this:
 
 ```typescript
 const routes: Routes = [
@@ -69,38 +69,38 @@ const routes: Routes = [
 ];
 ```
 
-ルーティング定義は、`component: CustomerListComponent`にあるその型に基づいてコンポーネントを参照します。
+A route definition refers to a component by its type with `component: CustomerListComponent`.
 
-すべてのルーターコンポーネントはエントリーコンポーネントでなければなりません。あなたはコンポーネントを2つの場所(ルーターと`entryComponents`)に追加する必要がありそうですが、コンパイラは十分賢いのでこれがルーティング定義であることを認識して、自動的にルーターコンポーネントを`entryComponents`に追加してくれます。
+All router components must be entry components. Because this would require you to add the component in two places (router and `entryComponents`) the Compiler is smart enough to recognize that this is a router definition and automatically add the router component into `entryComponents`.
 
 
-## `entryComponents`配列
+## The `entryComponents` array
 
-`@NgModule`デコレーターは`entryComponents`配列を持っていますが、
-Angularが`@NgModule.bootstrap`にリストされたコンポーネントと、ルーティング定義内のコンポーネントをエントリーコンポーネントとして自動的に追加するので、ほとんどの場合エントリーコンポーネントを明示的に設定する必要はありません。これらの2つのメカニズムによって追加されたエントリーコンポーネントがほとんどを占めますが、アプリケーションからブートストラップを行ったり、コンポーネントを型に基づいて命令的に動的ロードしたりする場合は、
-`entryComponents`に明示的に追加する必要があります。
+Though the `@NgModule` decorator has an `entryComponents` array, most of the time
+you won't have to explicitly set any entry components because Angular adds components listed in `@NgModule.bootstrap` and those in route definitions to entry components automatically. Though these two mechanisms account for most entry components, if your app happens to bootstrap or dynamically load a component by type imperatively,
+you must add it to `entryComponents` explicitly.
 
-### `entryComponents`とコンパイラ
+### `entryComponents` and the compiler
 
-プロダクション用のアプリケーションのために、あなたはできるだけコードサイズを減らしたいと思っています。
-コードには実際に必要なクラスだけが含まれていて、使用されていないコンポーネントは除外すべきです。
-そういうわけで、Angularコンパイラは、`entryComponents`から到達可能なコンポーネントだけのコードを生成します(これはつまり、`@NgModule.declarations`に参照を追加しても、必ずしも最終的なバンドルには含まれないことを意味します)。
+For production apps you want to load the smallest code possible.
+The code should contain only the classes that you actually need and
+exclude components that are never used. For this reason, the Angular compiler only generates code for components which are reachable from the `entryComponents`; This means that adding more references to `@NgModule.declarations` does not imply that they will necessarily be included in the final bundle.
 
-事実、多くのライブラリはまったく使用されないかもしれないコンポーネントを宣言しエクスポートしています。
-たとえば、マテリアルデザインライブラリはあなたが使用するコンポーネントを知らないため、すべてのコンポーネントをエクスポートしますが、全部を使用することはそうそうないでしょう。
-参照していないコンポーネントは、ツリーシェーカーが最終的なコードパッケージから削除します。
+In fact, many libraries declare and export components you'll never use.
+For example, a material design library will export all components because it doesn’t know which ones you will use. However, it is unlikely that you will use them all.
+For the ones you don't reference, the tree shaker drops these components from the final code package.
 
-あるコンポーネントが_エントリーコンポーネント_ではなく、なおかつPlantillas内に見つからない場合は、
-ツリーシェーカーはそれを投げ捨てるでしょう。
-なので、アプリケーションのサイズをできるだけ小さく保つためには、本当に必要なエントリーコンポーネントだけを追加することをお勧めします。
+If a component isn't an _entry component_ and isn't found in a template,
+the tree shaker will throw it away. So, it's best to add only the components that are truly entry components to help keep your app
+as trim as possible.
 
 
 <hr />
 
-## Angularのモジュールについてのさらに詳しい情報
+## More on Angular modules
 
-あなたは次の記事に興味があるかもしれません:
-* [NgModuleの種類](guide/module-types)
-* [Angularルーターによるモジュールの遅延ロード](guide/lazy-loading-ngmodules)
-* [プロバイダー](guide/providers)
-* [NgModules FAQ](guide/ngmodule-faq)
+You may also be interested in the following:
+* [Types of NgModules](guide/module-types)
+* [Lazy Loading Modules with the Angular Router](guide/lazy-loading-ngmodules).
+* [Providers](guide/providers).
+* [NgModules FAQ](guide/ngmodule-faq).

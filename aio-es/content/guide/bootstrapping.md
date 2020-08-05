@@ -1,18 +1,18 @@
-# ルートモジュールによるアプリケーションの起動
+# Launching your app with a root module
 
-#### 前提条件
+#### Prerequisites
 
-次の基本的な理解
-* [Módulo JavaScript y NgModule](guide/ngmodule-vs-jsmodule)
+A basic understanding of the following:
+* [JavaScript Modules vs. NgModules](guide/ngmodule-vs-jsmodule).
 
 <hr />
 
-NgModuleは、アプリケーションパーツがどのように組み合わされるかを記述します。
-すべてのアプリケーションには、少なくとも1つのAngularモジュール（_root_モジュール）があり、
-起動時にアプリケーションをブートストラップするために存在する必要があります。
-慣例により、それは通常`AppModule`と呼ばれます。
+An NgModule describes how the application parts fit together.
+Every application has at least one Angular module, the _root_ module,
+which must be present for bootstrapping the application on launch.
+By convention and by default, this NgModule is named `AppModule`.
 
-[Angular CLI](cli) の `ng new` コマンドを使用してアプリケーションを生成する場合、デフォルトのAppModuleは次のようになります。
+When you use the [Angular CLI](cli) command `ng new` to generate an app, the default `AppModule` is as follows.
 
 ```typescript
 /* JavaScript imports */
@@ -40,41 +40,43 @@ export class AppModule { }
 
 ```
 
-import文の後に、
-**`@NgModule`**[デコレータ](guide/glossary#decorator '"Decorator" の説明')をもつクラスがあります。
+After the import statements is a class with the
+**`@NgModule`** [decorator](guide/glossary#decorator '"Decorator" explained').
 
-`@NgModule`デコレーターは`AppModule`を`NgModule`クラスとして識別します。
-`@NgModule`はアプリケーションのコンパイルと起動の方法をAngularに伝えるメタデータオブジェクトを受け取ります。
+The `@NgModule` decorator identifies `AppModule` as an `NgModule` class.
+`@NgModule` takes a metadata object that tells Angular how to compile and launch the application.
 
-* **_declarations_**&mdash;このアプリケーションの唯一のコンポーネントです。
-* **_imports_**&mdash;DOMレンダリング、サニタイズ、およびロケーションなどのブラウザ特定のサービスをもつ`BrowserModule`をインポートします。
-* **_providers_**&mdash;サービスプロバイダー
-* **_bootstrap_**&mdash;Angularが作成してホストWebページである`index.html`に挿入する_ルート_コンポーネント。
+* **_declarations_**&mdash;this application's lone component.
+* **_imports_**&mdash;import `BrowserModule` to have browser specific services such as DOM rendering, sanitization, and location.
+* **_providers_**&mdash;the service providers.
+* **_bootstrap_**&mdash;the _root_ component that Angular creates and inserts
+into the `index.html` host web page.
 
-Angular CLIで作成されたデフォルトのアプリケーションにはコンポーネントが`AppComponent`1つしかなく、
-`declarations`と`bootstrap`配列の両方にあります。
+The default application created by the Angular CLI only has one component, `AppComponent`, so it
+is in both the `declarations` and the `bootstrap` arrays.
 
-{@a the-declarations-array}
+{@a declarations}
 
-## `declarations`配列
+## The `declarations` array
 
-モジュールの`declarations`配列は、そのモジュールに属するコンポーネントをAngularに示します。
-追加のコンポーネントを作成したら、それらを`declarations`に追加します。
+The module's `declarations` array tells Angular which components belong to that module.
+As you create more components, add them to `declarations`.
 
-すべてのコンポーネントを厳密に1つの`NgModule`クラスに宣言する必要があります。
-コンポーネントを宣言せずに使用すると、Angularはエラーメッセージを返します。
+You must declare every component in exactly one `NgModule` class.
+If you use a component without declaring it, Angular returns an
+error message.
 
-`declarations`配列は宣言を受け取ります。
-宣言とはコンポーネント、[ディレクティブ](guide/attribute-directives)および[パイプ](guide/pipes)です。
-モジュールのすべての宣言は`declarations`配列内になければなりません。
-宣言は、正確に1つのモジュールに属していなければなりません。
-複数のモジュールで同じクラスを宣言しようとすると、コンパイラでエラーが発生します。
+The `declarations` array only takes declarables. Declarables
+are components, [directives](guide/attribute-directives) and [pipes](guide/pipes).
+All of a module's declarables must be in the `declarations` array.
+Declarables must belong to exactly one module. The compiler emits
+an error if you try to declare the same class in more than one module.
 
-これらの宣言されたクラスはモジュール内からは見えますが、このモジュールからエクスポートされ、
-他のモジュールがこのモジュールをインポートしない限り、
-別のモジュール内のコンポーネントには表示されません。
+These declared classes are visible within the module but invisible
+to components in a different module unless they are exported from
+this module and the other module imports this one.
 
-宣言の配列に入る例を次に示します。
+An example of what goes into a declarations array follows:
 
 ```typescript
   declarations: [
@@ -84,82 +86,89 @@ Angular CLIで作成されたデフォルトのアプリケーションにはコ
   ],
 ```
 
-宣言は1つのモジュールにしか属せないので、1つの`@NgModule`だけに宣言します。
-必要なときは、必要な宣言をもつモジュールをインポートします。
+A declarable can only belong to one module, so only declare it in
+one `@NgModule`. When you need it elsewhere,
+import the module that has the declarable you need in it.
 
-**`@NgModule`の参照のみ**が`imports`配列に格納されます。
-
-
-### `@NgModule`とディレクティブの使用
-
-ディレクティブのために`declarations`配列を使いましょう。
-ディレクティブ、コンポーネント、またはパイプをモジュール内で使用するには、いくつかのことをおこなう必要があります。
-
-1. 書き込んだファイルからエクスポートします。
-2. それを適切なモジュールにインポートします。
-3. `@NgModule`の`declarations`配列で宣言します。
+**Only `@NgModule` references** go in the `imports` array.
 
 
-これらの3つのステップは次のようになります。ディレクティブを作成するファイルで、ディレクティブをエクスポートします。
-`ItemDirective`という名前の次の例は、CLIが生成する`item.directive.ts`ファイルに生成するデフォルトのディレクティブ構造です。
+### Using directives with `@NgModule`
+
+Use the `declarations` array for directives.
+To use a directive, component, or pipe in a module, you must do a few things:
+
+1. Export it from the file where you wrote it.
+2. Import it into the appropriate module.
+3. Declare it in the `@NgModule` `declarations` array.
+
+
+Those three steps look like the following. In the file where you create your directive, export it.
+The following example, named `ItemDirective` is the default directive structure that the CLI generates in its own file, `item.directive.ts`:
 
 <code-example path="bootstrapping/src/app/item.directive.ts" region="directive" header="src/app/item.directive.ts"></code-example>
 
-重要な点は、別の場所にインポートできるようにエクスポートする必要があることです。
-次に、JavaScriptのimport文を使用して `NgModule` 、この例では`app.module.ts`にインポートします。
+The key point here is that you have to export it so you can import it elsewhere. Next, import it
+into the `NgModule`, in this example `app.module.ts`, with a JavaScript import statement:
 
 <code-example path="bootstrapping/src/app/app.module.ts" region="directive-import" header="src/app/app.module.ts"></code-example>
 
-そして、同じファイルで`@NgModule`の`declarations`配列に追加します。
+And in the same file, add it to the `@NgModule` `declarations` array:
 
 <code-example path="bootstrapping/src/app/app.module.ts" region="declarations" header="src/app/app.module.ts"></code-example>
 
-これで`ItemDirective`をコンポーネントで使えるようになりました。この例では`AppModule`を使いましたが、フィーチャーモジュールでも同じようにできます。ディレクティブの詳細については、[属性ディレクティブ](guide/attribute-directives)と[構造ディレクティブ](guide/structural-directives)を参照してください。また、[パイプ](guide/pipes)やコンポーネントにも同じTécnicaを使用します。
 
-コンポーネント、ディレクティブ、およびパイプは、1つのモジュールにのみ属することを忘れないでください。必要なモジュールをインポートしてシェアするために、アプリケーション中で宣言しなければならないのは一度だけです。これにより時間が節約され、アプリをリーンに保つのに役立ちます。
+Now you could use your `ItemDirective` in a component. This example uses `AppModule`, but you'd do it the same way for a feature module. For more about directives, see [Attribute Directives](guide/attribute-directives) and [Structural Directives](guide/structural-directives). You'd also use the same technique for [pipes](guide/pipes) and components.
+
+Remember, components, directives, and pipes belong to one module only. You only need to declare them once in your app because you share them by importing the necessary modules. This saves you time and helps keep your app lean.
 
 
 
 
 {@a imports}
 
-## `imports`配列
+## The `imports` array
 
-モジュールの`imports`配列は、`@NgModule`メタデータオブジェクトの中にだけ現れます。
-このモジュールが適切に機能するために必要な他のNgModuleについてAngularに伝えます。
+The module's `imports` array appears exclusively in the `@NgModule` metadata object.
+It tells Angular about other NgModules that this particular module needs to function properly.
 
-このモジュールのリストは、このモジュール内のコンポーネントのPlantillasが参照するコンポーネント、
-ディレクティブ、またはパイプをエクスポートするモジュールです。
-この場合、コンポーネントは`AppComponent`であり、`BrowserModule`、
-`FormsModule`または`HttpClientModule`の中のコンポーネント、ディレクティブあるいはパイプを参照します。
-コンポーネントPlantillasは、参照されたクラスがこのモジュールで宣言されているか、
-クラスが別のモジュールからインポートされたときに、
-別のコンポーネント、ディレクティブ、またはパイプを参照できます。
+This list of modules are those that export components, directives, or pipes
+that the component templates in this module reference. In this case, the component is
+`AppComponent`, which references components, directives, or pipes in `BrowserModule`,
+`FormsModule`, or  `HttpClientModule`.
+A component template can reference another component, directive,
+or pipe when the referenced class is declared in this module or
+the class was imported from another module.
 
 {@a bootstrap-array}
 
-## `providers`配列
+## The `providers` array
 
-プロバイダー配列は、アプリケーションが必要とするサービスを並べます。
-ここにサービスを並べると、アプリ全体で利用できるようになります。
-フィーチャモジュールと遅延ロードを使用しているときにはスコープを設定できます。
-詳細については、[プロバイダー](guide/providers)を参照してください。
+The providers array is where you list the services the app needs. When
+you list services here, they are available app-wide. You can scope
+them when using feature modules and lazy loading. For more information, see
+[Providers](guide/providers).
 
-## `bootstrap`配列
+## The `bootstrap` array
 
-アプリケーションは、Raíz`AppModule`をブートストラップすることで起動します、これは`entryComponent`とも呼ばれます。
-とりわけ、ブートストラッププロセスは、`bootstrap`配列にリストされているコンポーネントを作成し、それぞれをブラウザDOMに挿入します。
+The application launches by bootstrapping the root `AppModule`, which is
+also referred to as an `entryComponent`.
+Among other things, the bootstrapping process creates the component(s) listed in the `bootstrap` array
+and inserts each one into the browser DOM.
 
-ブートストラップされた各コンポーネントは、それ自身のコンポーネントツリーのベースです。
-通常、ブートストラップされたコンポーネントを挿入すると、
-そのツリーを埋めるコンポーネントの作成が次々に起こります。
+Each bootstrapped component is the base of its own tree of components.
+Inserting a bootstrapped component usually triggers a cascade of
+component creations that fill out that tree.
 
-ホストWebページに複数のコンポーネントツリーを配置することはできますが、ほとんどのアプリケーションではコンポーネントツリーが1つしかなく、単一のルートコンポーネントをブートストラップします。
+While you can put more than one component tree on a host web page,
+most applications have only one component tree and bootstrap a single root component.
 
-この1つのルートコンポーネントは、通常`AppComponent`と呼ばれ、ルートモジュールの`bootstrap`配列内にあります。
+This one root component is usually called `AppComponent` and is in the
+root module's `bootstrap` array.
 
 
 
-## Angularモジュールについての詳細
+## More about Angular Modules
 
-アプリ中でよく使われるAngularモジュールについては、[Módulos de uso común](guide/frequent-ngmodules)を参照してください。
+For more on NgModules you're likely to see frequently in apps,
+see [Frequently Used Modules](guide/frequent-ngmodules).

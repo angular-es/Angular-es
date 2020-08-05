@@ -1,4 +1,4 @@
-# 構造ディレクティブ
+# Structural directives
 
 <style>
   h4 {font-size: 17px !important; text-transform: none !important;}
@@ -8,54 +8,54 @@
 
 
 
-このガイドでは、Angular が **構造ディレクティブ** を使って DOM を操作する方法と、
-同じことをするために独自の構造ディレクティブを作成する方法について説明します。
+This guide looks at how Angular manipulates the DOM with **structural directives** and
+how you can write your own structural directives to do the same thing.
 
-<live-example></live-example> から試してみてください。
+Try the <live-example></live-example>.
 
 
 {@a definition}
 
 
 
-## 構造ディレクティブとは?
+## What are structural directives?
 
-構造ディレクティブは HTML のレイアウトを担当します。
-それらは、通常は要素を追加、削除、または操作することによって、
-DOM の _構造_ を構築または再構成します。
+Structural directives are responsible for HTML layout.
+They shape or reshape the DOM's _structure_, typically by adding, removing, or manipulating
+elements.
 
-他のディレクティブと同様に、_ホスト要素_ に構造ディレクティブを適用します。
-ディレクティブはそのあとに、そのホスト要素とその子孫でするはずだったことをすべて行います。
+As with other directives, you apply a structural directive to a _host element_.
+The directive then does whatever it's supposed to do with that host element and its descendants.
 
-構造ディレクティブは簡単に認識できます。
-次の例のように、アスタリスク (*) がディレクティブ属性名の前に付きます。
+Structural directives are easy to recognize.
+An asterisk (*) precedes the directive attribute name as in this example.
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (ngif)" region="ngif"></code-example>
 
 
 
-角括弧なし。括弧なし。`*ngIf` に文字列をセットするだけです。
+No brackets. No parentheses. Just `*ngIf` set to a string.
 
-このガイドでは、[アスタリスク (*) は便利な表記法](guide/structural-directives#asterisk) であること、
-文字列は通常のPlantillas式ではなく
-[_マイクロシンタックス_](guide/structural-directives#microsyntax) であることを学びます。
-Angular はこの表記法を、`<ng-template>`
-でホスト要素とその子孫を囲むマークアップにデシュガーします。
-個々の構造ディレクティブは、そのPlantillasを使用して何か違うことをします。
+You'll learn in this guide that the [asterisk (*) is a convenience notation](guide/structural-directives#asterisk)
+and the string is a [_microsyntax_](guide/structural-directives#microsyntax) rather than the usual
+[template expression](guide/template-syntax#template-expressions).
+Angular desugars this notation into a marked-up `<ng-template>` that surrounds the
+host element and its descendents.
+Each structural directive does something different with that template.
 
-3つの一般的なビルトイン構造ディレクティブ
-([NgIf](guide/template-syntax#ngIf)、[NgFor](guide/template-syntax#ngFor)、[NgSwitch...](guide/template-syntax#ngSwitch)) は、
-[_Plantillas構文_](guide/template-syntax) ガイドで説明されており、
-Angular のドキュメント全体のサンプルで見られます。Plantillasの例は次のようになります:
+Three of the common, built-in structural directives&mdash;[NgIf](guide/template-syntax#ngIf),
+[NgFor](guide/template-syntax#ngFor), and [NgSwitch...](guide/template-syntax#ngSwitch)&mdash;are
+described in the [_Template Syntax_](guide/template-syntax) guide and seen in samples throughout the Angular documentation.
+Here's an example of them in a template:
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (built-in)" region="built-in"></code-example>
 
 
 
-このガイドでは、それらの _使い方_ を繰り返すことはしません。しかし、
-_それらがどのように機能するのか_、そして構造ディレクティブを [あなた自身で書く方法](guide/structural-directives#unless) を説明します。
+This guide won't repeat how to _use_ them. But it does explain _how they work_
+and how to [write your own](guide/structural-directives#unless) structural directive.
 
 
 <div class="callout is-helpful">
@@ -63,21 +63,21 @@ _それらがどのように機能するのか_、そして構造ディレクテ
 
 
 <header>
-  ディレクティブのつづり
+  Directive spelling
 </header>
 
 
-このガイド全体を通して、あなたはディレクティブが _UpperCamelCase_ と _lowerCamelCase_ の両方でつづられているのを見るでしょう。
-すでに `NgIf` と `ngIf` を見たことがあるでしょう。それには理由があります。
-`NgIf` はディレクティブの _クラス_ を参照します。
-`ngIf` はディレクティブの _属性名_ を参照します。
 
-ディレクティブの _クラス_ は _UpperCamelCase_ (`NgIf`) でつづられます。
-ディレクティブの _属性名_ は _lowerCamelCase_ (`ngIf`) でつづられます。
-このガイドでは、そのプロパティとディレクティブが何をするのかについて話すときにディレクティブ
-_クラス_ を参照します。
-このガイドでは、HTML Plantillasの要素にディレクティブをどのように適用するかを説明するときに
-_属性名_ を参照します。
+Throughout this guide, you'll see a directive spelled in both _UpperCamelCase_ and _lowerCamelCase_.
+Already you've seen `NgIf` and `ngIf`.
+There's a reason. `NgIf` refers to the directive _class_;
+`ngIf` refers to the directive's _attribute name_.
+
+A directive _class_ is spelled in _UpperCamelCase_ (`NgIf`).
+A directive's _attribute name_ is spelled in _lowerCamelCase_ (`ngIf`).
+The guide refers to the directive _class_ when talking about its properties and what the directive does.
+The guide refers to the _attribute name_ when describing how
+you apply the directive to an element in the HTML template.
 
 
 </div>
@@ -88,19 +88,19 @@ _属性名_ を参照します。
 
 
 
-Angular ディレクティブには他にも (1)&nbsp;コンポーネントと (2)&nbsp;属性ディレクティブの2つの種類があります。
-他の場所で詳しく説明しています。
+There are two other kinds of Angular directives, described extensively elsewhere:
+(1)&nbsp;components and (2)&nbsp;attribute directives.
 
-*コンポーネント* は、ネイティブの HTML 要素のように HTML の領域を管理します。
-技術的にみると、それはPlantillas付きのディレクティブです。
+A *component* manages a region of HTML in the manner of a native HTML element.
+Technically it's a directive with a template.
 
-[*属性* ディレクティブ](guide/attribute-directives)
-は、要素、コンポーネント、または他のディレクティブの外観または動作を変更します。
-たとえば、ビルトインの [`NgStyle`](guide/template-syntax#ngStyle)
-ディレクティブは同時にいくつかの要素スタイルを変更します。
+An [*attribute* directive](guide/attribute-directives) changes the appearance or behavior
+of an element, component, or another directive.
+For example, the built-in [`NgStyle`](guide/template-syntax#ngStyle) directive
+changes several element styles at the same time.
 
-1つのホスト要素に複数の _属性_ ディレクティブを適用できます。
-1つのホスト要素に適用できる _構造_ ディレクティブは [1つだけ](guide/structural-directives#one-per-element) です。
+You can apply many _attribute_ directives to one host element.
+You can [only apply one](guide/structural-directives#one-per-element) _structural_ directive to a host element.
 
 
 </div>
@@ -111,18 +111,18 @@ Angular ディレクティブには他にも (1)&nbsp;コンポーネントと (
 
 
 
-## NgIf ケーススタディ
+## NgIf case study
 
-`NgIf` はもっとも単純で、もっとも理解しやすい構造ディレクティブです。
-真偽値を返す式を受け取り、DOM のチャンク全体を追加、削除します。
+`NgIf` is the simplest structural directive and the easiest to understand.
+It takes a boolean expression and makes an entire chunk of the DOM appear or disappear.
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (ngif-true)" region="ngif-true"></code-example>
 
 
 
-`ngIf` ディレクティブは CSS で要素を非表示にするのではなく、DOM に物理的に追加、削除します。
-ブラウザの開発者ツールを使用して DOM を調査し、その事実を確認してください。
+The `ngIf` directive doesn't hide elements with CSS. It adds and removes them physically from the DOM.
+Confirm that fact using browser developer tools to inspect the DOM.
 
 
 <div class="lightbox">
@@ -131,24 +131,24 @@ Angular ディレクティブには他にも (1)&nbsp;コンポーネントと (
 
 
 
-上のパラグラフは DOM に存在します。下の使われていないパラグラフは存在しません。
-その代わりに "bindings" についてのコメントが置かれます (これについては [後](guide/structural-directives#asterisk) で詳しく説明します)。
+The top paragraph is in the DOM. The bottom, disused paragraph is not;
+in its place is a comment about "bindings" (more about that [later](guide/structural-directives#asterisk)).
 
-条件が false の場合、`NgIf` はそのホスト要素を DOM から削除し、
-それを DOM イベント (それが作成したアタッチメント) からデタッチし、
-コンポーネントを Angular の変更検知からデタッチし、そして破棄します。
-コンポーネントと DOM ノードはガベージコレクトされ、メモリを解放することができます。
+When the condition is false, `NgIf` removes its host element from the DOM,
+detaches it from DOM events (the attachments that it made),
+detaches the component from Angular change detection, and destroys it.
+The component and DOM nodes can be garbage-collected and free up memory.
 
-### *非表示* にするのではなく *削除する* のはなぜですか？
+### Why *remove* rather than *hide*?
 
-ディレクティブは、`display` スタイルを `none` に設定することによって、不要なパラグラフを非表示にすることができます。
+A directive could hide the unwanted paragraph instead by setting its `display` style to `none`.
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (display-none)" region="display-none"></code-example>
 
 
 
-見えない間も要素は DOM に残ります。
+While invisible, the element remains in the DOM.
 
 
 <div class="lightbox">
@@ -157,58 +157,58 @@ Angular ディレクティブには他にも (1)&nbsp;コンポーネントと (
 
 
 
-非表示と削除の違いは、単純なパラグラフでは問題になりません。
-ホスト要素がリソースを集中的に使用するコンポーネントにアタッチされている場合が問題です。
-そのようなコンポーネントの動作は、隠れていても継続します。
-コンポーネントはその DOM 要素にアタッチされたままです。それはイベントをリッスンし続けます。
-Angular はデータバインディングに影響を与える可能性のある変更をチェックし続けます。
-コンポーネントが何をしていようとも、それは継続します。
+The difference between hiding and removing doesn't matter for a simple paragraph.
+It does matter when the host element is attached to a resource intensive component.
+Such a component's behavior continues even when hidden.
+The component stays attached to its DOM element. It keeps listening to events.
+Angular keeps checking for changes that could affect data bindings.
+Whatever the component was doing, it keeps doing.
 
-不可視ですが、コンポーネント (とそのすべての子孫コンポーネント) はリソースを拘束します。
-パフォーマンスとメモリの負担が大きくなり、応答性が低下する可能性があり、そしてユーザーは何も見えません。
+Although invisible, the component&mdash;and all of its descendant components&mdash;tie up resources.
+The performance and memory burden can be substantial, responsiveness can degrade, and the user sees nothing.
 
-肯定的な面では、要素を再表示するのは速いです。
-コンポーネントの以前の状態は保持され、表示する準備が整っています。
-コンポーネントは再初期化されません (これは、コストがかかる可能性がある操作です)。
-そのため、表示、非表示するのが正しいこともあります。
+On the positive side, showing the element again is quick.
+The component's previous state is preserved and ready to display.
+The component doesn't re-initialize&mdash;an operation that could be expensive.
+So hiding and showing is sometimes the right thing to do.
 
-しかし、それらを回避するための説得力のある理由がない場合は、`NgIf`
-のような構造ディレクティブを使用して、ユーザーが表示できない DOM 要素を削除し、
-未使用のリソースを回復することをお勧めします。
+But in the absence of a compelling reason to keep them around,
+your preference should be to remove DOM elements that the user can't see
+and recover the unused resources with a structural directive like `NgIf` .
 
-**これらの同じ考慮事項は、組み込みであろうとカスタムであろうと、すべての構造ディレクティブに適用されます。**
-構造ディレクティブを適用する前に一時停止して、要素の追加と削除、
-およびコンポーネントの作成と破棄の影響を検討することをお勧めします。
+**These same considerations apply to every structural directive, whether built-in or custom.**
+Before applying a structural directive, you might want to pause for a moment
+to consider the consequences of adding and removing elements and of creating and destroying components.
 
 
 {@a asterisk}
 
-{@a the-asterisk--prefix}
 
-## アスタリスク (*) 接頭辞
 
-あなたは、ディレクティブ名の前にアスタリスク (*)
-が付いていることに気付き、それがなぜ必要なのか、また何をするのか疑問に思ったはずです。
+## The asterisk (*) prefix
 
-次では、`hero` が存在する場合、`*ngIf` はヒーローの名前を表示します。
+Surely you noticed the asterisk (*) prefix to the directive name
+and wondered why it is necessary and what it does.
+
+Here is `*ngIf` displaying the hero's name if `hero` exists.
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (asterisk)" region="asterisk"></code-example>
 
 
 
-アスタリスクはもう少し複雑なものの "糖衣構文" です。
-内部的には、Angular は次のように `*ngIf` _属性_ を含んだ `<ng-template>` _要素_ に変換し、ホスト要素を囲みます。
+The asterisk is "syntactic sugar" for something a bit more complicated.
+Internally, Angular translates the `*ngIf` _attribute_ into a `<ng-template>` _element_, wrapped around the host element, like this.
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (ngif-template)" region="ngif-template"></code-example>
 
 
 
-* `*ngIf` ディレクティブは `<ng-template>` 要素に移動し、そこでプロパティバインディング `[ngIf]` になりました。
-* class 属性を含む残りの `<div>` は、`<ng-template>` 要素内に移動しました。
+* The `*ngIf` directive moved to the `<ng-template>` element where it became a property binding,`[ngIf]`.
+* The rest of the `<div>`, including its class attribute, moved inside the `<ng-template>` element.
 
-最初の形式は実際にはレンダリングされず、最終結果だけが DOM に入ります。
+The first form is not actually rendered, only the finished product ends up in the DOM.
 
 
 <div class="lightbox">
@@ -217,41 +217,41 @@ Angular はデータバインディングに影響を与える可能性のある
 
 
 
-Angular は実際のレンダリング中に `<ng-template>` のコンテンツを利用し、
-`<ng-template>` を診断コメントに置き換えました。
+Angular consumed the `<ng-template>` content during its actual rendering and
+replaced the `<ng-template>` with a diagnostic comment.
 
-[`NgFor`](guide/structural-directives#ngFor) ディレクティブと [`NgSwitch...`](guide/structural-directives#ngSwitch) ディレクティブは同じパターンに従います。
+The [`NgFor`](guide/structural-directives#ngFor) and [`NgSwitch...`](guide/structural-directives#ngSwitch) directives follow the same pattern.
 
 
 {@a ngFor}
 
 
 
-## _*ngFor_ の内側
+## Inside _*ngFor_
 
-Angular は、同じ方法で `*ngFor` をアスタリスク (*) 構文から `<ng-template>` _要素_ に変換します。
+Angular transforms the `*ngFor` in similar fashion from asterisk (*) syntax to `<ng-template>` _element_.
 
-両方の方法で書かれた `NgFor` のフル機能のアプリケーションは次のようになります:
+Here's a full-featured application of `NgFor`, written both ways:
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (inside-ngfor)" region="inside-ngfor"></code-example>
 
 
 
-これは `ngIf` よりも明らかに複雑で、そしてそれはそのとおりです。
-`NgFor` ディレクティブには、このガイドに示されている `NgIf` よりも多くの機能 (必須およびオプション) があります。
-最低でも `NgFor` はループ変数 (`let hero`) とリスト (`heroes`) が必要です。
+This is manifestly more complicated than `ngIf` and rightly so.
+The `NgFor` directive has more features, both required and optional, than the `NgIf` shown in this guide.
+At minimum `NgFor` needs a looping variable (`let hero`) and a list (`heroes`).
 
-これらの機能は、`ngFor` に割り当てられた Angular の [マイクロシンタックス](guide/structural-directives#microsyntax) で記述した文字列で有効にします。
+You enable these features in the string assigned to `ngFor`, which you write in Angular's [microsyntax](guide/structural-directives#microsyntax).
 
 
 <div class="alert is-helpful">
 
 
 
-`ngFor` 文字列の _外側_ のものはすべて、
-`<ng-template>` の内側に移動するときにホスト要素 (`<div>`) に残ります。
-この例では、`[class.odd]="odd"` は `<div>` 上に残ったままになります。
+Everything _outside_ the `ngFor` string stays with the host element
+(the `<div>`) as it moves inside the `<ng-template>`.
+In this example, the `[class.odd]="odd"` stays on the `<div>`.
 
 
 </div>
@@ -261,37 +261,37 @@ Angular は、同じ方法で `*ngFor` をアスタリスク (*) 構文から `<
 {@a microsyntax}
 
 
-## マイクロシンタックス
+## Microsyntax
 
-Angular のマイクロシンタックスを使用すると、コンパクトでわかりやすい文字列でディレクティブを設定できます。
-マイクロシンタックスパーサーはその文字列を `<ng-template>` の属性に変換します。
+The Angular microsyntax lets you configure a directive in a compact, friendly string.
+The microsyntax parser translates that string into attributes on the `<ng-template>`:
 
-* `let` キーワードは、Plantillas内で参照する [_Plantillas入力変数_](guide/structural-directives#template-input-variable) を宣言します。
-この例の入力変数は、`hero`、`i`、および `odd` です。
-パーサーは、`let hero`、`let i`、`let odd` を、
-`let-hero`、`let-i`、`let-odd` という名前の変数に変換します。
+* The `let` keyword declares a [_template input variable_](guide/structural-directives#template-input-variable)
+that you reference within the template. The input variables in this example are `hero`, `i`, and `odd`.
+The parser translates `let hero`, `let i`, and `let odd` into variables named
+`let-hero`, `let-i`, and `let-odd`.
 
-* マイクロシンタックスパーサーは、すべてのディレクティブをタイトルケースにして、`ngFor`などのディレクティブの属性名の接頭辞を付けます。
-たとえば、`ngFor`入力プロパティでは、
-`of`と`trackBy`は、それぞれ`ngForOf`と`ngForTrackBy`になります。
-このようにして、ディレクティブはリストが `heros` で、トラックごとに呼ばれる関数が `trackById` であることを認識します。
+* The microsyntax parser title-cases all directives and prefixes them with the directive's
+attribute name, such as `ngFor`. For example, the `ngFor` input properties,
+`of` and `trackBy`, become `ngForOf` and `ngForTrackBy`, respectively.
+That's how the directive learns that the list is `heroes` and the track-by function is `trackById`.
 
-* `NgFor` ディレクティブはリストをループしながら、自身の _コンテキスト_ オブジェクトのプロパティを設定およびリセットします。
-これらのプロパティには、`index`、`odd`、および`$implicit`という名前の特別なプロパティを含めることができますが、
-これらに限定されません。
+* As the `NgFor` directive loops through the list, it sets and resets properties of its own _context_ object.
+These properties can include, but aren't limited to, `index`, `odd`, and a special property
+named `$implicit`.
 
-* `let-i` 変数と `let-odd` 変数は、`let i=index`、`let odd=odd` と定義されました。
-Angular は、コンテキストの `index`、`odd` プロパティにの現在の値を設定します。
+* The `let-i` and `let-odd` variables were defined as `let i=index` and `let odd=odd`.
+Angular sets them to the current value of the context's `index` and `odd` properties.
 
-* `let-hero` のコンテキストプロパティは指定されませんでした。
-それを表すソースは暗黙的です。
-Angular は、現在のイテレーションで `NgFor`
-がヒーローで初期化したコンテキストの `$implicit` プロパティの値を `let-hero` に設定します。
+* The context property for `let-hero` wasn't specified.
+Its intended source is implicit.
+Angular sets `let-hero` to the value of the context's `$implicit` property,
+which `NgFor` has initialized with the hero for the current iteration.
 
-* [`NgFor`のAPI ガイド](api/common/NgForOf "API: NgFor")
-では、追加の `NgFor` ディレクティブプロパティとコンテキストプロパティについて説明しています。
+* The [`NgFor` API guide](api/common/NgForOf "API: NgFor")
+describes additional `NgFor` directive properties and context properties.
 
-* `NgForOf`ディレクティブが`NgFor`を実装しています。追加の `NgForOf` ディレクティブプロパティとコンテキストプロパティ [NgForOf APIリファレンス](api/common/NgForOf) を参照してください。
+* The `NgForOf` directive implements `NgFor`. Read more about additional `NgForOf` directive properties and context properties in the [NgForOf API reference](api/common/NgForOf).
 
 ### Writing your own structural directives
 
@@ -421,10 +421,10 @@ The following table demonstrates how Angular desugars microsyntax.
   </tr>
 </table>
 
-[`NgIf` のソースコード](https://github.com/angular/angular/blob/master/packages/common/src/directives/ng_if.ts "Source: NgIf")
-と
-[`NgForOf`](https://github.com/angular/angular/blob/master/packages/common/src/directives/ng_for_of.ts "Source: NgForOf")
-を勉強することはさらなる学習のためのよい方法です。
+Studying the
+[source code for `NgIf`](https://github.com/angular/angular/blob/master/packages/common/src/directives/ng_if.ts "Source: NgIf")
+and [`NgForOf`](https://github.com/angular/angular/blob/master/packages/common/src/directives/ng_for_of.ts "Source: NgForOf")
+is a great way to learn more.
 
 
 {@a template-input-variable}
@@ -433,90 +433,90 @@ The following table demonstrates how Angular desugars microsyntax.
 {@a template-input-variables}
 
 
-## Plantillas入力変数
+## Template input variable
 
-_Plantillas入力変数_ は、Plantillasの単一インスタンス _内_ で参照できる変数です。この例には、`hero`、`i`、および `odd`
-のようないくつかの変数が含まれます。
-すべてのキーワードの前には `let` が付きます。
+A _template input variable_ is a variable whose value you can reference _within_ a single instance of the template.
+There are several such variables in this example: `hero`, `i`, and `odd`.
+All are preceded by the keyword `let`.
 
-_Plantillas入力変数_ は、
-[Plantillas _参照_ 変数](guide/template-syntax#ref-vars) と
-_意味的_ にも _構文的_ にも同じでは **ありません**。
+A _template input variable_ is **_not_** the same as a
+[template _reference_ variable](guide/template-syntax#ref-vars),
+neither _semantically_ nor _syntactically_.
 
-`let` キーワード (`let hero`) を使ってPlantillas _入力_ 変数を宣言します。
-変数のスコープは、繰り返されるPlantillasの _単一インスタンス_ に制限されています。
-他の構造ディレクティブの定義でも同じ変数名を使用できます。
+You declare a template _input_ variable using the `let` keyword (`let hero`).
+The variable's scope is limited to a _single instance_ of the repeated template.
+You can use the same variable name again in the definition of other structural directives.
 
-変数名の前に `#` (`#var`) を付けてPlantillas _参照_ 変数を宣言します。
-_参照_ 変数は、それにアタッチされた要素、コンポーネント、またはをディレクティブを参照します。
-それは _Plantillas全体_ の _どこからでも_ アクセスできます。
+You declare a template _reference_ variable by prefixing the variable name with `#` (`#var`).
+A _reference_ variable refers to its attached element, component or directive.
+It can be accessed _anywhere_ in the _entire template_.
 
-Plantillas _入力_ 変数名とPlantillas _参照_ 変数名は、個々の名前空間を持ちます。
-`let hero` 内の `hero` は、`#hero` として宣言された `hero` と同じ変数になることはありません。
+Template _input_ and _reference_ variable names have their own namespaces. The `hero` in `let hero` is never the same
+variable as the `hero` declared as `#hero`.
 
 
 {@a one-per-element}
 
 
-## ホスト要素ごとに1つの構造ディレクティブ {@a one-structural-directive-per-host-element}
+## One structural directive per host element
 
-あるとき、あなたは指定した条件が true なものだけで HTML ブロックを繰り返したいと思います。
-あなたは同じホスト要素に `*ngFor` と `*ngIf` の両方を配置 _しよう_ とするでしょう。
-Angular はそれを許しません。1つの要素に適用できる構造ディレクティブは1つだけです。
+Someday you'll want to repeat a block of HTML but only when a particular condition is true.
+You'll _try_ to put both an `*ngFor` and an `*ngIf` on the same host element.
+Angular won't let you. You may apply only one _structural_ directive to an element.
 
-その理由は単純です。構造ディレクティブは、ホスト要素とその子孫を使って複雑なことを行えます。
-2つのディレクティブが同じホスト要素を要求するとき、どちらが優先されるでしょうか?
-`NgIf` と `NgFor` のどちらが先になるでしょうか。
-`NgIf` は `NgFor` の効果をキャンセルできるでしょうか?もしそうなら (そしてそれはそうあるべきだと思われる)、Angular は他の構造ディレクティブをキャンセルする能力をどのように一般化すべきでしょうか?
+The reason is simplicity. Structural directives can do complex things with the host element and its descendents.
+When two directives lay claim to the same host element, which one takes precedence?
+Which should go first, the `NgIf` or the `NgFor`? Can the `NgIf` cancel the effect of the `NgFor`?
+If so (and it seems like it should be so), how should Angular generalize the ability to cancel for other structural directives?
 
-これらの質問に対する簡単な答えはありません。複数の構造ディレクティブを禁止することでその質問を無意味にします。
-このユースケースでは簡単な解決策があります。`*ngFor` 要素をラップするコンテナ要素に `*ngIf` を追加します。
-一方または両方の要素を[`ng-container`](guide/structural-directives#ngcontainer)にすることができるので、余分な階層の HTML を導入する必要はありません。
+There are no easy answers to these questions. Prohibiting multiple structural directives makes them moot.
+There's an easy solution for this use case: put the `*ngIf` on a container element that wraps the `*ngFor` element.
+One or both elements can be an [`ng-container`](guide/structural-directives#ngcontainer) so you don't have to introduce extra levels of HTML.
 
 
 {@a ngSwitch}
 
 
 
-## _NgSwitch_ ディレクティブの内側
+## Inside _NgSwitch_ directives
 
-Angular の _NgSwitch_ は、実際には `NgSwitch`、`NgSwitchCase`、および `NgSwitchDefault` の協調的なディレクティブのセットです。
+The Angular _NgSwitch_ is actually a set of cooperating directives: `NgSwitch`, `NgSwitchCase`, and `NgSwitchDefault`.
 
-例は次のようになります。
+Here's an example.
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (ngswitch)" region="ngswitch"></code-example>
 
 
 
-`NgSwitch` (`hero.emotion`) に割り当てられたスイッチ値は、
-(もしあれば) どのスイッチケースが表示されるかを決定します。
+The switch value assigned to `NgSwitch` (`hero.emotion`) determines which
+(if any) of the switch cases are displayed.
 
-`NgSwitch` 自体は構造ディレクティブではありません。
-他の2つのスイッチディレクティブの動作を制御するのは _属性_ ディレクティブです。
-それが `*ngSwitch` と書かず、`[ngSwitch]` と書く理由です。
+`NgSwitch` itself is not a structural directive.
+It's an _attribute_ directive that controls the behavior of the other two switch directives.
+That's why you write `[ngSwitch]`, never `*ngSwitch`.
 
-`NgSwitchCase` と `NgSwitchDefault` _は_ 構造ディレクティブです。
-アスタリスク (*) 接頭辞表記を使用してそれらを要素にアタッチします。
-`NgSwitchCase` は、その値がスイッチ値と一致するとき、そのホスト要素を表示します。
-兄弟の `NgSwitchCase` が1つもスイッチ値と一致しないときは、`NgSwitchDefault` がそのホスト要素を表示します。
+`NgSwitchCase` and `NgSwitchDefault` _are_ structural directives.
+You attach them to elements using the asterisk (*) prefix notation.
+An `NgSwitchCase` displays its host element when its value matches the switch value.
+The `NgSwitchDefault` displays its host element when no sibling `NgSwitchCase` matches the switch value.
 
 
 <div class="alert is-helpful">
 
 
 
-ディレクティブを適用する要素はその _ホスト_ 要素です。
-`*ngSwitchCase` が happy のときのホスト要素は `<happy-hero>` です。
-`*ngSwitchDefault` のホスト要素は `<unknown-hero>` です。
+The element to which you apply a directive is its _host_ element.
+The `<happy-hero>` is the host element for the happy `*ngSwitchCase`.
+The `<unknown-hero>` is the host element for the `*ngSwitchDefault`.
 
 
 </div>
 
 
 
-他の構造ディレクティブと同様に、`NgSwitchCase` と `NgSwitchDefault` は
-`<ng-template>` 要素形式にデシュガーすることができます。
+As with other structural directives, the `NgSwitchCase` and `NgSwitchDefault`
+can be desugared into the `<ng-template>` element form.
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (ngswitch-template)" region="ngswitch-template"></code-example>
@@ -526,37 +526,37 @@ Angular の _NgSwitch_ は、実際には `NgSwitch`、`NgSwitchCase`、およ�
 {@a prefer-asterisk}
 
 
-## アスタリスク (*) 構文を優先しましょう
+## Prefer the asterisk (*) syntax.
 
-アスタリスク (*) 構文は、デシュガーされた形式よりも明確です。
-ディレクティブをホストする要素が1つもない場合は、
-[&lt;ng-container&gt;](guide/structural-directives#ng-container) を使用してください。
+The asterisk (*) syntax is more clear than the desugared form.
+Use [&lt;ng-container&gt;](guide/structural-directives#ng-container) when there's no single element
+to host the directive.
 
-構造ディレクティブをPlantillas内の _属性_ または _要素_ 形式で適用することには
-それほどよい理由はありませんが、Angular が `<ng-template>` を作成し、
-それがどのように機能するかを理解することは重要です。あなたがあなた自身の構造ディレクティブを書くとき、`<ng-template>` を参照するでしょう。
+While there's rarely a good reason to apply a structural directive in template _attribute_ or _element_ form,
+it's still important to know that Angular creates a `<ng-template>` and to understand how it works.
+You'll refer to the `<ng-template>` when you [write your own structural directive](guide/structural-directives#unless).
 
 
 {@a template}
 
 
 
-## *&lt;ng-template&gt;*
+## The *&lt;ng-template&gt;*
 
-&lt;ng-template&gt; は HTML をレンダリングするための Angular の要素です。
-直接表示されることはありません。
-実際、ビューをレンダリングする前に、Angular は `<ng-template>` とその内容をコメントに _置き換えます_。
+The &lt;ng-template&gt; is an Angular element for rendering HTML.
+It is never displayed directly.
+In fact, before rendering the view, Angular _replaces_ the `<ng-template>` and its contents with a comment.
 
-構造ディレクティブがなく、単に `<ng-template>`
-でいくつかの要素をラップすると、それらの要素は消えます。
-次は、"Hip! Hip! Hooray!" というフレーズ内の中央の "Hip!" の結末です。
+If there is no structural directive and you merely wrap some elements in a `<ng-template>`,
+those elements disappear.
+That's the fate of the middle "Hip!" in the phrase "Hip! Hip! Hooray!".
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (template-tag)" region="template-tag"></code-example>
 
 
 
-Angular は中央の "Hip!" を消去し、歓声と熱狂をやや抑えます。
+Angular erases the middle "Hip!", leaving the cheer a bit less enthusiastic.
 
 
 <div class="lightbox">
@@ -565,8 +565,8 @@ Angular は中央の "Hip!" を消去し、歓声と熱狂をやや抑えます�
 
 
 
-[自身の構造ディレクティブを書く](guide/structural-directives#unless) ときに見て分かるように、
-構造ディレクティブは `<ng-template>` に働かせます。
+A structural directive puts a `<ng-template>` to work
+as you'll see when you [write your own structural directive](guide/structural-directives#unless).
 
 
 {@a ngcontainer}
@@ -576,45 +576,45 @@ Angular は中央の "Hip!" を消去し、歓声と熱狂をやや抑えます�
 
 
 
-## 兄弟要素を &lt;ng-container&gt; でグルーピングする
+## Group sibling elements with &lt;ng-container&gt;
 
-構造ディレクティブをホストできる・すべき _ルート_ 要素がしばしばあります。
-リスト要素 (`<li>`) は `NgFor` リピーターの典型的なホスト要素です。
+There's often a _root_ element that can and should host the structural directive.
+The list element (`<li>`) is a typical host element of an `NgFor` repeater.
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (ngfor-li)" region="ngfor-li"></code-example>
 
 
 
-ホスト要素がない場合は、通常、コンテンツを `<div>` などのネイティブ HTML コンテナ要素にラップし、
-そのラッパーにディレクティブをアタッチできます。
+When there isn't a host element, you can usually wrap the content in a native HTML container element,
+such as a `<div>`, and attach the directive to that wrapper.
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (ngif)" region="ngif"></code-example>
 
 
 
-単一の _ルート_ の下に要素をグループピングするために別のコンテナ要素
-(通常は `<span>` や `<div>`) を導入しても通常は無害です。
-_通常は_ ... でも _いつでも_ ではありません。
+Introducing another container element&mdash;typically a `<span>` or `<div>`&mdash;to
+group the elements under a single _root_ is usually harmless.
+_Usually_ ... but not _always_.
 
-CSS スタイルは新しいレイアウトを想定も対応もしないので、
-グルーピングした要素はPlantillasの外観を崩すかもしれません。
-たとえば、次のようなパラグラフのレイアウトがあるとします。
+The grouping element may break the template appearance because CSS styles
+neither expect nor accommodate the new layout.
+For example, suppose you have the following paragraph layout.
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (ngif-span)" region="ngif-span"></code-example>
 
 
 
-また、`<p>` 内の `<span>` に適用される CSS スタイルルールもあります。
+You also have a CSS style rule that happens to apply to a `<span>` within a `<p>`aragraph.
 
 
 <code-example path="structural-directives/src/app/app.component.css" header="src/app/app.component.css (p-span)" region="p-span"></code-example>
 
 
 
-構築されたパラグラフは変にレンダリングされます。
+The constructed paragraph renders strangely.
 
 
 <div class="lightbox">
@@ -623,20 +623,20 @@ CSS スタイルは新しいレイアウトを想定も対応もしないので�
 
 
 
-他の場所での使用を意図した `p span` のスタイルが、ここでは誤って適用されました。
+The `p span` style, intended for use elsewhere, was inadvertently applied here.
 
-もうひとつの問題: いくつかの HTML 要素はすべての直系の子が特定の型であることを要求します。
-たとえば、`<select>` 要素には `<option>` の子が必要です。
-_options_ を条件付きの `<div>` または `<span>` で囲むことはできません。
+Another problem: some HTML elements require all immediate children to be of a specific type.
+For example, the `<select>` element requires `<option>` children.
+You can't wrap the _options_ in a conditional `<div>` or a `<span>`.
 
-これを試すと、
+When you try this,
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (select-span)" region="select-span"></code-example>
 
 
 
-ドロップダウンは空になります。
+the drop down is empty.
 
 
 <div class="lightbox">
@@ -645,21 +645,21 @@ _options_ を条件付きの `<div>` または `<span>` で囲むことはでき
 
 
 
-ブラウザは、`<span>` 内に `<option>` を表示しません。
+The browser won't display an `<option>` within a `<span>`.
 
-### &lt;ng-container&gt; で助ける
+### &lt;ng-container&gt; to the rescue
 
-Angularの `<ng-container>` はスタイルやレイアウトを接続しないグルーピング要素です。
-Angular は _それを DOM 内に配置しません_。
+The Angular `<ng-container>` is a grouping element that doesn't interfere with styles or layout
+because Angular _doesn't put it in the DOM_.
 
-次もまた条件付きのパラグラフです。今回は `<ng-container>` を使用します。
+Here's the conditional paragraph again, this time using `<ng-container>`.
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (ngif-ngcontainer)" region="ngif-ngcontainer"></code-example>
 
 
 
-正しくレンダリングされます。
+It renders properly.
 
 
 <div class="lightbox">
@@ -668,14 +668,14 @@ Angular は _それを DOM 内に配置しません_。
 
 
 
-`<ng-container>` で _選択した_ `<option>` を条件付きで除外します。
+Now conditionally exclude a _select_ `<option>` with `<ng-container>`.
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (select-ngcontainer)" region="select-ngcontainer"></code-example>
 
 
 
-ドロップダウンは正しく動きます。
+The drop down works properly.
 
 
 <div class="lightbox">
@@ -684,14 +684,14 @@ Angular は _それを DOM 内に配置しません_。
 
 <div class="alert is-helpful">
 
-**Note:**  ngModel ディレクティブは Angular の FormsModule の一部として宣言されていて、それを使用したい場合は Angular のモジュールメタデータの imports: [...] セクション内に FormsModule を追加する必要があります。
+**Note:** Remember that ngModel directive is defined as a part of Angular FormsModule and you need to include FormsModule in the imports: [...] section of the Angular module metadata, in which you want to use it.
 
 </div>
 
 
-`<ng-container>` は Angular パーサーによって認識される構文要素です。
-ディレクティブ、コンポーネント、クラス、またはインターフェースではありません。
-JavaScript の `if` ブロックの中括弧のようなものです:
+The `<ng-container>` is a syntax element recognized by the Angular parser.
+It's not a directive, component, class, or interface.
+It's more like the curly braces in a JavaScript `if`-block:
 
 
 <code-example language="javascript">
@@ -705,88 +705,88 @@ JavaScript の `if` ブロックの中括弧のようなものです:
 
 
 
-中括弧がなければ、JavaScript は、あなたがそれらすべてを単一ブロックとして条件付きで実行する意図があっても、
-最初の文のみを実行するでしょう。
-`<ng-container>` は Angular Plantillas内での同様のニーズを満たします。
+Without those braces, JavaScript would only execute the first statement
+when you intend to conditionally execute all of them as a single block.
+The `<ng-container>` satisfies a similar need in Angular templates.
 
 
 {@a unless}
 
 
 
-## 構造ディレクティブを書く
+## Write a structural directive
 
-このセクションでは、`NgIf` の逆を行う
-`UnlessDirective` 構造ディレクティブを作成します。
-条件が `true` の場合、`NgIf` はPlantillasの内容を表示します。
-`UnlessDirective` は、条件が ***false*** のときに内容を表示します。
+In this section, you write an `UnlessDirective` structural directive
+that does the opposite of `NgIf`.
+`NgIf` displays the template content when the condition is `true`.
+`UnlessDirective` displays the content when the condition is ***false***.
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (appUnless-1)" region="appUnless-1"></code-example>
 
 
 
-ディレクティブの作成はコンポーネントの作成と似ています。
+Creating a directive is similar to creating a component.
 
-* (`Component` デコレーターの代わりに) `Directive` デコレーターをインポートします。
+* Import the `Directive` decorator (instead of the `Component` decorator).
 
-* `Input`、`TemplateRef`、および `ViewContainerRef` シンボルをインポートします。_どんな_ 構造ディレクティブでもそれらを必要とするでしょう。
+* Import the `Input`, `TemplateRef`, and `ViewContainerRef` symbols; you'll need them for _any_ structural directive.
 
-* ディレクティブクラスにデコレーターを適用します。
+* Apply the decorator to the directive class.
 
-* Plantillas内の要素に適用されたときにディレクティブを識別する CSS *属性セレクター* を設定します。
+* Set the CSS *attribute selector* that identifies the directive when applied to an element in a template.
 
-次は、始めの部分です:
+Here's how you might begin:
 
 
 <code-example path="structural-directives/src/app/unless.directive.ts" header="src/app/unless.directive.ts (skeleton)" region="skeleton"></code-example>
 
 
 
-ディレクティブの _セレクター_ は、通常、
-ディレクティブの角括弧内の **属性名** `[appUnless]` です。
-角括弧は CSS <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors" title="MDN: Attribute selectors">属性セレクター</a> を定義します。
+The directive's _selector_ is typically the directive's **attribute name** in square brackets, `[appUnless]`.
+The brackets define a CSS
+<a href="https://developer.mozilla.org/en-US/docs/Web/CSS/Attribute_selectors" title="MDN: Attribute selectors">attribute selector</a>.
 
-ディレクティブの _属性名_は _lowerCamelCase_ でつづり、接頭辞で始める必要があります。
-`ng` を使わないでください。
-その接頭辞は Angular に属します。
-あなたやあなたの会社に合った短いものを選んでください。この例では、接頭辞は `app` です。
+The directive _attribute name_ should be spelled in _lowerCamelCase_ and begin with a prefix.
+Don't use `ng`. That prefix belongs to Angular.
+Pick something short that fits you or your company.
+In this example, the prefix is `app`.
 
 
-ディレクティブの _クラス_ 名は [スタイルガイド](guide/styleguide#02-03 "Angular Style Guide") にしたがって `Directive` で終わります。
-Angular 自身のディレクティブは違います。
+The directive _class_ name ends in `Directive` per the [style guide](guide/styleguide#02-03 "Angular Style Guide").
+Angular's own directives do not.
 
-### _TemplateRef_ と _ViewContainerRef_
+### _TemplateRef_ and _ViewContainerRef_
 
-このような単純な構造ディレクティブは、
-Angular が生成した
-`<ng-template>` から [_埋め込みビュー_](api/core/EmbeddedViewRef "API: EmbeddedViewRef") を作成し、
-そのビューをディレクティブの元の `<p>`
-ホスト要素に隣接する [_ビューコンテナ_](api/core/ViewContainerRef "API: ViewContainerRef") に挿入します。
+A simple structural directive like this one creates an
+[_embedded view_](api/core/EmbeddedViewRef "API: EmbeddedViewRef")
+from the Angular-generated `<ng-template>` and inserts that view in a
+[_view container_](api/core/ViewContainerRef "API: ViewContainerRef")
+adjacent to the directive's original `<p>` host element.
 
-[`TemplateRef`](api/core/TemplateRef "API: TemplateRef") で `<ng-template>`
-の内容を取得し、
-[`ViewContainerRef`](api/core/ViewContainerRef "API: ViewContainerRef")
-を通して _ビューコンテナ_ にアクセスします。
+You'll acquire the `<ng-template>` contents with a
+[`TemplateRef`](api/core/TemplateRef "API: TemplateRef")
+and access the _view container_ through a
+[`ViewContainerRef`](api/core/ViewContainerRef "API: ViewContainerRef").
 
-両方をディレクティブのコンストラクターにクラスのプライベート変数として注入します。
+You inject both in the directive constructor as private variables of the class.
 
 
 <code-example path="structural-directives/src/app/unless.directive.ts" header="src/app/unless.directive.ts (ctor)" region="ctor"></code-example>
 
 
 
-### _appUnless_ プロパティ
+### The _appUnless_ property
 
-ディレクティブの利用者は true/false 条件を `[appUnless]` にバインドすることを期待しています。
-つまり、ディレクティブには `@Input` で装飾された `appUnless` プロパティが必要です。
+The directive consumer expects to bind a true/false condition to `[appUnless]`.
+That means the directive needs an `appUnless` property, decorated with `@Input`
 
 
 <div class="alert is-helpful">
 
 
 
-[_Plantillas構文_](guide/template-syntax#inputs-outputs) ガイドの `@Input` について参照してください。
+Read about `@Input` in the [_Template Syntax_](guide/template-syntax#inputs-outputs) guide.
 
 
 </div>
@@ -797,35 +797,35 @@ Angular が生成した
 
 
 
-Angular は、条件の値が変わるたびに `appUnless` プロパティをセットします。
-`appUnless` プロパティが機能するために、セッターが必要です。
+Angular sets the `appUnless` property whenever the value of the condition changes.
+Because the `appUnless` property does work, it needs a setter.
 
-* 条件が falsy で、ビューが以前に作成されていない場合は、
-Plantillasから _埋め込みビュー_ を作成するように _ビューコンテナ_ に指示します。
+* If the condition is falsy and the view hasn't been created previously,
+tell the _view container_ to create the _embedded view_ from the template.
 
-* 条件が truthy でビューが現在表示されている場合は、
-コンテナをクリアしてビューも破棄します。
+* If the condition is truthy and the view is currently displayed,
+clear the container which also destroys the view.
 
-誰も `appUnless` プロパティを読みこまないため、ゲッターは必要ありません。
+Nobody reads the `appUnless` property so it doesn't need a getter.
 
-完成したディレクティブのコードは次のようになります:
+The completed directive code looks like this:
 
 
 <code-example path="structural-directives/src/app/unless.directive.ts" header="src/app/unless.directive.ts (excerpt)" region="no-docs"></code-example>
 
 
 
-このディレクティブを `AppModule` の `declarations` 配列に追加します。
+Add this directive to the `declarations` array of the AppModule.
 
-それから、それを試すためにいくつかの HTML を作成します。
+Then create some HTML to try it.
 
 
 <code-example path="structural-directives/src/app/app.component.html" header="src/app/app.component.html (appUnless)" region="appUnless"></code-example>
 
 
 
-`condition` が falsy のとき、上段 (A) のパラグラフが表示され、下段 (B) のパラグラフが削除されます。
-`condition` が truthy のとき、上段 (A) パラグラフが削除され、下段 (B) パラグラフが表示されます。
+When the `condition` is falsy, the top (A) paragraph appears and the bottom (B) paragraph disappears.
+When the `condition` is truthy, the top (A) paragraph is removed and the bottom (B) paragraph appears.
 
 
 <div class="lightbox">
@@ -921,11 +921,11 @@ export class ExampleDirective {
 
 
 
-## まとめ
+## Summary
 
-<live-example></live-example> の例で、このガイドのソースコードを試してダウンロードすることができます。
+You can both try and download the source code for this guide in the <live-example></live-example>.
 
-`src/app/` フォルダのソースは次のようになります。
+Here is the source from the `src/app/` folder.
 
 
 <code-tabs>
@@ -962,11 +962,11 @@ export class ExampleDirective {
 
 
 
-あなたは次のことを学びました。
+You learned:
 
-* 構造ディレクティブは HTML レイアウトを操作すること。
-* 適切なホスト要素がない場合は、[`<ng-container>`](guide/structural-directives#ngcontainer) をグルーピング要素として使用すること。
-* Angular が [アスタリスク (*) 構文](guide/structural-directives#asterisk) を `<ng-template>` に置き換えること。
-* `NgIf`、`NgFor`、および `NgSwitch `の組み込みディレクティブがどのように機能するか。
-* [`<ng-template>`](guide/structural-directives#template) に展開する [_マイクロシンタックス_](guide/structural-directives#microsyntax) について。
-*  [カスタム構造ディレクティブ](guide/structural-directives#unless) を書く方法 (`UnlessDirective` より)。
+* that structural directives manipulate HTML layout.
+* to use [`<ng-container>`](guide/structural-directives#ngcontainer) as a grouping element when there is no suitable host element.
+* that the Angular desugars [asterisk (*) syntax](guide/structural-directives#asterisk) into a `<ng-template>`.
+* how that works for the `NgIf`, `NgFor` and `NgSwitch` built-in directives.
+* about the [_microsyntax_](guide/structural-directives#microsyntax) that expands into a [`<ng-template>`](guide/structural-directives#template).
+* to write a [custom structural directive](guide/structural-directives#unless), `UnlessDirective`.

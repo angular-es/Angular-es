@@ -1,122 +1,122 @@
-# Bazel を使ったビルド
+# Building with Bazel
 
-このガイドでは、 Bazel を使って Angular アプリケーションをビルドしテストする方法を説明します。
+This guide explains how to build and test Angular apps with Bazel.
 
 
 <div class="alert is-helpful">
 
-このガイドは、あなたが [CLI](cli) を使った Angular アプリケーションの開発とビルドに慣れていることを前提としています。
+This guide assumes you are already familiar with developing and building Angular applications using the [CLI](cli).
 
-Angular Labsの一部であり、安定版ではなく、サポートされていない API 機能について説明しています。
+It describes features which are part of Angular Labs, and are not considered a stable, supported API.
 
 </div>
 
-## Angular CLI での Bazel の使い方
+## Using Bazel with the Angular CLI
 
-`@angular/bazel` パッケージは Angular CLI で Bazel がビルドツールとして使用することを可能にするビルダーを提供します。
+The `@angular/bazel` package provides a builder that allows Angular CLI to use Bazel as the build tool.
 
-既存のアプリケーションで利用するには、次のコマンドを実行します。
+To opt-in an existing application, run
 
 ```sh
 ng add @angular/bazel
 ```
 
-新しいアプリケーションでBazelを使うには、まず `@angular/bazel` をグローバルインストールしてください。
+To use Bazel in a new application, first install `@angular/bazel` globally
 
 ```sh
 npm install -g @angular/bazel
 ```
 
-それから新しいアプリケーションを作成します。
+then create the new application with
 
 ```sh
 ng new --collection=@angular/bazel
 ```
 
-`ng build` や `ng serve` のような Angular CLI のビルドコマンドを使う時、
-裏側では Bazel が使われています。
-Bazelからの出力は `dist/bin` フォルダに現れます。
+Now when you use Angular CLI build commands such as `ng build` and `ng serve`,
+Bazel is used behind the scenes.
+Outputs from Bazel appear in the `dist/bin` folder.
 
-> コマンドライン出力には、 Bazel からの追加のログが含まれています。
-> 将来的にはこれを減らす予定です。
+> The command-line output includes extra logging from Bazel.
+> We plan to reduce this in the future.
 
-### Bazel の削除
+### Removing Bazel
 
-Bazel の使用をやめる必要がある場合は、バックアップファイルから復元できます。
+If you need to opt-out from using Bazel, you can restore the backup files:
 
-- `/angular.json.bak` から `/angular.json` に置き換えます。
+- `/angular.json.bak` replaces `/angular.json`
 
-## 高度な設定
+## Advanced configuration
 
 <div class="alert is-helpful">
 
-Bazel の設定を編集すると、Bazel が使用出来なくなる可能性があります。
-他のビルダーのカスタム動作は、 Bazel では利用できません。
+Editing the Bazel configuration may prevent you opting out of Bazel.
+Custom behaviors driven by Bazel won't be available in other Builders.
 
-このセクションはあなたが [Bazel](https://docs.bazel.build) に精通していることを前提としています。
+This section assumes you are familiar with [Bazel](https://docs.bazel.build).
 
 </div>
 
-手動で Bazel 設定を調整することができます。
+You can manually adjust the Bazel configuration to:
 
-* ビルド手順をカスタマイズ
-* スケールとインクリメンタリティのためのビルド並列化
+* customize the build steps
+* parallellize the build for scale and incrementality
 
-次のコマンドを実行して、Bazel の初期設定ファイルの作成します:
+Create the initial Bazel configuration files by running the following command:
 
 ```sh
 ng build --leaveBazelFilesOnDisk
 ```
 
-これで、 Angular ワークスペースに新しいファイルが見つかります:
+Now you'll find new files in the Angular workspace:
 
-* `/WORKSPACE` は外部の依存関係をダウンロードする方法を Bazel に伝えます。
-* `/BUILD.bazel` と `/src/BUILD.bazel` はあなたのソースコードについて Bazel に伝えます。
+* `/WORKSPACE` tells Bazel how to download external dependencies.
+* `/BUILD.bazel` and `/src/BUILD.bazel` tell Bazel about your source code.
 
-カスタム Bazel 構成を含めたすべての機能の例を https://github.com/bazelbuild/rules_nodejs/tree/master/examples/angular. で、見ることができます。
+You can find a full-featured example with custom Bazel configurations at https://github.com/bazelbuild/rules_nodejs/tree/master/examples/angular.
 
-フロントエンドプロジェクトに Bazel を使用するためのドキュメントは https://docs.bazel.build/versions/master/bazel-and-javascript.html にリンクされています。
-
-
-
-## Bazel の直接実行
-
-場合によっては、 Angular CLI ビルダーを使わず、 Bazel CLI を直接実行する必要があります。
-Bazelツールは、 `@bazel/bazelisk`パッケージによって管理されます（Node.jsが` nvm`によって管理されるのと似ています）。
-あなたのパスに `bazelisk` コマンドを入れるためにグローバルインストールするか、または次の bazelisk の代わりに `$(npm bin)/bazelisk` を使うことができます。
-
-Bazel の一般的なコマンドは次のとおりです。:
-
-* `bazelisk build [targets]`: 指定ターゲットのデフォルト出力成果をコンパイルします。
-* `bazelisk test [targets]`: パターンの中で見つかったどの `*_test` ターゲットについてもテストを実行します。
-* `bazelisk run [target]`: target で表されるプログラムをコンパイルしてから実行します。
-
-入力が変わるたびにコマンドを繰り返すには（監視モード）、これらのコマンドで `bazelisk` を `ibazel` に置き換えてください。
-
-アウトプットの場所は出力に記されます。
-
-Bazel CLI の完全なドキュメントは https://docs.bazel.build/versions/master/command-line-reference.html にあります。
+Documentation for using Bazel for frontend projects is linked from https://docs.bazel.build/versions/master/bazel-and-javascript.html.
 
 
-## ビルドグラフの照会
 
-Bazel はあなたのターゲットからグラフを作成するので、たくさんの役に立つ情報を見つけることができます。
+## Running Bazel directly
 
-graphviz のオプションの依存関係を使うと、`dot` プログラムが手に入り、 `bazel query` と一緒に使うことができます。:
+In some cases you'll want to bypass the Angular CLI builder, and run the Bazel CLI directly.
+The Bazel tool is managed by the `@bazel/bazelisk` package (similar to how Node.js can be managed by `nvm`).
+You can install it globally to get the `bazelisk` command in your path, or use `$(npm bin)/bazelisk` in place of bazelisk below.
+
+The common commands in Bazel are:
+
+* `bazelisk build [targets]`: Compile the default output artifacts of the given targets.
+* `bazelisk test [targets]`: For whichever `*_test` targets are found in the patterns, run the tests.
+* `bazelisk run [target]`: Compile the program represented by target, and then run it.
+
+To repeat the command any time the inputs change (watch mode), replace `bazelisk` with `ibazel` in these commands.
+
+The output locations are printed in the output.
+
+Full documentation for the Bazel CLI is at https://docs.bazel.build/versions/master/command-line-reference.html.
+
+
+## Querying the build graph
+
+Because Bazel constructs a graph out of your targets, you can find lots of useful information.
+
+Using the graphviz optional dependency, you'll have a program `dot`, which you can use with `bazel query`:
 
 ```bash
 $ bazel query --output=graph ... | dot -Tpng > graph.png
 ```
 
-`bazel query` の詳細については https://docs.bazel.build/versions/master/query-how-to.html をご覧ください。
+See https://docs.bazel.build/versions/master/query-how-to.html for more details on `bazel query`.
 
 
-## `BUILD.bazel` ファイルのカスタマイズ
+## Customizing `BUILD.bazel` files
 
-"ルール" は Bazel のプラグインのようなものです。 多くのルールセットが利用可能です。 このガイドは、Google のAngular チームによって維持されているものを文書化しています。
+"Rules" are like plugins for Bazel. Many rule sets are available. This guide documents the ones maintained by the Angular team at Google.
 
-ルールは `BUILD.bazel` ファイルで使われています。これはあなたのワークスペース内のパッケージのメーカーです。 個々の `BUILD.bazel` ファイルは Bazel への別々のパッケージを宣言しますが、あなたが（たとえば `npm` に）公開するパッケージを多くの Bazel パッケージで構成することができるようにもっと粒度の細かいディストリビューションをもつことができます。
+Rules are used in `BUILD.bazel` files, which are markers for the packages in your workspace. Each `BUILD.bazel` file declares a separate package to Bazel, though you can have more coarse-grained distributions so that the packages you publish (for example, to `npm`) can be made up of many Bazel packages.
 
-`BUILD.bazel` ファイルでは、最初に `load` ステートメントを使って各ルールをインポートしなければなりません。 それからルールはいくつかの属性で呼び出され、そして、ルールを呼び出す結果はいくつかの入力と依存関係を与えられたいくつかの出力を引き出すことができる方法を Bazel に宣言します。 そのあとで、 `bazel`コマンドラインを実行すると、Bazelは実行する必要があるものの絶対的な順序を決定するために宣言したすべてのルールをロードします。 要求された出力を生成するために必要な規則だけが実際に実行されることに注意してください。
+In the `BUILD.bazel` file, each rule must first be imported, using the `load` statement. Then the rule is called with some attributes, and the result of calling the rule is that you've declared to Bazel how it can derive some outputs given some inputs and dependencies. Then later, when you run a `bazel` command line, Bazel loads all the rules you've declared to determine an absolute ordering of what needs to be run. Note that only the rules needed to produce the requested output will actually be executed.
 
-フロントエンド開発の一般的な規則の一覧は、 https://github.com/bazelbuild/rules_nodejs/ にあるREADMEに記載されています。
+A list of common rules for frontend development is documented in the README at https://github.com/bazelbuild/rules_nodejs/.

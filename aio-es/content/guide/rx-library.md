@@ -1,96 +1,97 @@
-# RxJS ライブラリ
+# The RxJS library
 
-リアクティブプログラミングは、データストリームと変更の伝播 ([Wikipedia](https://en.wikipedia.org/wiki/Reactive_programming)) に関する非同期プログラミングのパラダイムです。RxJS (Reactive Extensions for JavaScript) は、非同期またはコールバックベースのコード ([RxJS Docs](https://rxjs.dev/guide/overview)) の作成を容易にする observables を使用したリアクティブプログラミング用のライブラリです。
+Reactive programming is an asynchronous programming paradigm concerned with data streams and the propagation of change ([Wikipedia](https://en.wikipedia.org/wiki/Reactive_programming)). RxJS (Reactive Extensions for JavaScript) is a library for reactive programming using observables that makes it easier to compose asynchronous or callback-based code. See ([RxJS Docs](https://rxjs.dev/guide/overview)).
 
-RxJS は `Observable` 型の実装を提供します。Observable 型は、型が言語の一部となるまで、そしてブラウザがそれをサポートするまで必要です。ライブラリはまたobservablesを作成して作業するためのユーティリティ関数を提供します。これらのユーティリティ関数は、次の用途に使用できます。
+RxJS provides an implementation of the `Observable` type, which is needed until the type becomes part of the language and until browsers support it. The library also provides utility functions for creating and working with observables. These utility functions can be used for:
 
-* 非同期処理の既存のコードを observables に変換する
-* ストリーム内の値を反復処理する
-* 異なる型への値のマッピング
-* ストリームのフィルタリング
-* 複数のストリームの作成
+* Converting existing code for async operations into observables
+* Iterating through the values in a stream
+* Mapping values to different types
+* Filtering streams
+* Composing multiple streams
 
-## Observable 作成関数
+## Observable creation functions
 
-RxJS には新しい observables を作成するために使用できるいくつかの関数が用意されています。これらの関数はイベント、タイマー、promise などから observables を作成するプロセスを簡素化できます。たとえば：
+RxJS offers a number of functions that can be used to create new observables. These functions can simplify the process of creating observables from things such as events, timers, promises, and so on. For example:
 
-<code-example path="rx-library/src/simple-creation.ts" region="promise" header="promise から observable を作成する"></code-example>
 
-<code-example path="rx-library/src/simple-creation.ts" region="interval" header="カウンターから observable を作成する"></code-example>
+<code-example path="rx-library/src/simple-creation.ts" region="promise" header="Create an observable from a promise"></code-example>
 
-<code-example path="rx-library/src/simple-creation.ts" region="event" header="イベントから observable を作成する"></code-example>
+<code-example path="rx-library/src/simple-creation.ts" region="interval" header="Create an observable from a counter"></code-example>
 
-<code-example path="rx-library/src/simple-creation.ts" region="ajax" header="AJAX リクエストから observable を作成する"></code-example>
+<code-example path="rx-library/src/simple-creation.ts" region="event" header="Create an observable from an event"></code-example>
 
-## オペレーター {@a operators}
+<code-example path="rx-library/src/simple-creation.ts" region="ajax" header="Create an observable that creates an AJAX request"></code-example>
 
-オペレーターは、コレクションの高度な操作を可能にするために、observables 基盤上に構築される関数です。たとえば RxJS は `map()`、`filter()`、`concat()`、`flatMap()` のようなオペレーターを定義します。
+## Operators
 
-オペレーターは設定オプションをとり、ソースとなる observable を受け取る関数を返します。この返された関数を実行するとき、オペレーターは observable が出力する値を観測、変換し、変換された値の新しい observable を返します。ここに簡単な例があります：
+Operators are functions that build on the observables foundation to enable sophisticated manipulation of collections. For example, RxJS defines operators such as `map()`, `filter()`, `concat()`, and `flatMap()`.
+
+Operators take configuration options, and they return a function that takes a source observable. When executing this returned function, the operator observes the source observable’s emitted values, transforms them, and returns a new observable of those transformed values. Here is a simple example:
 
 <code-example path="rx-library/src/operators.ts" header="Map operator"></code-example>
 
-_パイプ_を使用するとオペレーターをリンクすることができます。パイプを使用すると、複数の機能を1つの機能にまとめることができます。`pipe()` 関数は、結合する関数を引数としてとり、実行時に順次関数を実行する新しい関数を返します。
+You can use _pipes_ to link operators together. Pipes let you combine multiple functions into a single function. The `pipe()` function takes as its arguments the functions you want to combine, and returns a new function that, when executed, runs the composed functions in sequence.
 
-observable に適用されるオペレーターのセットは、レシピ、つまり関心のある値を生成するための一連の命令です。それだけではレシピは何もしません。レシピを通して結果を出すには  `subscribe()` を呼び出す必要があります。
+A set of operators applied to an observable is a recipe&mdash;that is, a set of instructions for producing the values you’re interested in. By itself, the recipe doesn’t do anything. You need to call `subscribe()` to produce a result through the recipe.
 
-これはその例です:
+Here’s an example:
 
 <code-example path="rx-library/src/operators.1.ts" header="Standalone pipe function"></code-example>
 
-`pipe()` 関数は　RxJS `Observable` のメソッドでもあるので、この短い形式を使って同じ操作を定義します：
+The `pipe()` function is also a method on the RxJS `Observable`, so you use this shorter form to define the same operation:
 
 <code-example path="rx-library/src/operators.2.ts" header="Observable.pipe function"></code-example>
 
-### 共通のオペレーター
+### Common operators
 
-RxJS には多くのオペレーターが用意されていますが、頻繁に使用されるのは一握りです。オペレーターと使用例のリストについては、[RxJS API Documentation](https://rxjs.dev/api) を参照してください。
+RxJS provides many operators, but only a handful are used frequently. For a list of operators and usage samples, visit the [RxJS API Documentation](https://rxjs.dev/api).
 
 <div class="alert is-helpful">
-  Angular アプリでは、チェーンを使用するのではなく、パイプとオペレーターを組み合わせることをお勧めします。チェーンは多くの RxJS の例で使用されています。
+  Note that, for Angular apps, we prefer combining operators with pipes, rather than chaining. Chaining is used in many RxJS examples.
 </div>
 
-| エリア | オペレーター |
+| Area | Operators |
 | :------------| :----------|
-| Creation |  `from`, `fromEvent`, `of` |
+| Creation |  `from`,`fromEvent`, `of` |
 | Combination | `combineLatest`, `concat`, `merge`, `startWith` , `withLatestFrom`, `zip` |
 | Filtering | `debounceTime`, `distinctUntilChanged`, `filter`, `take`, `takeUntil` |
 | Transformation | `bufferTime`, `concatMap`, `map`, `mergeMap`, `scan`, `switchMap` |
 | Utility | `tap` |
 | Multicasting | `share` |
 
-## エラーハンドリング
+## Error handling
 
-RxJS は、サブスクリプションで提供する `error()` ハンドラーに加えて、observable レシピの既知のエラーを処理するための `catchError` オペレーターも提供しています。
+In addition to the `error()` handler that you provide on subscription, RxJS provides the `catchError` operator that lets you handle known errors in the observable recipe.
 
-たとえば、APIリクエストを作成しサーバーからの応答にマップする observable があるとします。サーバーがエラーを戻すか、値が存在しない場合、エラーが生成されます。このエラーを受け取り、デフォルト値を指定した場合、ストリームはエラーを処理するのではなく値を処理し続けます。
+For instance, suppose you have an observable that makes an API request and maps to the response from the server. If the server returns an error or the value doesn’t exist, an error is produced. If you catch this error and supply a default value, your stream continues to process values rather than erroring out.
 
-以下は `catchError` オペレーターを使ってこれを行う例です：
+Here's an example of using the `catchError` operator to do this:
 
-<code-example path="rx-library/src/error-handling.ts" header="catchError オペレーター"></code-example>
+<code-example path="rx-library/src/error-handling.ts" header="catchError operator"></code-example>
 
-### 失敗した observable の再実行
+### Retry failed observable
 
-`catchError` オペレーターがシンプルなリカバリーパスを提供する場合、`retry` オペレーターは失敗したリクエストを再試行させます。
+Where the `catchError` operator provides a simple path of recovery, the `retry` operator lets you retry a failed request.
 
-`catchError` オペレーターの前に `retry` オペレーターを使用します。これは元のソース observable に再びサブスクライブし、エラーの原因となった一連のアクションを再実行できます。これに HTTP リクエストが含まれる場合、その HTTP リクエストを再試行します。
+Use the `retry` operator before the `catchError` operator. It resubscribes to the original source observable, which can then re-run the full sequence of actions that resulted in the error. If this includes an HTTP request, it will retry that HTTP request.
 
-次の例はエラーをキャッチする前にリクエストを再試行するために、前の例を変換します。
+The following converts the previous example to retry the request before catching the error:
 
 <code-example path="rx-library/src/retry-on-error.ts" header="retry operator"></code-example>
 
 <div class="alert is-helpful">
 
-   **認証**リクエストはユーザーの操作によってのみ開始されるため、再試行しないでください。ユーザーが開始していない繰り返しのログインリクエストでユーザーアカウントをロックアウトする必要はありません。
+   Do not retry **authentication** requests, since these should only be initiated by user action. We don't want to lock out user accounts with repeated login requests that the user has not initiated.
 
 </div>
 
-## observables の命名規則
+## Naming conventions for observables
 
-Angular アプリケーションは主に TypeScript で記述されるため、変数がいつ observable であるかを知ることができます。Angular フレームワークは observables の命名規則を強制しませんが、末尾に "$" 記号が付いた名前の observables をよく見かけるでしょう。
+Because Angular applications are mostly written in TypeScript, you will typically know when a variable is an observable. Although the Angular framework does not enforce a naming convention for observables, you will often see observables named with a trailing “$” sign.
 
-これはコードをスキャンして observable の値を探す場合に便利です。また、プロパティに observable からの最新の値を格納する場合は、"$" の有無にかかわらず同じ名前を使用すると便利です。
+This can be useful when scanning through code and looking for observable values. Also, if you want a property to store the most recent value from an observable, it can be convenient to simply use the same name with or without the “$”.
 
-たとえば:
+For example:
 
 <code-example path="rx-library/src/naming-convention.ts" header="Naming observables"></code-example>

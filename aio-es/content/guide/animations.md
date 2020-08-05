@@ -1,145 +1,143 @@
-# Angularanimación・Introducción
+# Introduction to Angular animations
 
-animaciónは動きの錯覚を提供します(時間の経過と共にHTML要素のスタイルが変化します)。うまく設計されたanimaciónはアプリケーションをより楽しく使いやすくすることができます。しかし、ただの飾りではありません。animaciónは、さまざまな方法でアプリ・ユーザー体験を向上させることができます:
+Animation provides the illusion of motion: HTML elements change styling over time. Well-designed animations can make your application more fun and easier to use, but they aren't just cosmetic. Animations can improve your app and user experience in a number of ways:
 
-* animaciónがなければ、Webページの遷移は突然で不快感を与えるかもしれません。
+* Without animations, web page transitions can seem abrupt and jarring.
 
-* モーションはユーザー体験を大幅に向上させます。animaciónはユーザーの操作に対するアプリケーションの応答を検出する機会を与えます。
+* Motion greatly enhances the user experience, so animations give users a chance to detect the application's response to their actions.
 
-* よいanimaciónは直感的にユーザーの注意を必要な場所に呼びよせます。
+* Good animations intuitively call the user's attention to where it is needed.
 
-通常、animaciónは時間の経過と共に複数のスタイルの*変形*を引き起こします。HTML要素は、ページの移動、色の変更、拡大または縮小、フェード、またはスライドさせることができます。これらの変形は同時、または逐次的に行うことができます。あなたは各変形のタイミングを制御することができます。
+Typically, animations involve multiple style *transformations* over time. An HTML element can move, change color, grow or shrink, fade, or slide off the page. These changes can occur simultaneously or sequentially. You can control the timing of each transformation.
 
-AngularのanimaciónシステムはCSSの機能に基づいて構築されています。つまり、ブラウザがanimación化可能であるあらゆるプロパティをanimación化できます。これには、位置、サイズ、変形、色、ボーダーなどが含まれます。W3Cは[CSS Transitions](https://www.w3.org/TR/css-transitions-1/)のページでanimación可能なプロパティのリストを管理しています。
+Angular's animation system is built on CSS functionality, which means you can animate any property that the browser considers animatable. This includes positions, sizes, transforms, colors, borders, and more. The W3C maintains a list of animatable properties on its [CSS Transitions](https://www.w3.org/TR/css-transitions-1/) page.
 
+## About this guide
 
-## このガイドについて
+This guide covers the basic Angular animation features to get you started on adding Angular animations to your project.
 
-このガイドでは、Angularanimaciónをプロジェクトに追加して使い始めるために、Angularanimaciónの基本的な機能について説明します。
+The features described in this guide &mdash; and the more advanced features described in the related Angular animations guides &mdash; are demonstrated in an example app available as a <live-example></live-example>.
 
-このガイドで説明されている機能(と、関連するAngularanimaciónガイドで説明されている高度な機能)は、<live-example></live-example>のAplicación de muestraケーションでデモを確認することができます。
+#### Prerequisites
 
-#### 前提条件
-
-このガイドでは、次のセクションで説明されているような基本的なAngularアプリの作成に精通していることを前提としています:
+The guide assumes that you're familiar with building basic Angular apps, as described in the following sections:
 
 * [Tutorial](tutorial)
-* [アーキテクチャオーバービュー](guide/architecture)
+* [Architecture Overview](guide/architecture)
 
 
-## はじめよう
+## Getting started
 
-animaciónのための主なAngularモジュールは、`@angular/animations`と`@angular/platform-browser`です。CLIを使用して新しいプロジェクトを作成すると、これらの依存関係がプロジェクトに自動的に追加されます。
+The main Angular modules for animations are `@angular/animations` and `@angular/platform-browser`. When you create a new project using the CLI, these dependencies are automatically added to your project.
 
-Angularanimaciónをプロジェクトに追加するには、標準のAngularの機能と一緒にanimación固有のモジュールをインポートしてください。
+To get started with adding Angular animations to your project, import the animation-specific modules along with standard Angular functionality.
 
-### ステップ1: animaciónモジュールを有効にする
+### Step 1: Enabling the animations module
 
-`BrowserAnimationsModule`をインポートしてください。これによってanimación機能をAngularのルートアプリケーションモジュールに取り込みます。
+Import `BrowserAnimationsModule`, which introduces the animation capabilities into your Angular root application module.
 
 <code-example path="animations/src/app/app.module.1.ts" header="src/app/app.module.ts" language="typescript"></code-example>
 
 <div class="alert is-helpful">
 
-**Note:** CLIを使用してアプリケーションを作成しているときは、ルートアプリケーションモジュールである`app.module.ts`は`src/app`フォルダ内に配置されます。
+**Note:** When you use the CLI to create your app, the root application module `app.module.ts` is placed in the `src/app` folder.
 </div>
 
-### ステップ2: コンポーネントファイル内にanimación関数をインポートする
+### Step 2: Importing animation functions into component files
 
-コンポーネントファイルで特定のanimación関数を使用する場合は、それらの関数を`@angular/animations`からインポートしてください。
+If you plan to use specific animation functions in component files, import those functions from `@angular/animations`.
 
 <code-example path="animations/src/app/app.component.ts" header="src/app/app.component.ts" region="imports" language="typescript">
 </code-example>
 
 <div class="alert is-helpful">
 
-**Note:** このページの最後にある[利用可能なanimación関数の概要](guide/animations#animation-api-summary)を参照してください。
+**Note:** See a [summary of available animation functions](guide/animations#animation-api-summary) at the end of this guide.
 </div>
 
-### ステップ3: animaciónメタデータプロパティを追加する
+### Step 3: Adding the animation metadata property
 
-コンポーネントファイル内の`@Component()`デコレーター内に`animations:`というメタデータプロパティを追加してください。animaciónを定義したトリガーを`animations`メタデータプロパティ内に配置します。
+In the component file, add a metadata property called `animations:` within the `@Component()` decorator. You put the trigger that defines an animation within the `animations` metadata property.
 
 <code-example path="animations/src/app/app.component.ts" header="src/app/app.component.ts" region="decorator" language="typescript">
 </code-example>
 
-## シンプルな遷移animación
+## Animating a simple transition
 
-単一のHTML要素をある状態から別の状態に変更するシンプルな遷移をanimación化しましょう。たとえば、ユーザーの最後の操作から、ボタンが**Open**または**Closed**のいずれかを表示するように指定できます。ボタンが`open`状態では表示され黄色になり、`closed`状態になると透明で緑色になります。
+Let's animate a simple transition that changes a single HTML element from one state to another. For example, you can specify that a button displays either **Open** or **Closed** based on the user's last action. When the button is in the `open` state, it's visible and yellow. When it's the `closed` state, it's transparent and green.
 
-HTMLでは、これらの属性は色や不透明度などの通常のCSSスタイルを使用して設定されます。Angularでは、`style()`関数を使用して、animaciónで使用する一連のCSSスタイルを指定します。animaciónの状態に対して一連のスタイルをまとめて、その状態に対して`open`や`closed`などの名前を付けることができます。
+In HTML, these attributes are set using ordinary CSS styles such as color and opacity. In Angular, use the `style()` function to specify a set of CSS styles for use with animations. You can collect a set of styles in an animation state, and give the state a name, such as `open` or `closed`.
 
 <div class="lightbox">
   <img src="generated/images/guide/animations/open-closed.png" alt="open and closed states">
 </div>
 
-### animaciónの状態とスタイル
+### Animation state and styles
 
-各遷移の終了時に呼び出す個別の状態を定義するためには、Angularの`state()`関数を使用します。この関数は、`open`や`closed`のようなユニークな名前と`style()`関数の2つの引数をとります。
+Use Angular's `state()` function to define different states to call at the end of each transition. This function takes two arguments: a unique name like `open` or `closed` and a `style()` function.
 
-`style()`関数を使って、与えられた状態名に関連付けるスタイルのセットを定義します。スタイル属性は[*キャメルケース(camelCase)*](guide/glossary#case-conventions)でなければならないことに注意してください。
+Use the `style()` function to define a set of styles to associate with a given state name. Note that the style attributes must be in [*camelCase*](guide/glossary#case-conventions).
 
-Angularの`state()`関数がCSSスタイル属性を設定する`style⁣()`関数とどのように機能するかを見てみましょう。次のコードスニペットでは、複数のスタイル属性が状態に対して同時に設定されています。`open`状態では、ボタンの高さは200ピクセル、不透明度は1、背景色は黄色になります。
+Let's see how Angular's `state()` function works with the `style⁣­(⁠)` function to set CSS style attributes. In this code snippet, multiple style attributes are set at the same time for the state. In the `open` state, the button has a height of 200 pixels, an opacity of 1, and a background color of yellow.
 
 <code-example path="animations/src/app/open-close.component.ts" header="src/app/open-close.component.ts" region="state1" language="typescript">
 </code-example>
 
-次の`closed`状態では、ボタンの高さは100ピクセル、不透明度は0.5、背景色は緑になります。
+In the `closed` state, shown below, the button has a height of 100 pixels, an opacity of 0.5, and a background color of green.
 
 <code-example path="animations/src/app/open-close.component.ts" header="src/app/open-close.component.ts" region="state2" language="typescript">
 </code-example>
 
-### 遷移とタイミング
+### Transitions and timing
 
-Angularでは、animaciónなしで複数のスタイルを設定できます。しかし、このままでは、ボタンはフェード、収縮やその他の変化が起きたことを視認できるなにかがなく瞬時に変形されます。
+In Angular, you can set multiple styles without any animation. However, without further refinement, the button instantly transforms with no fade, no shrinkage, or other visible indicator that a change is occurring.
 
-突然の変形をなくすためには、animaciónの*遷移*を定義して一定の期間にわたってある状態と別の状態の間で発生する変更を指定する必要があります。`transition()`関数は2つの引数を受け取ります。最初の引数は2つの遷移状態間の方向を定義する式を受け取り、2つ目の引数は ひとつまたは複数の `animate()`関数を受け取ります。
+To make the change less abrupt, we need to define an animation *transition* to specify the changes that occur between one state and another over a period of time. The `transition()` function accepts two arguments: the first argument accepts an expression that defines the direction between two transition states, and the second argument accepts one or a series of `animate()` steps.
 
+Use the `animate()` function to define the length, delay, and easing of a transition, and to designate the style function for defining styles while transitions are taking place. You can also use the `animate()` function to define the `keyframes()` function for multi-step animations. These definitions are placed in the second argument of the `animate()` function.
 
-デュレーション、ディレイ、イージングを定義したり、遷移の実行中にスタイルを定義するスタイル関数を指定するには、`animate()`関数を使用します。`animate()`関数を使用して複数ステップanimaciónの`keyframes()`関数を定義することもできます。これらの定義は`animate()`関数の第2引数に置かれます。
+#### Animation metadata: duration, delay, and easing
 
-#### animaciónメタデータ: デュレーション、ディレイ、イージング
+The `animate()` function (second argument of the transition function) accepts the `timings` and `styles` input parameters.
 
-`animate()`関数(遷移関数の第2引数)では`timings`と`styles`の入力パラメータを受け取ります。
-
-`timings`パラメータは3つのパーツで定義された文字列をとります。
+The `timings` parameter takes a string defined in three parts.
 
 >`animate ('duration delay easing')`
 
-最初の部分、`duration`は必須です。デュレーションは、クオートのない純粋な数値で表現されたミリ秒、またはクオートと時間指定子を含む秒単位で表現することができます。たとえば、10分の1秒のデュレーションは、次のように表現することができます:
+The first part, `duration`, is required. The duration can be expressed in milliseconds as a simple number without quotes, or in seconds with quotes and a time specifier. For example, a duration of a tenth of a second can be expressed as follows:
 
-* 純粋な数値(ミリ秒単位): `100`
+* As a plain number, in milliseconds: `100`
 
-* 文字列(ミリ秒単位): `'100ms'`
+* In a string, as milliseconds: `'100ms'`
 
-* 文字列(秒単位): `'0.1s'`
+* In a string, as seconds: `'0.1s'`
 
-2つ目の引数、`delay`は`duration`と同じような構文を持ちます。たとえば:
+The second argument, `delay`, has the same syntax as `duration`. For example:
 
-* 100ms待機してから200msかけて実行する: `'0.2s 100ms'`
+* Wait for 100ms and then run for 200ms: `'0.2s 100ms'`
 
-3番目の引数、`easing`は実行時にanimaciónの[加速と減速](http://easings.net/)を制御します。たとえば、`ease-in`は、animaciónをゆっくりと開始させ、進行とともに速度を上げます。
+The third argument, `easing`, controls how the animation [accelerates and decelerates](http://easings.net/) during its runtime. For example, `ease-in` causes the animation to begin slowly, and to pick up speed as it progresses.
 
-* 100ms待機してから200msかけて実行する。減速曲線を使用して速く始動し、ゆっくりと休止点に向かって減速する: `'0.2s 100ms ease-out'`
+* Wait for 100ms, run for 200ms. Use a deceleration curve to start out fast and slowly decelerate to a resting point: `'0.2s 100ms ease-out'`
 
-* ディレイなしで200msかけて実行する。標準曲線を使用してゆっくりと開始し、途中で加速し、最後にゆっくり減速する: `'0.2s ease-in-out'`
+* Run for 200ms, with no delay. Use a standard curve to start slow, accelerate in the middle, and then decelerate slowly at the end: `'0.2s ease-in-out'`
 
-* ただちに開始し、200msかけて実行する。加速カーブを使用して低速で始まり、完全な速度で終了する: `'0.2s ease-in'`
+* Start immediately, run for 200ms. Use an acceleration curve to start slow and end at full velocity: `'0.2s ease-in'`
 
 <div class="alert is-helpful">
 
-**Note:** イージングカーブの一般的な情報については、マテリアルデザインのウェブサイトの[Natural easing curves](https://material.io/design/motion/speed.html#easing)を参照してください。
+**Note:** See the Material Design website's topic on [Natural easing curves](https://material.io/design/motion/speed.html#easing) for general information on easing curves.
 </div>
 
-次の例では、状態間の1秒の遷移で、`open`から`closed`への状態遷移を提供しています。
+This example provides a state transition from `open` to `closed` with a one second transition between states.
 
 <code-example path="animations/src/app/open-close.component.ts" header="src/app/open-close.component.ts" language="typescript"
 region="transition1">
 </code-example>
 
-上のコードスニペットでは、`=>`演算子は単方向の遷移、 `<=>`は双方向の遷移を表します。遷移内では、`animate()`は遷移にかかる時間を指定します。この場合、`open`から`closed`への状態変化は1秒であり、ここでは`1s`と表現されます。
+In the code snippet above, the `=>` operator indicates unidirectional transitions, and `<=>` is bidirectional. Within the transition, `animate()` specifies how long the transition takes. In this case, the state change from `open` to `closed` takes one second, expressed here as `1s`.
 
-次の例では、0.5秒の遷移animaciónの運動曲線を使用して、`closed`状態から`open`状態への状態遷移を追加します。
+This example adds a state transition from the `closed` state to the `open` state with a 0.5 second transition animation arc.
 
 <code-example path="animations/src/app/open-close.component.ts" header="src/app/open-close.component.ts" language="typescript"
 region="transition2">
@@ -147,24 +145,24 @@ region="transition2">
 
 <div class="alert is-helpful">
 
-**Note:** `state`関数と`transition`関数の中でスタイルを使用する際にいくつか追加の注意点があります。
+**Note:** Some additional notes on using styles within `state` and `transition` functions.
 
-* 各遷移の最後に適用されるスタイルを定義するには、`state()`を使用します。これはanimaciónが完了した後も持続します。
+* Use `state()` to define styles that are applied at the end of each transition, they persist after the animation has completed.
 
-* 中間のスタイルを定義するには、`transition()`を使います。これは、animación中に動きの錯覚を作り出します。
+* Use `transition()` to define intermediate styles, which create the illusion of motion during the animation.
 
-* animaciónが無効になったとき、`transition()`のスタイルはスキップできますが、`state()`のスタイルはスキップできません。
+* When animations are disabled, `transition()` styles can be skipped, but `state()` styles can't.
 
-* 同じ`transition()`引数に複数の状態のペアを含めることができます:<br/> `transition( 'on => off, off => void' )`。
+* You can include multiple state pairs within the same `transition()` argument:<br/> `transition( 'on => off, off => void' )`.
 </div>
 
-### animaciónをトリガーする
+### Triggering the animation
 
-animaciónがいつ開始するか検知するために、Angularは*トリガー*を必要とします。HTMLPlantillasのトリガーする要素にアタッチできるようにするために、`trigger()`関数は状態と遷移をまとめて、animaciónに名前を付けます。
+An animation requires a *trigger*, so that it knows when to start. The `trigger()` function collects the states and transitions, and gives the animation a name, so that you can attach it to the triggering element in the HTML template.
 
-`trigger()`関数は、変更を監視するためにプロパティ名を記述します。変更が発生すると、トリガーはその定義に含まれるアクションを開始します。これらのアクションは、あとで説明するような、遷移関数やその他の関数にすることができます。
+The `trigger()` function describes the property name to watch for changes. When a change occurs, the trigger initiates the actions included in its definition. These actions can be transitions or other functions, as we'll see later on.
 
-この例では、トリガーに`openClose`という名前をつけて、`button`要素にアタッチします。トリガーには、`open`状態と`close`状態、および2つの遷移のタイミングを記述します。
+In this example, we'll name the trigger `openClose`, and attach it to the `button` element. The trigger describes the open and closed states, and the timings for the two transitions.
 
 <div class="lightbox">
   <img src="generated/images/guide/animations/triggering-the-animation.png" alt="triggering the animation">
@@ -172,44 +170,44 @@ animaciónがいつ開始するか検知するために、Angularは*トリガ�
 
 <div class="alert is-helpful">
 
-**Note:** 各`trigger()`関数呼び出しの中では、1つの要素はある時点で1つの状態にしかなれません。ただし、一度に複数のトリガーをアクティブにすることは可能です。
+**Note:** Within each `trigger()` function call, an element can only be in one state at any given time. However, it's possible for multiple triggers to be active at once.
 </div>
 
-### animaciónを定義してHTMLPlantillasに適用する
+### Defining animations and attaching them to the HTML template
 
-animaciónは、animación化されるHTML要素を制御するコンポーネントのメタデータで定義されます。animaciónを定義するコードを`@Component()`デコレーター内の`animations:`プロパティ下に配置します。
+Animations are defined in the metadata of the component that controls the HTML element to be animated. Put the code that defines your animations under the `animations:` property within the `@Component()` decorator.
 
 <code-example path="animations/src/app/open-close.component.ts" header="src/app/open-close.component.ts" language="typescript" region="component"></code-example>
 
-コンポーネントのanimaciónトリガーを定義したら、トリガー名を角括弧で囲み、その前に`@`記号を付けてそのコンポーネントのPlantillas内の要素にアタッチすることができます。それから、次に示すように標準のAngularプロパティバインディング構文を使用して、トリガーをPlantillas式にバインドできます。ここで、`triggerName`はトリガーの名前で、`expression`は定義されたanimaciónの状態として評価されます。
+When you've defined an animation trigger for a component, you can attach it to an element in that component's template by wrapping the trigger name in brackets and preceding it with an `@` symbol. Then, you can bind the trigger to a template expression using standard Angular property binding syntax as shown below, where `triggerName` is the name of the trigger, and `expression` evaluates to a defined animation state.
 
 ```
 <div [@triggerName]="expression">...</div>;
 ```
 
-式の値が新しい状態に変わると、animaciónが実行またはトリガーされます。
+The animation is executed or triggered when the expression value changes to a new state.
 
-次のコードスニペットでは、トリガーを`isOpen`プロパティの値にバインドします。
+The following code snippet binds the trigger to the value of the `isOpen` property.
 
 <code-example path="animations/src/app/open-close.component.1.html" header="src/app/open-close.component.html"
 region="compare">
 </code-example>
 
-この例では、`isOpen`式が`open`または`closed`の定義された状態として評価されたとき、状態変更のトリガー`openClose`を通知します。それから、状態変更をハンドルし、状態変更animaciónを開始するのは、`openClose`のコードにゆだねます。
+In this example, when the `isOpen` expression evaluates to a defined state of `open` or `closed`, it notifies the trigger `openClose` of a state change. Then it's up to the `openClose` code to handle the state change and kick off a state change animation.
 
-ページに出入りする要素(DOMに挿入または削除される要素)では、animaciónを条件付きにすることができます。たとえば、HTMLPlantillasのanimaciónトリガーで`*ngIf`を使用する場合などです。
+For elements entering or leaving a page (inserted or removed from the DOM), you can make the animations conditional. For example, use `*ngIf` with the animation trigger in the HTML template.
 
 <div class="alert is-helpful">
 
-**Note:** コンポーネントファイル内で、animaciónを定義するトリガーを`@Component()`デコレーターの`animations`プロパティの値に設定してください。
+**Note:** In the component file, set the trigger that defines the animations as the value of the `animations:` property in the `@Component()` decorator.
 
-HTMLPlantillasファイル内では、定義されたanimaciónをanimación化されるHTML要素にアタッチするためにトリガー名を使用してください。
+In the HTML template file, use the trigger name to attach the defined animations to the HTML element to be animated.
 
 </div>
 
-### コードレビュー
+### Code review
 
-遷移の例で説明したコードファイルは次のとおりです。
+Here are the code files discussed in the transition example.
 
 <code-tabs>
 
@@ -226,106 +224,106 @@ region="trigger">
 
 </code-tabs>
 
-### まとめ
+### Summary
 
-あなたは、`style()`と`state()`と`animate()`を使って2つの状態間の単純な遷移にanimaciónを追加する方法を学びました。
+You learned to add animation to a simple transition between two states, using `style()` and `state()` along with `animate()` for the timing.
 
-Angularanimaciónの高度な機能については、animaciónセクションの[遷移とトリガー](guide/transition-and-triggers)の高度なTécnicaから開始して学ぶことができます。
+You can learn about more advanced features in Angular animations under the Animation section, beginning with advanced techniques in [transition and triggers](guide/transition-and-triggers).
 
 {@a animation-api-summary}
-## animaciónAPIの概要
+## Animations API summary
 
-`@angular/animations`モジュールによって提供される関数的APIはAngularアプリケーションのanimaciónを作成して制御するためのドメイン固有言語(DSL)を提供します。コア関数と関連するデータ構造の完全なリストと構文の詳細については、[APIリファレンス](api/animations)を参照してください。
+The functional API provided by the `@angular/animations` module provides a domain-specific language (DSL) for creating and controlling animations in Angular applications. See the [API reference](api/animations) for a complete listing and syntax details of the core functions and related data structures.
 
 <table>
 
 <tr>
 <th style="vertical-align: top">
-関数名
+Function name
 </th>
 
 <th style="vertical-align: top">
-説明
+What it does
 </th>
 </tr>
 
 <tr>
 <td><code>trigger()</code></td>
-<td>animaciónを開始し、他のすべてのanimaciónの関数コールのコンテナとして機能します。HTMLPlantillasは<code>triggerName</code>にバインドされます。ユニークなトリガー名を宣言するために、最初の引数を使用します。配列構文を使用します。</td>
+<td>Kicks off the animation and serves as a container for all other animation function calls. HTML template binds to <code>triggerName</code>. Use the first argument to declare a unique trigger name. Uses array syntax.</td>
 </tr>
 
 <tr>
 <td><code>style()</code></td>
-<td>animaciónで使用する1つまたは複数のCSSスタイルを定義します。animación中のHTML要素の外観を制御します。オブジェクト構文を使用します。</td>
+<td>Defines one or more CSS styles to use in animations. Controls the visual appearance of HTML elements during animations. Uses object syntax.</td>
 </tr>
 
 <tr>
 <td><code><a href="api/animations/state" class="code-anchor">state()</a></code></td>
-<td>指定された状態への遷移が成功した場合に適用されるCSSスタイルの名前付きセットを作成します。状態は、他のanimación関数内で名前で参照することができます。</td>
+<td>Creates a named set of CSS styles that should be applied on successful transition to a given state. The state can then be referenced by name within other animation functions.</td>
 </tr>
 
 <tr>
 <td><code>animate()</code></td>
-<td>遷移のタイミング情報を指定します。<code>delay</code>と<code>easing</code>はオプショナルな値です。<code>style()</code>の呼び出し時に紐付けられます。</td>
+<td>Specifies the timing information for a transition. Optional values for <code>delay</code> and <code>easing</code>. Can contain <code>style()</code> calls within.</td>
 </tr>
 
 <tr>
 <td><code>transition()</code></td>
-<td>2つの名前付きの状態間のanimaciónの順序を定義します。配列構文を使用します。</td>
+<td>Defines the animation sequence between two named states. Uses array syntax.</td>
 </tr>
 
 <tr>
 <td><code>keyframes()</code></td>
-<td>スタイル間の指定した期間での逐次的な変更を許可します。<code>animate()</code>内で使用します。各<code>keyframe()</code>内に複数の<code>style()</code>を含めることができます。配列構文を使用します。</td>
+<td>Allows a sequential change between styles within a specified time interval. Use within <code>animate()</code>. Can include multiple <code>style()</code> calls within each <code>keyframe()</code>. Uses array syntax.</td>
 </tr>
 
 <tr>
 <td><code><a href="api/animations/group" class="code-anchor">group()</a></code></td>
-<td>並行して実行されるanimaciónステップ(内部animación)のグループを指定します。animaciónは、すべての内部animaciónステップが完了した後にのみ継続されます。<code>sequence()</code>または<code>transition()</code>内で使用されます。</td>
+<td>Specifies a group of animation steps (<em>inner animations</em>) to be run in parallel. Animation continues only after all inner animation steps have completed. Used within <code>sequence()</code> or <code>transition().</code></td>
 </tr>
 
 <tr>
 <td><code>query()</code></td>
-<td>現在の要素内で1つまたは複数の内部HTML要素を見つけるために使用します。</td>
+<td>Use to find one or more inner HTML elements within the current element. </td>
 </tr>
 
 <tr>
 <td><code>sequence()</code></td>
-<td>逐次的に実行されるanimaciónステップのリストを指定します。</td>
+<td>Specifies a list of animation steps that are run sequentially, one by one.</td>
 </tr>
 
 <tr>
 <td><code>stagger()</code></td>
-<td>複数の要素のanimaciónの開始時間をずらします。</td>
+<td>Staggers the starting time for animations for multiple elements.</td>
 </tr>
 
 <tr>
 <td><code>animation()</code></td>
-<td>他の場所から呼び出すことができる再利用可能なanimaciónを作成します。<code>useAnimation()</code>と一緒に使用されます。</td>
+<td>Produces a reusable animation that can be invoked from elsewhere. Used together with <code>useAnimation()</code>.</td>
 </tr>
 
 <tr>
 <td><code>useAnimation()</code></td>
-<td>再利用可能なanimaciónを有効にします。<code>animation()</code>と一緒に使用されます。</td>
+<td>Activates a reusable animation. Used with <code>animation()</code>.</td>
 </tr>
 
 <tr>
 <td><code>animateChild()</code></td>
-<td>子コンポーネントのanimaciónを親と同じ時間枠内で実行できるようにします。</td>
+<td>Allows animations on child components to be run within the same timeframe as the parent.</td>
 </tr>
 
 </table>
 
-## Angularanimaciónの詳細
+## More on Angular animations
 
-あなたは次に興味があるかもしれません:
+You may also be interested in the following:
 
-* [遷移とトリガー](guide/transition-and-triggers)
-* [複雑なanimaciónシーケンス](guide/complex-animation-sequences)
-* [再利用可能なanimación](guide/reusable-animations)
-* [ルート遷移animación](guide/route-animations)
+* [Transition and triggers](guide/transition-and-triggers)
+* [Complex animation sequences](guide/complex-animation-sequences)
+* [Reusable animations](guide/reusable-animations)
+* [Route transition animations](guide/route-animations)
 
 <div class="alert is-helpful">
 
-完全なanimaciónの[デモ](http://animationsftw.in/#/)と[プレゼンテーション](https://www.youtube.com/watch?v=JhNo3Wvj6UQ&feature=youtu.be&t=2h47m53s)を参照してください。これは2017年11月のAngularConnectカンファレンスで発表されたものです。
+Check out this full animation [demo](http://animationsftw.in/#/) with accompanying [presentation](https://www.youtube.com/watch?v=JhNo3Wvj6UQ&feature=youtu.be&t=2h47m53s), shown at the AngularConnect conference in November 2017.
 </div>

@@ -1,35 +1,35 @@
-# Angular Universal を使ったサーバーサイドレンダリング (SSR)
+# Server-side rendering (SSR) with Angular Universal
 
-このガイドでは、Angular アプリケーションをサーバー上でレンダリングするテクノロジーである **Angular Universal** について説明します。
+This guide describes **Angular Universal**, a technology that renders Angular applications on the server.
 
-通常の Angular アプリケーションは _ブラウザ_ で実行され、ユーザーのアクションに応じて DOM にページをレンダリングします。
-Angular Universal は _サーバー_ 上で実行され、あとでクライアント上でブートストラップされる _静的_ アプリケーションページを生成します。
-これは通常、アプリケーションがより高速にレンダリングされ、
-ユーザーが完全にインタラクティブになる前にアプリケーションのレイアウトを表示する機会を与えることを意味します。
+A normal Angular application executes in the _browser_, rendering pages in the DOM in response to user actions.
+Angular Universal executes on the _server_, generating _static_ application pages that later get bootstrapped on
+the client. This means that the application generally renders more quickly, giving users a chance to view the application
+layout before it becomes fully interactive.
 
-SSR を取り巻くさまざまな手法と概念の詳細については、
-この[記事](https://developers.google.com/web/updates/2019/02/rendering-on-the-web)をご覧ください。
+For a more detailed look at different techniques and concepts surrounding SSR, please check out this
+[article](https://developers.google.com/web/updates/2019/02/rendering-on-the-web).
 
-[Angular CLI](guide/glossary#cli) を使用して、サーバーサイドレンダリング用のアプリを簡単に準備できます。
-CLI の schematic `@nguniversal/express-engine` は、以下で説明するように、必要な手順を実行します。
+You can easily prepare an app for server-side rendering using the [Angular CLI](guide/glossary#cli).
+The CLI schematic `@nguniversal/express-engine` performs the required steps, as described below.
 
 <div class="alert is-helpful">
 
-  **メモ:** [Node.js® Express](https://expressjs.com/) サーバーで実行される
-  <live-example downloadOnly>完成したサンプルコードをダウンロード</live-example>します。
+  **Note:** <live-example downloadOnly>Download the finished sample code</live-example>,
+  which runs in a [Node.js® Express](https://expressjs.com/) server.
 
 </div>
 
 {@a the-example}
-## Universal Tutorial
+## Universal tutorial
 
-[ツアー オブ ヒーローズ Tutorial](tutorial) は、このTutorialのbaseです。
+The [Tour of Heroes tutorial](tutorial) is the foundation for this walkthrough.
 
-この例では、Angular CLI は [Ahead-of-Time (AOT) コンパイラー](guide/aot-compiler)を使用して
-アプリの Universal バージョンをコンパイルおよびバンドルします。
-Node.js Express Web サーバーは、クライアント要求に基づいて、Universal で HTML ページをコンパイルします。
+In this example, the Angular CLI compiles and bundles the Universal version of the app with the
+[Ahead-of-Time (AOT) compiler](guide/aot-compiler).
+A Node.js Express web server compiles HTML pages with Universal based on client requests.
 
-サーバー側のアプリモジュール `app.server.module.ts` を作成するには、次の CLI コマンドを実行します。
+To create the server-side app module, `app.server.module.ts`, run the following CLI command.
 
 <code-example language="bash">
 
@@ -37,233 +37,233 @@ ng add @nguniversal/express-engine
 
 </code-example>
 
-このコマンドは、次のフォルダ構造を作成します。
+The command creates the following folder structure.
 
 <code-example language="none">
 src/
-  index.html                 <i>アプリの Web ページ</i>
-  main.ts                    <i>クライアントアプリのブートストラップ</i>
-  main.server.ts             <i>* サーバーアプリのブートストラップ</i>
-  style.css                  <i>アプリのスタイル</i>
-  app/ ...                   <i>アプリケーションコード</i>
-    app.server.module.ts     <i>* サーバーサイドアプリケーションモジュール</i>
-server.ts                    <i>* Express Web サーバー</i>
+  index.html                 <i>app web page</i>
+  main.ts                    <i>bootstrapper for client app</i>
+  main.server.ts             <i>* bootstrapper for server app</i>
+  style.css                  <i>styles for the app</i>
+  app/ ...                   <i>application code</i>
+    app.server.module.ts     <i>* server-side application module</i>
+server.ts                    <i>* express web server</i>
 tsconfig.json                <i>TypeScript solution style configuration</i>
-tsconfig.base.json           <i>TypeScript 基本構成</i>
-tsconfig.app.json            <i>TypeScript クライアント構成</i>
-tsconfig.server.json         <i>* TypeScript サーバー構成</i>
-tsconfig.spec.json           <i>TypeScript 仕様の構成</i>
+tsconfig.base.json           <i>TypeScript base configuration</i>
+tsconfig.app.json            <i>TypeScript browser application configuration</i>
+tsconfig.server.json         <i>TypeScript server application configuration</i>
+tsconfig.spec.json           <i>TypeScript tests configuration</i>
 </code-example>
 
-`*` でマークされたファイルは新しいもので、元のTutorialサンプルにはありません。
+The files marked with `*` are new and not in the original tutorial sample.
 
 ### Universal in action
 
-ローカルシステムで Universal を使用してアプリのレンダリングを開始するには、次のコマンドを使用します。
+To start rendering your app with Universal on your local system, use the following command.
 
 <code-example language="bash">
 npm run dev:ssr
 </code-example>
 
-ブラウザを開き、http://localhost:4200/ に移動します。
-おなじみの Tour of Heroes ダッシュボードページが表示されます。
+Open a browser and navigate to http://localhost:4200/.
+You should see the familiar Tour of Heroes dashboard page.
 
-`routerLinks` を介したナビゲーションはネイティブアンカー (`<a>`) タグを使用するため、正常に機能します。
-ダッシュボードからヒーローページに遷移して戻ることができます。
-ダッシュボードページでヒーローをクリックすると、その詳細ページが表示されます。
+Navigation via `routerLinks` works correctly because they use the native anchor (`<a>`) tags.
+You can go from the Dashboard to the Heroes page and back.
+You can click a hero on the Dashboard page to display its Details page.
 
-クライアント側のスクリプトのダウンロードに時間がかかるように (次の手順) ネットワーク速度を調整する場合、
-次のことに気づくでしょう:
-* ヒーローページでヒーローをクリックしても何も起こりません。
-* ヒーローを追加または削除することはできません。
-* ダッシュボードページの検索ボックスは無視されます。
-* 詳細ページの *戻る* ボタンと *保存* ボタンは機能しません。
+If you throttle your network speed so that the client-side scripts take longer to download (instructions below),
+you'll notice:
+* Clicking a hero on the Heroes page does nothing.
+* You can't add or delete a hero.
+* The search box on the Dashboard page is ignored.
+* The *Back* and *Save* buttons on the Details page don't work.
 
-`routerLink` クリック以外のユーザーイベントはサポートされていません。
-完全なクライアントアプリがブートストラップして実行されるのを待つか、
-[preboot](https://github.com/angular/preboot) などのライブラリを使用してイベントをバッファリングする必要があります。
+User events other than `routerLink` clicks aren't supported.
+You must wait for the full client app to bootstrap and run, or buffer the events using libraries like
+[preboot](https://github.com/angular/preboot), which allow you to replay these events once the client-side scripts load.
 
-サーバーレンダリングされたアプリからクライアントアプリへの移行は開発マシンで迅速に行われますが、
-実際のシナリオでは常にアプリをテストする必要があります。
+The transition from the server-rendered app to the client app happens quickly on a development machine, but you should
+always test your apps in real-world scenarios.
 
-遅いネットワークをシミュレートして、次のように移行をより明確に確認できます:
+You can simulate a slower network to see the transition more clearly as follows:
 
-1. Chrome Dev Tools を開き、ネットワークタブに移動します。
-1. メニューバーの右端にある [Network Throttling](https://developers.google.com/web/tools/chrome-devtools/network-performance/reference#throttling)
-ドロップダウンを見つけます。
-1. "3G" 速度のいずれかを試します。
+1. Open the Chrome Dev Tools and go to the Network tab.
+1. Find the [Network Throttling](https://developers.google.com/web/tools/chrome-devtools/network-performance/reference#throttling)
+dropdown on the far right of the menu bar.
+1. Try one of the "3G" speeds.
 
-サーバーレンダリングされたアプリは引き続き迅速に起動しますが、完全なクライアントアプリの読み込みには数秒かかる場合があります。
+The server-rendered app still launches quickly but the full client app may take seconds to load.
 
 {@a why-do-it}
-## サーバーサイドレンダリングを使用する理由
+## Why use server-side rendering?
 
-アプリの Universal バージョンを作成する主な理由は3つあります。
+There are three main reasons to create a Universal version of your app.
 
-1. [検索エンジン最適化 (SEO)](https://support.google.com/webmasters/answer/7451184?hl=ja)による Web クローラーの促進
-1. モバイルおよび非力なデバイスのパフォーマンスを改善する
-1. [first-contentful paint (FCP)](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint) で最初のページをすばやく表示します
+1. Facilitate web crawlers through [search engine optimization (SEO)](https://static.googleusercontent.com/media/www.google.com/en//webmasters/docs/search-engine-optimization-starter-guide.pdf)
+1. Improve performance on mobile and low-powered devices
+1. Show the first page quickly with a [first-contentful paint (FCP)](https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint)
 
 {@a seo}
 {@a web-crawlers}
-### Web クローラーを促進する (SEO)
+### Facilitate web crawlers (SEO)
 
-Google、Bing、Facebook、Twitter、およびその他のソーシャルメディアサイトは、Web クローラーに依存してアプリケーションコンテンツのインデックスを作成し、
-そのコンテンツを Web 上で検索可能にします。
-これらの Web クローラーは、人間のユーザーのように、高度にインタラクティブな Angular アプリケーションをナビゲートおよびインデックス化できない場合があります。
+Google, Bing, Facebook, Twitter, and other social media sites rely on web crawlers to index your application content and
+make that content searchable on the web.
+These web crawlers may be unable to navigate and index your highly interactive Angular application as a human user could do.
 
-Angular Universal は、JavaScript なしで簡単に検索、リンク、ナビゲートできるアプリの静的バージョンを生成できます。また、Universal は、各 URL が完全にレンダリングされたページを返すため、サイトプレビューを利用可能にします。
+Angular Universal can generate a static version of your app that is easily searchable, linkable, and navigable without JavaScript.
+Universal also makes a site preview available since each URL returns a fully rendered page.
 
 {@a no-javascript}
-### モバイルおよび非力なデバイスのパフォーマンスを改善する
+### Improve performance on mobile and low-powered devices
 
-一部のデバイスはJavaScriptをサポートしていないか、JavaScriptの実行が不十分であるため、
-そのユーザー体験は受け入れがたいものです。
-このような場合、サーバーレンダリングされたJavaScriptなしのアプリが必要になる場合があります。
-このバージョンは、制限はありますが、アプリをまったく使用できなかった場合の唯一の実用的な代替手段になる可能性があります。
+Some devices don't support JavaScript or execute JavaScript so poorly that the user experience is unacceptable.
+For these cases, you may require a server-rendered, no-JavaScript version of the app.
+This version, however limited, may be the only practical alternative for
+people who otherwise couldn't use the app at all.
 
 {@a startup-performance}
-### 最初のページをすばやく表示する
+### Show the first page quickly
 
-最初のページをすばやく表示することは、ユーザーエンゲージメントにとって重要です。
-読み込みが高速なページは、[100ミリ秒の小さな変更でも](https://web.dev/shopping-for-speed-on-ebay/)パフォーマンスが向上します。
-これらのユーザーが何か他のことをする前にエンゲージするには、アプリの起動を高速化する必要があります。
+Displaying the first page quickly can be critical for user engagement.
+Pages that load faster perform better, [even with changes as small as 100ms](https://web.dev/shopping-for-speed-on-ebay/).
+Your app may have to launch faster to engage these users before they decide to do something else.
 
-Angular Universal を使用すると、完全なアプリのように見えるアプリのランディングページを生成できます。
-ページは純粋な HTML であり、JavaScript が無効になっていても表示できます。
-ページはブラウザイベントを処理しませんが、[`routerLink`](guide/router#router-link) を使用してサイト内のナビゲーションをサポート _します_ 。
+With Angular Universal, you can generate landing pages for the app that look like the complete app.
+The pages are pure HTML, and can display even if JavaScript is disabled.
+The pages don't handle browser events, but they _do_ support navigation through the site using [`routerLink`](guide/router#router-link).
 
-実際には、静的バージョンのランディングページを提供して、ユーザーの注意を引き付けます。
-同時に、その背後にある完全な Angular アプリをロードします。
-ユーザーは、ランディングページからほぼ瞬時のパフォーマンスを認識し、
-アプリが完全に読み込まれた後、完全なインタラクティブエクスペリエンスを取得します。
+In practice, you'll serve a static version of the landing page to hold the user's attention.
+At the same time, you'll load the full Angular app behind it.
+The user perceives near-instant performance from the landing page
+and gets the full interactive experience after the full app loads.
 
 {@a how-does-it-work}
-## Universal Web サーバー
+## Universal web servers
 
-Universal Web サーバーは、[Universal Plantillasエンジン](#universal-engine)によってレンダリングされた静的 HTML でアプリケーションページリクエストに応答します。
-サーバーは、クライアント (通常はブラウザ) から HTTP リクエストを受信して応答し、スクリプト、CSS、画像などの静的アセットを提供します。
-データリクエストに、直接または別のデータサーバーへのプロキシとして応答する場合があります。
+A Universal web server responds to application page requests with static HTML rendered by the [Universal template engine](#universal-engine).
+The server receives and responds to HTTP requests from clients (usually browsers), and serves static assets such as scripts, CSS, and images.
+It may respond to data requests, either directly or as a proxy to a separate data server.
 
-このガイドのサンプル Web サーバーは、一般的な [Express](https://expressjs.com/) フレームワークに基づいています。
+The sample web server for this guide is based on the popular [Express](https://expressjs.com/) framework.
 
 <div class="alert is-helpful">
 
-  **メモ:** Universal の `renderModule()` 関数を呼び出すことができる限り、_どの_ Web サーバーテクノロジーでも Universal アプリを提供できます。
-  ここで説明する原則と決定事項は、すべての Web サーバーテクノロジーに適用されます。
+  **Note:** _Any_ web server technology can serve a Universal app as long as it can call Universal's `renderModule()` function.
+  The principles and decision points discussed here apply to any web server technology.
 
 </div>
 
-ユニバーサルアプリケーションは、Angular `platform-server` パッケージ (`platform-browser` ではなく) を使用します。
-これは、DOM、`XMLHttpRequest`、およびブラウザに依存しないその他の低レベル機能のサーバー実装を提供します。
+Universal applications use the Angular `platform-server` package (as opposed to `platform-browser`), which provides
+server implementations of the DOM, `XMLHttpRequest`, and other low-level features that don't rely on a browser.
 
-サーバー (このガイドの例では [Node.js Express](https://expressjs.com/)) は、アプリケーションページのクライアントリクエストを NgUniversal の `ngExpressEngine` に渡します。
-内部では、これは Universal の `renderModule()` 関数を呼び出しますが、
-キャッシングやその他の有用なユーティリティを提供します。
+The server ([Node.js Express](https://expressjs.com/) in this guide's example)
+passes client requests for application pages to the NgUniversal `ngExpressEngine`. Under the hood, this
+calls Universal's `renderModule()` function, while providing caching and other helpful utilities.
 
-`renderModule()` 関数は、入力としてPlantillas HTML ページ (通常は `index.html`)、
-コンポーネントを含む Angular *モジュール*、および表示するコンポーネントを決定する *ルート* を受け取ります。
-ルートは、クライアントの要求からサーバーに到達します。
+The `renderModule()` function takes as inputs a *template* HTML page (usually `index.html`),
+an Angular *module* containing components, and a *route* that determines which components to display.
+The route comes from the client's request to the server.
 
-各リクエストの結果、リクエストされたRaíz適切なビューが表示されます。
-`renderModule()` 関数は、Plantillasの `<app>` タグ内でビューをレンダリングし、
-クライアント用の完成した HTML ページを作成します。
+Each request results in the appropriate view for the requested route.
+The `renderModule()` function renders the view within the `<app>` tag of the template,
+creating a finished HTML page for the client.
 
-最後に、サーバーはレンダリングされたページをクライアントに返します。
+Finally, the server returns the rendered page to the client.
 
-### ブラウザ API の回避
+### Working around the browser APIs
 
-ユニバーサルアプリはブラウザで実行されないため、ブラウザ API と機能の一部がサーバー上にない場合があります。
+Because a Universal app doesn't execute in the browser, some of the browser APIs and capabilities may be missing on the server.
 
-たとえば、サーバー側のアプリケーションは、`window`、`document`、`navigator`、`location` などのブラウザのみのグローバルオブジェクトを参照できません。
+For example, server-side applications can't reference browser-only global objects such as `window`, `document`, `navigator`, or `location`.
 
-Angular は、[`Location`](api/common/Location) や [`DOCUMENT`](api/common/DOCUMENT) など、
-これらのオブジェクトに対して注入可能な抽象化を提供します。
-これらの API を適切に置き換えることができます。
-Angular がそれを提供しない場合、ブラウザ内ではブラウザ API に委任し、サーバー上では別名実装 (別名シミング) に委任する新しい抽象化を記述することができます。
+Angular provides some injectable abstractions over these objects, such as [`Location`](api/common/Location)
+or [`DOCUMENT`](api/common/DOCUMENT); it may substitute adequately for these APIs.
+If Angular doesn't provide it, it's possible to write new abstractions that delegate to the browser APIs while in the browser
+and to an alternative implementation while on the server (aka shimming).
 
-同様に、マウスまたはキーボードイベントがない場合、サーバーサイドアプリは、ユーザーがボタンをクリックしてコンポーネントを表示することに依存できません。
-アプリは、受信するクライアントリクエストのみに基づいてレンダリングするものを決定する必要があります。
-これは、アプリを[ルーティング可能](guide/router)にするためのよい議論です。
-
+Similarly, without mouse or keyboard events, a server-side app can't rely on a user clicking a button to show a component.
+The app must determine what to render based solely on the incoming client request.
+This is a good argument for making the app [routable](guide/router).
 
 {@a universal-engine}
-### Universal Plantillasエンジン
+### Universal template engine
 
-`server.ts` ファイルの重要な部分は `ngExpressEngine()` 関数です。
+The important bit in the `server.ts` file is the `ngExpressEngine()` function.
 
 <code-example path="universal/server.ts" header="server.ts" region="ngExpressEngine">
 </code-example>
 
-`ngExpressEngine()` 関数は、クライアントのリクエストをサーバーレンダリングされた HTML ページに変換する
-Universal の `renderModule()` 関数のラッパーです。次のプロパティをもつオブジェクトを受け入れます。
+The `ngExpressEngine()` function is a wrapper around Universal's `renderModule()` function which turns a client's
+requests into server-rendered HTML pages. It accepts an object with the following properties:
 
 * `bootstrap`: The root `NgModule` or `NgModule` factory to use for bootstraping the app when rendering on the server. For the example app, it is `AppServerModule`. It's the bridge between the Universal server-side renderer and the Angular application.
 * `extraProviders`: This is optional and lets you specify dependency providers that apply only when rendering the app on the server. You can do this when your app needs information that can only be determined by the currently running server instance.
 
-`ngExpressEngine()` 関数は、レンダリングされたページに解決される `Promise` コールバックを返します。
-そのページをどう処理するかはエンジン次第です。
-このエンジンの `Promise` コールバックは、レンダリングされたページを Web サーバーに返し、
-Web サーバーはそれを HTTP レスポンスでクライアントに転送します。
+The `ngExpressEngine()` function returns a `Promise` callback that resolves to the rendered page.
+It's up to the engine to decide what to do with that page.
+This engine's `Promise` callback returns the rendered page to the web server,
+which then forwards it to the client in the HTTP response.
 
 <div class="alert is-helpful">
 
-  **メモ:**  これらのラッパーは、`renderModule()` 関数の複雑さを隠すのに役立ちます。
-  [Universal リポジトリ](https://github.com/angular/universal)には、さまざまなバックエンドテクノロジー用のラッパーがさらにあります。
+  **Note:**  These wrappers help hide the complexity of the `renderModule()` function. There are more wrappers
+  for different backend technologies at the [Universal repository](https://github.com/angular/universal).
 
 </div>
 
-### リクエスト URL のフィルタリング
+### Filtering request URLs
 
-メモ: NgUniversal Express schematic を使用すると、次に説明する基本的な動作が自動的に処理されます。
-これは、基本的な動作を理解したり、schematic を使用せずに複製したりするときに役立ちます。
+NOTE: The basic behavior described below is handled automatically when using the NgUniversal Express schematic. This
+is helpful when trying to understand the underlying behavior or replicate it without using the schematic.
 
-Web サーバーは、_アプリのページのリクエスト_ を他の種類のリクエストと区別する必要があります。
+The web server must distinguish _app page requests_ from other kinds of requests.
 
-ルートアドレス `/` へのリクエストをインターセプトするほど簡単ではありません。
-ブラウザは、`/dashboard`、`/heroes`、`/detail:12` などのアプリケーションRaízいずれかをリクエストできます。
-実際、アプリがサーバーによってのみレンダリングされた場合、
-クリックされた _すべての_ アプリリンクは、ルーター向けのナビゲーション URL としてサーバーに到達します。
+It's not as simple as intercepting a request to the root address `/`.
+The browser could ask for one of the application routes such as `/dashboard`, `/heroes`, or `/detail:12`.
+In fact, if the app were only rendered by the server, _every_ app link clicked would arrive at the server
+as a navigation URL intended for the router.
 
-幸いなことに、アプリケーションルートには共通点があります。URL にはファイル拡張子がありません。
-(データリクエストにも拡張子はありませんが、常に `/api` で始まるため、簡単に認識できます。)
-すべての静的アセットリクエストには (`main.js` や `/node_modules/zone.js/dist/zone.js` など) ファイル拡張子があります。
+Fortunately, application routes have something in common: their URLs lack file extensions.
+(Data requests also lack extensions but they're easy to recognize because they always begin with `/api`.)
+All static asset requests have a file extension (such as `main.js` or `/node_modules/zone.js/dist/zone.js`).
 
-ルーティングを使用するため、3種類のリクエストを簡単に認識して、異なる方法で処理できます。
+Because we use routing, we can easily recognize the three types of requests and handle them differently.
 
-1. **データリクエスト**: `/api` で始まるリクエスト URL
-1. **アプリのナビゲーション**: ファイル拡張子のないリクエスト URL
-1. **静的アセット**: 他のすべてのリクエスト
+1. **Data request**: request URL that begins `/api`.
+1. **App navigation**: request URL with no file extension.
+1. **Static asset**: all other requests.
 
-Node.js Express サーバーは、リクエストを次々にフィルタリングして処理するミドルウェアのパイプラインです。
-Node.js Express サーバーパイプラインは、データリクエスト用にこのような `app.get()` の呼び出しで構成します。
+A Node.js Express server is a pipeline of middleware that filters and processes requests one after the other.
+You configure the Node.js Express server pipeline with calls to `server.get()` like this one for data requests.
 
 <code-example path="universal/server.ts" header="server.ts (data URL)" region="data-request"></code-example>
 
 <div class="alert is-helpful">
 
-  **メモ:** このサンプルサーバーはデータリクエストを処理しません。
+  **Note:** This sample server doesn't handle data requests.
 
-  Tutorialの「インメモリ Web API」モジュールであるデモおよび開発ツールは、
-  すべての HTTP 呼び出しをインターセプトし、リモートデータサーバーの動作をシミュレートします。
-  実際には、このモジュールを削除して、Web API ミドルウェアをサーバーに登録します。
+  The tutorial's "in-memory web API" module, a demo and development tool, intercepts all HTTP calls and
+  simulates the behavior of a remote data server.
+  In practice, you would remove that module and register your web API middleware on the server here.
 
 </div>
 
-次のコードは、拡張子のないリクエスト URL をフィルタリングし、それらをナビゲーションリクエストとして扱います。
+The following code filters for request URLs with no extensions and treats them as navigation requests.
 
 <code-example path="universal/server.ts" header="server.ts (navigation)" region="navigation-request"></code-example>
 
-### 静的ファイルを安全に提供する
+### Serving static files safely
 
-単一の `server.use()` は、他のすべての URL を
-JavaScript、画像、スタイルファイルなどの静的アセットのリクエストとして扱います。
+A single `server.use()` treats all other URLs as requests for static assets
+such as JavaScript, image, and style files.
 
-クライアントが表示が許可されているファイルのみをダウンロードできるようにするには、すべてのクライアント向けアセットファイルを `/dist` フォルダーに入れ、
-`/dist` フォルダーからのファイルのリクエストのみを受け入れます。
+To ensure that clients can only download the files that they are permitted to see, put all client-facing asset files in
+the `/dist` folder and only honor requests for files from the `/dist` folder.
 
-次の Node.js Express コードは、残りのすべてのリクエストを `/dist` にルーティングし、
-ファイルが見つからない場合は `404 - NOT FOUND` エラーを返します。
+The following Node.js Express code routes all remaining requests to `/dist`, and returns a `404 - NOT FOUND` error if the
+file isn't found.
 
 <code-example path="universal/server.ts" header="server.ts (static files)" region="static"></code-example>
 

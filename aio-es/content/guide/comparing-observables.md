@@ -1,25 +1,25 @@
-# Observable と 他の技術の比較
+# Observables compared to other techniques
 
-Promise の代わりに Observable を使用して、値を非同期に配信することができます。 同様に、Observable はイベントハンドラーと置き換えることができます。最後に、Observable は複数の値を提供するため、配列でビルドして操作する可能性のある場所で使用することができます。
+You can often use observables instead of promises to deliver values asynchronously. Similarly, observables can take the place of event handlers. Finally, because observables deliver multiple values, you can use them where you might otherwise build and operate on arrays.
 
-Observable は、これらの状況の個々の代替技術とは多少異なる動作をしますが、いくつか重要な利点があります。違いの詳細な比較を次に示します。
+Observables behave somewhat differently from the alternative techniques in each of these situations, but offer some significant advantages. Here are detailed comparisons of the differences.
 
-## Observable と Promise の比較
+## Observables compared to promises
 
-Observable はしばしば Promise と比較されます。主な違いは次のとおりです。
+Observables are often compared to promises. Here are some key differences:
 
-* Observable は宣言型です。購読するまで処理が開始されません。Promise は作成時に直ちに実行されます。これにより、結果が必要なときにいつでも実行できるレシピを定義するために、Observable が役立ちます。
+* Observables are declarative; computation does not start until subscription. Promises execute immediately on creation. This makes observables useful for defining recipes that can be run whenever you need the result.
 
-* Observable は多くの値を提供します。Promise は1つです。これは、時間の経過とともに複数の値を取得するのには Observable が有効だということです。
+* Observables provide many values. Promises provide one. This makes observables useful for getting multiple values over time.
 
-* Observable は、連鎖とサブスクリプションを区別します。Promise は `.then()` 句しかありません。これにより、作業を実行させることなく、システムの他の部分で使用される複雑な変換レシピを作成するのに便利です。
+* Observables differentiate between chaining and subscription. Promises only have `.then()` clauses. This makes observables useful for creating complex transformation recipes to be used by other part of the system, without causing the work to be executed.
 
-* Observable の `subscribe()` はエラーを処理します。Promise は子の Promise にエラーをプッシュします。これにより、Observable は集中管理され、予測可能なエラー処理に役立ちます。
+* Observables `subscribe()` is responsible for handling errors. Promises push errors to the child promises. This makes observables useful for centralized and predictable error handling.
 
 
-### 作成とサブスクリプション
+### Creation and subscription
 
-* Observable は、消費者が購読するまで実行されません。`subscribe()` は定義された振る舞いを一度実行し、再び呼び出すことができます。各サブスクリプションには独自の計算機能があります。再購読によって値の再計算が行われます。
+* Observables are not executed until a consumer subscribes. The `subscribe()` executes the defined behavior once, and it can be called again. Each subscription has its own computation. Resubscription causes recomputation of values.
 
   <code-example 
     path="comparing-observables/src/observables.ts" 
@@ -27,7 +27,7 @@ Observable はしばしば Promise と比較されます。主な違いは次の
     region="observable">
   </code-example>
 
-* Promise はすぐに、一度だけ実行されます。結果の計算は Promise が作成されたときに開始されます。作業を再開する方法はありません。 すべての `then` 句 (サブスクリプション) は同じ計算を共有します。
+* Promises execute immediately, and just once. The computation of the result is initiated when the promise is created. There is no way to restart work. All `then` clauses (subscriptions) share the same computation.
 
   <code-example 
     path="comparing-observables/src/promises.ts" 
@@ -35,9 +35,9 @@ Observable はしばしば Promise と比較されます。主な違いは次の
     region="promise">
   </code-example>
 
-### チェーンにする
+### Chaining
 
-* Observable は map やサブスクリプションなどの変換機能を区別します。サブスクリプションだけがサブスクライバー機能をアクティブにして値の計算を開始します。
+* Observables differentiate between transformation function such as a map and subscription. Only subscription activates the subscriber function to start computing the values.
 
   <code-example 
     path="comparing-observables/src/observables.ts" 
@@ -45,7 +45,17 @@ Observable はしばしば Promise と比較されます。主な違いは次の
     region="chain">
   </code-example>
 
-* Promise は最後の `.then` 節 (サブスクリプションに相当) と中間の `.then` 節 (mapに相当) を区別しません。
+* Promises do not differentiate between the last `.then` clauses (equivalent to subscription) and intermediate `.then` clauses (equivalent to map).
+
+  <code-example 
+    path="comparing-observables/src/promises.ts"
+    header="src/promises.ts (chain)" 
+    region="chain">
+  </code-example>
+
+### Cancellation
+
+* Observable subscriptions are cancellable. Unsubscribing removes the listener from receiving further values, and notifies the subscriber function to cancel work.
 
   <code-example 
     path="comparing-observables/src/observables.ts" 
@@ -53,21 +63,11 @@ Observable はしばしば Promise と比較されます。主な違いは次の
     region="unsubscribe">
   </code-example>
 
-### キャンセル処理
+* Promises are not cancellable.
 
-* Observable のサブスクリプションはキャンセル可能です。サブスクライブ解除は、リスナーがそれ以上の値を受け取らないようにし、サブスクライバー関数に作業を取り消すよう通知します。
+### Error handling
 
-  <code-example 
-    path="comparing-observables/src/observables.ts" 
-    header="src/observables.ts (unsubcribe)" 
-    region="unsubscribe">
-  </code-example>
-
-* Promise はキャンセルできません。
-
-### エラーハンドリング
-
-* Observable の実行エラーはサブスクライバーのエラーハンドラーに渡され、サブスクライバーは Observable から自動的にサブスクライブを解除します。
+* Observable execution errors are delivered to the subscriber's error handler, and the subscriber automatically unsubscribes from the observable.
 
   <code-example 
     path="comparing-observables/src/observables.ts" 
@@ -75,7 +75,7 @@ Observable はしばしば Promise と比較されます。主な違いは次の
     region="error">
   </code-example>
 
-* Promise は子の Promise にエラーをプッシュします。
+* Promises push errors to the child promises.
 
   <code-example 
     path="comparing-observables/src/promises.ts" 
@@ -83,26 +83,26 @@ Observable はしばしば Promise と比較されます。主な違いは次の
     region="error">
   </code-example>
 
-### チートシート
+### Cheat sheet
 
-次のコードスニペットは、Observable と Promise を使用して同じ種類の操作を定義する方法を示しています。
+The following code snippets illustrate how the same kind of operation is defined using observables and promises.
 
 <table>
   <thead>
     <tr>
-      <th>処理</th>
+      <th>Operation</th>
       <th>Observable</th>
       <th>Promise</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <td>作成</td>
+      <td>Creation</td>
       <td>
         <pre>
 new Observable((observer) => {
   observer.next(123);
-  });</pre>
+});</pre>
       </td>
       <td>
         <pre>
@@ -112,12 +112,12 @@ new Promise((resolve, reject) => {
       </td>
     </tr>
     <tr>
-      <td>変換</td>
+      <td>Transform</td>
       <td><pre>obs.pipe(map((value) => value * 2));</pre></td>
       <td><pre>promise.then((value) => value * 2);</pre></td>
     </tr>
     <tr>
-      <td>サブスクライブ</td>
+      <td>Subscribe</td>
       <td>
         <pre>
 sub = obs.subscribe((value) => {
@@ -132,20 +132,20 @@ promise.then((value) => {
       </td>
     </tr>
     <tr>
-      <td>サブスクライブ解除</td>
+      <td>Unsubscribe</td>
       <td><pre>sub.unsubscribe();</pre></td>
-      <td>暗黙的に Promise が決定します。</td>
+      <td>Implied by promise resolution.</td>
     </tr>
   </tbody>
 </table>
 
-## events API と Observable の比較
+## Observables compared to events API
 
-Observable は events API を使用するイベントハンドラーと非常によく似ています。どちらの手法も通知ハンドラーを定義し、それらを使用して複数の値を処理します。Observable を登録することは、イベントリスナーを追加することと同じです。重要な違いの1つは、イベントをハンドラーに渡す前に、イベントを変換する Observable を構成できることです。
+Observables are very similar to event handlers that use the events API. Both techniques define notification handlers, and use them to process multiple values delivered over time. Subscribing to an observable is equivalent to adding an event listener. One significant difference is that you can configure an observable to transform an event before passing the event to the handler.
 
-Observable を使用してイベントや非同期操作を処理すると、HTTP リクエストなどのコンテキストの一貫性が向上するという利点があります。
+Using observables to handle events and asynchronous operations can have the advantage of greater consistency in contexts such as HTTP requests.
 
-Observable と events API を使用して同じ種類の操作を定義する方法を示すコードサンプルをいくつか示します。
+Here are some code samples that illustrate how the same kind of operation is defined using observables and the events API.
 
 <table>
   <tr>
@@ -154,7 +154,7 @@ Observable と events API を使用して同じ種類の操作を定義する方
     <th>Events API</th>
   </tr>
   <tr>
-    <td>作成 & キャンセル</td>
+    <td>Creation & cancellation</td>
     <td>
 <pre>// Setup
 let clicks$ = fromEvent(buttonEl, ‘click’);
@@ -176,7 +176,7 @@ button.removeEventListener(‘click’, handler);
     </td>
   </tr>
   <tr>
-    <td>サブスクリプション</td>
+    <td>Subscription</td>
     <td>
 <pre>observable.subscribe(() => {
   // notification handlers here
@@ -189,7 +189,7 @@ button.removeEventListener(‘click’, handler);
     </td>
   </tr>
   <tr>
-    <td>設定</td>
+    <td>Configuration</td>
     <td>Listen for keystrokes, but provide a stream representing the value in the input.
 <pre>fromEvent(inputEl, 'keydown').pipe(
   map(e => e.target.value)
@@ -205,9 +205,9 @@ button.removeEventListener(‘click’, handler);
 </table>
 
 
-## Observable と 配列の比較
+## Observables compared to arrays
 
-Observable は時間とともに値を生成します。配列は静的な値のセットとして作成されます。ある意味では、配列が同期であるところで Observable は非同期です。次の例では、➞ は非同期の値の配信を意味します。
+An observable produces values over time. An array is created as a static set of values. In a sense, observables are asynchronous where arrays are synchronous. In the following examples, ➞ implies asynchronous value delivery.
 
 <table>
   <tr>
