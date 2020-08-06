@@ -1,21 +1,21 @@
-# ビューへのMostrar datos
+# Displaying data in views
 
-Angular [コンポーネント](guide/glossary#component) は、アプリケーションのデータ構造を形成します。
-コンポーネントに関連付けられた HTML [Plantillas](guide/glossary#template)は、Web ページのコンテキストでそのデータを表示する手段を提供します。
-コンポーネントのクラスとPlantillasが一緒になって、アプリケーションデータの[ビュー](guide/glossary#view)を形成します。
+Angular [components](guide/glossary#component) form the data structure of your application.
+The HTML [template](guide/glossary#template) associated with a component provides the means to display that data in the context of a web page.
+Together, a component's class and template form a [view](guide/glossary#view) of your application data.
 
-データの値をページ上の表現と結合するプロセスは、[データバインディング](guide/glossary#data-binding)と呼ばれます。
-HTML Plantillasのコントロールをコンポーネントクラスのデータプロパティに *バインドすること* により、ユーザーにデータを表示 (およびユーザーからデータを収集) します。
+The process of combining data values with their representation on the page is called [data binding](guide/glossary#data-binding).
+You display your data to a user (and collect data from the user) by *binding* controls in the HTML template to the data properties of the component class.
 
-さらに、[ディレクティブ](guide/glossary#directive)を含めることでPlantillasにロジックを追加できます。ディレクティブは、レンダリングされるページを変更する方法を Angular に指示します。
+In addition, you can add logic to the template by including [directives](guide/glossary#directive), which tell Angular how to modify the page as it is rendered.
 
-Angular は、さまざまな種類のデータバインディングと論理ディレクティブを定義できる構文で HTML 表記を拡張する *Plantillas言語* を定義します。
-ページがレンダリングされると、Angular はPlantillas構文を解釈して、ロジックと現在のデータ状態にしたがって HTML を更新します。
-完全な[Plantillas構文ガイド](guide/template-syntax)を読む前に、このページの演習では、Plantillas構文がどのように機能するかを簡単に説明します。
+Angular defines a *template language* that expands HTML notation with syntax that allows you to define various kinds of data binding and logical directives.
+When the page is rendered, Angular interprets the template syntax to update the HTML according to your logic and current data state.
+Before you read the complete [template syntax guide](guide/template-syntax), the exercises on this page give you a quick demonstration of how template syntax works.
 
-このデモでは、ヒーローのリストを含むコンポーネントを作成します。
-あなたはヒーロー名のリストを表示し、条件付きでリストの下にメッセージを表示します。
-最終的な UI は次のようになります：
+In this demo, you'll create a component with a list of heroes.
+You'll display the list of hero names and conditionally show a message below the list.
+The final UI looks like this:
 
 <div class="lightbox">
   <img src="generated/images/guide/displaying-data/final.png" alt="Final UI">
@@ -23,90 +23,90 @@ Angular は、さまざまな種類のデータバインディングと論理デ
 
 <div class="alert is-helpful">
 
-<live-example></live-example> は、このページで説明しているすべての構文とコードスニペットを示しています。
+The <live-example></live-example> demonstrates all of the syntax and code snippets described in this page.
 
 </div>
 
 {@a interpolation}
 
-## 補間によるコンポーネントプロパティの表示
-コンポーネントプロパティを表示するもっとも簡単な方法は、補間によってプロパティ名をバインドすることです。
-補間では、プロパティ名をビューPlantillasに入れ、二重中括弧で囲みます： `{{myHero}}`
+## Showing component properties with interpolation
+The easiest way to display a component property is to bind the property name through interpolation.
+With interpolation, you put the property name in the view template, enclosed in double curly braces: `{{myHero}}`.
 
-`displaying-data` という名前のワークスペースとアプリケーションを作成するために、CLIコマンド [`ng new displaying-data`](cli/new) を実行します。
+Use the CLI command [`ng new displaying-data`](cli/new) to create a workspace and app named `displaying-data`.
 
-<code>app.component.html</code>ファイルを削除します。この例では必要ありません。
+Delete the <code>app.component.html</code> file. It is not needed for this example.
 
-次に、Plantillasとコンポーネントの本体を変更して
-<code>app.component.ts</code>ファイルを変更します。
+Then modify the <code>app.component.ts</code> file by
+changing the template and the body of the component.
 
-完了したら、このようになります。
+When you're done, it should look like this:
 
 <code-example path="displaying-data/src/app/app.component.1.ts" header="src/app/app.component.ts"></code-example>
 
-空のコンポーネントには、`title` と　`myHero` の2つのプロパティを追加しました。
+You added two properties to the formerly empty component: `title` and `myHero`.
 
-Plantillasは、二重中括弧補間を使用して
-2つのコンポーネントプロパティを表示します：
+The template displays the two component properties using double curly brace
+interpolation:
 
 <code-example path="displaying-data/src/app/app.component.1.ts" header="src/app/app.component.ts (template)" region="template"></code-example>
 
 <div class="alert is-helpful">
 
-Plantillasは、ECMAScript 2015 バッククオート(<code>\`</code>)内の複数行の文字列です。
-一重引用符(`'`)と同じ文字*ではない*バッククオート(<code>\`</code>)は複数行にわたって
-文字列を構成することができ、
-HTML をより読みやすくします。
+The template is a multi-line string within ECMAScript 2015 backticks (<code>\`</code>).
+The backtick (<code>\`</code>)&mdash;which is *not* the same character as a single
+quote (`'`)&mdash;allows you to compose a string over several lines, which makes the
+HTML more readable.
 
 </div>
 
-Angularは自動的にコンポーネントから `title` と `myHero` プロパティの値を取り出し、
-それらの値をブラウザに挿入します。
-Angular は、これらのプロパティが変更されると、表示を更新します。
+Angular automatically pulls the value of the `title` and `myHero` properties from the component and
+inserts those values into the browser. Angular updates the display
+when these properties change.
 
 <div class="alert is-helpful">
 
-より正確には、再表示は、キーストローク、タイマー完了、HTTP リクエストへの応答など、
-ビューに関連する何らかの非同期イベントの後に発生します。
+More precisely, the redisplay occurs after some kind of asynchronous event related to
+the view, such as a keystroke, a timer completion, or a response to an HTTP request.
 
 </div>
 
-`AppComponent` クラスのインスタンスを作成するために、**new** を呼び出さないことに注目してください。
-Angular がインスタンスを作成しています。どのように？
+Notice that you don't call **new** to create an instance of the `AppComponent` class.
+Angular is creating an instance for you. How?
 
-`@Component` デコレーターの CSS の`selector`は、`<app-root>` という名前の要素を指定します。
-その要素は `index.html` ファイルの body 内のプレースホルダです：
+The CSS `selector` in the `@Component` decorator specifies an element named `<app-root>`.
+That element is a placeholder in the body of your `index.html` file:
 
 <code-example path="displaying-data/src/index.html" header="src/index.html (body)" region="body"></code-example>
 
-`AppComponent` クラスでブートストラップすると（<code>main.ts</code>内）、
-Angular は `index.html` 内の `<app-root>` を探してそれを見つけ、
-`AppComponent` をインスタンス化して、 `<app-root>` タグの中にレンダリングします。
+When you bootstrap with the `AppComponent` class (in <code>main.ts</code>), Angular looks for a `<app-root>`
+in the `index.html`, finds it, instantiates an instance of `AppComponent`, and renders it
+inside the `<app-root>` tag.
 
-今すぐアプリケーションを実行しましょう。タイトルとヒーロー名が表示されます。
+Now run the app. It should display the title and hero name:
 
 <div class="lightbox">
   <img src="generated/images/guide/displaying-data/title-and-hero.png" alt="Title and Hero">
 </div>
 
-次のいくつかのセクションでは、アプリケーションのコーディングの選択肢のいくつかをレビューします。
+The next few sections review some of the coding choices in the app.
 
 
-## Plantillasソースの選択
+## Choosing the template source
 
-`@Component` メタデータは、Angular にコンポーネントのPlantillasの場所を伝えます。
-コンポーネントのPlantillasは、2つの場所のいずれかに格納できます。
+The `@Component` metadata tells Angular where to find the component's template.
+You can store your component's template in one of two places.
 
-* `@Component` デコレーターの `template` プロパティを使用して、Plantillasを *インライン* で定義できます。インラインPlantillasは、小規模なデモやテストに役立ちます。
-* または、別の HTML ファイルでPlantillasを定義し、`@Component` デコレーターの `templateUrl` プロパティでそのファイルにリンクできます。この構成は、小規模なテストやデモよりも複雑な場合に一般的であり、新しいコンポーネントを生成するときのデフォルトです。
+* You can define the template *inline* using the `template` property of the `@Component` decorator. An inline template is useful for a small demo or test.
+* Alternatively, you can define the template in a separate HTML file and link to that file in the `templateUrl` property of the `@Component` decorator. This configuration is typical for anything more complex than a small test or demo, and is the default when you generate a new component.
 
-どちらのスタイルでも、Plantillasデータバインディングはコンポーネントのプロパティへの同じアクセス権を持ちます。
-ここでは、Plantillasが小さく、追加の HTML ファイルなしでデモが簡単であるため、アプリケーションはインライン HTML を使用します。
+In either style, the template data bindings have the same access to the component's properties.
+Here the app uses inline HTML because the template is small and the demo is simpler without the additional HTML file.
 
 <div class="alert is-helpful">
 
-  デフォルトでは、Angular CLI コマンド [`ng generate component`](cli/generate) はPlantillasファイルを伴うコンポーネントを生成します。
-  "-t" (`inlineTemplate=true` の略）オプションを追加することでオーバーライドできます：
+  By default, the Angular CLI command [`ng generate component`](cli/generate) generates components with a template file.
+  You can override that by adding the "-t" (short for `inlineTemplate=true`) option:
 
   <code-example hideCopy language="sh" class="code-shell">
     ng generate component hero -t
@@ -115,138 +115,138 @@ Angular は `index.html` 内の `<app-root>` を探してそれを見つけ、
 </div>
 
 
-## 初期化
+## Initialization
 
-次の例では、変数の割り当てを使用してコンポーネントを初期化します。
+The following example uses variable assignment to initialize the components.
 
 <code-example path="displaying-data/src/app/app-ctor.component.1.ts" region="class"></code-example>
 
-代わりに、コンストラクターを使用してプロパティを宣言および初期化できます。
-このアプリは簡単のために、より簡潔な「変数割り当て」スタイルを使用しています。
+ You could instead declare and initialize the properties using a constructor.
+ This app uses more terse "variable assignment" style simply for brevity.
 
 
 {@a ngFor}
 
-## データをループするロジックを追加する
+## Add logic to loop through data
 
-`*ngFor` ディレクティブ (Angular で事前定義) を使用すると、データをループできます。次の例では、ディレクティブを使用して、配列プロパティのすべての値を表示します。
+The `*ngFor` directive (predefined by Angular) lets you loop through data. The following example uses the directive to show all of the values in an array property.
 
-ヒーローのリストを表示するには、ヒーロー名の配列をコンポーネントに追加し、配列の最初の名前になるように `myHero` を再定義します。
+To display a list of heroes, begin by adding an array of hero names to the component and redefine `myHero` to be the first name in the array.
 
 
 <code-example path="displaying-data/src/app/app.component.2.ts" header="src/app/app.component.ts (class)" region="class"></code-example>
 
 
-Plantillasで Angular `ngFor` ディレクティブを使用して、各項目を `heroes` リストに表示します。
+Now use the Angular `ngFor` directive in the template to display each item in the `heroes` list.
 
 
 <code-example path="displaying-data/src/app/app.component.2.ts" header="src/app/app.component.ts (template)" region="template"></code-example>
 
 
-このUIでは、HTML の順序付けられていないリストを `<ul>` および `<li>` タグとともに使用します。
-`<li>` 要素の `*ngFor` は Angular 「繰り返し」 ディレクティブです。
-これは `<li>`要素 (とその子要素) を「リピータPlantillas」としてマークします：
+This UI uses the HTML unordered list with `<ul>` and `<li>` tags. The `*ngFor`
+in the `<li>` element is the Angular "repeater" directive.
+It marks that `<li>` element (and its children) as the "repeater template":
 
 
 <code-example path="displaying-data/src/app/app.component.2.ts" header="src/app/app.component.ts (li)" region="li"></code-example>
 
 <div class="alert is-important">
 
-`*ngFor` の先頭のアスタリスク（\*）を忘れないでください。それは構文の不可欠な部分です。
-`ngFor` や `*` の詳細については、[Plantillas構文](guide/template-syntax#ngFor)ページの[ngForセクション](guide/template-syntax#ngfor)を参照してください。
+Don't forget the leading asterisk (\*) in `*ngFor`. It is an essential part of the syntax.
+Read more about `ngFor` and `*` in the [ngFor section](guide/template-syntax#ngfor) of the [Template Syntax](guide/template-syntax) page.
 
 </div>
 
-`ngFor` 二重引用符命令の `hero` に注目してください。
-これはPlantillas入力変数の例です。
-さらに詳しいPlantillas入力変数については、[Plantillas構文](guide/template-syntax) ページの
-[ミクロ構文](guide/template-syntax#microsyntax) セクションを読んでください。
+Notice the `hero` in the `ngFor` double-quoted instruction;
+it is an example of a template input variable. Read
+more about template input variables in the [microsyntax](guide/template-syntax#microsyntax) section of
+the [Template Syntax](guide/template-syntax) page.
 
-Angular はリスト内の各項目の `<li>` を複製し、
-`hero` 変数を現在の反復の項目 (ヒーロー) に設定します。
-Angular はその変数を二重中括弧内の補間のコンテキストとして使用します。
+Angular duplicates the `<li>` for each item in the list, setting the `hero` variable
+to the item (the hero) in the current iteration. Angular uses that variable as the
+context for the interpolation in the double curly braces.
 
 <div class="alert is-helpful">
 
-この場合は、`ngFor` は配列を表示していますが、
-`ngFor` は任意の[反復可能](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Iteration_protocols)オブジェクトについて項目を繰り返すことができます。
+In this case, `ngFor` is displaying an array, but `ngFor` can
+repeat items for any [iterable](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols) object.
 
 </div>
 
-今、ヒーローは順不同のリストに表示されます。
+Now the heroes appear in an unordered list.
 
 <div class="lightbox">
   <img src="generated/images/guide/displaying-data/hero-names-list.png" alt="After ngfor">
 </div>
 
 
-## データのクラスを作成する
+## Creating a class for the data
 
-アプリケーションのコードは、コンポーネント内に直接データを定義しますが、これはベストプラクティスではありません。
-しかし、簡単なデモでは大丈夫です。
+The app's code defines the data directly inside the component, which isn't best practice.
+In a simple demo, however, it's fine.
 
-現時点では、文字列の配列に対するバインドが行われます。
-実際のアプリケーションでは、ほとんどのバインディングはより特殊なオブジェクトになります。
+At the moment, the binding is to an array of strings.
+In real applications, most bindings are to more specialized objects.
 
-このバインディングを特殊なオブジェクトを使用するように変換するには、
-ヒーロー名の配列を `Hero` オブジェクトの配列に変換します。そのためには、`Hero` クラスが必要です。
+To convert this binding to use specialized objects, turn the array
+of hero names into an array of `Hero` objects. For that you'll need a `Hero` class:
 
 <code-example language="sh" class="code-shell">
   ng generate class hero
 </code-example>
 
-このコマンドは、次のコードを作成します。
+This command creates the following code.
 
 
 <code-example path="displaying-data/src/app/hero.ts" header="src/app/hero.ts"></code-example>
 
-コンストラクターと2つのプロパティ、`id` と `name` をもつクラスを定義しました。
+You've defined a class with a constructor and two properties: `id` and `name`.
 
-クラスにプロパティがあるように見えないかもしれませんが、それはあります。
-コンストラクターパラメータの宣言は、TypeScript のショートカットを利用します。
+It might not look like the class has properties, but it does.
+The declaration of the constructor parameters takes advantage of a TypeScript shortcut.
 
-最初のパラメータを考えてみましょう：
+Consider the first parameter:
 
 
 <code-example path="displaying-data/src/app/hero.ts" header="src/app/hero.ts (id)" region="id"></code-example>
 
-簡単な構文で多くのことをしています：
+That brief syntax does a lot:
 
-* コンストラクターパラメータとその型を宣言します。
-* 同じ名前のパブリックプロパティを宣言します。
-* クラスのインスタンスを作成するときに、対応する引数でそのプロパティを初期化します。
+* Declares a constructor parameter and its type.
+* Declares a public property of the same name.
+* Initializes that property with the corresponding argument when creating an instance of the class.
 
 
-### Hero クラスの使用
+### Using the Hero class
 
-`Hero` クラスをインポートした後、`AppComponent.heroes` プロパティは `Hero` オブジェクト
-の _型付きの_ 配列を返すことができます：
+After importing the `Hero` class, the `AppComponent.heroes` property can return a _typed_ array
+of `Hero` objects:
 
 
 <code-example path="displaying-data/src/app/app.component.3.ts" header="src/app/app.component.ts (heroes)" region="heroes"></code-example>
 
 
 
-次に、Plantillasを更新します。
-現時点では、ヒーローの`id` と `name` が表示されます。
-ヒーローの `name` プロパティだけを表示するように修正しました。
+Next, update the template.
+At the moment it displays the hero's `id` and `name`.
+Fix that to display only the hero's `name` property.
 
 
 <code-example path="displaying-data/src/app/app.component.3.ts" header="src/app/app.component.ts (template)" region="template"></code-example>
 
 
-ディスプレイは同じように見えますが、コードはきれいになります。
+The display looks the same, but the code is clearer.
 
 {@a ngIf}
 
-## NgIf による条件付き表示
+## Conditional display with NgIf
 
-アプリケーションは時には、特定の状況下でのみビューまたはビューの一部を表示する必要があります。
+Sometimes an app needs to display a view or a portion of a view only under specific circumstances.
 
-3人以上のヒーローがいる場合、メッセージを表示するように例を変更しましょう。
+Let's change the example to display a message if there are more than three heroes.
 
-Angular `ngIf` ディレクティブは _真偽_ 条件に基づいて要素を挿入または削除します。
-実際の動作を確認するには、Plantillasの一番下に次の段落を追加します。
+The Angular `ngIf` directive inserts or removes an element based on a _truthy/falsy_ condition.
+To see it in action, add the following paragraph at the bottom of the template:
 
 
 <code-example path="displaying-data/src/app/app.component.ts" header="src/app/app.component.ts (message)" region="message"></code-example>
@@ -254,42 +254,42 @@ Angular `ngIf` ディレクティブは _真偽_ 条件に基づいて要素を�
 
 <div class="alert is-important">
 
-`*ngIf` の先頭のアスタリスク（\*）を忘れないでください。 それは構文の不可欠な部分です。
-さらに詳しい `ngIf` と `*` については、[Plantillas構文](guide/template-syntax) ページの [ngIf セクション](guide/template-syntax#ngIf) を読んでください。
+Don't forget the leading asterisk (\*) in `*ngIf`. It is an essential part of the syntax.
+Read more about `ngIf` and `*` in the [ngIf section](guide/template-syntax#ngIf) of the [Template Syntax](guide/template-syntax) page.
 
 </div>
 
 
-`*ngIf="heroes.length > 3"` という二重引用符で囲まれたPlantillas式は、
-TypeScript とよく似ています。
-コンポーネントのヒーローのリストに3つより多いアイテムがある場合、Angular は段落を DOM に追加し、
-メッセージが表示されます。 
-3つ以内のアイテムがある場合、 Angular は段落を省略するので、メッセージは表示されません。 
+The template expression inside the double quotes,
+`*ngIf="heroes.length > 3"`, looks and behaves much like TypeScript.
+When the component's list of heroes has more than three items, Angular adds the paragraph
+to the DOM and the message appears.
+If there are three or fewer items, Angular omits the paragraph, so no message appears.
 
-詳細については、[Plantillas構文](guide/template-syntax) ページの[Plantillas式](guide/template-syntax#template-expressions) を参照してください。
+For more information, see [template expressions](guide/template-syntax#template-expressions).
 
 
 <div class="alert is-helpful">
 
-Angular はメッセージを表示したり隠したりしていません。DOM から段落要素を追加したり削除したりしています。
-これは、特に大規模なプロジェクトで多くのデータバインディングを含む HTML を条件により含めたり除外したりするときに、パフォーマンスを改善します。
+Angular isn't showing and hiding the message. It is adding and removing the paragraph element from the DOM. That improves performance, especially in larger projects when conditionally including or excluding
+big chunks of HTML with many data bindings.
 
 </div>
 
-やってみましょう。 配列には4つの項目があるため、メッセージが表示されます。
-<code>app.component.ts</code>に戻り、ヒーロー配列の要素の1つを削除またはコメントアウトします。
-ブラウザは自動で更新し、メッセージは消えるでしょう。
+Try it out. Because the array has four items, the message should appear.
+Go back into <code>app.component.ts</code> and delete or comment out one of the elements from the heroes array.
+The browser should refresh automatically and the message should disappear.
 
 
-## まとめ
-これらの使い方を学びました：
+## Summary
+Now you know how to use:
 
-* コンポーネントのプロパティを表示するための二重中括弧による **補間**。
-* 配列の要素を示すための **ngFor**
-* コンポーネントのための **モデルデータ** を型作り、そのプロパティを表示するためのTypeScriptクラス。
-* 真偽式に基づいて条件付きでHTMLの塊を表示するための **ngIf** 。
+* **Interpolation** with double curly braces to display a component property.
+* **ngFor** to display an array of items.
+* A TypeScript class to shape the **model data** for your component and display properties of that model.
+* **ngIf** to conditionally display a chunk of HTML based on a boolean expression.
 
-最終的なコードはこちらです：
+Here's the final code:
 
 <code-tabs>
 

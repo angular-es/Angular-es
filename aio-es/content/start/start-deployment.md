@@ -1,93 +1,91 @@
-# Intentemos: Desplegar
+# Try it: Deployment
 
 
-アプリケーションをDesplegarするには、それをコンパイルしてから、JavaScript、CSS、およびHTMLをWebサーバー上でホストする必要があります。 ビルドされたAngularアプリケーションは非常に移植性が高く、あらゆる環境で動作したり、Node、Java、.NET、PHP、その他多くのテクノロジーによって提供されます。
+To deploy your application, you have to compile it, and then host the JavaScript, CSS, and HTML on a web server. Built Angular applications are very portable and can live in any environment or served by any technology, such as Node, Java, .NET, PHP, and many others.
 
 <div class="alert is-helpful">
 
-[パート1](start "Try it: A basic app")から直接ここに来ても、[Navegación en la aplicación](start/start-routing "Try it: In-app navigation")、[Gestión de datos](start/start-data "Try it: Manage data")、および[ユーザー入力用のフォーム](start/start-forms "Try it: Forms for user input")セクションを通してオンラインストアアプリケーションを完成させても、あなたはこのセクションの指示にしたがってDesplegarできるアプリケーションをもっています。
+Whether you came here directly from [Part 1](start "Try it: A basic app"), or completed the entire online store application through the [In-app navigation](start/start-routing "Try it: In-app navigation"), [Manage data](start/start-data "Try it: Manage data"), and [Forms for user input](start/start-forms "Try it: Forms for user input") sections, you have an application that you can deploy by following the instructions in this section.
 
 </div>
 
+## Share your application
 
+StackBlitz projects are public by default, allowing you to share your Angular app via the project URL. Keep in mind that this is a great way to share ideas and prototypes, but it is not intended for production hosting.
 
-## アプリケーションを共有する
+1. In your StackBlitz project, make sure you have forked or saved your project.
+1. In the preview page, you should see a URL that looks like `https://<Project ID>.stackblitz.io`.
+1. Share this URL with a friend or colleague.
+1. Users that visit your URL will see a development server start up, and then your application will load.
 
-StackBlitzプロジェクトはデフォルトで公開されているため、プロジェクトのURLを介してAngularアプリを共有できます。 これはアイデアやプロトタイプを共有するのに最適な方法ですが、プロダクションホスティングを目的としたものではありません。
+## Building locally
 
-1. StackBlitzプロジェクトで、プロジェクトをフォークまたは保存したことを確認してください。
-1. プレビューウィンドウに、 `https://<Project ID>.stackblitz.io` のようなURLが表示されるはずです。
-1. このURLを友人や同僚と共有してください。
-1. あなたのURLにアクセスしたユーザーは開発サーバーが起動し、その後あなたのアプリケーションがロードされるのを見るでしょう。
+To build your application locally or for production, download the source code from your StackBlitz project by clicking the `Download Project` icon in the left menu across from `Project` to download your files.
 
-## ローカルでビルドする
+Once you have the source code downloaded and unzipped, use the [Angular Console](https://angularconsole.com "Angular Console web site") to serve the application, or install `Node.js` and serve your app with the Angular CLI.
 
-アプリケーションをローカルまたは本番用にビルドするには、StackBlitzプロジェクトからソースコードをダウンロードする必要があります。 ファイルをダウンロードするには、プロジェクトの横にある左メニューの `Descargar Project` アイコンをクリックします。
-
-ソースコードをダウンロードして解凍したら、 [Angularコンソール](https://angularconsole.com "Angular Console web site") を使用してアプリケーションを実行するか、`Node.js`をインストールしてAngular CLIをインストールします。
-
-ターミナルから、Angular CLIをグローバルにインストールします:
+From the terminal, install the Angular CLI globally with:
 
 ```sh
 npm install -g @angular/cli
 ```
 
-これにより、システムに `ng` コマンドがインストールされます。 これは、新しいワークスペース、新しいプロジェクトの作成、開発中のアプリケーションの提供、または共有や配布が可能なビルドの作成に使用するコマンドです。
+This installs the command `ng` on your system, which is the command you use to create new workspaces, new projects, serve your application during development, or produce builds to share or distribute.
 
-[`ng new`](cli/new "CLI ng new command reference") コマンドを使用して新しいAngular CLIワークスペースを作成します:
+Create a new Angular CLI workspace using the [`ng new`](cli/new "CLI ng new command reference") command:
 
 ```sh
 ng new my-project-name
 ```
 
-そこから、 `/src` フォルダを `StackBlitz` からダウンロードしたもので置き換え、次にビルドを実行してください。
+In your new CLI generated app, replace the `/src` folder with the one from your `StackBlitz` download, and then perform a build.
 
 ```sh
 ng build --prod
 ```
 
-これにより、Desplegarする必要があるファイルが生成されます。
+This will produce the files that you need to deploy.
 
 <div class="alert is-helpful">
 
-上記の `ng build`コマンドがパッケージの欠落についてエラーを投げる場合は、ローカルプロジェクトの` package.json`ファイルに欠落している依存関係を追加して、ダウンロードしたStackBlitzプロジェクトの依存関係と一致させましょう。
+If the above `ng build` command throws an error about missing packages, append the missing dependencies in your local project's `package.json` file to match the one in the downloaded StackBlitz project.
 
 </div>
 
-#### ビルドしたプロジェクトをホストする
+#### Hosting the built project
 
-`dist/my-project-name` フォルダ内のファイルは静的であり、ファイルを提供できる任意のWebサーバー（`Node.js`、Java、.NET）または任意のバックエンド（Firebase、Google Cloud、App Engine、その他）でホストできます。
+The files in the `dist/my-project-name` folder are static. This means you can host them on any web server capable of serving files (such as `Node.js`, Java, .NET), or any backend (such as Firebase, Google Cloud, or App Engine).
 
-### FirebaseでAngularアプリをホストする
+### Hosting an Angular app on Firebase
 
-あなたのサイトを動かすもっとも簡単な方法のひとつはFirebaseを使ってホストすることです。
+One of the easiest ways to get your site live is to host it using Firebase.
 
-1. [Firebase](https://firebase.google.com/ "Firebase web site") で firebaseアカウントにサインアップしてください。
-1. 新しいプロジェクトを作成し、好きな名前を付けます。
-1. `ng add @angular/fire`を使用して、Desplegarメントを処理する`@angular/fire` schematicsを追加します。
-1. CLIをFirebaseアカウントに接続し、 `firebase login` および `firebase init` を使用してプロジェクトへの接続を初期化します。
-1. プロンプトにしたがってホスティング用に作成した `Firebase` プロジェクトを選択します。
-  - 最初のプロンプトで`Hosting`オプションを選択します。
-  - 先ほどFirebaseで作ったプロジェクトを選択します。
-  - 公開ディレクトリとして `dist/my-project-name` を選択します。
-1. `ng deploy`でアプリケーションをDesplegarします。
-1. Desplegarが完了したら、 https://your-firebase-project-name.firebaseapp.com にアクセスして動かしてみましょう。
+1. Sign up for a firebase account on [Firebase](https://firebase.google.com/ "Firebase web site").
+1. Create a new project, giving it any name you like.
+1. Add the `@angular/fire` schematics that will handle your deployment using `ng add @angular/fire`.
+1. Connect your CLI to your Firebase account and initialize the connection to your project using `firebase login` and `firebase init`.
+1. Follow the prompts to select the `Firebase` project you are creating for hosting.
+    - Select the `Hosting` option on the first prompt.
+    - Select the project you previously created on Firebase.
+    - Select `dist/my-project-name` as the public directory.
+1. Deploy your application with `ng deploy`.
+1. Once deployed, visit https://your-firebase-project-name.firebaseapp.com to see it live!
 
-### 別のホストでAngularアプリをホストする
+### Hosting an Angular app anywhere else
 
-Angularアプリを別のWebホストでホストするには、ファイルをアップロードするかホストに送信する必要があります。
-シングルページアプリケーションを構築しているため、無効なURLを `index.html` ファイルにリダイレクトする必要があります。
-アプリケーションの開発と配布の詳細については、 [ビルドとサーブ](guide/build "Building and Serving Angular Apps") と [Desplegar](guide/deployment "Deployment guide") のガイドを参照してください。
+To host an Angular app on another web host, upload or send the files to the host.
+Because you are building a single page application, you'll also need to make sure you redirect any invalid URLs to your `index.html` file.
+Read more about development and distribution of your application in the [Building & Serving](guide/build "Building and Serving Angular Apps") and [Deployment](guide/deployment "Deployment guide") guides.
 
-## Angularコミュニティに参加する
+## Join the Angular community
 
-あなたはもうAngularの開発者です！ [この瞬間を共有](https://twitter.com/intent/tweet?url=https://angular.jp/start&text=Angularの入門Tutorialを終了しました！ "Angular on Twitter") し、この入門についての考えをお聞かせください。 または、 [今後のエディションについての提案](https://github.com/angular/angular/issues/new/choose "Angular GitHub repository new issue form")を送信してください。
+You are now an Angular developer! [Share this moment](https://twitter.com/intent/tweet?url=https://angular.io/start&text=I%20just%20finished%20the%20Angular%20Getting%20Started%20Tutorial "Angular on Twitter"), tell us what you thought of this get-started exercise, or submit [suggestions for future editions](https://github.com/angular/angular/issues/new/choose "Angular GitHub repository new issue form").
 
-Angularはさらに多くの機能を提供します。 そして、あなたは今、アプリケーションを構築し、それらの他の機能を探求することを可能にする基盤を持っています:
+Angular offers many more capabilities, and you now have a foundation that empowers you to build an application and explore those other capabilities:
 
-* Angularは、モバイルアプリ、animación、国際化、サーバーサイドレンダリングなどの高度な機能を提供します。
-* [Angular Material](https://material.angular.io/ "Angular Material web site") は、Material Designコンポーネントの広範なライブラリを提供しています。
-* [Angular Protractor](https://protractor.angular.io/ "Angular Protractor web site") はAngularアプリのエンドツーエンドのテストフレームワークを提供します。
-* Angularには、広範な[サードパーティ製のツールやライブラリのネットワーク](resources "Angular resources list") もあります。
+* Angular provides advanced capabilities for mobile apps, animation, internationalization, server-side rendering, and more.
+* [Angular Material](https://material.angular.io/ "Angular Material web site") offers an extensive library of Material Design components.
+* [Angular Protractor](https://protractor.angular.io/ "Angular Protractor web site") offers an end-to-end testing framework for Angular apps.
+* Angular also has an extensive [network of 3rd-party tools and libraries](resources "Angular resources list").
 
-[Angularのブログ](https://blog.angular.io/ "Angular blog") をフォローして最新の情報を入手してください。
+Keep current by following the [Angular blog](https://blog.angular.io/ "Angular blog").

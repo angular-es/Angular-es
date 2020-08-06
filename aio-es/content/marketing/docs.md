@@ -1,58 +1,58 @@
-<h1 class="no-toc">Angular Docsの紹介</h1>
+<h1 class="no-toc">Introducción a la documentación de Angular</h1>
 
-Angularは、効率的で洗練されたシングルページアプリケーションを作成するためのアプリケーション設計フレームワークおよび開発プラットフォームです。
+Angular es un marco de diseño de aplicaciones y una plataforma de desarrollo para crear aplicaciones eficientes y sofisticadas de una sola página.
 
-これらのAngularドキュメントは、最初のアプリケーションから複雑なエンタープライズアプリの最適化まで、Angularのプラットフォームとフレームワークの学習と使用に役立ちます。
-Tutorialとガイドには、プロジェクトを加速するためのダウンロード可能なサンプルが含まれています。
+Estos documentos de Angular lo ayudan a aprender y usar el marco angular y la plataforma de desarrollo, desde su primera aplicación hasta la optimización de aplicaciones complejas de una sola página para empresas. Los tutoriales y guías incluyen ejemplos descargables para acelerar sus proyectos.
 
 
 <div class="card-container">
   <a href="guide/setup-local" class="docs-card"
     title="Angular Local Environment Setup">
-      <section>はじめよう</section>
-      <p>Angular CLIを使用して、開発用のローカル環境をprepararします。</p>
-      <p class="card-footer">ローカルpreparar</p>
+      <section> Primeros pasos </section>
+       <p> Preparar un entorno local para el desarrollo utilizando CLI de Angular. </p>
+       <p class="card-footer"> Configuración local</p>
   </a>
   <a href="guide/architecture" class="docs-card" title="Angular Concepts">
-      <section>学習と探検</section>
-      <p>Angularアプリの基本的な設計概念とアーキテクチャについて学びましょう。</p>
-      <p class="card-footer">Angularの概念の紹介</p>
+      <section> Aprendizaje y exploración </section>
+       <p> Aprenda los conceptos básicos de diseño y la arquitectura de las aplicaciones Angular.</p>
+       <p class="card-footer"> Introducción a los conceptos de Angular</p>
   </a>
   <a href="start" class="docs-card" title="Angular Getting Started">
-      <section>見学してみよう</section>
-      <p>prepararなしで、既成の小さなAngularアプリを調べ、動かしてみましょう。</p>
-      <p class="card-footer">いますぐ試す</p> 
+      <section>Echar un un vistazo</section>
+      <p>Examine y trabaje con una pequeña aplicación Angular lista para usar, sin ninguna configuración.</p>
+      <p class="card-footer">Pruebalo ahora</p> 
   </a>
   <a href="tutorial" class="docs-card" title="Create an app">
-      <section>Hello World</section>
-      <p>完全なTutorialを実行して、最初のアプリを作成します。</p>
-      <p class="card-footer">Tour of HeroesTutorial</p>
+      <section>Hola Mundo</section>
+      <p>Trabaja en un tutorial completo para crear tu primera aplicación.</p>
+      <p class="card-footer">Tutorial del Tour de los Héroes</p>
   </a>
 
 
 </div>
 
 
-## 想定読者
+## Suposiciones
 
 
-これらのドキュメントは、あなたがすでに[HTML](https://developer.mozilla.org/docs/Learn/HTML/Introduction_to_HTML "Learn HTML")、[CSS](https://developer.mozilla.org/docs/Learn/CSS/First_steps "Learn CSS")、 [JavaScript](https://developer.mozilla.org/ja/docs/Web/JavaScript/A_re-introduction_to_JavaScript "Learn JavaScript") 、
-そして [クラス](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Classes "ES2015 Classes") や [モジュール](https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Statements/import "ES2015 Modules") のような [最新の標準](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Language_Resources "Latest JavaScript standards") からのツールのいくつかに慣れていることを前提としています。
-コードサンプルは [TypeScript](https://www.typescriptlang.org/ "TypeScript") を使って書かれています。ほとんどのAngularコードは、Inyección de dependenciaに [型](https://www.typescriptlang.org/docs/handbook/classes.html "TypeScript Types") を使用し、メタデータに [デコレーター](https://www.typescriptlang.org/docs/handbook/decorators.html "Decorators") を使用して、
-最新のJavaScriptだけで記述できます。
+Estos documentos suponen que ya está familiarizado con [HTML](https://developer.mozilla.org/docs/Learn/HTML/Introduction_to_HTML "Learn HTML"), [CSS](https://developer.mozilla.org/docs/Learn/CSS/First_steps "Learn CSS"), [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript/A_re-introduction_to_JavaScript "Learn JavaScript"),
+y algunas de las herramientas de los [últimos estándares](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Language_Resources "Últimos estándares de JavaScrip"), como las [clases](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes "ES2015 Classes") y [modulos](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/import "ES2015 Modulos").
+Los ejemplos de código se escriben usando [TypeScript](https://www.typescriptlang.org/ "TypeScript").
+La mayoría de código en Angulare se pueden escribir con el último JavaScript, utilizando [tipos](https://www.typescriptlang.org/docs/handbook/classes.html "Tipos de TypeScript") para la inyección de dependencia y utilizando [decoradores](https://www.typescriptlang.org/docs/handbook/decorators.html "Decoradores") para metadatos.
 
 
-## フィードバック
+## Realimentación
 
-<h4>わたしたちは誰でも歓迎します！</h4>
+<h4>¡Puedes sentarte con nosotros! </h4>
 
-声を聞かせてください。 [問題を報告するか、将来のドキュメンテーションに関する提案を提出してください](https://github.com/angular/angular/issues/new/choose "Angular GitHub repository new issue form") 。
+Queremos escuchar de ti. [Informa de problemas o envia sugerencias para documentos futuros.](https://github.com/angular-es/angular-es/issues/new/choose "Formulario de nuevo problema de repositorio de Angular en GitHub")
 
-AngularのGithubリポジトリに 
-[プルリクエスト](https://github.com/angular/angular/pulls "Angular Github pull requests") を作成して
-Angularドキュメントに貢献してください。
-提出ガイドラインについては、 
-[Angularへの貢献](https://github.com/angular/angular/blob/master/CONTRIBUTING.md "Contributing guide") を参照してください。
+Contribuya a documentos de angular creando
+[pull requests](https://github.com/angular-es/angular-es/pulls "Angular Github pull requests")
+en el repositorio Angular Github.
+Consulte [Contribuir a angular](https://github.com/angular/angular-es/blob/master/CONTRIBUTING.md "Guía de contribución")
+para obtener información sobre las pautas de envío.
 
-私たちのコミュニティは、尊重、協力的なコミュニケーションを大切にしています。 
-[行動規範](https://github.com/angular/angular-ja/blob/master/CODE_OF_CONDUCT.md "Contributor code of conduct") を参照し、遵守してください。
+
+Nuestra comunidad valora la comunicación respetuosa y solidaria.
+Consulte y adhiérase al [Código de conducta](https://github.com/angular-es/code-of-conduct/blob/master/CODE_OF_CONDUCT.md "Código de conducta del colaborador").

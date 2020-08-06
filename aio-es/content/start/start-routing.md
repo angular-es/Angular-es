@@ -1,48 +1,48 @@
-# Navegación en la aplicación
+# In-app navigation
 
-[パート1](start "Get started with a basic Angular app")を終えると、オンラインストアアプリケーションは基本的な製品カタログを持っています。
-アプリには可変状態やナビゲーションはありません。
-URLは1つあり、そのURLには常に"My Store"ページが製品のリストとその説明とともに表示されます。
+At the end of [part 1](start "Get started with a basic Angular app"), the online store application has a basic product catalog.
+The app doesn't have any variable states or navigation.
+There is one URL, and that URL always displays the "My Store" page with a list of products and their descriptions.
 
-このガイドでは、Angular [ルーティング](guide/glossary#router "Router definition")を使用してユーザーにNavegación en la aplicaciónを提供する方法を示します。シングルページアプリでは、新しいページを読み込む代わりに、ユーザーがアプリケーションのどこにいるかに基づいて、さまざまなコンポーネントとデータをユーザーに表示します。
+This guide shows you how to use Angular [routing](guide/glossary#router "Router definition") to give the user in-app navigation. In a single-page app, instead of loading new pages, you show different components and data to the user based on where the user is in the application.
 
-[ルーター](guide/glossary#router "Router definition")を使用すると、製品の詳細を個別の[ビュー](guide/glossary#view "View definition")に表示できます。それぞれに独自のURLがあります。ルーティングを使用すると、ユーザーが次のようなタスクを実行するときに、あるビューから次のビュー（同じページ内）に移動できます。
+The router lets you display full product details in separate [views](guide/glossary#view "View definition"), each with its own URL. Routing enables navigation from one view to the next (within the same page) as users perform tasks such as the following:
 
-* アドレスバーにURLを入力して、対応するビューに移動する。
-* ページ上のリンクをクリックして、新しいビューに移動する。
-* ブラウザの戻るボタンと進むボタンをクリックして、ブラウザの履歴を前後にナビゲートする。
+* Entering a URL in the address bar to navigate to a corresponding view.
+* Clicking links on the page to navigate to a new view.
+* Clicking the browser's back and forward buttons to navigate backward and forward through the browser history.
 
-## ルーティングを登録する
+## Registering a route
 
-このアプリは、Angularのルーティングを使用して、以前に変更した製品リストコンポーネントに移動するようにすでに設定されています。 このセクションでは、個々の製品の詳細を表示するルートを定義する方法を示します。
+The app is already set up to use the Angular `Router` and to use routing to navigate to the product list component you modified earlier. This section shows you how to define a route to show individual product details.
 
-1. 製品詳細用の新しいコンポーネントを生成します。 コンポーネントに `product-details`という名前を付けます。
+1. Generate a new component for product details. Give the component the name `product-details`.
 
-    注意： ファイルリストの中で、 `app`フォルダを右クリックし、`Angular Generator`と `Component`を選択してください。
+    Reminder: In the file list, right-click the `app` folder, choose `Angular Generator` and `Component`.
 
-1. `app.module.ts`に、`products/:productId`の`path`と`component`の`ProductDetailsComponent`で、商品の詳細へのルーティングを追加します。
+1. In `app.module.ts`, add a route for product details, with a `path` of `products/:productId` and `ProductDetailsComponent` for the `component`.
 
     <code-example header="src/app/app.module.ts" path="getting-started/src/app/app.module.ts" region="product-details-route">
     </code-example>
 
-    ルーティングは、1つ以上のURLパスをコンポーネントに関連付けます。
+    A route associates one or more URL paths with a component.
 
-1. ディレクティブは、ユーザーがルートまたはURLに移動する方法を定義するためにコンポーネントPlantillasを構成します。ユーザーが製品名をクリックすると、アプリにその製品の詳細が表示されます。
+1. The directive configures the component template to define how the user navigates to the route or URL. When the user clicks a product name, the app  displays the details for that product.
 
-    1. `product-list.component.html`を開きます。
+    1. Open `product-list.component.html`.
 
-    1. リストを反復処理するときに、`*ngFor`ディレクティブを更新して、` products`配列の各インデックスを `productId`変数に割り当てるようにします。
+    1. Update the `*ngFor` directive to assign each index in the `products` array to the `productId` variable when iterating over the list.
 
-    1. `routerLink`を含めるように製品名のアンカーを変更します。
+    1. Modify the product name anchor to include a `routerLink`.
 
     <code-example header="src/app/product-list/product-list.component.html" path="getting-started/src/app/product-list/product-list.component.html" region="router-link">
     </code-example>
 
-      RouterLinkディレクティブはルーターにアンカー要素を制御させます。 この場合、ルーティング（URL）は1つの固定セグメント（`/products`）を含み、最後のセグメントは可変で、現在の製品のidプロパティを挿入します。 たとえば、`id`が1の商品のURLは`https://getting-started-myfork.stackblitz.io/products/1`のようになります。
+      The RouterLink directive gives the router control over the anchor element. In this case, the route, or URL, contains one fixed segment, `/products`, while the final segment is variable, inserting the id property of the current product. For example, the URL for a product with an `id` of 1 will be similar to `https://getting-started-myfork.stackblitz.io/products/1`.
 
-1. 製品名をクリックしてルーターをテストします。 このアプリには、現在"product-details works!"と常に表示されている製品詳細コンポーネントが表示されます。
+1. Test the router by clicking a product name. The app displays the product details component, which currently always says "product-details works!"
 
-    プレビューウィンドウのURLが変わることに注意してください。 最後のセグメントは `products/#`で、`#`にはあなたがクリックしたRaíz数字です。
+    Notice that the URL in the preview window changes. The final segment is `products/#`  where `#` is the number of the route you clicked.
 
     <div class="lightbox">
       <img src="generated/images/guide/start/product-details-works.png" alt="Product details view with updated URL">
@@ -50,43 +50,43 @@ URLは1つあり、そのURLには常に"My Store"ページが製品のリスト
 
 
 
-## ルーティング情報を使う
+## Using route information
 
-商品詳細コンポーネントは、各商品の表示を処理します。 Angularルーターは、ブラウザのURLと定義済みのルーティングに基づいてコンポーネントを表示します。 このセクションでは、Angular Routerを使用して`products` データとルート情報を組み合わせて、各製品の特定の詳細を表示する方法を示します。
+The product details component handles the display of each product. The Angular Router displays components based on the browser's URL and your defined routes. This section shows you how to use the Angular Router to combine the `products` data and route information to display the specific details for each product.
 
-1. `product-details.component.ts`を開きます
+1. Open `product-details.component.ts`
 
-1. 外部ファイルから製品データを使用するようにします。
+1. Arrange to use product data from an external file.
 
-    1. `@angular/router`パッケージから`ActivatedRoute`をインポートし、`../products`から`products`配列をインポートします。
+    1. Import `ActivatedRoute` from the `@angular/router` package, and the `products` array from `../products`.
 
         <code-example header="src/app/product-details/product-details.component.ts" path="getting-started/src/app/product-details/product-details.component.1.ts" region="imports">
         </code-example>
 
-    1. `product`プロパティを定義し、さらにコンストラクターの括弧内に引数として追加することで、コンストラクターに`ActivatedRoute`を注入します。
+    1. Define the `product` property and inject the `ActivatedRoute` into the constructor by adding it as an argument within the constructor's parentheses.
 
         <code-example header="src/app/product-details/product-details.component.ts" path="getting-started/src/app/product-details/product-details.component.1.ts" region="props-methods">
         </code-example>
 
-        `ActivatedRoute`は、Angular Routerがロードする各ルーティングコンポーネントごとに固有です。
-        ルーティング、そのパラメータ、およびそのルーティングに関連する追加データに関する情報が含まれています。
+        The `ActivatedRoute` is specific to each routed component that the Angular Router loads. It contains information about the
+        route, its parameters, and additional data associated with the route.
 
-        `ActivatedRoute` を注入することで、サービスを使用するようにコンポーネントを設定しています。[Gestión de datos](start/start-data "Try it: Managing Data") ページでサービスの詳細を説明しています。
+        By injecting the `ActivatedRoute`, you are configuring the component to use a *service*. The [Managing Data](start/start-data "Try it: Managing Data") page covers services in more detail.
 
 
-1. `ngOnInit()`メソッドで、ルーティングパラメータをサブスクライブし、`productId`に基づいて製品を取得します。
+1. In the `ngOnInit()` method, subscribe to route parameters and fetch the product based on the `productId`.
 
     <code-example path="getting-started/src/app/product-details/product-details.component.1.ts" header="src/app/product-details/product-details.component.ts" region="get-product">
     </code-example>
 
-    ルートパラメータは、ルートで定義するパス変数に対応します。ルートに一致するURLは、`productId`を提供します。 Angularは `productId`を使用して、それぞれ固有の製品の詳細を表示します。
+    The route parameters correspond to the path variables you define in the route. The URL that matches the route provides the `productId`. Angular uses the `productId` to display the details for each unique product.
 
-1. Plantillasを更新して、`*ngIf`内に製品の詳細情報を表示します。
+1. Update the template to display product details information inside an `*ngIf`.
 
     <code-example header="src/app/product-details/product-details.component.html" path="getting-started/src/app/product-details/product-details.component.html" region="details">
     </code-example>
 
-商品リストコンポーネントを商品詳細コンポーネントと入れ替えて、商品詳細を表示するようになりました。
+Now, when users click on a name in the product list, the router navigates them to the distinct URL for the product, swaps out the product list component for the product details component, and displays the product details.
 
 <div class="lightbox">
   <img src="generated/images/guide/start/product-details-routed.png" alt="Product details page with updated URL and full details displayed">
@@ -96,18 +96,18 @@ URLは1つあり、そのURLには常に"My Store"ページが製品のリスト
 
 <div class="alert is-helpful">
 
-Angularルーターについての詳細は[Enrutamiento y transición de pantalla](guide/router "Enrutamiento y transición de pantallaガイド")をご覧ください。
+For more information about the Angular Router, see [Routing & Navigation](guide/router "Routing & Navigation guide").
 
 </div>
 
 
-## Próximos pasos
+## Next steps
 
-おめでとうございます！ あなたはオンラインストアにルーティングを統合しました。
+Congratulations! You have integrated routing into your online store.
 
-* 商品は商品一覧ビューから個々の商品にリンクされています
-* ユーザーはリストから製品名をクリックして、別のURL（ルーティング）を使用して新しいビューに詳細を表示できます。
+* Products are linked from the product list view to individual products.
+* Users can click on a product name from the list to see details in a new view, with a distinct URL/route.
 
-Angularの探索を続けるには、次のいずれかのオプションを選択してください。
-* ["Gestión de datos"セクションに進む](start/start-data "Try it: Managing Data")ことで、ショッピングデータ機能を追加します。 サービスを使用してカートデータを管理し、HTTPを使用して出荷価格の外部データを取得します。
-* [先に"Desplegar"セクションに進む](start/start-deployment "Try it: Deployment")ことで、ローカル開発に移動するか、アプリをFirebaseまたは独自のサーバーにDesplegarします。
+To continue exploring Angular, choose either of the following options:
+* [Continue to the "Managing Data" section](start/start-data "Try it: Managing Data") to add a shopping cart feature, use a service to manage the cart data and use HTTP to retrieve external data for shipping prices.
+* [Skip ahead to the Deployment section](start/start-deployment "Try it: Deployment") to deploy your app to Firebase or move to local development.

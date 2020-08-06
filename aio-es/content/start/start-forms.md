@@ -1,84 +1,85 @@
-# Intentemos: ユーザー入力にフォームを使おう
+# Try it: Use forms for user input
 
-[データ管理](start/start-data "Try it: Managing Data") を終えると、オンラインストアアプリケーションには製品カタログとショッピングカートがあります。
+At the end of [Managing Data](start/start-data "Try it: Managing Data"), the online store application has a product catalog and a shopping cart.
 
-このセクションでは、フォームベースのチェックアウト機能を追加して、チェックアウトの一部としてユーザー情報を収集する方法を説明します。
+This section walks you through adding a form-based checkout feature to collect user information as part of checkout.
 
-## Angularのフォーム
+## Forms in Angular
 
-Angularのフォームは、標準のHTMLフォームに基づいて構築され、カスタムフォームコントロールと簡単な検証エクスペリエンスの作成に役立ちます。 Angular Reactiveフォームには2つの部分があります。フォームを保存および管理するためにコンポーネントに存在するオブジェクトと、Plantillasに存在するフォームの可視化です。
+Forms in Angular build upon the standard HTML forms to help you create custom form controls and easy validation experiences. There are two parts to an Angular Reactive form: the objects that live in the component to store and manage the form, and the visualization of the form that lives in the template.
 
-## チェックアウトフォームモデルを定義する
+## Define the checkout form model
 
-最初に、チェックアウトフォームモデルを設定します。コンポーネントクラスで定義されているフォームモデルは、フォームのステータスの真実の情報源です。
+First, set up the checkout form model. Defined in the component class, the form model is the source of truth for the status of the form.
 
-1. `cart.component.ts` を開きます。
+1. Open `cart.component.ts`.
 
-1. Angularの `FormBuilder` サービスは、コントロールを生成するための便利な方法を提供します。これまでに使用した他のサービスと同様に、使用する前にサービスをインポートして注入する必要があります:
+1. Angular's `FormBuilder` service provides convenient methods for generating controls. As with the other services you've used, you need to import and inject the service before you can use it:
 
-    1. `@angular/forms` パッケージから `FormBuilder` サービスをインポートします。
+    1. Import the `FormBuilder` service from the `@angular/forms` package.
 
       <code-example header="src/app/cart/cart.component.ts" path="getting-started/src/app/cart/cart.component.ts" region="imports">
       </code-example>
 
-      `ReactiveFormsModule`は`FormBuilder`サービスを提供します。これは`AppModule`（`app.module.ts`内）がすでにインポートしています。
+      The `ReactiveFormsModule` provides the `FormBuilder` service, which `AppModule` (in `app.module.ts`) already imports.
 
-    1. `FormBuilder` サービスを注入します。 
+    1. Inject the `FormBuilder` service.
 
       <code-example header="src/app/cart/cart.component.ts" path="getting-started/src/app/cart/cart.component.ts" region="inject-form-builder">
       </code-example>
 
-1. `CartComponent` クラスで、フォームモデルを格納するための `checkoutForm` プロパティを定義します。
+1. Still in the `CartComponent` class, define the `checkoutForm` property to store the form model.
 
     <code-example header="src/app/cart/cart.component.ts" path="getting-started/src/app/cart/cart.component.ts" region="checkout-form">
     </code-example>
 
-1. ユーザーの名前と住所を収集するために、`FormBuilder`の`group() `メソッドを使用して、`name`と `address`フィールドを含むフォームモデルで `checkoutForm`プロパティを設定します。これをコンストラクターの中括弧 `{}`の間に追加します。
+1. To gather the user's name and address, set the `checkoutForm` property with a form model containing `name` and `address` fields, using the `FormBuilder` `group()` method. Add this between the curly braces, `{}`,
+of the constructor.
 
     <code-example header="src/app/cart/cart.component.ts" path="getting-started/src/app/cart/cart.component.ts" region="checkout-form-group"></code-example>
 
-1. チェックアウト処理では、ユーザーはフォームデータ（自分の名前と住所）を送信する必要があります。 注文が送信されると、フォームはリセットされ、カートはクリアされます。
+1. For the checkout process, users need to submit their name and address. When they submit their order, the form should reset and the cart should clear.
 
-    `cart.component.ts` で、フォームを処理するための `onSubmit()` メソッドを定義します。 `CartService#clearCart()` メソッドを使用してカートアイテムを空にし、送信後にフォームをリセットします。 （実際のアプリでは、このメソッドはデータを外部サーバーに送信することもあります。）カートコンポーネント全体を次に示します:
+    1. In `cart.component.ts`, define an `onSubmit()` method to process the form. Use the `CartService` `clearCart()` method to empty the cart items and reset the form after its submission. In a real-world app, this method would also submit the data to an external server. The entire cart component class is as follows:
 
     <code-example header="src/app/cart/cart.component.ts" path="getting-started/src/app/cart/cart.component.ts">
     </code-example>
 
-コンポーネントクラスでフォームモデルを定義したので、ビューにモデルを反映するためのチェックアウトフォームが必要です。
+Now that you've defined the form model in the component class, you need a checkout form to reflect the model in the view.
 
-## チェックアウトフォームを作成する
+## Create the checkout form
 
-"カート" ビューの下部にチェックアウトフォームを追加するには、次の手順を使用します。
+Use the following steps to add a checkout form at the bottom of the "Cart" view.
 
-1. `cart.component.html`を開きます。
+1. Open `cart.component.html`.
 
-1. Plantillasの下部に、ユーザー情報を取り込むためのHTMLフォームを追加します。
+1. At the bottom of the template, add an HTML form to capture user information.
 
-1. `formGroup` プロパティバインディングを使用して、 `checkoutForm` をPlantillas内の `form` タグにバインドします。 また、フォームを送信するための"購入"ボタンを含めてください。
+1. Use a `formGroup` property binding to bind the `checkoutForm` to the `form` tag in the template. Also include a "Purchase" button to submit the form.
 
   <code-example header="src/app/cart/cart.component.html" path="getting-started/src/app/cart/cart.component.3.html" region="checkout-form">
   </code-example>
 
-1. `form` タグで、 `ngSubmit` イベントバインディングを使用してフォーム送信を待機し、 `checkoutForm` のvalueを指定して `onSubmit()` メソッドを呼び出します。
+1. On the `form` tag, use an `ngSubmit` event binding to listen for the form submission and call the `onSubmit()` method with the `checkoutForm` value.
 
   <code-example path="getting-started/src/app/cart/cart.component.html" header="src/app/cart/cart.component.html (cart component template detail)" region="checkout-form-1">
   </code-example>
 
-1. `name` と `address` の入力フィールドを追加します。 `formControlName` 属性バインディングを使用して、 `name` と `address` の `checkoutForm` フォーム・コントロールをそれらの入力フィールドにバインドします。 最後の完成したコンポーネントは次のとおりです:
+1. Add input fields for `name` and `address`.  Use the `formControlName` attribute binding to bind the `checkoutForm` form controls for `name` and `address` to their input fields. The final complete component is as follows:
 
   <code-example path="getting-started/src/app/cart/cart.component.html" header="src/app/cart/cart.component.html" region="checkout-form-2">
   </code-example>
 
-カートにいくつかの商品を入れた後、ユーザーは自分の商品を確認し、名前と住所を入力し、購入を送信することができます:
+After putting a few items in the cart, users can now review their items, enter their name and address, and submit their purchase:
 
 <div class="lightbox">
   <img src='generated/images/guide/start/cart-with-items-and-form.png' alt="Cart view with checkout form">
 </div>
 
-送信を確認するには、送信した名前と住所を含むオブジェクトが表示されるはずのコンソールを開きます。
+To confirm submission, open the console where you should see an object containing the name and address you submitted.
 
-## Próximos pasos
+## Next steps
 
-おめでとうございます！製品カタログ、ショッピングカート、およびチェックアウト機能を備えた完全なオンラインストアアプリケーションがあります。
+Congratulations! You have a complete online store application with a product catalog, a shopping cart, and a checkout function.
 
-["Desplegar"セクションに進んで](start/start-deployment "Try it: Deployment") ローカル開発に移動するか、アプリをFirebaseまたは独自のサーバーに配置します。
+[Continue to the "Deployment" section](start/start-deployment "Try it: Deployment") to move to local development, or deploy your app to Firebase or your own server.

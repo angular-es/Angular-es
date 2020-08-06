@@ -1,158 +1,155 @@
-# Intentemos: Gestión de datos
+# Try it: Manage data
 
-[Navegación en la aplicación](start/start-routing "Try it: In-app Navigation") の最後に、オンラインストアアプリケーションには、製品リストと製品詳細の2つのビューをもつ製品カタログがあります。
-ユーザーはリストから製品名をクリックして、別のURLあるいはrouteを使用して新しいビューに詳細を表示できます。
+At the end of [In-app Navigation](start/start-routing "Try it: In-app Navigation"), the online store application has a product catalog with two views: a product list and product details.
+Users can click on a product name from the list to see details in a new view, with a distinct URL, or route.
 
-このページでは、ショッピングカートを3段階で作成します。
+This page guides you through creating the shopping cart in three phases:
 
-* 商品の詳細ビューに "Buy" ボタンを追加します。このボタンは、カートサービスが管理する商品のリストに現在の商品を追加します。
-* カートの中の商品を表示するカートコンポーネントを追加します。
-* Angularの`HttpClient`を使用して `.json` ファイルから配送データを取得することで、カート内の商品の配送料金を取得するshippingコンポーネントを追加します。
+* Update the product details view to include a "Buy" button, which adds the current product to a list of products that a cart service manages.
+* Add a cart component, which displays the items in the cart.
+* Add a shipping component, which retrieves shipping prices for the items in the cart by using Angular's `HttpClient` to retrieve shipping data from a `.json` file.
 
 {@a services}
-## サービス
+## Services
 
-サービスはAngularアプリケーションの不可欠な部分です。 Angularでは、サービスはAngularの [Inyección de dependenciaシステム](guide/glossary#dependency-injection-di "dependency injection definition") を使用してアプリケーションの任意の部分で使用できるクラスのインスタンスです。
+Services are an integral part of Angular applications. In Angular, a service is an instance of a class that you can make available to any part of your application using Angular's [dependency injection system](guide/glossary#dependency-injection-di "Dependency injection definition").
 
-サービスは、アプリケーションの各部分の間でデータを共有する場所です。 オンラインストアの場合、カートサービスはカートデータとメソッドを保存する場所です。
+Services are the place where you share data between parts of your application. For the online store, the cart service is where you store your cart data and methods.
 
 {@a create-cart-service}
-## ショッピングカートサービスを作成する
+## Create the shopping cart service
 
-この時点までで、ユーザーは製品情報を表示し、
-共有をシミュレートして製品の変更について通知を受けることができます。 
-しかし、ユーザーは商品を買うことはできません。
+Up to this point, users can view product information, and
+simulate sharing and being notified about product changes.
+They cannot, however, buy products.
 
-このセクションでは、製品の詳細ページに "Buy" ボタンを追加し、
-カートサービスを設定して、
-カート内の製品に関する情報を保存します。
+In this section, you add a "Buy" button to the product
+details view and set up a cart service to store information
+about products in the cart.
 
 <div class="alert is-helpful">
 
-このTutorialの後半の[ユーザー入力にフォームを使おう](start/start-forms "Try it: Forms for user input")では、ユーザーがチェックアウトするビューからこのカートサービスにアクセスする方法を説明しています。
+A later part of this tutorial, [Use forms for user input](start/start-forms "Try it: Forms for user input"), guides you through accessing this cart service from the view where the user checks out.
 
 </div>
 
 {@a generate-cart-service}
-### カートサービスを定義する
+### Define a cart service
 
-1. カートサービスを生成するには、`app`フォルダーを右クリックし、`Angular Generator`を選択して、`Service`を選択します。新しいサービスに`cart`という名前を付けます。
+1. To generate a cart service, right click on the `app` folder, choose `Angular Generator`, and choose `Service`. Name the new service `cart`.
 
         <code-example header="src/app/cart.service.ts" path="getting-started/src/app/cart.service.1.ts"></code-example>
 
     <div class="alert is-helpful>
 
-        StackBlitzジェネレーターは、デフォルトで`app.module.ts`でカートサービスを提供する場合があります。これは、バンドル最適化手法である `@Injectable()` デコレータと `{ providedIn： 'root' }`ステートメントを使用する例とは異なります。
-        サービスの詳細については、[サービスとInyección de dependenciaの概要](guide/architecture-services "Concepts > Intro to Services and DI") を参照してください。
+    The StackBlitz generator might provide the cart service in `app.module.ts` by default. That differs from the example, which uses a bundle-optimization technique, an  `@Injectable()` decorator with the `{ providedIn: 'root' }` statement.
+    For more information about services, see [Introduction to Services and Dependency Injection](guide/architecture-services "Concepts > Intro to Services and DI").
 
     </div>
 
-    1. StackBlitzは、上記のように `{ providedIn: 'root' }` ステートメントなしで `@Injectable()`デコレーターを生成する場合があります。代わりに、ジェネレーターはデフォルトで `app.module.ts`にカートサービスを提供します。
-    このTutorialでは、どちらの方法でも機能します。 `@Injectable()` の `{ providedIn: 'root' }` 構文は、[tree shaking](/guide/dependency-injection-providers#tree-shakable-providers) を可能にしますが、これはこのガイドの範囲外です。
-
-1. `CartService` クラスで、商品の配列をカートに格納するためのプロパティ `items` を定義します。
+1. In the `CartService` class, define an `items` property to store the array of the current products in the cart.
 
     <code-example path="getting-started/src/app/cart.service.ts" header="src/app/cart.service.ts" region="props"></code-example>
 
-1. カートへの商品の追加、商品リストの取得、商品リストのクリアを行う各メソッドを定義します:
+1. Define methods to add items to the cart, return cart items, and clear the cart items:
 
-   <code-example path="getting-started/src/app/cart.service.ts" header="src/app/cart.service.ts" region="methods"></code-example>
+    <code-example path="getting-started/src/app/cart.service.ts" header="src/app/cart.service.ts" region="methods"></code-example>
 
-    * `addToCart()`メソッドは、製品を `items`の配列に追加します。
+    * The `addToCart()` method appends a product to an array of `items`.
 
-    * `getItems()` メソッドは、ユーザーがカートに追加するアイテムを収集し、各アイテムを関連する数量とともに返します。
+    * The `getItems()` method collects the items users add to the cart and returns each item with its associated quantity.
 
-    * `clearCart()`メソッドはアイテムの空の配列を返します。
+    * The `clearCart()` method returns an empty array of items.
 
 {@a product-details-use-cart-service}
-### カートサービスを使用する
+### Use the cart service
 
-このセクションでは、カートサービスを使用して、"Buy" ボタンを使用して商品をカートに追加する方法を説明します。
+This section walks you through using the cart service to add a product to the cart with a "Buy" button.
 
-1. `product-details.component.ts` を開きます。
+1. Open `product-details.component.ts`.
 
-1. カートサービスを使用するようにコンポーネントを設定します。
+1. Configure the component to use the cart service.
 
-    1. カートサービスをインポートします。
+    1. Import the cart service.
 
         <code-example header="src/app/product-details/product-details.component.ts" path="getting-started/src/app/product-details/product-details.component.ts" region="cart-service">
         </code-example>
 
-    1. カートサービスを`constructor()`に追加して注入します。
+    1. Inject the cart service by adding it to the `constructor()`.
 
         <code-example path="getting-started/src/app/product-details/product-details.component.ts" header="src/app/product-details/product-details.component.ts" region="inject-cart-service">
         </code-example>
 
-        <!-- 
+        <!--
         To do: Consider defining "inject" and describing the concept of "dependency injection"
         -->
 
-1. 現在の商品をカートに追加する `addToCart()` メソッドを定義します。 
+1. Define the `addToCart()` method, which adds the current product to the cart.
 
-    `addToCart()` メソッドは次の3つのことを行います：
-    * 現在の `product` を受け取ります。
-    * カートサービスの `#addToCart()` メソッドを使用して商品をカートに追加します。
-    * 商品がカートに追加されたというメッセージを表示します。
-    
+    The `addToCart()` method does the following three things:
+    * Receives the current `product`.
+    * Uses the cart service's `addToCart()` method to add the product the cart.
+    * Displays a message that you've added a product to the cart.
+
     <code-example path="getting-started/src/app/product-details/product-details.component.ts" header="src/app/product-details/product-details.component.ts" region="add-to-cart"></code-example>
 
-1. 商品詳細Plantillasを更新して、現在の商品をカートに追加する "Buy" ボタンを表示します。
+1. Update the product details template with a "Buy" button that adds the current product to the cart.
 
-    1. `product-details.component.html` を開きます。
+    1. Open `product-details.component.html`.
 
-    1. "Buy" というラベルの付いたボタンを追加し、 `click()` イベントを `addToCart()` メソッドにバインドします:
+    1. Add a button with the label "Buy", and bind the `click()` event to the `addToCart()` method:
 
         <code-example header="src/app/product-details/product-details.component.html" path="getting-started/src/app/product-details/product-details.component.html">
         </code-example>
-
+    
     <div class="alert is-helpful">
 
-    この行、 `<h4>{{ product.price | currency }}</h4>` は、`currency`パイプを使用して、 `product.price`を数値から通貨文字列に変換します。パイプは、HTMLPlantillasのデータを変換できる方法です。Angularのパイプの詳細については、[パイプ](guide/pipes "Pipes")を参照してください。
+    The line, `<h4>{{ product.price | currency }}</h4>` uses the `currency` pipe to transform `product.price` from a number to a currency string. A pipe is a way you can transform data in your HTML template. For more information about Angular pipes, see [Pipes](guide/pipes "Pipes").
 
     </div>
 
-1. 新しい "Buy" ボタンを表示するには、アプリケーションを更新して製品の名前をクリックして詳細を表示します。
+1. To see the new "Buy" button, refresh the application and click on a product's name to display its details.
 
     <div class="lightbox">
       <img src='generated/images/guide/start/product-details-buy.png' alt="Display details for selected product with a Buy button">
     </div>
- 
-1. "Buy" ボタンをクリックしてください。 商品がカートに保存されている商品のリストに追加され、メッセージが表示されます。
+
+ 1. Click the "Buy" button to add the product to the stored list of items in the cart and display a confirmation message.
 
     <div class="lightbox">
       <img src='generated/images/guide/start/buy-alert.png' alt="Display details for selected product with a Buy button">
     </div>
 
 
-## カートビューを作成する
+## Create the cart view
 
-この時点で、ユーザーは "Buy" をクリックして商品をカートに入れることができますが、まだカートを見ることはできません。
+At this point, users can put items in the cart by clicking "Buy", but they can't yet see their cart.
 
-2ステップでカートビューを作成します。
+Create the cart view in two steps:
 
-1. カートコンポーネントを作成し、新しいコンポーネントへのルーティングを設定します。 この時点で、カートビューはデフォルトのテキストしかありません。
-1. カートの商品を表示します。
+1. Create a cart component and configure routing to the new component. At this point, the cart view has only default text.
+1. Display the cart items.
 
-### コンポーネントを設定する
+### Set up the component
 
-カートビューを作成するには、最初に製品詳細コンポーネントを作成し、新しいコンポーネントのルーティングを構成したときと同じ手順にしたがってください。
+ To create the cart view, begin by following the same steps you did to create the product details component and configure routing for the new component.
 
-1. `cart` という名前のコンポーネントを生成します。
+1. Generate a cart component, named `cart`.
 
-    リマインダー: ファイルリストで、 `app` フォルダを右クリックし、フォルダを選択し `Angular Generator` を選択して `Component` を選択します。
-    
+    Reminder: In the file list, right-click the `app` folder, choose `Angular Generator` and `Component`.
+
     <code-example header="src/app/cart/cart.component.ts" path="getting-started/src/app/cart/cart.component.1.ts"></code-example>
 
-1. カートコンポーネントのルーティング（URLパターン）を追加します。
+1. Add routing (a URL pattern) for the cart component.
 
-    `app.module.ts` を開き、 `cart` という `path` を使用して、コンポーネント `CartComponent` のルートを追加します：
+    Open `app.module.ts` and add a route for the component `CartComponent`, with a `path` of `cart`:
 
     <code-example header="src/app/app.module.ts" path="getting-started/src/app/app.module.ts" region="cart-route">
     </code-example>
 
-1. "チェックアウト" ボタンを更新して、 `/cart` URLにルーティングされるようにします。
+1. Update the "Checkout" button so that it routes to the `/cart` url.
 
-    `top-bar.component.html` を開き、`/cart` を指す `routerLink` ディレクティブを追加します。
+    Open `top-bar.component.html` and add a `routerLink` directive pointing to `/cart`.
 
     <code-example
         header="src/app/top-bar/top-bar.component.html"
@@ -160,62 +157,62 @@
         region="cart-route">
     </code-example>
 
-1. 新しいカートコンポーネントを表示するには、"チェックアウト" ボタンをクリックします。 デフォルトのテキスト "cart works!" を確認できます。そしてURLのパターンは `https://getting-started.stackblitz.io/cart`です。`getting-started.stackblitz.io` の部分はStackBlitzプロジェクトによって異なる場合があります。
+1. To see the new cart component, click the "Checkout" button. You can see the "cart works!" default text, and the URL has the pattern `https://getting-started.stackblitz.io/cart`,  where `getting-started.stackblitz.io` may be different for your StackBlitz project.
 
     <div class="lightbox">
       <img src='generated/images/guide/start/cart-works.png' alt="Display cart view before customizing">
     </div>
 
-### カートのアイテムを表示する
+### Display the cart items
 
-サービスを使用して、コンポーネント間でデータを共有できます:
+You can use services to share data across components:
 
-* 商品詳細コンポーネントは、すでにカートサービスを使用して商品をカートに追加します。
-* このセクションでは、カートサービスを使用してカート内の製品を表示する方法を示します。
+* The product details component already uses the cart service to add products to the cart.
+* This section shows you how to use the cart service to display the products in the cart.
 
 
-1. `cart.component.ts`を開きます。
+1. Open `cart.component.ts`.
 
-1. カートサービスを使用できるようにコンポーネントを設定します。
+1. Configure the component to use the cart service.
 
-    1. `cart.service.ts` ファイルから `CartService` をインポートします。
+    1. Import the `CartService` from the `cart.service.ts` file.
 
         <code-example header="src/app/cart/cart.component.ts" path="getting-started/src/app/cart/cart.component.2.ts" region="imports">
         </code-example>
 
-    1. カートコンポーネントが使用できるように、`CartService` を注入します。
+    1. Inject the `CartService` so that the cart component can use it.
 
         <code-example path="getting-started/src/app/cart/cart.component.2.ts" header="src/app/cart/cart.component.ts" region="inject-cart">
         </code-example>
 
-1. カートの商品を格納するための `items` プロパティを定義します。
+1. Define the `items` property to store the products in the cart.
 
     <code-example path="getting-started/src/app/cart/cart.component.2.ts" header="src/app/cart/cart.component.ts" region="items">
     </code-example>
 
-1. カートサービスの `getItems()` メソッドでitemsを設定します。[`cart.service.ts` の生成時](#generate-cart-service) にこのメソッドを定義したことを思い出しましょう。
+1. Set the items using the cart service's `getItems()` method. Recall that you defined this method [when you generated `cart.service.ts`](#generate-cart-service).
 
-    CartComponentクラスは次のようになります:
+    The resulting `CartComponent` class is as follows:
 
     <code-example path="getting-started/src/app/cart/cart.component.3.ts" header="src/app/cart/cart.component.ts" region="props-services">
     </code-example>
 
-1. ヘッダーとともにPlantillasを更新し、 `<div>` と `*ngFor` を使用してカートアイテムの名前と価格を表示します。
+1. Update the template with a header, and use a `<div>` with an `*ngFor` to display each of the cart items with its name and price.
 
-    結果、CartComponentPlantillasは次のようになります。
+    The resulting `CartComponent` template is as follows:
 
     <code-example header="src/app/cart/cart.component.html" path="getting-started/src/app/cart/cart.component.2.html" region="prices">
     </code-example>
 
-1. カートコンポーネントをテストしてください。
+1. Test your cart component.
 
-    1. "My Store" をクリックして商品リストビューに移動します。
-    1. 製品名をクリックして詳細を表示してください。
-    1. "Buy" をクリックして商品をカートに追加します。
-    1. カートを見るには、 "Checkout" をクリックしてください。
-    1. 他の商品を追加するには、 "My Store" をクリックして商品リストに戻ります。 
-    
-  繰り返してカートにアイテムを追加します。
+    1. Click on "My Store" to go to the product list view.
+    1. Click on a product name to display its details.
+    1. Click "Buy" to add the product to the cart.
+    1. Click "Checkout" to see the cart.
+    1. To add another product, click "My Store" to return to the product list.
+
+  Repeat to add more items to the cart.
 
     <div class="lightbox">
       <img src='generated/images/guide/start/cart-page-full.png' alt="Cart view with products added">
@@ -224,153 +221,155 @@
 
 <div class="alert is-helpful">
 
-StackBlitzのヒント：プレビューが更新されるたびに、カートはクリアされます。 アプリに変更を加えると、ページが更新されます。 カートに入れるには、商品をもう一度購入する必要があります。
+StackBlitz tip: Any time the preview refreshes, the cart is cleared. If you make changes to the app, the page refreshes, so you'll need to buy products again to populate the cart.
 
 </div>
 
 <div class="alert is-helpful">
 
-サービスの詳細については、 [サービスとInyección de dependenciaのIntroducción](guide/architecture-services "Concepts > Intro to Services and DI") を参照してください。
+For more information about services, see [Introduction to Services and Dependency Injection](guide/architecture-services "Concepts > Intro to Services and DI").
 
 </div>
 
 
-
-## 配送料金の取得
+## Retrieve shipping prices
 <!-- Accessing data with the HTTP client -->
 
-サーバーは、多くの場合、ストリームの形式でデータを返します。
-ストリームは、返されたデータを簡単に変換し、そのデータをリクエストする方法を変更できるため便利です。 
-Angular HTTPクライアント、`HttpClient` は、外部APIからデータを取得し、ストリームとしてアプリに提供する組み込みの方法です。
+Servers often return data in the form of a stream.
+Streams are useful because they make it easy to transform the returned data and  make modifications to the way you request that data.
+The Angular HTTP client, `HttpClient`, is a built-in way to fetch data from external APIs and provide them to your app as a stream.
 
-このセクションでは、HTTPクライアントを使用して外部ファイルから出荷価格を取得する方法を示します。
+This section shows you how to use the HTTP client to retrieve shipping prices from an external file.
 
-### 定義済み配送データ
+### Predefined shipping data
 
-StackBlitzがこのガイド用に生成するアプリには、定義済みの出荷データが `assets/shipping.json` に含まれています。
-このデータを使用して、カート内のアイテムの送料を追加します。
+The application that StackBlitz generates for this guide comes with predefined shipping data in `assets/shipping.json`.
+Use this data to add shipping prices for items in the cart.
 
 <code-example header="src/assets/shipping.json" path="getting-started/src/assets/shipping.json">
 </code-example>
 
 
-### `AppModule` で `HttpClient` を使う
+### Use `HttpClient` in the `AppModule`
 
-AngularのHTTPクライアントを使用する前に、 `HttpClientModule` を使用するようにアプリを設定する必要があります。
+Before you can use Angular's HTTP client, you must configure your app to use `HttpClientModule`.
 
-Angularの `HttpClientModule` は、アプリケーション全体で `HttpClient` サービスの単一のインスタンスを使用するために必要なプロバイダーを登録します。
+Angular's `HttpClientModule` registers the providers your app needs to use a single instance of the `HttpClient` service throughout your app.
 
-1. `app.module.ts`を開きます。
+1. Open `app.module.ts`.
 
-  このファイルには、アプリ全体で利用できるインポートと機能が含まれています。
+  This file contains imports and functionality that is available to the entire app.
 
-1. 他のインポートとともに、ファイルの先頭にある `@angular/common/http` パッケージから` HttpClientModule`をインポートします。他にも多くのインポートが存在するため、このコードスニペットでは簡潔にするためにそれらを省略しています。既存のインポートはそのままにしておいてください。
+1. Import `HttpClientModule` from the `@angular/common/http` package at the top of the file with the other imports. As there are a number of other imports, this code snippet omits them for brevity. Be sure to leave the existing imports in place.
 
     <code-example header="src/app/app.module.ts" path="getting-started/src/app/app.module.ts" region="http-client-module-import">
     </code-example>
 
-1. `HttpClientModule` を `AppModule`の`@NgModule()`の`imports` 配列に追加して、Angularの` HttpClient`プロバイダーをグローバルに登録します。
+1. Add `HttpClientModule` to the `AppModule` `@NgModule()` `imports` array to register Angular's `HttpClient` providers globally.
 
     <code-example path="getting-started/src/app/app.module.ts" header="src/app/app.module.ts" region="http-client-module">
     </code-example>
 
-### カートサービスで `HttpClient` を使う
+### Use `HttpClient` in the cart service
 
-`AppModule` が `HttpClientModule` をインポートしたので、Próximos pasosは`HttpClient`サービスをサービスにインジェクトし、アプリがデータを取得して外部のAPIやリソースとやり取りできるようにすることです。
+Now that the `AppModule` imports the `HttpClientModule`, the next step is to inject the `HttpClient` service into your service so your app can fetch data and interact with external APIs and resources.
 
-1. `cart.service.ts` を開きます。
 
-1. `@angular/common/http` パッケージから `HttpClient` をインポートします。
+1. Open `cart.service.ts`.
+
+1. Import `HttpClient` from the `@angular/common/http` package.
 
     <code-example header="src/app/cart.service.ts" path="getting-started/src/app/cart.service.ts" region="import-http">
     </code-example>
 
-1. `CartService` コンストラクターに `HttpClient` を注入します:
+1. Inject `HttpClient` into the `CartService` constructor:
 
     <code-example path="getting-started/src/app/cart.service.ts" header="src/app/cart.service.ts" region="inject-http">
     </code-example>
 
 
-### `get()` メソッドを定義する
+### Define the `get()` method
 
-複数のコンポーネントが同じサービスを利用することができます。
-このTutorialの後半で、shippingコンポーネントはcartサービスを使用して `shipping.json` ファイルからHTTP経由で配送データを取得します。
-最初に、`get()`メソッドを定義します。
+Multiple components can leverage the same service.
+Later in this tutorial, the shipping component uses the cart service to retrieve shipping data via HTTP from the `shipping.json` file.
+First, define a `get()` method.
 
-1. `cart.service.ts` で作業を続けます。
+1. Continue working in `cart.service.ts`.
 
-1. `clearCart()`メソッドの下に、 `HttpClient`の `get()`メソッドを使用して配送データを取得する新しい` getShippingPrices()`メソッドを定義します。
+1. Below the `clearCart()` method, define a new `getShippingPrices()` method that uses the `HttpClient` `get()` method to retrieve the shipping data.
 
     <code-example header="src/app/cart.service.ts" path="getting-started/src/app/cart.service.ts" region="get-shipping"></code-example>
 
 
 <div class="alert is-helpful">
 
-Angularの`HttpClient`の詳細については、 [クライアント・サーバーインタラクション](guide/http "Server interaction through HTTP")ガイド を参照してください。
+For more information about Angular's `HttpClient`, see the [Client-Server Interaction](guide/http "Server interaction through HTTP") guide.
 
 </div>
 
-## 配送ビューを定義する
+## Define the shipping view
 
-アプリで配送データを取得できるようになったので、配送コンポーネントとPlantillasを作成します。
+Now that your app can retrieve shipping data, create a shipping component and  template.
 
-1. `shipping` という名前の新しいコンポーネントを生成します。
+1. Generate a new component named `shipping`.
 
-    リマインダー: ファイルリストで、 `app` フォルダを右クリックし、　`Angular Generator` を選択して `Component` を選択します。
-    
+    Reminder: In the file list, right-click the `app` folder, choose `Angular Generator` and `Component`.
+
     <code-example header="src/app/shipping/shipping.component.ts" path="getting-started/src/app/shipping/shipping.component.1.ts"></code-example>
 
-1. `app.module.ts` で、配送のルートを追加します。 `shipping` という `path` で `ShippingComponent` コンポーネントを指定します。
+1. In `app.module.ts`, add a route for shipping. Specify a `path` of `shipping` and a component of `ShippingComponent`.
 
     <code-example header="src/app/app.module.ts" path="getting-started/src/app/app.module.ts" region="shipping-route"></code-example>
 
-    新しい配送コンポーネントへのリンクはまだありませんが、ルートが指定するURLを入力すると、プレビューペインにPlantillasが表示されます。 URLのパターンは `https://getting-started.stackblitz.io/shipping` です。ここで、`getting-started.stackblitz.io` の部分はStackBlitzプロジェクトによって異なる場合があります。
+    There's no link to the new shipping component yet, but you can see its template in the preview pane by entering the URL its route specifies. The URL has the pattern: `https://getting-started.stackblitz.io/shipping` where the `getting-started.stackblitz.io` part may be different for your StackBlitz project.
 
-1. カートサービスを使用して、 `shipping.json` ファイルからHTTP経由で配送データを取得するよう配送コンポーネントを変更します。
+1. Modify the shipping component so that it uses the cart service to retrieve shipping data via HTTP from the `shipping.json` file.
 
-    1. カートサービスをインポートします。
+    1. Import the cart service.
 
         <code-example header="src/app/shipping/shipping.component.ts" path="getting-started/src/app/shipping/shipping.component.ts" region="imports"></code-example>
 
-    1. `shippingCosts` プロパティを定義します。
+    1. Define a `shippingCosts` property.
 
-        <code-example path="getting-started/src/app/shipping/shipping.component.ts" region="props"></code-example>
+        <code-example path="getting-started/src/app/shipping/shipping.component.ts" header="src/app/shipping/shipping.component.ts" region="props"></code-example>
 
-    1. カートサービスを `ShippingComponent` コンストラクターに注入します:
+    1. Inject the cart service in the `ShippingComponent` constructor:
 
         <code-example path="getting-started/src/app/shipping/shipping.component.ts" header="src/app/shipping/shipping.component.ts" region="inject-cart-service"></code-example>
 
-    1. カートサービスの `getShippingPrices()` メソッドを使用して `shippingCosts` プロパティを設定します。
+    1. Set the `shippingCosts` property using the `getShippingPrices()` method from the cart service.
 
-        <code-example path="getting-started/src/app/shipping/shipping.component.ts" region="ctor"></code-example>
+        <code-example path="getting-started/src/app/shipping/shipping.component.ts" header="src/app/shipping/shipping.component.ts" region="ctor"></code-example>
 
-1. 配送コンポーネントのPlantillasで、`async`パイプを使用して配送タイプと価格を表示するように更新します:
+1. Update the shipping component's template to display the shipping types and prices using the `async` pipe:
 
     <code-example header="src/app/shipping/shipping.component.html" path="getting-started/src/app/shipping/shipping.component.html"></code-example>
 
-1. カートビューから配送ビューへのリンクを追加します:
+    The `async` pipe returns the latest value from a stream of data and continues to do so for the life of a given component. When Angular destroys that component, the `async` pipe automatically stops. For detailed information about the `async` pipe, see the [AsyncPipe API documentation](/api/common/AsyncPipe).
+
+1. Add a link from the cart view to the shipping view:
 
     <code-example header="src/app/cart/cart.component.html" path="getting-started/src/app/cart/cart.component.2.html"></code-example>
 
-1. 配送料金の機能をテストします:
-    
-    更新されたカートを見るには、 "チェックアウト" ボタンをクリックしてください。 （アプリを変更するとプレビューが更新され、カートが空になることを忘れないでください。）
+1. Test your shipping prices feature:
+
+    Click the "Checkout" button to see the updated cart. Remember that changing the app causes the preview to refresh, which empties the cart.
 
     <div class="lightbox">
       <img src='generated/images/guide/start/cart-empty-with-shipping-prices.png' alt="Cart with link to shipping prices">
     </div>
 
-    リンクをクリックして配送料金を確認してください。
+    Click on the link to navigate to the shipping prices.
 
     <div class="lightbox">
       <img src='generated/images/guide/start/shipping-prices.png' alt="Display shipping prices">
     </div>
 
 
-## Próximos pasos
+## Next steps
 
-おめでとうございます！ 商品カタログとショッピングカートを含むオンラインストアアプリケーションがあります。 配送料金を調べて表示することもできます。
+Congratulations! You have an online store application with a product catalog and shopping cart. You can also look up and display shipping prices.
 
-Angularの探索を続けるには、次のいずれかのオプションを選択してください:
-* ショッピングカートページとチェックアウトフォームを追加してアプリを完成させるには、 ["フォーム"セクションに進んで](start/start-forms "Try it: Forms for User Input") ください。 チェックアウトの一環としてユーザー情報を収集するためのフォームを作成します。
-* ["Desplegar" セクションに進んで](start/start-deployment "Try it: Deployment") ローカル開発に移行するか、アプリをFirebaseまたは独自のサーバーにDesplegarします。
+To continue exploring Angular, choose either of the following options:
+* [Continue to the "Forms" section](start/start-forms "Try it: Forms for User Input") to finish the app by adding the shopping cart view and a checkout form.
+* [Skip ahead to the "Deployment" section](start/start-deployment "Try it: Deployment") to move to local development, or deploy your app to Firebase or your own server.

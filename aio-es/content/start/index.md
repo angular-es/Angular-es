@@ -1,222 +1,222 @@
-# パート1：基本的なAngularアプリをはじめる
+# Part 1: Getting started with a basic Angular app
 
-Angularへようこそ！
+Welcome to Angular!
 
-このTutorialでは、カタログ、ショッピングカート、チェックアウトフォームを備えたシンプルなeコマースサイトを順を追って説明し、Angularの要点を紹介します。
-すぐに始められるように、このガイドでは（[ローカル環境のpreparar](guide/setup-local "Setup guide")の必要なく）インタラクティブに調べて変更できる既製のシンプルなアプリケーションを使用します。
+This tutorial introduces you to the essentials of Angular by walking you through a simple e-commerce site with a catalog, shopping cart, and check-out form.
+To help you get started right away, this guide uses a simple ready-made application that you can examine and modify interactively (without having to [set up a local work environment](guide/setup-local "Setup guide")).
 
 <div class="callout is-helpful">
-<header>Web開発は初めてですか？</header>
+<header>New to web development?</header>
 
-Angularのドキュメントを補完するための多くのリソースがあります。 MozillaのMDNドキュメントには[HTML](https://developer.mozilla.org/en-US/docs/Learn/HTML "Learning HTML: Guides and tutorials")と[JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript "JavaScript")の両方の紹介が含まれています。 [TypeScriptのドキュメント](https://www.typescriptlang.org/docs/home.html "TypeScript documentation")には5分間のTutorialが含まれています。 [Udemy](http://www.udemy.com "Udemy online courses")や[Codecademy](https://www.codecademy.com/ "Codecademy online courses")などのさまざまなオンラインコースプラットフォームもWeb開発の基本をカバーしています。
+ There are many resources to complement the Angular docs. Mozilla's MDN docs include both [HTML](https://developer.mozilla.org/en-US/docs/Learn/HTML "Learning HTML: Guides and tutorials") and [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript "JavaScript") introductions. [TypeScript's docs](https://www.typescriptlang.org/docs/home.html "TypeScript documentation") include a 5-minute tutorial. Various online course platforms, such as [Udemy](http://www.udemy.com "Udemy online courses") and [Codecademy](https://www.codecademy.com/ "Codecademy online courses"), also cover web development basics.
 
-</div> 
+</div>
 
 
 {@a new-project}
-## サンプルプロジェクトを作成する
+## Create the sample project
 
 <h4>
-<live-example name="getting-started-v0" noDownload>StackBlitzで既製のサンプルプロジェクトを作成するためこちらをクリックしてください。</live-example> 
+<live-example name="getting-started-v0" noDownload>Click here to create the ready-made sample project in StackBlitz.</live-example>
 </h4>
 
 <div class="lightbox">
   <img src="generated/images/guide/start/new-app-all.gif" alt="Starter online store app">
 </div>
 
-* 右側のプレビューペインには、サンプルのAngularアプリの開始状態が表示されます。
-トップバー（ストア名とチェックアウトアイコンを含む）と製品リストのタイトル（アプリケーションからのデータが入力され、動的に更新されます）をもつフレームを明らかにします。
+* The preview pane on the right shows the starting state of the sample Angular app.
+It defines a frame with a top bar (containing the store name and checkout icon) and the title for a product list (which will be populated and dynamically updated with data from the application).
 
-* 左側のプロジェクトペインには、すべてのインフラストラクチャファイルと構成ファイルを含む、アプリケーションを構成するソースファイルが表示されます。現在選択されているファイルは、中央のエディターペインに表示されます。
+* The project pane on the left shows the source files that make up the application, including all of the infrastructure and configuration files. The currently selected file shows up in the editor pane in the middle.
 
-ソースの構造に入る前に、次のセクションでは提供されたサンプルデータを使用して、製品リストのHTML *Plantillas* を記入する方法を示します。
-これにより、ページを動的に変更および更新することがどれほど簡単かが分かるでしょう。
+Before going into the source structure, the next section shows how to fill out the HTML *template* for the product list, using the provided sample data.
+This should give you an idea how easy it is to modify and update the page dynamically.
 
 <div class="callout is-helpful">
 <header>StackBlitz tips</header>
 
-* StackBlitzにログインすると、作業を保存して再開できます。 
-GitHubアカウントをお持ちの場合は、
-そのアカウントでStackBlitzにログインできます。
-進行状況を保存するには、左上のForkボタンを使用してプロジェクトをフォークし、
-Saveボタンをクリックして
-自分のStackBlitzアカウントに作業を保存できます。
-* このTutorialからコード例をコピーするには、
-コード例ボックスの右上にあるアイコンをクリックしてから、
-クリップボードのコードスニペットをStackBlitzに貼り付けます。
-* StackBlitzのプレビューペインに期待したものが表示されない場合は、
-保存してから更新ボタンをクリックします。
-* StackBlitzは継続的に改善されているので、
-生成されたコードにわずかな違いがあるかもしれませんが、
-アプリの動作は同じになります。
-* Tutorialに付随するStackBlitzAplicación de muestraを生成すると、
-StackBlitzはスターターファイルと
-モックデータを作成します。
-Tutorial全体で使用するファイルは、
-StackBlitzAplicación de muestraの `src`フォルダーにあります。
+* Log into StackBlitz so you can save and resume your work.
+If you have a GitHub account, you can log into StackBlitz
+with that account. In order to save your progress, first
+fork the project using the Fork button at the top left,
+then you'll be able to save your work to your own StackBlitz
+account by clicking the Save button.
+* To copy a code example from this tutorial, click the icon
+at the top right of the code example box, and then paste the
+code snippet from the clipboard into StackBlitz.
+* If the StackBlitz preview pane isn't showing what you
+expect, save and then click the refresh button.
+* StackBlitz is continually improving, so there may be
+slight differences in generated code, but the app's
+behavior will be the same.
+* When you generate the StackBlitz example apps that
+accompany the tutorials, StackBlitz creates the starter
+files and mock data for you. The files you'll use throughout
+the tutorials are in the `src` folder of the StackBlitz
+example apps.
 
 </div>
 
 <div class="alert is-important">
 
-[StackBlitzオンライン開発環境](https://stackblitz.com/)に直接移動し、[新しいAngularワークスペースを開始する](https://stackblitz.com/fork/angular)を選択すると、一般的なこの[例のサンプル](#new-project)ではなく汎用的なスタブアプリケーションが作られます。ここで基本的な概念に入門したあとは、Angularを学習しながらインタラクティブに作業するのに役立ちます。
+If you go directly to the [StackBlitz online development environment](https://stackblitz.com/) and choose to [start a new Angular workspace](https://stackblitz.com/fork/angular), you get a generic stub application, rather than this [illustrative sample](#new-project). Once you have been introduced to the basic concepts here, this can be helpful for working interactively while you are learning Angular.
 
-実際の開発では、通常、[Angular CLI](guide/glossary#command-line-interface-cli) を使用します。これは、アプリケーションを生成および変更できる強力なコマンドラインツールです。CLIを使用して新しいプロジェクトとそのすべてのパーツを作成する方法を示す完全なステップバイステップガイドについては、[Tour of HeroesTutorial](tutorial) を参照してください。
+In actual development you will typically use the [Angular CLI](guide/glossary#command-line-interface-cli "Definition of CLI"), a powerful command-line tool that lets you generate and modify applications. For a full step-by-step guide that shows how to use the CLI to create a new project and all of its parts, see [Tutorial: Tour of Heroes](tutorial).
 
 </div>
 
 
 {@a template-syntax}
-## Plantillas構文
+## Template syntax
 
-AngularのPlantillas構文はHTMLとJavaScriptを拡張します。
-このセクションでは、"Products"エリアを実装しながらPlantillas構文を紹介します。
+Angular's template syntax extends HTML and JavaScript.
+This section introduces template syntax by enhancing the "Products" area.
 
 <div class="alert is-helpful">
 
-作業を進めるために、次の手順では、 `products.ts`ファイル（StackBlitzのサンプルで作成済み）の定義済み製品データと` product-list.component.ts`ファイルのメソッドを使用します。
+To help you get going, the following steps use predefined product data from the `products.ts` file (already created in StackBlitz example) and methods from the `product-list.component.ts` file.
 
 </div>
 
-1.  `product-list`フォルダーで、Plantillasファイル`product-list.component.html`を開きます。
+1. In the `product-list` folder, open the template file `product-list.component.html`.
 
-1. 製品リストのPlantillasを変更して製品名のリストを表示します。
+1. Modify the product list template to display a list of product names.
 
-    1. リスト内の各商品を同じように、ページ上に順番に表示するようにします。 定義済みの製品リストを反復するには、`*ngFor`ディレクティブを使用します。次に示すように、`*ngFor`ディレクティブを`<div>`に配置します。
+    1. Each product in the list displays the same way, one after another on the page. To iterate over the predefined list of products, put the `*ngFor` directive on a `<div>`, as follows:
 
       <code-example header="src/app/product-list/product-list.component.html" path="getting-started/src/app/product-list/product-list.component.2.html" region="ngfor">
       </code-example>
 
-      `*ngFor` によってリスト内の各製品ごとに`<div>`が繰り返されます。
+      With `*ngFor`, the `<div>` repeats for each product in the list.
 
       <div class="alert is-helpful">
 
-      `*ngFor`は"構造ディレクティブ"です。 構造ディレクティブは、通常、それらが関連付けられている要素を追加、削除、および操作することによって、DOMの構造を整形または再構成します。 アスタリスク `*` の付いたディレクティブはすべて構造ディレクティブです。
+      `*ngFor` is a "structural directive". Structural directives shape or reshape the DOM's structure, typically by adding, removing, and manipulating the elements to which they are attached. Directives with an asterisk, `*`, are structural directives.
 
       </div>
 
-    1. 製品の名前を表示するには、補間構文 {{ }} を使用します。 補間は、プロパティの値をテキストとしてレンダリングします。 `<div>`の中に、製品のnameプロパティを補間し表示するための`<h3>`見出しを追加します。
+    1. To display the names of the products, use the interpolation syntax `{{ }}`. Interpolation renders a property's value as text. Inside the `<div>`, add an `<h3>` to display the interpolation of the product's name property:
 
       <code-example path="getting-started/src/app/product-list/product-list.component.2.html" header="src/app/product-list/product-list.component.html" region="interpolation">
       </code-example>
 
-      プレビューペインがすぐに更新されて、リスト内の各製品の名前が表示されます。
+      The preview pane immediately updates to display the name of each product in the list.
 
       <div class="lightbox">
         <img src="generated/images/guide/start/template-syntax-product-names.png" alt="Product names added to list">
       </div>
 
-1. 各商品名を商品詳細へのリンクにするには、次のように`<a>`要素を追加し、プロパティバインディング `[]` 構文を使用してそのタイトルを製品名に設定します。
+1. To make each product name a link to product details, add the `<a>` element and set its title to be the product's name by using the property binding `[ ]` syntax, as follows:
 
     <code-example path="getting-started/src/app/product-list/product-list.component.2.html" header="src/app/product-list/product-list.component.html">
     </code-example>
 
-    プレビューペインで製品名の上にポインターを置いて、
-    バインドされたnameプロパティの値を確認します。
-    これは、製品名に「詳細」という単語を加えたものです。
-    補間 `{{}}` では、プロパティの値をテキストとしてレンダリングできます。
-    プロパティバインディング `[]`を使用すると、
-    Plantillas式の中でプロパティ値を使用できます。
+    In the preview pane, hold the pointer over a product
+    name to see the bound name property value, which is
+    the product name plus the word "details".
+    Interpolation `{{ }}` lets you render the
+    property value as text; property binding `[ ]` lets you
+    use the property value in a template expression.
 
     <div class="lightbox">
       <img src="generated/images/guide/start/template-syntax-product-anchor.png" alt="Product name anchor text is product name property">
     </div>
 
-  
-1. 商品の説明を追加しましょう。 `<p>`要素で`*ngIf`ディレクティブを使用して、現在の製品に説明がある場合にのみAngularが `<p>` 要素を作成するようにします。
+
+4. Add the product descriptions. On the `<p>` element, use an `*ngIf` directive so that Angular only creates the `<p>` element if the current product has a description.
 
     <code-example path="getting-started/src/app/product-list/product-list.component.3.html" header="src/app/product-list/product-list.component.html">
     </code-example>
 
-    アプリはリストに各商品の名前と説明を表示します。 最後の製品には説明文がまったくないことに注意してください。 商品のdescriptionプロパティが空なので、 Angularは`<p>`要素（"Description"という単語を含む）を作成しません。
+    The app now displays the name and description of each product in the list. Notice that the final product does not have a description paragraph. Because the product's description property is empty, Angular doesn't create the `<p>` element&mdash;including the word "Description".
 
     <div class="lightbox">
       <img src="generated/images/guide/start/template-syntax-product-description.png" alt="Product descriptions added to list">
     </div>
 
-1. ユーザーが商品を友人と共有できるようにボタンを追加します。 ボタンの`click`イベントを、（`product-list.component.ts`に）定義した`share()`メソッドに紐付けます。 イベントバインディングは次の `<button>` 要素のように、イベントを囲むカッコ `( )` を使用します。
+5. Add a button so users can share a product with friends. Bind the button's `click` event to the `share()` method (in `product-list.component.ts`). Event binding uses a set of parentheses, `( )`, around the event, as in the following `<button>` element:
 
     <code-example path="getting-started/src/app/product-list/product-list.component.4.html" header="src/app/product-list/product-list.component.html">
     </code-example>
 
-    各製品には"Share"ボタンがあります。
+    Each product now has a "Share" button:
 
     <div class="lightbox">
       <img src="generated/images/guide/start/template-syntax-product-share-button.png" alt="Share button added for each product">
     </div>
 
-    "Share"ボタンをテストします。
+    Test the "Share" button:
 
     <div class="lightbox">
       <img src="generated/images/guide/start/template-syntax-product-share-alert.png" alt="Alert box indicating product has been shared">
     </div>
 
-アプリは現在、製品リストと共有機能を持っています。
-その過程で、AngularのPlantillas構文の5つの一般的な機能を使用する方法を学びました。
+The app now has a product list and sharing feature.
+In the process, you've learned to use five common features of Angular's template syntax:
 * `*ngFor`
 * `*ngIf`
-* 補間 `{{ }}`
-* プロパティバインディング `[ ]`
-* イベントバインディング `( )`
+* Interpolation `{{ }}`
+* Property binding `[ ]`
+* Event binding `( )`
 
 
 <div class="alert is-helpful">
 
-AngularのPlantillas構文の全機能については、[コンポーネントとPlantillasのIntroducción](guide/architecture-components#template-syntax "Template Syntax")を参照してください。
+For a fuller introduction to Angular's template syntax, see [Introduction to components and templates](guide/architecture-components#template-syntax "Template Syntax").
 
 </div>
 
 
 {@a components}
-## コンポーネント
+## Components
 
-*コンポーネント*は、これらの一連のUI機能を再利用できるようにするための、
-UI内の責任領域を定義します。
-あなたはすでに製品リストコンポーネントを使ってこれを構築しました。
+*Components* define areas of responsibility in the user interface, or UI,
+that let you reuse sets of UI functionality.
+You've already built one with the product list component.
 
-コンポーネントは3つの要素で構成されています。
-* **コンポーネントクラス** では、データと機能を処理します。前のセクションでは、コンポーネントクラス内の製品データと`share()`メソッドはそれぞれデータと機能を処理しました。
-* **HTMLPlantillas** では、UIを決定します。 前のセクションでは、商品リストのHTMLPlantillasを変更して、各商品の名前、説明、および"Share"ボタンを表示しました。
-* **コンポーネント固有スタイル** では、ルック・アンド・フィールを定義します。 
-商品リストにはスタイルは定義されていませんが、
-ここにはコンポーネントCSSが存在します。
+A component consists of three things:
+* **A component class** that handles data and functionality. In the previous section, the product data and the `share()` method in the component class handle data and functionality, respectively.
+* **An HTML template** that determines the UI. In the previous section, the product list's HTML template displays the name, description, and a "Share" button for each product.
+* **Component-specific styles** that define the look and feel.
+Though product list does not define any styles, this is where component CSS
+resides.
 
-<!-- 
-### クラス定義
+<!--
+### Class definition
 
-製品リストコンポーネントのクラス定義を簡単に見てみましょう。
+Let's take a quick look a the product list component's class definition:
 
-1. `product-list`ディレクトリで、`product-list.component.ts`を開きます。
+1. In the `product-list` directory, open `product-list.component.ts`.
 
-1. `@Component`デコレーターに注目してください。 これにより、Plantillas、スタイル、セレクターなど、コンポーネントに関するメタデータが提供されます。
+1. Notice the `@Component` decorator. This provides metadata about the component, including its templates, styles, and a selector.
 
-    * `selector`はコンポーネントを識別するために使われます。 セレクターは、ページ上にHTML要素としてレンダリングされるときにAngularコンポーネントに付ける名前です。 慣例により、Angularコンポーネントセレクターは `app-`のような接頭辞で始まり、その後にコンポーネント名が続きます。
+    * The `selector` is used to identify the component. The selector is the name you give the Angular component when it is rendered as an HTML element on the page. By convention, Angular component selectors begin with the prefix such as `app-`, followed by the component name.
 
-    *Plantillasとスタイルのファイル名もここにあります。 慣例により、コンポーネントの各部分は別々のファイルにあり、すべて同じディレクトリにあり、同じプレフィックスが付いています。
+    * The template and style filename also are provided here. By convention each of the component's parts is in a separate file, all in the same directory and with the same prefix.
 
-1. コンポーネント定義には、コンポーネントの機能を処理するエクスポートクラスも含まれています。 ここが商品リストデータと `Share()`メソッドが定義されている場所です。
+1. The component definition also includes an exported class, which handles functionality for the component. This is where the product list data and `Share()` method are defined.
 
-### 構成
+### Composition
 -->
 
-Angularアプリケーションはコンポーネントのツリーで構成され、各Angularコンポーネントには特定の目的と責任があります。
+An Angular application comprises a tree of components, in which each Angular component has a specific purpose and responsibility.
 
-現在、Aplicación de muestraには3つのコンポーネントがあります。
+Currently, the example app has three components:
 
 <div class="lightbox">
   <img src="generated/images/guide/start/app-components.png" alt="Online store with three components">
 </div>
 
-* `app-root`（オレンジ色のボックス）はアプリケーションシェルです。 これは最初にロードするコンポーネントであり、他のすべてのコンポーネントの親です。 これをベースページと考えることができます。
-* `app-top-bar`（青い背景）は店名とチェックアウトボタンです。
-* `app-product-list`（紫色のボックス）は前のセクションで修正した製品リストです。
+* `app-root` (orange box) is the application shell. This is the first component to load and the parent of all other components. You can think of it as the base page.
+* `app-top-bar` (blue background) is the store name and checkout button.
+* `app-product-list` (purple box) is the product list that you modified in the previous section.
 
-次のセクションでは、商品リストコンポーネントの子として新しいコンポーネント（商品アラート）を追加します。
+The next section expands the app's capabilities by adding a new component&mdash;a product alert&mdash;as a child of the product list component.
 
 
 <div class="alert is-helpful">
 
-コンポーネントとそれらがPlantillasとどのように相互作用するかについての詳細は[コンポーネントのIntroducción](guide/architecture-components "コンポーネントとPlantillasのIntroducción")を参照してください。
+For more information about components and how they interact with templates, see [Introduction to Components](guide/architecture-components "Concepts > Introduction to Components and Templates").
 
 </div>
 
@@ -224,63 +224,63 @@ Angularアプリケーションはコンポーネントのツリーで構成さ�
 {@a input}
 ## Input
 
-現在、製品リストには各製品の名前と説明が表示されています。
-商品リストコンポーネントは、`products.ts`の`products`配列からインポートした各商品のデータを含む `products`プロパティも定義しています。
+Currently, the product list displays the name and description of each product.
+The product list component also defines a `products` property that contains imported data for each product from the `products` array in `products.ts`.
 
-Próximos pasosは、新しいアラート機能を作成します。 アラート機能は製品を入力として受け取り、それから製品の価格をチェックします。 そして、価格が700ドル以上であるならば、製品が発売されたとき、ユーザーが通知にサインアップすることを可能にする "Notify Me" ボタンを表示します。
+The next step is to create a new alert feature that takes a product as an input. The alert checks the product's price, and, if the price is greater than $700, displays a "Notify Me" button that lets users sign up for notifications when the product goes on sale.
 
-1. 新しい商品アラートコンポーネントを作成します。
+1. Create a new product alerts component.
 
-    1. `app`フォルダを右クリックし、` Angular Generator`を使って `product-alerts`という名前の新しいコンポーネントを生成します。
+    1. Right click on the `app` folder and use the `Angular Generator` to generate a new component named `product-alerts`.
 
         <div class="lightbox">
           <img src="generated/images/guide/start/generate-component.png" alt="StackBlitz command to generate component">
         </div>
 
-        ジェネレータは、コンポーネントの3つの部分すべてに対してスターターファイルを作成します:
+        The generator creates starter files for all three parts of the component:
         * `product-alerts.component.ts`
         * `product-alerts.component.html`
         * `product-alerts.component.css`
 
-1. `product-alerts.component.ts`を開きます。
+1. Open `product-alerts.component.ts`.
 
-    <code-example header="src/app/product-alerts/product-alerts.component.ts" path="getting-started/src/app/product-alerts/product-alerts.component.1.ts" region="as-generated"></code-example>    
+    <code-example header="src/app/product-alerts/product-alerts.component.ts" path="getting-started/src/app/product-alerts/product-alerts.component.1.ts" region="as-generated"></code-example>
 
-    1. `@Component()`デコレーターに注目してください。 これは、次のクラスがコンポーネントであることを示しています。 Plantillas、スタイル、セレクターなど、コンポーネントに関するメタデータを提供します。
+    1. Notice the `@Component()` decorator. This indicates that the following class is a component. It provides metadata about the component, including its selector, templates, and styles.
 
-        * `selector`はコンポーネントを識別します。 セレクターは、ページ上にHTML要素としてレンダリングされるときにAngularコンポーネントに付ける名前です。 慣例により、Angularコンポーネントセレクターは接頭辞 `app-`で始まり、その後にコンポーネント名が続きます。
+        * The `selector` identifies the component. The selector is the name you give the Angular component when it is rendered as an HTML element on the page. By convention, Angular component selectors begin with the prefix `app-`, followed by the component name.
 
-        * Plantillasとスタイルのファイル名は、StackBlitzが生成したHTMLとCSSファイルを参照します。
+        * The template and style filenames reference the HTML and CSS files that StackBlitz generates.
 
-    1. コンポーネント定義はクラス（`ProductAlertsComponent`）もエクスポートします。 これはコンポーネントの機能を処理します。
+    1. The component definition also exports the class, `ProductAlertsComponent`, which handles functionality for the component.
 
-1. 入力として製品を受け取るように新しい製品アラートコンポーネントを設定します。
+1. Set up the new product alerts component to receive a product as input:
 
-    1. `@angular/core`から`Input`をインポートしてください。
+    1. Import `Input` from `@angular/core`.
 
         <code-example path="getting-started/src/app/product-alerts/product-alerts.component.1.ts" region="imports" header="src/app/product-alerts/product-alerts.component.ts"></code-example>
 
-    1. `ProductAlertsComponent`クラス定義で、`@Input()`デコレーターを使って`product`という名前のプロパティを定義します。 `@Input`デコレーターはプロパティ値がコンポーネントの親（この場合は商品リストコンポーネント）から渡されることを示します。
+    1. In the `ProductAlertsComponent` class definition, define a property named `product` with an `@Input()` decorator. The `@Input()` decorator indicates that the property value passes in from the component's parent, the product list component.
 
         <code-example path="getting-started/src/app/product-alerts/product-alerts.component.1.ts" region="input-decorator" header="src/app/product-alerts/product-alerts.component.ts"></code-example>
 
-1. 新しい製品警告コンポーネントのビューを定義します。
+1. Define the view for the new product alert component.
 
-    1. `product-alerts.component.html`Plantillasを開き、商品価格が700ドル以上の場合に表示される"Notify Me"ボタンでプレースホルダーの段落を置き換えます。
+    1. Open the `product-alerts.component.html` template and replace the placeholder paragraph with a "Notify Me" button that appears if the product price is over $700.
 
     <code-example header="src/app/product-alerts/product-alerts.component.html" path="getting-started/src/app/product-alerts/product-alerts.component.1.html"></code-example>
 
-1. 製品リストの子として新しい製品アラートコンポーネントを表示します。
+1. Display the new product alert component as a child of the product list.
 
-    1. `product-list.component.html`を開きます。
-    
-    1. 新しいコンポーネントを含めるには、HTML要素と同じようにセレクター `app-product-alert`を使います。
-    
-    1. プロパティバインディングを使用して、現在の商品を入力としてコンポーネントに渡します。
+    1. Open `product-list.component.html`.
+
+    1. To include the new component, use its selector, `app-product-alerts`, as you would an HTML element.
+
+    1. Pass the current product as input to the component using property binding.
 
         <code-example header="src/app/product-list/product-list.component.html" path="getting-started/src/app/product-list/product-list.component.5.html" region="app-product-alerts"></code-example>
 
-新しい製品アラートコンポーネントは、製品リストからの入力として製品を受け取ります。 この入力による製品の価格に基づいて、"Notify Me"ボタンを表示もしくは隠す挙動をおこないます。 Phone XLの価格が700ドルを超えているため、製品には"Notify Me"ボタンが表示されます。
+The new product alert component takes a product as input from the product list. With that input, it shows or hides the "Notify Me" button, based on the price of the product. The Phone XL price is over $700, so the "Notify Me" button appears on that product.
 
 <div class="lightbox">
   <img src="generated/images/guide/start/product-alert-button.png" alt="Product alert button added to products over $700">
@@ -288,7 +288,7 @@ Próximos pasosは、新しいアラート機能を作成します。 アラー�
 
 <div class="alert is-helpful">
 
-親から子コンポーネントへのデータの受け渡し、親からの値の傍受および処理、入力プロパティ値への変更の検出および処理の詳細については、[コンポーネントの相互作用](guide/component-interaction "コンポーネント & Plantillas > コンポーネントの相互作用")を参照してください。
+See [Component Interaction](guide/component-interaction "Components & Templates > Component Interaction") for more information about passing data from a parent to child component, intercepting and acting upon a value from the parent, and detecting and acting on changes to input property values.
 
 </div>
 
@@ -296,43 +296,43 @@ Próximos pasosは、新しいアラート機能を作成します。 アラー�
 {@a output}
 ## Output
 
-"Notify Me"ボタンを機能させるには、次の2つの設定が必要です。
+To make the "Notify Me" button work, you need to configure two things:
 
-  - ユーザーが"Notify Me"をクリックしたときにイベントを発行する商品アラートコンポーネント
-  - そのイベントに反応する商品リストコンポーネント
+  - the product alert component to emit an event when the user clicks "Notify Me"
+  - the product list component to act on that event
 
-1. `product-alerts.component.ts`を開きます。
+1. Open `product-alerts.component.ts`.
 
-1. `@angular/core`から`Output`と`EventEmitter`をインポートします。
+1. Import `Output` and `EventEmitter` from `@angular/core`:
 
     <code-example header="src/app/product-alerts/product-alerts.component.ts" path="getting-started/src/app/product-alerts/product-alerts.component.ts" region="imports"></code-example>
 
-1. コンポーネントクラスで、`@Output()`デコレーターと `EventEmitter()` のインスタンスを使って、`notify`という名前のプロパティを定義します。 これにより、notifyプロパティの値が変更されたときに製品アラートコンポーネントがイベントを発行することが可能になります。
+1. In the component class, define a property named `notify` with an `@Output()` decorator and an instance of `EventEmitter()`. This allows the product alert component to emit an event when the value of the notify property changes.
 
 <div class="alert is-helpful">
 
-  Angular CLIが新しいコンポーネントを生成すると、空のコンストラクター、 `OnInit`インターフェース、および` ngOnInit() `メソッドが含まれます。
-  次の例ではそれらを使用していないため、簡潔にするためにここでは省略します。
+  When the Angular CLI generates a new component, it includes an empty constructor, the `OnInit` interface, and the `ngOnInit()` method.
+  Since the following example isn't using them, they are omitted here for brevity.
 
 </div>
 
     <code-example path="getting-started/src/app/product-alerts/product-alerts.component.ts" header="src/app/product-alerts/product-alerts.component.ts" region="input-output"></code-example>
 
-1. 商品アラートPlantillas `product-alerts.component.html` にて、`notify.emit()`メソッドを呼び出すためのイベントバインディングで"Notify Me"ボタンを更新します。
+1. In the product alert template, `product-alerts.component.html`, update the "Notify Me" button with an event binding to call the `notify.emit()` method.
 
     <code-example header="src/app/product-alerts/product-alerts.component.html" path="getting-started/src/app/product-alerts/product-alerts.component.html"></code-example>
 
-1. 次に、ユーザーがボタンをクリックしたときに発生する動作を定義します。 子がイベントを発行したときにアクションするのは、親の商品リストコンポーネント（商品アラートコンポーネントではなく）であることを思い出してください。 `product-list.component.ts`ファイルで、`share()`メソッドと同様に、`onNotify()`メソッドを定義します。
+1. Next, define the behavior that should happen when the user clicks the button. Recall that it's the parent, product list component&mdash;not the product alerts component&mdash;that acts when the child raises the event. In  `product-list.component.ts`, define an `onNotify()` method, similar to the `share()` method:
 
     <code-example header="src/app/product-list/product-list.component.ts" path="getting-started/src/app/product-list/product-list.component.ts" region="on-notify"></code-example>
 
-1. 最後に、製品アラートコンポーネントからの出力を受け取るように製品リストコンポーネントを更新します。
+1. Finally, update the product list component to receive output from the product alerts component.
 
-    `product-list.component.html`で、` app-product-alerts`コンポーネント（これは"Notify Me"ボタンを表示するものです）を商品リストコンポーネントの `onNotify()`メソッドにバインドします。
+    In `product-list.component.html`, bind the `app-product-alerts` component (which is what displays the "Notify Me" button) to the `onNotify()` method of the product list component.
 
     <code-example header="src/app/product-list/product-list.component.html" path="getting-started/src/app/product-list/product-list.component.6.html" region="on-notify"></code-example>
 
-1. "Notify Me"ボタンを試してください。
+1. Try the "Notify Me" button:
 
     <div class="lightbox">
       <img src="generated/images/guide/start/product-alert-notification.png" alt="Product alert notification confirmation dialog">
@@ -341,20 +341,20 @@ Próximos pasosは、新しいアラート機能を作成します。 アラー�
 
 <div class="alert is-helpful">
 
-子コンポーネントからのイベントのリスニング、子プロパティの読み取り、子メソッドの呼び出し、および親子内での双方向通信のためのサービスの使用の詳細については、[コンポーネントの相互作用](guide/component-interaction "コンポーネント ＆ Plantillas > コンポーネントの相互作用")を参照してください。
+See [Component Interaction](guide/component-interaction "Components & Templates > Component Interaction") for more information about listening for events from child components, reading child properties or invoking child methods, and using a service for bi-directional communication between components.
 
 </div>
 
 
 {@a next-steps}
-## Próximos pasos
+## Next steps
 
-おめでとうございます！ あなたははじめてのAngularアプリを完成させました！
+Congratulations! You've completed your first Angular app!
 
-基本的なオンラインストアカタログがあり、商品リスト、"Share"ボタン、"Notify me"ボタンがあります。
-Angularのbase、つまりコンポーネントとPlantillasの構文について学びました。
-また、コンポーネントクラスとPlantillasがどのように相互作用するのか、およびコンポーネントが相互に通信する方法も学びました。
+You have a basic online store catalog with a product list, "Share" button, and "Notify Me" button.
+You've learned about the foundation of Angular: components and template syntax.
+You've also learned how the component class and template interact, and how components communicate with each other.
 
-Angularの探索を続けるには、次のいずれかのオプションを選択してください。
-* ["Navegación en la aplicación"セクションに進む](start/start-routing "入門： Navegación en la aplicación")ことで、製品名をクリックしてアクセスでき、独自のURLパターンをもつ製品詳細ページを作成します。
-* [先に"Desplegar"セクションに進む](start/start-deployment "入門： Desplegar")ことで、ローカル開発に移動するか、アプリをFirebaseまたは独自のサーバーにDesplegarします。
+To continue exploring Angular, choose either of the following options:
+* [Continue to the "In-app navigation" section](start/start-routing "Try it: In-app navigation") to create a product details page that can be accessed by clicking a product name and that has its own URL pattern.
+* [Skip ahead to the "Deployment" section](start/start-deployment "Try it: Deployment") to move to local development, or deploy your app to Firebase or your own server.
