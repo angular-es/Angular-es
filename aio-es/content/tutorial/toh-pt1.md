@@ -183,7 +183,7 @@ Abra `AppModule` (` app.module.ts`) e importe el símbolo `FormsModule` desde la
  region="formsmodule-js-import">
 </code-example>
 
-A continuación, agregue el `FormsModule` a la matriz` imports` de los metadatos `@ NgModule`.
+A continuación, agregue el `FormsModule` a el arreglo ` imports` de los metadatos `@ NgModule`.
 Esta matriz contiene una lista de módulos externos que requiere su aplicación.
 
 <code-example path="toh-pt1/src/app/app.module.ts" header="app.module.ts ( @NgModule imports)"

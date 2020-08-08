@@ -1,113 +1,108 @@
-# In-app navigation
+# Navegación en la aplicación
 
-At the end of [part 1](start "Get started with a basic Angular app"), the online store application has a basic product catalog.
-The app doesn't have any variable states or navigation.
-There is one URL, and that URL always displays the "My Store" page with a list of products and their descriptions.
+Al final de la [parte 1](start "Empiece con una aplicación angular básica"), la aplicación de la tienda en línea tiene un catálogo básico de productos.
+La aplicación no tiene estados variables ni navegación.
+Hay una URL, y esa URL siempre muestra la página "Mi tienda" con una lista de productos y sus descripciones.
 
-This guide shows you how to use Angular [routing](guide/glossary#router "Router definition") to give the user in-app navigation. In a single-page app, instead of loading new pages, you show different components and data to the user based on where the user is in the application.
+Esta guía le muestra cómo usar Angular [enrutamiento](guide/glossary#router "Definición de enrutador") para brindarle al usuario navegación dentro de la aplicación. En una aplicación de una sola página, en lugar de cargar páginas nuevas, le muestra diferentes componentes y datos al usuario en función de dónde se encuentra el usuario en la aplicación.
 
-The router lets you display full product details in separate [views](guide/glossary#view "View definition"), each with its own URL. Routing enables navigation from one view to the next (within the same page) as users perform tasks such as the following:
+El enrutador le permite mostrar detalles completos del producto en [vistas](guide/glossary#view "Definición de vista") separadas, cada una con su propia URL. El enrutamiento permite la navegación de una vista a la siguiente (dentro de la misma página) cuando los usuarios realizan tareas como las siguientes:
 
-* Entering a URL in the address bar to navigate to a corresponding view.
-* Clicking links on the page to navigate to a new view.
-* Clicking the browser's back and forward buttons to navigate backward and forward through the browser history.
+- Ingresando una URL en la barra de direcciones para navegar a la vista correspondiente.
+- Hacer clic en los enlaces de la página para navegar a una nueva vista.
+- Hacer clic en los botones de avance y retroceso del navegador para navegar hacia atrás y hacia adelante a través del historial del navegador.
 
-## Registering a route
+## Registrar una ruta
 
-The app is already set up to use the Angular `Router` and to use routing to navigate to the product list component you modified earlier. This section shows you how to define a route to show individual product details.
+La aplicación ya está configurada para usar el `Enrutador` angular y para usar el enrutamiento para navegar al componente de la lista de productos que modificó anteriormente. Esta sección le muestra cómo definir una ruta para mostrar detalles de productos individuales.
 
-1. Generate a new component for product details. Give the component the name `product-details`.
+1. Genere un nuevo componente para los detalles del producto. Asigne al componente el nombre "detalles del producto".
 
-    Reminder: In the file list, right-click the `app` folder, choose `Angular Generator` and `Component`.
+   Recordatorio: En la lista de archivos, haga clic con el botón derecho en la carpeta `app`, elija `Angular Generator` y `Component`.
 
-1. In `app.module.ts`, add a route for product details, with a `path` of `products/:productId` and `ProductDetailsComponent` for the `component`.
+1. En `app.module.ts`, agregue una ruta para los detalles del producto, con `ruta` de `products/:productId` y `ProductDetailsComponent` para el `componente`.
 
-    <code-example header="src/app/app.module.ts" path="getting-started/src/app/app.module.ts" region="product-details-route">
-    </code-example>
+   <code-example header="src/app/app.module.ts" path="getting-started/src/app/app.module.ts" region="product-details-route">
+   </code-example>
 
-    A route associates one or more URL paths with a component.
+   A route associates one or more URL paths with a component.
 
-1. The directive configures the component template to define how the user navigates to the route or URL. When the user clicks a product name, the app  displays the details for that product.
+1. The directive configures the component template to define how the user navigates to the route or URL. When the user clicks a product name, the app displays the details for that product.
 
-    1. Open `product-list.component.html`.
+   1. Open `product-list.component.html`.
 
-    1. Update the `*ngFor` directive to assign each index in the `products` array to the `productId` variable when iterating over the list.
+   1. Update the `*ngFor` directive to assign each index in the `products` array to the `productId` variable when iterating over the list.
 
-    1. Modify the product name anchor to include a `routerLink`.
+   1. Modify the product name anchor to include a `routerLink`.
 
-    <code-example header="src/app/product-list/product-list.component.html" path="getting-started/src/app/product-list/product-list.component.html" region="router-link">
-    </code-example>
+   <code-example header="src/app/product-list/product-list.component.html" path="getting-started/src/app/product-list/product-list.component.html" region="router-link">
+   </code-example>
 
-      The RouterLink directive gives the router control over the anchor element. In this case, the route, or URL, contains one fixed segment, `/products`, while the final segment is variable, inserting the id property of the current product. For example, the URL for a product with an `id` of 1 will be similar to `https://getting-started-myfork.stackblitz.io/products/1`.
+   La directiva RouterLink le da al enrutador control sobre el elemento de anclaje. En este caso, la ruta, o URL, contiene un segmento fijo, `/productos`, mientras que el segmento final es variable, insertando la propiedad id del producto actual. Por ejemplo, la URL de un producto con un `id` de 1 será similar a `https://getting-started-myfork.stackblitz.io/products/1`.
 
-1. Test the router by clicking a product name. The app displays the product details component, which currently always says "product-details works!"
+1. Pruebe el enrutador haciendo clic en el nombre de un producto. La aplicación muestra el componente de detalles del producto, que actualmente siempre dice "¡los detalles del producto funcionan!"
 
-    Notice that the URL in the preview window changes. The final segment is `products/#`  where `#` is the number of the route you clicked.
+   Observe que cambia la URL en la ventana de vista previa. El segmento final es `products/#` donde `#` es el número de la ruta en la que hizo clic.
 
-    <div class="lightbox">
-      <img src="generated/images/guide/start/product-details-works.png" alt="Product details view with updated URL">
-    </div>
+   <div class="lightbox">
+     <img src="generated/images/guide/start/product-details-works.png" alt="Product details view with updated URL">
+   </div>
 
+## Usando información de ruta
 
+El componente de detalles del producto maneja la exhibición de cada producto. El enrutador angular muestra componentes basados en la URL del navegador y sus rutas definidas. Esta sección le muestra cómo usar el enrutador angular para combinar los datos de `productos` y la información de ruta para mostrar los detalles específicos de cada producto.
 
-## Using route information
+1. Abra `product-details.component.ts`
 
-The product details component handles the display of each product. The Angular Router displays components based on the browser's URL and your defined routes. This section shows you how to use the Angular Router to combine the `products` data and route information to display the specific details for each product.
+1. Disponga el uso de datos de productos de un archivo externo.
 
-1. Open `product-details.component.ts`
+   1. Importe `ActivatedRoute` del paquete `@angular/router` y el arreglo `products` de `../products`.
 
-1. Arrange to use product data from an external file.
+   <code-example header="src/app/product-details/product-details.component.ts" path="getting-started/src/app/product-details/product-details.component.1.ts" region="imports">
+   </code-example>
 
-    1. Import `ActivatedRoute` from the `@angular/router` package, and the `products` array from `../products`.
+   1. Defina la propiedad `product` e inyecte el `ActivatedRoute` en el constructor agregándolo como un argumento dentro de los paréntesis del constructor.
 
-        <code-example header="src/app/product-details/product-details.component.ts" path="getting-started/src/app/product-details/product-details.component.1.ts" region="imports">
-        </code-example>
+      <code-example header="src/app/product-details/product-details.component.ts" path="getting-started/src/app/product-details/product-details.component.1.ts" region="props-methods">
+      </code-example>
 
-    1. Define the `product` property and inject the `ActivatedRoute` into the constructor by adding it as an argument within the constructor's parentheses.
+      El `ActivatedRoute` es específico para cada componente enrutado que carga el enrutador angular. Contiene información sobre el
+      ruta, sus parámetros y datos adicionales asociados con la ruta.
 
-        <code-example header="src/app/product-details/product-details.component.ts" path="getting-started/src/app/product-details/product-details.component.1.ts" region="props-methods">
-        </code-example>
+      Al inyectar el `ActivatedRoute`, está configurando el componente para usar un _service_. La página [Gestión de datos](start/start-data "Pruébelo: Gestión de datos") cubre los servicios con más detalle.
 
-        The `ActivatedRoute` is specific to each routed component that the Angular Router loads. It contains information about the
-        route, its parameters, and additional data associated with the route.
+1) En el método `ngOnInit()`, suscríbase a los parámetros de ruta y obtenga el producto basándose en el `productId`.
 
-        By injecting the `ActivatedRoute`, you are configuring the component to use a *service*. The [Managing Data](start/start-data "Try it: Managing Data") page covers services in more detail.
+   <code-example path="getting-started/src/app/product-details/product-details.component.1.ts" header="src/app/product-details/product-details.component.ts" region="get-product">
+   </code-example>
 
+   Los parámetros de la ruta corresponden a las variables de ruta que define en la ruta. La URL que coincide con la ruta proporciona el "productId". Angular usa el `productId` para mostrar los detalles de cada producto único.
 
-1. In the `ngOnInit()` method, subscribe to route parameters and fetch the product based on the `productId`.
+1) Actualice la plantilla para mostrar información de detalles del producto dentro de un `*ngIf`.
 
-    <code-example path="getting-started/src/app/product-details/product-details.component.1.ts" header="src/app/product-details/product-details.component.ts" region="get-product">
-    </code-example>
+<code-example header="src/app/product-details/product-details.component.html" path="getting-started/src/app/product-details/product-details.component.html" region="details">
+</code-example>
 
-    The route parameters correspond to the path variables you define in the route. The URL that matches the route provides the `productId`. Angular uses the `productId` to display the details for each unique product.
-
-1. Update the template to display product details information inside an `*ngIf`.
-
-    <code-example header="src/app/product-details/product-details.component.html" path="getting-started/src/app/product-details/product-details.component.html" region="details">
-    </code-example>
-
-Now, when users click on a name in the product list, the router navigates them to the distinct URL for the product, swaps out the product list component for the product details component, and displays the product details.
+Ahora, cuando los usuarios hacen clic en un nombre en la lista de productos, el enrutador los dirige a la URL distinta del producto, cambia el componente de la lista de productos por el componente de detalles del producto y muestra los detalles del producto.
 
 <div class="lightbox">
   <img src="generated/images/guide/start/product-details-routed.png" alt="Product details page with updated URL and full details displayed">
 </div>
 
-
-
 <div class="alert is-helpful">
 
-For more information about the Angular Router, see [Routing & Navigation](guide/router "Routing & Navigation guide").
+Para obtener más información sobre el enrutador angular, consulte [Enrutamiento y navegación](guide/router "Guía de enrutamiento y navegación").
 
 </div>
 
+## Próximos pasos
 
-## Next steps
+¡Felicidades! Has integrado el enrutamiento en tu tienda online.
 
-Congratulations! You have integrated routing into your online store.
+- Los productos están vinculados desde la vista de lista de productos a productos individuales.
+- Los usuarios pueden hacer clic en el nombre de un producto de la lista para ver los detalles en una nueva vista, con una URL/ruta distinta.
 
-* Products are linked from the product list view to individual products.
-* Users can click on a product name from the list to see details in a new view, with a distinct URL/route.
+Para continuar explorando Angular, elija cualquiera de las siguientes opciones:
 
-To continue exploring Angular, choose either of the following options:
-* [Continue to the "Managing Data" section](start/start-data "Try it: Managing Data") to add a shopping cart feature, use a service to manage the cart data and use HTTP to retrieve external data for shipping prices.
-* [Skip ahead to the Deployment section](start/start-deployment "Try it: Deployment") to deploy your app to Firebase or move to local development.
+- [Continúe con la sección "Administración de datos"](start/start-data "Pruébelo: Administración de datos") para agregar una función de carrito de compras, use un servicio para administrar los datos del carrito y use HTTP para recuperar datos externos para los precios de envío .
+- [Vaya a la sección Implementación](start/start-deployment "Pruébelo: Implementación") para implementar su aplicación en Firebase o pasar al desarrollo local.

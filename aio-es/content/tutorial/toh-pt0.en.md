@@ -11,7 +11,7 @@ In this part of the tutorial, you'll do the following:
 
 <div class="alert is-helpful">
 
-  For the sample app that this page describes, see the <live-example></live-example>.
+  Para ver la aplicación de ejemplo que describe esta página, consulte el<live-example></live-example>.
 
 </div>
 
@@ -116,8 +116,7 @@ Open `src/styles.css` and add the code below to the file.
 <code-example path="toh-pt0/src/styles.1.css" header="src/styles.css (excerpt)">
 </code-example>
 
-## Final code review
-
+## Revisión final del código
 Here are the code files discussed on this page.
 
 <code-tabs>

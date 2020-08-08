@@ -6,7 +6,7 @@ and place that component in the application shell.
 
 <div class="alert is-helpful">
 
-  For the sample app that this page describes, see the <live-example></live-example>.
+  Para ver la aplicación de ejemplo que describe esta página, consulte el<live-example></live-example>.
 
 </div>
 
@@ -205,8 +205,7 @@ The `HeroesComponent` is declared in the `@NgModule.declarations` array.
 Note that `AppModule`  declares both application components, `AppComponent` and `HeroesComponent`.
 
 
-## Final code review
-
+## Revisión final del código
 Here are the code files discussed on this page.
 
 <code-tabs>

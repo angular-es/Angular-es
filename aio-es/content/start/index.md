@@ -1,185 +1,185 @@
-# Part 1: Getting started with a basic Angular app
+# Parte 1: Empezando con una aplicación Angular básica
 
-Welcome to Angular!
+¡Bienvenido a Angular!
 
-This tutorial introduces you to the essentials of Angular by walking you through a simple e-commerce site with a catalog, shopping cart, and check-out form.
-To help you get started right away, this guide uses a simple ready-made application that you can examine and modify interactively (without having to [set up a local work environment](guide/setup-local "Setup guide")).
+Este tutorial le presenta los conceptos básicos de Angular y lo guía a través de un sitio de comercio electrónico simple con un catálogo, un carrito de compras y un formulario de pago.
+Para ayudarlo a comenzar de inmediato, esta guía utiliza una aplicación sencilla lista para usar que puede examinar y modificar de forma interactiva (sin tener que [configurar un entorno de trabajo local](guide/setup-local "Guía de configuración")).
 
 <div class="callout is-helpful">
-<header>New to web development?</header>
+<header>¿Es nuevo en el desarrollo web?</header>
 
- There are many resources to complement the Angular docs. Mozilla's MDN docs include both [HTML](https://developer.mozilla.org/en-US/docs/Learn/HTML "Learning HTML: Guides and tutorials") and [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript "JavaScript") introductions. [TypeScript's docs](https://www.typescriptlang.org/docs/home.html "TypeScript documentation") include a 5-minute tutorial. Various online course platforms, such as [Udemy](http://www.udemy.com "Udemy online courses") and [Codecademy](https://www.codecademy.com/ "Codecademy online courses"), also cover web development basics.
+Hay muchos recursos para complementar los documentos de Angular. Los documentos MDN de Mozilla incluyen tanto [HTML](https://developer.mozilla.org/en-US/docs/Learn/HTML "Aprendizaje de HTML: guías y tutoriales") y [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript "JavaScript") introducciones. [Los documentos de TypeScript](https://www.typescriptlang.org/docs/home.html "Documentación de TypeScript") incluyen un tutorial de 5 minutos. Varias plataformas de cursos en línea, como [Udemy](http://www.udemy.com "Cursos en línea de Udemy") y [Codecademy](https://www.codecademy.com/ "Cursos en línea de Codecademy"), también cubren conceptos básicos de desarrollo web.
 
 </div>
 
-
 {@a new-project}
-## Create the sample project
+
+## Cree el proyecto de muestra
 
 <h4>
-<live-example name="getting-started-v0" noDownload>Click here to create the ready-made sample project in StackBlitz.</live-example>
+<live-example name="getting-started-v0" noDownload>Haga clic aquí para crear el proyecto de muestra listo para usar en StackBlitz.</live-example>
 </h4>
 
 <div class="lightbox">
   <img src="generated/images/guide/start/new-app-all.gif" alt="Starter online store app">
 </div>
 
-* The preview pane on the right shows the starting state of the sample Angular app.
-It defines a frame with a top bar (containing the store name and checkout icon) and the title for a product list (which will be populated and dynamically updated with data from the application).
+- El panel de vista previa a la derecha muestra el estado inicial de la aplicación Angular de muestra.
+  Define un marco con una barra superior (que contiene el nombre de la tienda y el icono de pago) y el título de una lista de productos (que se completará y actualizará dinámicamente con datos de la aplicación).
 
-* The project pane on the left shows the source files that make up the application, including all of the infrastructure and configuration files. The currently selected file shows up in the editor pane in the middle.
+- El panel del proyecto de la izquierda muestra los archivos de origen que componen la aplicación, incluidos todos los archivos de configuración e infraestructura. El archivo seleccionado actualmente aparece en el panel del editor en el medio.
 
-Before going into the source structure, the next section shows how to fill out the HTML *template* for the product list, using the provided sample data.
-This should give you an idea how easy it is to modify and update the page dynamically.
+Antes de entrar en la estructura de la fuente, la siguiente sección muestra cómo completar la _plantilla_ HTML para la lista de productos, utilizando los datos de muestra proporcionados.
+Esto debería darle una idea de lo fácil que es modificar y actualizar la página de forma dinámica.
 
 <div class="callout is-helpful">
-<header>StackBlitz tips</header>
+<header>Consejos de StackBlitz</header>
 
-* Log into StackBlitz so you can save and resume your work.
-If you have a GitHub account, you can log into StackBlitz
-with that account. In order to save your progress, first
-fork the project using the Fork button at the top left,
-then you'll be able to save your work to your own StackBlitz
-account by clicking the Save button.
-* To copy a code example from this tutorial, click the icon
-at the top right of the code example box, and then paste the
-code snippet from the clipboard into StackBlitz.
-* If the StackBlitz preview pane isn't showing what you
-expect, save and then click the refresh button.
-* StackBlitz is continually improving, so there may be
-slight differences in generated code, but the app's
-behavior will be the same.
-* When you generate the StackBlitz example apps that
-accompany the tutorials, StackBlitz creates the starter
-files and mock data for you. The files you'll use throughout
-the tutorials are in the `src` folder of the StackBlitz
-example apps.
+- Inicie sesión en StackBlitz para que pueda guardar y reanudar su trabajo.
+  Si tiene una cuenta de GitHub, puede iniciar sesión en StackBlitz
+  con esa cuenta. Para guardar su progreso, primero
+  bifurque el proyecto usando el botón Bifurcación en la parte superior izquierda,
+  entonces podrás guardar tu trabajo en tu propio StackBlitz
+  cuenta haciendo clic en el botón Guardar.
+- Para copiar un ejemplo de código de este tutorial, haga clic en el icono
+  en la parte superior derecha del cuadro de ejemplo de código y luego pegue el
+  fragmento de código del portapapeles en StackBlitz.
+- Si el panel de vista previa de StackBlitz no muestra lo que
+  esperar, guardar y luego hacer clic en el botón actualizar.
+- StackBlitz mejora continuamente, por lo que puede haber
+  ligeras diferencias en el código generado, pero la aplicación
+  el comportamiento será el mismo.
+- Cuando genera las aplicaciones de ejemplo de StackBlitz que
+  acompañar los tutoriales, StackBlitz crea el iniciador
+  archivos y datos simulados para usted. Los archivos que usará en todo
+  los tutoriales están en la carpeta `src` de StackBlitz
+  aplicaciones de ejemplo.
 
 </div>
 
 <div class="alert is-important">
 
-If you go directly to the [StackBlitz online development environment](https://stackblitz.com/) and choose to [start a new Angular workspace](https://stackblitz.com/fork/angular), you get a generic stub application, rather than this [illustrative sample](#new-project). Once you have been introduced to the basic concepts here, this can be helpful for working interactively while you are learning Angular.
+Si va directamente al [entorno de desarrollo en línea de StackBlitz](https://stackblitz.com/) y elige [iniciar un nuevo espacio de trabajo angular](https://stackblitz.com/fork/angular), obtiene un aplicación de código auxiliar, en lugar de esta [muestra ilustrativa](#new-project). Una vez que haya sido introducido a los conceptos básicos aquí, esto puede ser útil para trabajar de forma interactiva mientras aprende Angular.
 
-In actual development you will typically use the [Angular CLI](guide/glossary#command-line-interface-cli "Definition of CLI"), a powerful command-line tool that lets you generate and modify applications. For a full step-by-step guide that shows how to use the CLI to create a new project and all of its parts, see [Tutorial: Tour of Heroes](tutorial).
+En el desarrollo real, normalmente usará [Angular CLI](guide/glossary#command-line-interface-cli "Definición de CLI"), una poderosa herramienta de línea de comandos que le permite generar y modificar aplicaciones. Para obtener una guía completa paso a paso que muestra cómo usar la CLI para crear un nuevo proyecto y todas sus partes, consulte [Tutorial: Tour of Heroes](tutorial).
 
 </div>
-
 
 {@a template-syntax}
-## Template syntax
 
-Angular's template syntax extends HTML and JavaScript.
-This section introduces template syntax by enhancing the "Products" area.
+## Sintaxis de la plantilla
 
-<div class="alert is-helpful">
-
-To help you get going, the following steps use predefined product data from the `products.ts` file (already created in StackBlitz example) and methods from the `product-list.component.ts` file.
-
-</div>
-
-1. In the `product-list` folder, open the template file `product-list.component.html`.
-
-1. Modify the product list template to display a list of product names.
-
-    1. Each product in the list displays the same way, one after another on the page. To iterate over the predefined list of products, put the `*ngFor` directive on a `<div>`, as follows:
-
-      <code-example header="src/app/product-list/product-list.component.html" path="getting-started/src/app/product-list/product-list.component.2.html" region="ngfor">
-      </code-example>
-
-      With `*ngFor`, the `<div>` repeats for each product in the list.
-
-      <div class="alert is-helpful">
-
-      `*ngFor` is a "structural directive". Structural directives shape or reshape the DOM's structure, typically by adding, removing, and manipulating the elements to which they are attached. Directives with an asterisk, `*`, are structural directives.
-
-      </div>
-
-    1. To display the names of the products, use the interpolation syntax `{{ }}`. Interpolation renders a property's value as text. Inside the `<div>`, add an `<h3>` to display the interpolation of the product's name property:
-
-      <code-example path="getting-started/src/app/product-list/product-list.component.2.html" header="src/app/product-list/product-list.component.html" region="interpolation">
-      </code-example>
-
-      The preview pane immediately updates to display the name of each product in the list.
-
-      <div class="lightbox">
-        <img src="generated/images/guide/start/template-syntax-product-names.png" alt="Product names added to list">
-      </div>
-
-1. To make each product name a link to product details, add the `<a>` element and set its title to be the product's name by using the property binding `[ ]` syntax, as follows:
-
-    <code-example path="getting-started/src/app/product-list/product-list.component.2.html" header="src/app/product-list/product-list.component.html">
-    </code-example>
-
-    In the preview pane, hold the pointer over a product
-    name to see the bound name property value, which is
-    the product name plus the word "details".
-    Interpolation `{{ }}` lets you render the
-    property value as text; property binding `[ ]` lets you
-    use the property value in a template expression.
-
-    <div class="lightbox">
-      <img src="generated/images/guide/start/template-syntax-product-anchor.png" alt="Product name anchor text is product name property">
-    </div>
-
-
-4. Add the product descriptions. On the `<p>` element, use an `*ngIf` directive so that Angular only creates the `<p>` element if the current product has a description.
-
-    <code-example path="getting-started/src/app/product-list/product-list.component.3.html" header="src/app/product-list/product-list.component.html">
-    </code-example>
-
-    The app now displays the name and description of each product in the list. Notice that the final product does not have a description paragraph. Because the product's description property is empty, Angular doesn't create the `<p>` element&mdash;including the word "Description".
-
-    <div class="lightbox">
-      <img src="generated/images/guide/start/template-syntax-product-description.png" alt="Product descriptions added to list">
-    </div>
-
-5. Add a button so users can share a product with friends. Bind the button's `click` event to the `share()` method (in `product-list.component.ts`). Event binding uses a set of parentheses, `( )`, around the event, as in the following `<button>` element:
-
-    <code-example path="getting-started/src/app/product-list/product-list.component.4.html" header="src/app/product-list/product-list.component.html">
-    </code-example>
-
-    Each product now has a "Share" button:
-
-    <div class="lightbox">
-      <img src="generated/images/guide/start/template-syntax-product-share-button.png" alt="Share button added for each product">
-    </div>
-
-    Test the "Share" button:
-
-    <div class="lightbox">
-      <img src="generated/images/guide/start/template-syntax-product-share-alert.png" alt="Alert box indicating product has been shared">
-    </div>
-
-The app now has a product list and sharing feature.
-In the process, you've learned to use five common features of Angular's template syntax:
-* `*ngFor`
-* `*ngIf`
-* Interpolation `{{ }}`
-* Property binding `[ ]`
-* Event binding `( )`
-
+La sintaxis de la plantilla de Angular extiende HTML y JavaScript.
+Esta sección presenta la sintaxis de la plantilla mejorando el área "Productos".
 
 <div class="alert is-helpful">
 
-For a fuller introduction to Angular's template syntax, see [Introduction to components and templates](guide/architecture-components#template-syntax "Template Syntax").
+Para ayudarlo a comenzar, los siguientes pasos usan datos de productos predefinidos del archivo `products.ts` (ya creado en el ejemplo de StackBlitz) y métodos del archivo `product-list.component.ts`.
 
 </div>
 
+1. En la carpeta `product-list`, abra el archivo de plantilla `product-list.component.html`.
+
+1. Modifique la plantilla de la lista de productos para mostrar una lista de nombres de productos.
+
+   1. Todos los productos de la lista se muestran de la misma manera, uno tras otro en la página. Para iterar sobre la lista predefinida de productos, coloque la directiva `*ngFor` en un `<div>`, de la siguiente manera:
+
+     <code-example header="src/app/product-list/product-list.component.html" path="getting-started/src/app/product-list/product-list.component.2.html" region="ngfor">
+     </code-example>
+
+   Con `* ngFor`, el`<div>`se repite para cada producto de la lista.
+
+     <div class="alert is-helpful">
+
+   `* ngFor` es una" directiva estructural ". Las directivas estructurales dan forma o remodelan la estructura del DOM, generalmente agregando, quitando y manipulando los elementos a los que están adjuntos. Las directivas con un asterisco, `*`, son directivas estructurales.
+
+     </div>
+
+   1. Para mostrar los nombres de los productos, utilice la sintaxis de interpolación `{{}}`. La interpolación representa el valor de una propiedad como texto. Dentro de `<div>`, agregue un `<h3>` para mostrar la interpolación de la propiedad del nombre del producto:
+
+     <code-example path="getting-started/src/app/product-list/product-list.component.2.html" header="src/app/product-list/product-list.component.html" region="interpolation">
+     </code-example>
+
+   El panel de vista previa se actualiza inmediatamente para mostrar el nombre de cada producto en la lista.
+
+     <div class="lightbox">
+       <img src="generated/images/guide/start/template-syntax-product-names.png" alt="Product names added to list">
+     </div>
+
+1. Para hacer que el nombre de cada producto sea un enlace a los detalles del producto, agregue el elemento `<a>` y establezca su título como el nombre del producto utilizando la sintaxis de enlace de propiedad `[]`, de la siguiente manera:
+
+   <code-example path="getting-started/src/app/product-list/product-list.component.2.html" header="src/app/product-list/product-list.component.html">
+   </code-example>
+
+En el panel de vista previa, mantenga el puntero sobre un producto
+name para ver el valor de la propiedad del nombre enlazado, que es
+el nombre del producto más la palabra "detalles".
+La interpolación `{{}}` le permite renderizar el
+valor de propiedad como texto; el enlace de propiedad `[]` te permite
+utilice el valor de la propiedad en una expresión de plantilla.
+
+   <div class="lightbox">
+     <img src="generated/images/guide/start/template-syntax-product-anchor.png" alt="Product name anchor text is product name property">
+   </div>
+
+4. Agregue las descripciones de los productos. En el elemento `<p>`, use una directiva `*ngIf` para que Angular solo cree el elemento `<p>` si el producto actual tiene una descripción.
+
+   <code-example path="getting-started/src/app/product-list/product-list.component.3.html" header="src/app/product-list/product-list.component.html">
+   </code-example>
+
+La aplicación ahora muestra el nombre y la descripción de cada producto en la lista. Tenga en cuenta que el producto final no tiene un párrafo de descripción. Debido a que la propiedad de descripción del producto está vacía, Angular no crea el elemento&mdash; `<p>` que incluye la palabra "Descripción".
+
+   <div class="lightbox">
+     <img src="generated/images/guide/start/template-syntax-product-description.png" alt="Product descriptions added to list">
+   </div>
+
+5. Agregue un botón para que los usuarios puedan compartir un producto con amigos. Vincula el evento `click` del botón al método `share()`(en`product-list.component.ts`). El enlace de eventos usa un conjunto de paréntesis, `()`, alrededor del evento, como en el siguiente elemento `<button>`:
+
+   <code-example path="getting-started/src/app/product-list/product-list.component.4.html" header="src/app/product-list/product-list.component.html">
+   </code-example>
+
+   Cada producto tiene ahora un botón "Compartir":
+
+   <div class="lightbox">
+     <img src="generated/images/guide/start/template-syntax-product-share-button.png" alt="Share button added for each product">
+   </div>
+
+Prueba el botón "Compartir":
+
+   <div class="lightbox">
+     <img src="generated/images/guide/start/template-syntax-product-share-alert.png" alt="Alert box indicating product has been shared">
+   </div>
+
+La aplicación ahora tiene una lista de productos y una función para compartir.
+En el proceso, ha aprendido a usar cinco características comunes de la sintaxis de la plantilla de Angular:
+
+- `*ngFor`
+- `*ngIf`
+- Interpolación `{{}}`
+- Propiedad vinculante `[]`
+- Enlace de eventos `()`
+
+<div class="alert is-helpful">
+
+Para una introducción más completa a la sintaxis de la plantilla angular, consulte [Introducción a componentes y plantillas](guide/architecture-components#template-syntax "Sintaxis de plantilla").
+
+</div>
 
 {@a components}
-## Components
 
-*Components* define areas of responsibility in the user interface, or UI,
-that let you reuse sets of UI functionality.
-You've already built one with the product list component.
+## Componentes
 
-A component consists of three things:
-* **A component class** that handles data and functionality. In the previous section, the product data and the `share()` method in the component class handle data and functionality, respectively.
-* **An HTML template** that determines the UI. In the previous section, the product list's HTML template displays the name, description, and a "Share" button for each product.
-* **Component-specific styles** that define the look and feel.
-Though product list does not define any styles, this is where component CSS
-resides.
+_Componentes_ definen áreas de responsabilidad en la interfaz de usuario, o UI,
+que le permiten reutilizar conjuntos de funciones de la interfaz de usuario.
+Ya ha creado uno con el componente de lista de productos.
+
+Un componente consta de tres cosas:
+
+- **Una clase de componente** que maneja datos y funcionalidad. En la sección anterior, los datos del producto y el método `share()` en la clase de componente manejan datos y funcionalidad, respectivamente.
+- **Una plantilla HTML** que determina la interfaz de usuario. En la sección anterior, la plantilla HTML de la lista de productos muestra el nombre, la descripción y un botón "Compartir" para cada producto.
+- **Estilos de componentes específicos** que definen la apariencia.
+  Aunque la lista de productos no define ningún estilo, aquí es donde el CSS del componente
+  reside
 
 <!--
 ### Class definition
@@ -199,88 +199,88 @@ Let's take a quick look a the product list component's class definition:
 ### Composition
 -->
 
-An Angular application comprises a tree of components, in which each Angular component has a specific purpose and responsibility.
+Una aplicación Angular comprende un árbol de componentes, en el que cada componente Angular tiene un propósito y una responsabilidad específicos.
 
-Currently, the example app has three components:
+Actualmente, la aplicación de ejemplo tiene tres componentes:
 
 <div class="lightbox">
   <img src="generated/images/guide/start/app-components.png" alt="Online store with three components">
 </div>
 
-* `app-root` (orange box) is the application shell. This is the first component to load and the parent of all other components. You can think of it as the base page.
-* `app-top-bar` (blue background) is the store name and checkout button.
-* `app-product-list` (purple box) is the product list that you modified in the previous section.
+- `app-root` (cuadro naranja) es el shell de la aplicación. Este es el primer componente que se carga y el padre de todos los demás componentes. Puede pensar en ella como la página base.
+- `app-top-bar` (fondo azul) es el nombre de la tienda y el botón de pago.
+- `app-product-list` (cuadro violeta) es la lista de productos que modificó en la sección anterior.
 
-The next section expands the app's capabilities by adding a new component&mdash;a product alert&mdash;as a child of the product list component.
-
+La siguiente sección amplía las capacidades de la aplicación al agregar un nuevo &mdash;, una alerta de producto&mdash;, como un elemento secundario del componente de lista de productos.
 
 <div class="alert is-helpful">
 
-For more information about components and how they interact with templates, see [Introduction to Components](guide/architecture-components "Concepts > Introduction to Components and Templates").
+Para obtener más información sobre los componentes y cómo interactúan con las plantillas, consulte [Introducción a los componentes](guide/architecture-components "Conceptos> Introducción a componentes y plantillas").
 
 </div>
 
-
 {@a input}
-## Input
 
-Currently, the product list displays the name and description of each product.
-The product list component also defines a `products` property that contains imported data for each product from the `products` array in `products.ts`.
+## Entrada
 
-The next step is to create a new alert feature that takes a product as an input. The alert checks the product's price, and, if the price is greater than $700, displays a "Notify Me" button that lets users sign up for notifications when the product goes on sale.
+Actualmente, la lista de productos muestra el nombre y la descripción de cada producto.
+El componente de lista de productos también define una propiedad de `productos` que contiene datos importados para cada producto de la matriz `productos` en `productos.ts`.
 
-1. Create a new product alerts component.
+El siguiente paso es crear una nueva función de alerta que tome un producto como entrada. La alerta verifica el precio del producto y, si el precio es superior a \ \$ 700, muestra un botón "Notificarme" que permite a los usuarios registrarse para recibir notificaciones cuando el producto sale a la venta.
 
-    1. Right click on the `app` folder and use the `Angular Generator` to generate a new component named `product-alerts`.
+1. Cree un nuevo componente de alertas de productos.
 
-        <div class="lightbox">
-          <img src="generated/images/guide/start/generate-component.png" alt="StackBlitz command to generate component">
-        </div>
+   1. Haga clic derecho en la carpeta `app` y use el `Generador angular` para generar un nuevo componente llamado `product-alerts`.
 
-        The generator creates starter files for all three parts of the component:
-        * `product-alerts.component.ts`
-        * `product-alerts.component.html`
-        * `product-alerts.component.css`
+     <div class="lightbox">
+       <img src="generated/images/guide/start/generate-component.png" alt="StackBlitz command to generate component">
+     </div>
 
-1. Open `product-alerts.component.ts`.
+   El generador crea archivos de inicio para las tres partes del componente:
 
-    <code-example header="src/app/product-alerts/product-alerts.component.ts" path="getting-started/src/app/product-alerts/product-alerts.component.1.ts" region="as-generated"></code-example>
+   - `product-alerts.component.ts`
+   - `product-alerts.component.html`
+   - `product-alerts.component.css`
 
-    1. Notice the `@Component()` decorator. This indicates that the following class is a component. It provides metadata about the component, including its selector, templates, and styles.
+1. Abra `product-alerts.component.ts`.
 
-        * The `selector` identifies the component. The selector is the name you give the Angular component when it is rendered as an HTML element on the page. By convention, Angular component selectors begin with the prefix `app-`, followed by the component name.
+   <code-example header="src/app/product-alerts/product-alerts.component.ts" path="getting-started/src/app/product-alerts/product-alerts.component.1.ts" region="as-generated"></code-example>
 
-        * The template and style filenames reference the HTML and CSS files that StackBlitz generates.
+   1. Observe el decorador `@Component()`. Esto indica que la siguiente clase es un componente. Proporciona metadatos sobre el componente, incluido su selector, plantillas y estilos.
 
-    1. The component definition also exports the class, `ProductAlertsComponent`, which handles functionality for the component.
+      - El `selector` identifica el componente. El selector es el nombre que le da al componente angular cuando se representa como un elemento HTML en la página. Por convención, los selectores de componentes angulares comienzan con el prefijo `app-`, seguido del nombre del componente.
 
-1. Set up the new product alerts component to receive a product as input:
+      - Los nombres de archivo de plantilla y estilo hacen referencia a los archivos HTML y CSS que genera StackBlitz.
 
-    1. Import `Input` from `@angular/core`.
+   1. La definición del componente también exporta la clase, `ProductAlertsComponent`, que maneja la funcionalidad del componente.
 
-        <code-example path="getting-started/src/app/product-alerts/product-alerts.component.1.ts" region="imports" header="src/app/product-alerts/product-alerts.component.ts"></code-example>
+1. Configure el componente de alertas de nuevos productos para recibir un producto como entrada:
 
-    1. In the `ProductAlertsComponent` class definition, define a property named `product` with an `@Input()` decorator. The `@Input()` decorator indicates that the property value passes in from the component's parent, the product list component.
+   1. Importe `Input` de `@angular/core`.
 
-        <code-example path="getting-started/src/app/product-alerts/product-alerts.component.1.ts" region="input-decorator" header="src/app/product-alerts/product-alerts.component.ts"></code-example>
+      <code-example path="getting-started/src/app/product-alerts/product-alerts.component.1.ts" region="imports" header="src/app/product-alerts/product-alerts.component.ts"></code-example>
 
-1. Define the view for the new product alert component.
+   1. En la definición de clase `ProductAlertsComponent`, defina una propiedad denominada `producto` con un decorador `@Input()`. El decorador `@Input()` indica que el valor de la propiedad pasa del padre del componente, el componente de la lista de productos.
 
-    1. Open the `product-alerts.component.html` template and replace the placeholder paragraph with a "Notify Me" button that appears if the product price is over $700.
+      <code-example path="getting-started/src/app/product-alerts/product-alerts.component.1.ts" region="input-decorator" header="src/app/product-alerts/product-alerts.component.ts"></code-example>
 
-    <code-example header="src/app/product-alerts/product-alerts.component.html" path="getting-started/src/app/product-alerts/product-alerts.component.1.html"></code-example>
+1. Defina la vista del componente de alerta de producto nuevo.
 
-1. Display the new product alert component as a child of the product list.
+   1. Abra la plantilla `product-alerts.component.html` y reemplace el párrafo de marcador de posición con un botón" Notificarme "que aparece si el precio del producto es superior a \$ 700.
 
-    1. Open `product-list.component.html`.
+   <code-example header="src/app/product-alerts/product-alerts.component.html" path="getting-started/src/app/product-alerts/product-alerts.component.1.html"></code-example>
 
-    1. To include the new component, use its selector, `app-product-alerts`, as you would an HTML element.
+1. Muestre el componente de alerta de producto nuevo como un elemento secundario de la lista de productos.
 
-    1. Pass the current product as input to the component using property binding.
+   1. Abra `product-list.component.html`.
 
-        <code-example header="src/app/product-list/product-list.component.html" path="getting-started/src/app/product-list/product-list.component.5.html" region="app-product-alerts"></code-example>
+   1. Para incluir el nuevo componente, use su selector, `app-product-alerts`, como lo haría con un elemento HTML.
 
-The new product alert component takes a product as input from the product list. With that input, it shows or hides the "Notify Me" button, based on the price of the product. The Phone XL price is over $700, so the "Notify Me" button appears on that product.
+   1. Pase el producto actual como entrada al componente mediante el enlace de propiedad.
+
+      <code-example header="src/app/product-list/product-list.component.html" path="getting-started/src/app/product-list/product-list.component.5.html" region="app-product-alerts"></code-example>
+
+El componente de alerta de nuevo producto toma un producto como entrada de la lista de productos. Con esa entrada, muestra u oculta el botón "Notificarme", según el precio del producto. El precio del Phone XL es de más de \$ 700, por lo que el botón "Notificarme" aparece en ese producto.
 
 <div class="lightbox">
   <img src="generated/images/guide/start/product-alert-button.png" alt="Product alert button added to products over $700">
@@ -288,73 +288,74 @@ The new product alert component takes a product as input from the product list. 
 
 <div class="alert is-helpful">
 
-See [Component Interaction](guide/component-interaction "Components & Templates > Component Interaction") for more information about passing data from a parent to child component, intercepting and acting upon a value from the parent, and detecting and acting on changes to input property values.
+Consulte [Interacción de componentes](guide/component-interaction "Componentes y plantillas> Interacción de componentes") para obtener más información sobre cómo pasar datos de un componente principal a secundario, interceptar un valor del elemento principal y actuar sobre él, y detectar y actuar sobre los cambios en valores de propiedad de entrada.
 
 </div>
 
-
 {@a output}
-## Output
 
-To make the "Notify Me" button work, you need to configure two things:
+## Salida
 
-  - the product alert component to emit an event when the user clicks "Notify Me"
-  - the product list component to act on that event
+Para que funcione el botón "Notificarme", debe configurar dos cosas:
 
-1. Open `product-alerts.component.ts`.
+- el componente de alerta del producto para emitir un evento cuando el usuario hace clic en "Notificarme"
+- el componente de la lista de productos para actuar en ese evento
 
-1. Import `Output` and `EventEmitter` from `@angular/core`:
+1. Abra `product-alerts.component.ts`.
 
-    <code-example header="src/app/product-alerts/product-alerts.component.ts" path="getting-started/src/app/product-alerts/product-alerts.component.ts" region="imports"></code-example>
+1. Importe `Output` y `EventEmitter` de `@angular/core`:
 
-1. In the component class, define a property named `notify` with an `@Output()` decorator and an instance of `EventEmitter()`. This allows the product alert component to emit an event when the value of the notify property changes.
+   <code-example header="src/app/product-alerts/product-alerts.component.ts" path="getting-started/src/app/product-alerts/product-alerts.component.ts" region="imports"></code-example>
+
+1. En la clase de componente, defina una propiedad llamada "notificar" con un decorador "@Output()" y una instancia de "EventEmitter()". Esto permite que el componente de alerta de producto emita un evento cuando cambia el valor de la propiedad de notificación.
 
 <div class="alert is-helpful">
 
-  When the Angular CLI generates a new component, it includes an empty constructor, the `OnInit` interface, and the `ngOnInit()` method.
-  Since the following example isn't using them, they are omitted here for brevity.
+Cuando la CLI de Angular genera un nuevo componente, incluye un constructor vacío, la interfaz `OnInit` y el método `ngOnInit()`.
+Dado que el siguiente ejemplo no los usa, se omiten aquí por brevedad.
 
 </div>
 
     <code-example path="getting-started/src/app/product-alerts/product-alerts.component.ts" header="src/app/product-alerts/product-alerts.component.ts" region="input-output"></code-example>
 
-1. In the product alert template, `product-alerts.component.html`, update the "Notify Me" button with an event binding to call the `notify.emit()` method.
+1. En la plantilla de alerta de producto, `product-alerts.component.html`, actualice el botón" Notificarme "con una vinculación de eventos para llamar al método `notify.emit()`.
 
-    <code-example header="src/app/product-alerts/product-alerts.component.html" path="getting-started/src/app/product-alerts/product-alerts.component.html"></code-example>
+   <code-example header="src/app/product-alerts/product-alerts.component.html" path="getting-started/src/app/product-alerts/product-alerts.component.html"></code-example>
 
-1. Next, define the behavior that should happen when the user clicks the button. Recall that it's the parent, product list component&mdash;not the product alerts component&mdash;that acts when the child raises the event. In  `product-list.component.ts`, define an `onNotify()` method, similar to the `share()` method:
+1) A continuación, defina el comportamiento que debe ocurrir cuando el usuario hace clic en el botón. Recuerde que es el componente principal de la lista de productos&mdash;, no el componente de alertas de productos&mdash; que actúa cuando el niño plantea el evento. En `product-list.component.ts`, defina un método `onNotify()`, similar al método `share()`:
+
 
     <code-example header="src/app/product-list/product-list.component.ts" path="getting-started/src/app/product-list/product-list.component.ts" region="on-notify"></code-example>
 
-1. Finally, update the product list component to receive output from the product alerts component.
+1. Por último, actualice el componente de lista de productos para recibir la salida del componente de alertas de productos.
 
-    In `product-list.component.html`, bind the `app-product-alerts` component (which is what displays the "Notify Me" button) to the `onNotify()` method of the product list component.
+   En `product-list.component.html`, vincule el componente `app-product-alerts` (que es lo que muestra el botón "Notificarme") al método `onNotify()` del componente de lista de productos.
 
-    <code-example header="src/app/product-list/product-list.component.html" path="getting-started/src/app/product-list/product-list.component.6.html" region="on-notify"></code-example>
+   <code-example header="src/app/product-list/product-list.component.html" path="getting-started/src/app/product-list/product-list.component.6.html" region="on-notify"></code-example>
 
-1. Try the "Notify Me" button:
+1. Prueba el botón "Notificarme":
 
-    <div class="lightbox">
-      <img src="generated/images/guide/start/product-alert-notification.png" alt="Product alert notification confirmation dialog">
-    </div>
-
+<div class="lightbox">
+  <img src="generated/images/guide/start/product-alert-notification.png" alt="Product alert notification confirmation dialog">
+</div>
 
 <div class="alert is-helpful">
 
-See [Component Interaction](guide/component-interaction "Components & Templates > Component Interaction") for more information about listening for events from child components, reading child properties or invoking child methods, and using a service for bi-directional communication between components.
+Consulte [Interacción de componentes](guide/component-interaction "Componentes y plantillas> Interacción de componentes") para obtener más información sobre cómo escuchar eventos de componentes secundarios, leer propiedades secundarias o invocar métodos secundarios y utilizar un servicio para la comunicación bidireccional entre componentes. .
 
 </div>
 
-
 {@a next-steps}
-## Next steps
 
-Congratulations! You've completed your first Angular app!
+## Próximos pasos
 
-You have a basic online store catalog with a product list, "Share" button, and "Notify Me" button.
-You've learned about the foundation of Angular: components and template syntax.
-You've also learned how the component class and template interact, and how components communicate with each other.
+¡Felicidades! ¡Has completado tu primera aplicación Angular!
 
-To continue exploring Angular, choose either of the following options:
-* [Continue to the "In-app navigation" section](start/start-routing "Try it: In-app navigation") to create a product details page that can be accessed by clicking a product name and that has its own URL pattern.
-* [Skip ahead to the "Deployment" section](start/start-deployment "Try it: Deployment") to move to local development, or deploy your app to Firebase or your own server.
+Tiene un catálogo básico de la tienda en línea con una lista de productos, el botón "Compartir" y el botón "Notificarme".
+Ha aprendido sobre la base de Angular: componentes y sintaxis de plantilla.
+También ha aprendido cómo interactúan la clase de componente y la plantilla, y cómo los componentes se comunican entre sí.
+
+Para continuar explorando Angular, elija cualquiera de las siguientes opciones:
+
+- [Continuar con la sección "Navegación en la aplicación"](start/start-routing "Pruébelo: navegación en la aplicación") para crear una página de detalles del producto a la que se puede acceder haciendo clic en el nombre de un producto y que tiene su propia URL patrón.
+- [Pase directamente a la sección "Implementación"](start/start-deployment "Pruébelo: Implementación") para pasar al desarrollo local o implementar su aplicación en Firebase o en su propio servidor.

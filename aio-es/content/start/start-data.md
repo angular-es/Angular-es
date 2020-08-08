@@ -1,155 +1,159 @@
-# Try it: Manage data
+# Pruébelo: administre datos
 
-At the end of [In-app Navigation](start/start-routing "Try it: In-app Navigation"), the online store application has a product catalog with two views: a product list and product details.
-Users can click on a product name from the list to see details in a new view, with a distinct URL, or route.
+Al final de [Navegación en la aplicación](start/start-routing "Pruébelo: Navegación en la aplicación"), la aplicación de la tienda en línea tiene un catálogo de productos con dos vistas: una lista de productos y detalles del producto.
+Los usuarios pueden hacer clic en el nombre de un producto de la lista para ver los detalles en una nueva vista, con una URL o ruta distinta.
 
-This page guides you through creating the shopping cart in three phases:
+Esta página lo guía a través de la creación del carrito de compras en tres fases:
 
-* Update the product details view to include a "Buy" button, which adds the current product to a list of products that a cart service manages.
-* Add a cart component, which displays the items in the cart.
-* Add a shipping component, which retrieves shipping prices for the items in the cart by using Angular's `HttpClient` to retrieve shipping data from a `.json` file.
+- Actualice la vista de detalles del producto para incluir un botón "Comprar", que agrega el producto actual a una lista de productos que administra un servicio de carrito.
+- Agregue un componente de carrito, que muestra los artículos en el carrito.
+- Agregue un componente de envío, que recupera los precios de envío de los artículos en el carrito mediante el uso de `HttpClient` de Angular para recuperar los datos de envío de un archivo `.json`.
 
 {@a services}
-## Services
 
-Services are an integral part of Angular applications. In Angular, a service is an instance of a class that you can make available to any part of your application using Angular's [dependency injection system](guide/glossary#dependency-injection-di "Dependency injection definition").
+## Servicios
 
-Services are the place where you share data between parts of your application. For the online store, the cart service is where you store your cart data and methods.
+Los servicios son una parte integral de las aplicaciones Angular. En Angular, un servicio es una instancia de una clase que puede poner a disposición de cualquier parte de su aplicación utilizando el [sistema de inyección de dependencia](guide/glossary#dependency-injection-di "Definición de inyección de dependencia") de Angular.
+
+Los servicios son el lugar donde comparte datos entre partes de su aplicación. Para la tienda en línea, el servicio de carrito es donde almacena los datos y métodos de su carrito.
 
 {@a create-cart-service}
-## Create the shopping cart service
 
-Up to this point, users can view product information, and
-simulate sharing and being notified about product changes.
-They cannot, however, buy products.
+## Crea el servicio de carrito de compras
 
-In this section, you add a "Buy" button to the product
-details view and set up a cart service to store information
-about products in the cart.
+Hasta este punto, los usuarios pueden ver la información del producto y
+simular compartir y recibir notificaciones sobre cambios de productos.
+Sin embargo, no pueden comprar productos.
+
+En esta sección, agrega un botón "Comprar" al producto
+ver detalles y configurar un servicio de carrito para almacenar información
+sobre los productos en el carrito.
 
 <div class="alert is-helpful">
 
-A later part of this tutorial, [Use forms for user input](start/start-forms "Try it: Forms for user input"), guides you through accessing this cart service from the view where the user checks out.
+Una parte posterior de este tutorial, [Usar formularios para la entrada del usuario](start/start-forms "Pruébelo: formularios para la entrada del usuario"), lo guía a través del acceso a este servicio de carrito desde la vista donde el usuario realiza el pago.
 
 </div>
 
 {@a generate-cart-service}
-### Define a cart service
 
-1. To generate a cart service, right click on the `app` folder, choose `Angular Generator`, and choose `Service`. Name the new service `cart`.
+### Definir un servicio de carrito
+
+    1. Para generar un servicio de carrito, haga clic con el botón derecho en la carpeta `app`, elija `Generator Angular` y elija `Service`. Nombra el nuevo servicio "carrito".
 
         <code-example header="src/app/cart.service.ts" path="getting-started/src/app/cart.service.1.ts"></code-example>
 
     <div class="alert is-helpful>
 
-    The StackBlitz generator might provide the cart service in `app.module.ts` by default. That differs from the example, which uses a bundle-optimization technique, an  `@Injectable()` decorator with the `{ providedIn: 'root' }` statement.
-    For more information about services, see [Introduction to Services and Dependency Injection](guide/architecture-services "Concepts > Intro to Services and DI").
+    El generador StackBlitz podría proporcionar el servicio de carrito en `app.module.ts` por defecto. Eso difiere del ejemplo, que usa una técnica de optimización de paquetes, un decorador `@Injectable()` con la declaración `{provideIn: 'root'}`.
+     Para obtener más información sobre los servicios, consulte [Introducción a los servicios y la inyección de dependencias](guide/architecture-services "Conceptos> Introducción a los servicios y DI").
 
     </div>
 
-1. In the `CartService` class, define an `items` property to store the array of the current products in the cart.
+    1. En la clase `CartService`, defina una propiedad de` items` para almacenar la matriz de los productos actuales en el carrito.
 
     <code-example path="getting-started/src/app/cart.service.ts" header="src/app/cart.service.ts" region="props"></code-example>
 
-1. Define methods to add items to the cart, return cart items, and clear the cart items:
+    1. Defina métodos para agregar artículos al carrito, devolver artículos del carrito y borrar los artículos del carrito:
 
     <code-example path="getting-started/src/app/cart.service.ts" header="src/app/cart.service.ts" region="methods"></code-example>
 
-    * The `addToCart()` method appends a product to an array of `items`.
+    - El método `addToCart()` agrega un producto a una matriz de `items`.
 
-    * The `getItems()` method collects the items users add to the cart and returns each item with its associated quantity.
+     - El método `getItems()` recopila los artículos que los usuarios agregan al carrito y devuelve cada artículo con su cantidad asociada.
 
-    * The `clearCart()` method returns an empty array of items.
+     - El método `clearCart()` devuelve una matriz vacía de elementos.
 
 {@a product-details-use-cart-service}
-### Use the cart service
 
-This section walks you through using the cart service to add a product to the cart with a "Buy" button.
+### Usa el servicio de carrito
 
-1. Open `product-details.component.ts`.
+    Esta sección lo guía a través del uso del servicio de carrito para agregar un producto al carrito con un botón "Comprar".
 
-1. Configure the component to use the cart service.
+    . Abra `product-details.component.ts`.
 
-    1. Import the cart service.
+    1. Configure el componente para utilizar el servicio de carrito.
 
-        <code-example header="src/app/product-details/product-details.component.ts" path="getting-started/src/app/product-details/product-details.component.ts" region="cart-service">
-        </code-example>
+    1. Importe el servicio de carrito.
 
-    1. Inject the cart service by adding it to the `constructor()`.
+   <code-example header="src/app/product-details/product-details.component.ts" path="getting-started/src/app/product-details/product-details.component.ts" region="cart-service">
+   </code-example>
 
-        <code-example path="getting-started/src/app/product-details/product-details.component.ts" header="src/app/product-details/product-details.component.ts" region="inject-cart-service">
-        </code-example>
+   1. Inyecte el servicio de carrito agregándolo al `constructor()`.
 
-        <!--
-        To do: Consider defining "inject" and describing the concept of "dependency injection"
-        -->
+      <code-example path="getting-started/src/app/product-details/product-details.component.ts" header="src/app/product-details/product-details.component.ts" region="inject-cart-service">
+      </code-example>
 
-1. Define the `addToCart()` method, which adds the current product to the cart.
+    <!--
+       Para hacer: considere definir "inyectar" y describir el concepto de "inyección de dependencia"
+    -->
 
-    The `addToCart()` method does the following three things:
-    * Receives the current `product`.
-    * Uses the cart service's `addToCart()` method to add the product the cart.
-    * Displays a message that you've added a product to the cart.
+    1. Defina el método `addToCart()`, que agrega el producto actual al carrito.
 
-    <code-example path="getting-started/src/app/product-details/product-details.component.ts" header="src/app/product-details/product-details.component.ts" region="add-to-cart"></code-example>
+    El método `addToCart()` hace las siguientes tres cosas:
 
-1. Update the product details template with a "Buy" button that adds the current product to the cart.
+    - Recibe el "producto" actual.
+    - Utiliza el método `addToCart()` del servicio de carrito para agregar el producto al carrito.
+    - Muestra un mensaje de que ha agregado un producto al carrito.
 
-    1. Open `product-details.component.html`.
+   <code-example path="getting-started/src/app/product-details/product-details.component.ts" header="src/app/product-details/product-details.component.ts" region="add-to-cart"></code-example>
 
-    1. Add a button with the label "Buy", and bind the `click()` event to the `addToCart()` method:
+1. Actualice la plantilla de detalles del producto con un botón "Comprar" que agrega el producto actual al carrito.
 
-        <code-example header="src/app/product-details/product-details.component.html" path="getting-started/src/app/product-details/product-details.component.html">
-        </code-example>
-    
-    <div class="alert is-helpful">
+    1. Abra `product-details.component.html`.
 
-    The line, `<h4>{{ product.price | currency }}</h4>` uses the `currency` pipe to transform `product.price` from a number to a currency string. A pipe is a way you can transform data in your HTML template. For more information about Angular pipes, see [Pipes](guide/pipes "Pipes").
+    1. Agregue un botón con la etiqueta "Comprar" y vincule el evento `click()` al método `addToCart()`:
 
-    </div>
+   <code-example header="src/app/product-details/product-details.component.html" path="getting-started/src/app/product-details/product-details.component.html">
+   </code-example>
 
-1. To see the new "Buy" button, refresh the application and click on a product's name to display its details.
+   <div class="alert is-helpful">
 
-    <div class="lightbox">
-      <img src='generated/images/guide/start/product-details-buy.png' alt="Display details for selected product with a Buy button">
-    </div>
+   La línea, `<h4> {{product.price | currency}} </h4>` usa el canal `currency` para transformar `product.price` de un número a una cadena de moneda. Una tubería es una forma de transformar datos en su plantilla HTML. Para obtener más información sobre los filtros en angular, consulte [Filtro](guide/pipes "Filtros").
 
- 1. Click the "Buy" button to add the product to the stored list of items in the cart and display a confirmation message.
+   </div>
 
-    <div class="lightbox">
-      <img src='generated/images/guide/start/buy-alert.png' alt="Display details for selected product with a Buy button">
-    </div>
+1. Para ver el nuevo botón "Comprar", actualice la aplicación y haga clic en el nombre de un producto para mostrar sus detalles.
 
+<div class="lightbox">
+  <img src='generated/images/guide/start/product-details-buy.png' alt="Display details for selected product with a Buy button">
+</div>
 
-## Create the cart view
+1. Haga clic en el botón "Comprar" para agregar el producto a la lista almacenada de artículos en el carrito y mostrar un mensaje de confirmación.
 
-At this point, users can put items in the cart by clicking "Buy", but they can't yet see their cart.
+   <div class="lightbox">
+     <img src='generated/images/guide/start/buy-alert.png' alt="Display details for selected product with a Buy button">
+   </div>
 
-Create the cart view in two steps:
+## Crea la vista del carrito
 
-1. Create a cart component and configure routing to the new component. At this point, the cart view has only default text.
-1. Display the cart items.
+    En este punto, los usuarios pueden colocar artículos en el carrito haciendo clic en "Comprar", pero aún no pueden ver su carrito.
 
-### Set up the component
+Cree la vista del carrito en dos pasos:
 
- To create the cart view, begin by following the same steps you did to create the product details component and configure routing for the new component.
+    1. Cree un componente de carro y configure el enrutamiento al nuevo componente. En este punto, la vista del carrito solo tiene texto predeterminado.
+    1. Muestre los artículos del carrito.
 
-1. Generate a cart component, named `cart`.
+### Configurar el componente
 
-    Reminder: In the file list, right-click the `app` folder, choose `Angular Generator` and `Component`.
+    Para crear la vista del carrito, comience siguiendo los mismos pasos que hizo para crear el componente de detalles del producto y configurar el enrutamiento para el nuevo componente.
+
+    1. Genere un componente de carrito, llamado "carrito".
+
+     Recordatorio: En la lista de archivos, haga clic con el botón derecho en la carpeta `app`, elija `Generador Angular` y `Component`.
 
     <code-example header="src/app/cart/cart.component.ts" path="getting-started/src/app/cart/cart.component.1.ts"></code-example>
 
-1. Add routing (a URL pattern) for the cart component.
+    1. Agregue una ruta (un patrón de URL) para el componente del carrito.
 
-    Open `app.module.ts` and add a route for the component `CartComponent`, with a `path` of `cart`:
+     Abra `app.module.ts` y agregue una ruta para el componente `CartComponent`, con una `ruta` de `carrito`:
 
     <code-example header="src/app/app.module.ts" path="getting-started/src/app/app.module.ts" region="cart-route">
     </code-example>
 
-1. Update the "Checkout" button so that it routes to the `/cart` url.
+    1. Actualice el botón "Pagar" para que se dirija a la URL `/cart`.
 
-    Open `top-bar.component.html` and add a `routerLink` directive pointing to `/cart`.
+     Abra `top-bar.component.html` y agregue una directiva `routerLink` apuntando a `/cart`.
 
     <code-example
         header="src/app/top-bar/top-bar.component.html"
@@ -157,219 +161,211 @@ Create the cart view in two steps:
         region="cart-route">
     </code-example>
 
-1. To see the new cart component, click the "Checkout" button. You can see the "cart works!" default text, and the URL has the pattern `https://getting-started.stackblitz.io/cart`,  where `getting-started.stackblitz.io` may be different for your StackBlitz project.
+1. Para ver el nuevo componente del carrito, haga clic en el botón "Pagar". Puede ver el "carrito funciona!" texto predeterminado, y la URL tiene el patrón `https://getting-started.stackblitz.io/cart`, donde `Getting-started.stackblitz.io` puede ser diferente para su proyecto StackBlitz.
 
-    <div class="lightbox">
-      <img src='generated/images/guide/start/cart-works.png' alt="Display cart view before customizing">
-    </div>
+   <div class="lightbox">
+     <img src='generated/images/guide/start/cart-works.png' alt="Display cart view before customizing">
+   </div>
 
-### Display the cart items
+   ### Mostrar los artículos del carrito
 
-You can use services to share data across components:
+   utilizar los servicios para compartir datos entre componentes:
 
-* The product details component already uses the cart service to add products to the cart.
-* This section shows you how to use the cart service to display the products in the cart.
+   - El componente de detalles del producto ya utiliza el servicio de carrito para agregar productos al carrito.
+   - Esta sección le muestra cómo utilizar el servicio de carrito para mostrar los productos en el carrito.
 
+   1. Abra `cart.component.ts`.
 
-1. Open `cart.component.ts`.
+   1. Configure el componente para utilizar el servicio de carrito.
 
-1. Configure the component to use the cart service.
+   1. Importe el `CartService` del archivo `cart.service.ts`.
 
-    1. Import the `CartService` from the `cart.service.ts` file.
+   <code-example header="src/app/cart/cart.component.ts" path="getting-started/src/app/cart/cart.component.2.ts" region="imports">
+   </code-example>
 
-        <code-example header="src/app/cart/cart.component.ts" path="getting-started/src/app/cart/cart.component.2.ts" region="imports">
-        </code-example>
+   1. Inyecte el `CartService` para que el componente del carrito pueda usarlo.
 
-    1. Inject the `CartService` so that the cart component can use it.
+   <code-example path="getting-started/src/app/cart/cart.component.2.ts" header="src/app/cart/cart.component.ts" region="inject-cart">
+   </code-example>
 
-        <code-example path="getting-started/src/app/cart/cart.component.2.ts" header="src/app/cart/cart.component.ts" region="inject-cart">
-        </code-example>
+   1. Defina la propiedad `items` para almacenar los productos en el carrito.
 
-1. Define the `items` property to store the products in the cart.
+   <code-example path="getting-started/src/app/cart/cart.component.2.ts" header="src/app/cart/cart.component.ts" region="items">
+   </code-example>
 
-    <code-example path="getting-started/src/app/cart/cart.component.2.ts" header="src/app/cart/cart.component.ts" region="items">
-    </code-example>
+   1. Configure los artículos usando el método `getItems()` del servicio de carrito. Recuerde que definió este método [cuando generó `cart.service.ts`](#generate-cart-service).
 
-1. Set the items using the cart service's `getItems()` method. Recall that you defined this method [when you generated `cart.service.ts`](#generate-cart-service).
+   La clase `CartComponent` resultante es la siguiente:
 
-    The resulting `CartComponent` class is as follows:
+   <code-example path="getting-started/src/app/cart/cart.component.3.ts" header="src/app/cart/cart.component.ts" region="props-services">
+   </code-example>
 
-    <code-example path="getting-started/src/app/cart/cart.component.3.ts" header="src/app/cart/cart.component.ts" region="props-services">
-    </code-example>
+   1. Actualice la plantilla con un encabezado y use un `<div>` con un `*ngFor` para mostrar cada uno de los artículos del carrito con su nombre y precio.
 
-1. Update the template with a header, and use a `<div>` with an `*ngFor` to display each of the cart items with its name and price.
+   La plantilla "CartComponent" resultante es la siguiente:
 
-    The resulting `CartComponent` template is as follows:
+   <code-example header="src/app/cart/cart.component.html" path="getting-started/src/app/cart/cart.component.2.html" region="prices">
+   </code-example>
 
-    <code-example header="src/app/cart/cart.component.html" path="getting-started/src/app/cart/cart.component.2.html" region="prices">
-    </code-example>
+1. Pruebe el componente de su carrito.
 
-1. Test your cart component.
+   1. Haga clic en "Mi tienda" para ir a la vista de lista de productos.
+   1. Haga clic en el nombre de un producto para mostrar sus detalles.
+   1. Haga clic en "Comprar" para agregar el producto al carrito.
+   1. Haga clic en "Pagar" para ver el carrito.
+   1. Para agregar otro producto, haga clic en "Mi tienda" para volver a la lista de productos.
 
-    1. Click on "My Store" to go to the product list view.
-    1. Click on a product name to display its details.
-    1. Click "Buy" to add the product to the cart.
-    1. Click "Checkout" to see the cart.
-    1. To add another product, click "My Store" to return to the product list.
-
-  Repeat to add more items to the cart.
+   Repita para agregar más artículos al carrito.
 
     <div class="lightbox">
       <img src='generated/images/guide/start/cart-page-full.png' alt="Cart view with products added">
     </div>
 
-
 <div class="alert is-helpful">
 
-StackBlitz tip: Any time the preview refreshes, the cart is cleared. If you make changes to the app, the page refreshes, so you'll need to buy products again to populate the cart.
+Consejo de StackBlitz: cada vez que se actualiza la vista previa, el carrito se borra. Si realiza cambios en la aplicación, la página se actualiza, por lo que deberá volver a comprar productos para completar el carrito.
 
 </div>
 
 <div class="alert is-helpful">
 
-For more information about services, see [Introduction to Services and Dependency Injection](guide/architecture-services "Concepts > Intro to Services and DI").
+Para obtener más información sobre los servicios, consulte [Introducción a los servicios y la inyección de dependencias](guide/architecture-services "Conceptos> Introducción a los servicios y ID").
 
 </div>
 
+## Recuperar precios de envío
 
-## Retrieve shipping prices
-<!-- Accessing data with the HTTP client -->
+<!-- Accediendo a los datos con el cliente HTTP -->
 
-Servers often return data in the form of a stream.
-Streams are useful because they make it easy to transform the returned data and  make modifications to the way you request that data.
-The Angular HTTP client, `HttpClient`, is a built-in way to fetch data from external APIs and provide them to your app as a stream.
+Los servidores suelen devolver datos en forma de flujo.
+Los flujos son útiles porque facilitan la transformación de los datos devueltos y hacen modificaciones a la forma en que solicita esos datos.
+El cliente HTTP de Angular, `HttpClient`, es una forma integrada de obtener datos de API externas y proporcionarlos a su aplicación como un flujo.
 
-This section shows you how to use the HTTP client to retrieve shipping prices from an external file.
+Esta sección le muestra cómo utilizar el cliente HTTP para recuperar los precios de envío de un archivo externo.
 
-### Predefined shipping data
+### Datos de envío predefinidos
 
-The application that StackBlitz generates for this guide comes with predefined shipping data in `assets/shipping.json`.
-Use this data to add shipping prices for items in the cart.
+La aplicación que StackBlitz genera para esta guía viene con datos de envío predefinidos en `assets/shipping.json`.
+Utilice estos datos para agregar los precios de envío de los artículos en el carrito.
 
 <code-example header="src/assets/shipping.json" path="getting-started/src/assets/shipping.json">
 </code-example>
 
+### Usa `HttpClient` en el `AppModule`
 
-### Use `HttpClient` in the `AppModule`
+Antes de que pueda usar el cliente HTTP de Angular, debe configurar su aplicación para usar `HttpClientModule`.
 
-Before you can use Angular's HTTP client, you must configure your app to use `HttpClientModule`.
+El `HttpClientModule` de Angular registra los proveedores que su aplicación necesita para usar una sola instancia del servicio `HttpClient` en toda su aplicación.
 
-Angular's `HttpClientModule` registers the providers your app needs to use a single instance of the `HttpClient` service throughout your app.
+1. Abra `app.module.ts`.
 
-1. Open `app.module.ts`.
+   Este archivo contiene importaciones y funciones que están disponibles para toda la aplicación.
 
-  This file contains imports and functionality that is available to the entire app.
+1. Importe `HttpClientModule` del paquete `@angular/common/http` en la parte superior del archivo con las otras importaciones. Como hay otras importaciones, este fragmento de código las omite por brevedad. Asegúrese de dejar las importaciones existentes en su lugar.
 
-1. Import `HttpClientModule` from the `@angular/common/http` package at the top of the file with the other imports. As there are a number of other imports, this code snippet omits them for brevity. Be sure to leave the existing imports in place.
+<code-example header="src/app/app.module.ts" path="getting-started/src/app/app.module.ts" region="http-client-module-import">
+</code-example>
 
-    <code-example header="src/app/app.module.ts" path="getting-started/src/app/app.module.ts" region="http-client-module-import">
-    </code-example>
+1. Agregue `HttpClientModule` a la matriz `AppModule` `@NgModule()` `import` para registrar los proveedores `HttpClient` de Angular a nivel mundial.
 
-1. Add `HttpClientModule` to the `AppModule` `@NgModule()` `imports` array to register Angular's `HttpClient` providers globally.
+<code-example path="getting-started/src/app/app.module.ts" header="src/app/app.module.ts" region="http-client-module">
+</code-example>
 
-    <code-example path="getting-started/src/app/app.module.ts" header="src/app/app.module.ts" region="http-client-module">
-    </code-example>
+### Usa `HttpClient` en el servicio de carrito
 
-### Use `HttpClient` in the cart service
+Ahora que el `AppModule` importa el `HttpClientModule`, el siguiente paso es inyectar el servicio `HttpClient` en su servicio para que su aplicación pueda obtener datos e interactuar con API y recursos externos.
 
-Now that the `AppModule` imports the `HttpClientModule`, the next step is to inject the `HttpClient` service into your service so your app can fetch data and interact with external APIs and resources.
+1. Abra `cart.service.ts`.
 
+1. Importe `HttpClient` del paquete `@angular/common/http`.
 
-1. Open `cart.service.ts`.
+<code-example header="src/app/cart.service.ts" path="getting-started/src/app/cart.service.ts" region="import-http">
+</code-example>
 
-1. Import `HttpClient` from the `@angular/common/http` package.
+1. Inyecte `HttpClient` en el constructor de `CartService`:
 
-    <code-example header="src/app/cart.service.ts" path="getting-started/src/app/cart.service.ts" region="import-http">
-    </code-example>
+<code-example path="getting-started/src/app/cart.service.ts" header="src/app/cart.service.ts" region="inject-http">
+</code-example>
 
-1. Inject `HttpClient` into the `CartService` constructor:
+### Definir el método `get()`
 
-    <code-example path="getting-started/src/app/cart.service.ts" header="src/app/cart.service.ts" region="inject-http">
-    </code-example>
+Varios componentes pueden aprovechar el mismo servicio.
+Más adelante en este tutorial, el componente de envío usa el servicio de carrito para recuperar datos de envío a través de HTTP del archivo `shipping.json`.
+Primero, defina un método `get()`.
 
+1. Continúe trabajando en `cart.service.ts`.
 
-### Define the `get()` method
+1. Debajo del método `clearCart()`, defina un nuevo método `getShippingPrices()` que use el método `HttpClient` `get()` para recuperar los datos de envío.
 
-Multiple components can leverage the same service.
-Later in this tutorial, the shipping component uses the cart service to retrieve shipping data via HTTP from the `shipping.json` file.
-First, define a `get()` method.
-
-1. Continue working in `cart.service.ts`.
-
-1. Below the `clearCart()` method, define a new `getShippingPrices()` method that uses the `HttpClient` `get()` method to retrieve the shipping data.
-
-    <code-example header="src/app/cart.service.ts" path="getting-started/src/app/cart.service.ts" region="get-shipping"></code-example>
-
+   <code-example header="src/app/cart.service.ts" path="getting-started/src/app/cart.service.ts" region="get-shipping"></code-example>
 
 <div class="alert is-helpful">
 
-For more information about Angular's `HttpClient`, see the [Client-Server Interaction](guide/http "Server interaction through HTTP") guide.
+Para obtener más información sobre el `HttpClient` de Angular, consulte la guía [Interacción cliente-servidor](guide/http " Interacción del servidor a través de HTTP").
 
 </div>
 
-## Define the shipping view
+## Definir la vista de envío
 
-Now that your app can retrieve shipping data, create a shipping component and  template.
+Ahora que su aplicación puede recuperar datos de envío, cree un componente y una plantilla de envío.
 
-1. Generate a new component named `shipping`.
+1. Genere un nuevo componente llamado "envío".
 
-    Reminder: In the file list, right-click the `app` folder, choose `Angular Generator` and `Component`.
+   Recordatorio: En la lista de archivos, haga clic con el botón derecho en la carpeta `app`, elija `Angular Generator` y `Component`.
 
-    <code-example header="src/app/shipping/shipping.component.ts" path="getting-started/src/app/shipping/shipping.component.1.ts"></code-example>
+   <code-example header="src/app/shipping/shipping.component.ts" path="getting-started/src/app/shipping/shipping.component.1.ts"></code-example>
 
-1. In `app.module.ts`, add a route for shipping. Specify a `path` of `shipping` and a component of `ShippingComponent`.
+1. En `app.module.ts`, agregue una ruta para el envío. Especifique una `ruta` de `envío` y un componente de `ShippingComponent`.
 
-    <code-example header="src/app/app.module.ts" path="getting-started/src/app/app.module.ts" region="shipping-route"></code-example>
+   <code-example header="src/app/app.module.ts" path="getting-started/src/app/app.module.ts" region="shipping-route"></code-example>
 
-    There's no link to the new shipping component yet, but you can see its template in the preview pane by entering the URL its route specifies. The URL has the pattern: `https://getting-started.stackblitz.io/shipping` where the `getting-started.stackblitz.io` part may be different for your StackBlitz project.
+   Todavía no hay un enlace al nuevo componente de envío, pero puede ver su plantilla en el panel de vista previa ingresando la URL que especifica su ruta. La URL tiene el patrón: `https://getting-started.stackblitz.io/shipping` donde la parte `Getting-started.stackblitz.io` puede ser diferente para su proyecto StackBlitz.
 
-1. Modify the shipping component so that it uses the cart service to retrieve shipping data via HTTP from the `shipping.json` file.
+1. Modifique el componente de envío para que utilice el servicio de carrito para recuperar los datos de envío a través de HTTP del archivo `shipping.json`.
 
-    1. Import the cart service.
+   1. Importe el servicio de carrito.
 
-        <code-example header="src/app/shipping/shipping.component.ts" path="getting-started/src/app/shipping/shipping.component.ts" region="imports"></code-example>
+      <code-example header="src/app/shipping/shipping.component.ts" path="getting-started/src/app/shipping/shipping.component.ts" region="imports"></code-example>
 
-    1. Define a `shippingCosts` property.
+   1. Defina una propiedad `shippingCosts`.
+      <code-example path="getting-started/src/app/shipping/shipping.component.ts" header="src/app/shipping/shipping.component.ts" region="props"></code-example>
 
-        <code-example path="getting-started/src/app/shipping/shipping.component.ts" header="src/app/shipping/shipping.component.ts" region="props"></code-example>
+   1. Inyecte el servicio de carrito en el constructor `ShippingComponent`:
 
-    1. Inject the cart service in the `ShippingComponent` constructor:
+      <code-example path="getting-started/src/app/shipping/shipping.component.ts" header="src/app/shipping/shipping.component.ts" region="inject-cart-service"></code-example>
 
-        <code-example path="getting-started/src/app/shipping/shipping.component.ts" header="src/app/shipping/shipping.component.ts" region="inject-cart-service"></code-example>
+   1. Establezca la propiedad `shippingCosts` usando el método`getShippingPrices ()`del servicio de carrito.
 
-    1. Set the `shippingCosts` property using the `getShippingPrices()` method from the cart service.
+      <code-example path="getting-started/src/app/shipping/shipping.component.ts" header="src/app/shipping/shipping.component.ts" region="ctor"></code-example>
 
-        <code-example path="getting-started/src/app/shipping/shipping.component.ts" header="src/app/shipping/shipping.component.ts" region="ctor"></code-example>
+1. Actualice la plantilla del componente de envío para mostrar los tipos de envío y los precios mediante la canalización `async`:
 
-1. Update the shipping component's template to display the shipping types and prices using the `async` pipe:
+   <code-example header="src/app/shipping/shipping.component.html" path="getting-started/src/app/shipping/shipping.component.html"></code-example>
 
-    <code-example header="src/app/shipping/shipping.component.html" path="getting-started/src/app/shipping/shipping.component.html"></code-example>
+   El filtro `async` devuelve el último valor de un flujo de datos y continúa haciéndolo durante la vida útil de un componente determinado. Cuando Angular destruye ese componente, El filtro `async` se detiene automáticamente. Para obtener información detallada sobre la canalización `async`, consulte la [documentación de la API de AsyncPipe](/api/common/AsyncPipe).
 
-    The `async` pipe returns the latest value from a stream of data and continues to do so for the life of a given component. When Angular destroys that component, the `async` pipe automatically stops. For detailed information about the `async` pipe, see the [AsyncPipe API documentation](/api/common/AsyncPipe).
+1. Agregue un enlace desde la vista del carrito a la vista de envío:
+   <code-example header="src/app/cart/cart.component.html" path="getting-started/src/app/cart/cart.component.2.html"></code-example>
 
-1. Add a link from the cart view to the shipping view:
+1. Pruebe la función de precios de envío:
 
-    <code-example header="src/app/cart/cart.component.html" path="getting-started/src/app/cart/cart.component.2.html"></code-example>
+   Haga clic en el botón "Pagar" para ver el carrito actualizado. Recuerde que cambiar la aplicación hace que la vista previa se actualice, lo que vacía el carrito.
 
-1. Test your shipping prices feature:
+   <div class="lightbox">
+     <img src='generated/images/guide/start/cart-empty-with-shipping-prices.png' alt="Cart with link to shipping prices">
+   </div>
 
-    Click the "Checkout" button to see the updated cart. Remember that changing the app causes the preview to refresh, which empties the cart.
+   Haga clic en el enlace para navegar a los precios de envío.
 
-    <div class="lightbox">
-      <img src='generated/images/guide/start/cart-empty-with-shipping-prices.png' alt="Cart with link to shipping prices">
-    </div>
+   <div class="lightbox">
+     <img src='generated/images/guide/start/shipping-prices.png' alt="Display shipping prices">
+   </div>
 
-    Click on the link to navigate to the shipping prices.
+## Próximos pasos
 
-    <div class="lightbox">
-      <img src='generated/images/guide/start/shipping-prices.png' alt="Display shipping prices">
-    </div>
+¡Felicidades! Tienes una aplicación de tienda online con catálogo de productos y carrito de compras. También puede buscar y mostrar los precios de envío.
 
+Para continuar explorando Angular, elija cualquiera de las siguientes opciones:
 
-## Next steps
-
-Congratulations! You have an online store application with a product catalog and shopping cart. You can also look up and display shipping prices.
-
-To continue exploring Angular, choose either of the following options:
-* [Continue to the "Forms" section](start/start-forms "Try it: Forms for User Input") to finish the app by adding the shopping cart view and a checkout form.
-* [Skip ahead to the "Deployment" section](start/start-deployment "Try it: Deployment") to move to local development, or deploy your app to Firebase or your own server.
+- [Continúe a la sección "Formularios"](start/start-forms "Pruébelo: Formularios para entrada de usuario") para finalizar la aplicación agregando la vista del carrito de compras y un formulario de pago.
+- [Pase directamente a la sección "Implementación"](start/start-deployment "Pruébelo: Implementación") para pasar al desarrollo local o implementar su aplicación en Firebase o en su propio servidor.

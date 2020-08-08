@@ -30,7 +30,7 @@ Abra el archivo de clase `HeroesComponent` e importe el simulacro`HEROES`.
 <code-example path="toh-pt2/src/app/heroes/heroes.component.ts" region="import-heroes" header="src/app/heroes/heroes.component.ts (import HEROES)">
 </code-example>
 
-En el mismo archivo (clase `HeroesComponent`), defina una propiedad de componente llamada `heroes` y exponga la matriz `HEROES` para el enlace.
+En el mismo archivo (clase `HeroesComponent`), defina una propiedad de componente llamada `heroes` y exponga el arreglo  `HEROES` para el enlace.
 
 <code-example path="toh-pt2/src/app/heroes/heroes.component.ts" header="src/app/heroes/heroes.component.ts" region="component">
 </code-example>

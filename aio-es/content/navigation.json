@@ -2,7 +2,7 @@
   "TopBar": [
     {
       "url": "features",
-      "title": "Característica"
+      "title": "Características"
     },
     {
       "url": "docs",
@@ -31,7 +31,7 @@
   ],
   "TopBarNarrow": [
     {
-      "title": "Sobre Angular",
+      "title": "Acerca de Angular",
       "children": [
         {
           "url": "features",

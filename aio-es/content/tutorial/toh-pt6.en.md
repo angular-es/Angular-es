@@ -9,7 +9,7 @@ Angular's `HttpClient`.
 
 <div class="alert is-helpful">
 
-  For the sample app that this page describes, see the <live-example></live-example>.
+  Para ver la aplicación de ejemplo que describe esta página, consulte el<live-example></live-example>.
 
 </div>
 
@@ -522,8 +522,7 @@ If you enter characters that match any existing hero names, you'll see something
   <img src='generated/images/guide/toh/toh-hero-search.png' alt="Hero Search Component">
 </div>
 
-## Final code review
-
+## Revisión final del código
 Here are the code files discussed on this page (all in the `src/app/` folder).
 
 {@a heroservice}

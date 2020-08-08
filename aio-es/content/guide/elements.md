@@ -4,7 +4,7 @@ _Angular elements_ are Angular components packaged as _custom elements_ (also ca
 
 <div class="alert is-helpful">
 
-  For the sample app that this page describes, see the <live-example></live-example>.
+  Para ver la aplicación de ejemplo que describe esta página, consulte el<live-example></live-example>.
 
 </div>
 

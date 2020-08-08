@@ -12,7 +12,7 @@ The `HeroDetailComponent` will present details of a selected hero.
 
 <div class="alert is-helpful">
 
-  For the sample app that this page describes, see the <live-example></live-example>.
+  Para ver la aplicación de ejemplo que describe esta página, consulte el<live-example></live-example>.
 
 </div>
 
@@ -140,8 +140,7 @@ without touching the parent `HeroesComponent`.
 
 1. You can re-use the `HeroDetailComponent` in the template of some future component.
 
-## Final code review
-
+## Revisión final del código
 Here are the code files discussed on this page.
 
 <code-tabs>

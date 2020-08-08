@@ -7,7 +7,7 @@ It will also be easier to unit-test with a mock service.
 
 <div class="alert is-helpful">
 
-  For the sample app that this page describes, see the <live-example></live-example>.
+  Para ver la aplicación de ejemplo que describe esta página, consulte el<live-example></live-example>.
 
 </div>
 
@@ -392,8 +392,7 @@ the selection. Use the "clear" button to clear the message history.
 
 {@a final-code-review}
 
-## Final code review
-
+## Revisión final del código
 Here are the code files discussed on this page.
 
 <code-tabs>

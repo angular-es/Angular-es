@@ -5,7 +5,7 @@ allow users to select a hero and display the hero's details.
 
 <div class="alert is-helpful">
 
-  For the sample app that this page describes, see the <live-example></live-example>.
+  Para ver la aplicación de ejemplo que describe esta página, consulte el<live-example></live-example>.
 
 </div>
 
@@ -224,8 +224,7 @@ The finished `<li>` looks like this:
 
 {@a final-code-review}
 
-## Final code review
-
+## Revisión final del código
 Here are the code files discussed on this page, including the `HeroesComponent` styles.
 
 <code-tabs>

@@ -9,7 +9,7 @@ There are new requirements for the Tour of Heroes app:
 
 <div class="alert is-helpful">
 
-  For the sample app that this page describes, see the <live-example></live-example>.
+  Para ver la aplicación de ejemplo que describe esta página, consulte el<live-example></live-example>.
 
 </div>
 
@@ -43,8 +43,7 @@ The generated file looks like this:
 <code-example path="toh-pt5/src/app/app-routing.module.0.ts" header="src/app/app-routing.module.ts (generated)">
 </code-example>
 
-Replace it with the following:
-
+Reemplácelo con lo siguiente:
 <code-example path="toh-pt5/src/app/app-routing.module.1.ts" header="src/app/app-routing.module.ts (updated)">
 </code-example>
 
@@ -254,8 +253,7 @@ Add a dashboard navigation link to the `AppComponent` shell template, just above
 <code-example path="toh-pt5/src/app/app.component.html" header="src/app/app.component.html">
 </code-example>
 
-After the browser refreshes you can navigate freely between the two views by clicking the links.
-
+Después de que se actualice el navegador, puede navegar libremente entre las dos vistas haciendo clic en los enlaces.
 {@a hero-details}
 ## Navigating to hero details
 
@@ -470,8 +468,7 @@ Refresh the browser and start clicking.
 Users can navigate around the app, from the dashboard to hero details and back,
 from heroes list to the mini detail to the hero details and back to the heroes again.
 
-## Final code review
-
+## Revisión final del código
 Here are the code files discussed on this page.
 
 {@a approutingmodule}

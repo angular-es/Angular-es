@@ -15,7 +15,7 @@ Estos documentos de Angular lo ayudan a aprender y usar el marco angular y la pl
   <a href="guide/architecture" class="docs-card" title="Angular Concepts">
       <section> Aprendizaje y exploración </section>
        <p> Aprenda los conceptos básicos de diseño y la arquitectura de las aplicaciones Angular.</p>
-       <p class="card-footer"> Introducción a los conceptos de Angular</p>
+       <p class="card-footer"> Introducción a conceptos </p>
   </a>
   <a href="start" class="docs-card" title="Angular Getting Started">
       <section>Echar un un vistazo</section>
