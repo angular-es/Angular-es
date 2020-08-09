@@ -71,30 +71,30 @@
           "translated": true
         },
         {
-          "title": "Conceptos de Aangular",
+          "title": "Conceptos de Angular",
           "tooltip": "Introducción a los conceptos básicos de las aplicaciones angular.",
           "children": [
             {
               "url": "guide/architecture",
-              "title": "Introducción del concepto básico.",
+              "title": "Introducción a los conceptos básicos.",
               "tooltip": "Bloques de construcción básicos de aplicaciones angular",
               "translated": true
             },
             {
               "url": "guide/architecture-modules",
-              "title": "Introducción del módulo",
+              "title": "Introducción a los módulos",
               "tooltip": "Sobre NgModule",
               "translated": true
             },
             {
               "url": "guide/architecture-components",
-              "title": "Introducción de componente",
+              "title": "Introducción a los componentes",
               "tooltip": "Acerca de componentes, plantillas y vistas.",
               "translated": true
             },
             {
               "url": "guide/architecture-services",
-              "title": "Introducción de servicios y DI",
+              "title": "Introducción a los servicios e ID (Inyección de dependecias)",
               "tooltip": "Sobre el servicio y la inyección de dependencias.",
               "translated": true
             },
