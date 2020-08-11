@@ -51,7 +51,7 @@ Envíe una solicitud de extracción para agregar los dos archivos.
 #### 1. Clonación de el repositorio
 
 ``` 
-$ git clone git@github.com: angular/angular-es.git
+$ git clone git@github.com:angular-es/Angular-es.git
 
 ```
 
@@ -60,8 +60,8 @@ $ git clone git@github.com: angular/angular-es.git
 Este repositorio utiliza un submódulo para integrarse con el repositorio de origen.
 
 ```
-$ git sincronización de submódulo
-Actualización del submódulo $ git --init
+$ git submodule sync
+$ git submodule update --init
 
 ```
 
@@ -74,9 +74,15 @@ Puede verificar el sitio creado configurando un servidor de desarrollo con su he
 $ ./build.sh
 
 ```
+#### 3.2x 
+Si usa windows utilize este comando en el powershell puede ser ejecutado desde windows server 2008 , ha sido probado en windows 8 y 10.
+
+```
+$./build-win.ps1 o .\build.sh
+```
 
 **Nota**
-
+-Si tiene problemas con windows revise si su sistema es compatible con robocopy & Get-Content.
 -El tiempo de construcción es muy largo, así que espere mientras prepara café.
 -En MacOS, el descriptor de archivo del sistema operativo se puede utilizar durante el proceso de compilación.
   En ese caso, debe aumentar el número máximo de la siguiente manera.
@@ -146,23 +152,23 @@ Cuando compila, puede obtener el siguiente error:
 
 ```
 warn: Dangling Links Found in "guide/despliegue.json":
- -guide / browser-support # polyfills
-warn: Dangling Links Found in "guide / deprecations.json":
- -guide/releases # deprecation-practices,
- -guide/component-styles # deprecated-deep - y-ng-deep
-warn: Dangling Links Found in "guide / glossary.json":
- -guide/workspace-config # project-tool-configuration-options,
- -guide/workspace-config # project-tool-configuration-options
+ -guide/browser-support # polyfills
+warn: Dangling Links Found in "guide/deprecations.json":
+ -guide/releases#deprecation-practices,
+ -guide/component-styles#deprecated-deep - y-ng-deep
+warn: Dangling Links Found in "guide/glossary.json":
+ -guide/workspace-config#project-tool-configuration-options,
+ -guide/workspace-config#project-tool-configuration-options
 warn: Dangling Links Found in "api/common/NgForOf.json":
  -guide/template-syntax # template-reference-variables - var-
 error: Error: 6 enlaces no coincidentes
-
 ```
 
 Este error es un enlace relativo en la documentación que advierte que no se puede encontrar el enlace.
 En el primer ejemplo anterior, aunque la `guía/implementación` está vinculada a `guide/browser-support # polyfills`, la página `guide/browser-support` dice `#polyfills`. Advertencia de que el titular no existe.
 
-Este error a menudo ocurre cuando traduce un encabezado que comienza con `#`. Debe agregar un ancla en la traducción para resolver la referencia del enlace. Agregue una directiva del formulario `{@a xxxxxx}` al encabezado traducido de la siguiente manera.
+Este error a menudo ocurre cuando traduce un encabezado que comienza con `#`.
+Debe agregar un ancla en la traducción para resolver la referencia del enlace. Agregue una directiva del formulario `{@a xxxxxx}` al encabezado traducido de la siguiente manera.
 
 ```md
 
