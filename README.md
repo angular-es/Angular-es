@@ -1,6 +1,5 @@
 # Angular en Español
-
-[![Estado de Netlify!](https://api.netlify.com/api/v1/badges/f9647a0c-fdf6-445d-ba06-df1353d74e27/deploy-status)](https://app.netlify.com/sites/angular-es/deploys) [![Discord](https://img.shields.io/discord/737097213548691506.svg?label=Discord&logo=discord&color=7289DA&labelColor=2C2F33)](https://discord.gg/tS4XVkS)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2ddd3a56-12fd-4834-bd79-d2791a4cf989/deploy-status)](https://app.netlify.com/sites/angular-es/deploys) [![Discord](https://img.shields.io/discord/737097213548691506.svg?label=Discord&logo=discord&color=7289DA&labelColor=2C2F33)](https://discord.gg/tS4XVkS)
 
 
 Angular es una plataforma de desarrollo para construir aplicaciones web y móviles que usa TypeScript/JavaScript y otros lenguajes de programación.
