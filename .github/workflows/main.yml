@@ -12,8 +12,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@Principal
-    - uses: actions/setup-node@Principal
+    - uses: actions/checkout@master
+    - uses: actions/setup-node@master
       with:
         node-version: '12'
     - run: ./build.sh
