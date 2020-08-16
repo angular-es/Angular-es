@@ -30,7 +30,7 @@ Las discusiones sobre proyectos de traducción están en curso en el canal `# tr
 - Correcciones / mejoras propuestas para documentos traducidos.
 -Traducción de documentos no traducidos
 
-Consulte [CONTRIBUTING.md] (./ CONTRIBUTING.md) para conocer el flujo de trabajo específico.
+Consulte [CONTRIBUTING.md](./ CONTRIBUTING.md) para conocer el flujo de trabajo específico.
 
 
 Repo de basado en [Angular-jp](https://github.com/angular/angular-ja), un agradecimiento especial a [@lacolaco](https://github.com/lacolaco) 
