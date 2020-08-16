@@ -20,6 +20,7 @@ jobs:
     - uses: actions/setup-node@master
       with:
         node-version: '12'
+    - run: ./update-origin.sh
     - run: ./build.sh
     - uses: w9jds/firebase-action@master
       with:
