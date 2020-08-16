@@ -12,6 +12,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout submodules
+      uses: textbook/git-checkout-submodule-action@master
+      with:
+         remote: true
     - uses: actions/checkout@master
     - uses: actions/setup-node@master
       with:
