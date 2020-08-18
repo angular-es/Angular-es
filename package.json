@@ -14,8 +14,8 @@
   "scripts": {
     "test": "npm run textlint",
     "update-origin": "./update-origin.sh",
-    "textlint": "textlint 'aio-ja/**/!(*.en).md'",
-    "textlint:f": "textlint --fix 'aio-ja/**/!(*.en).md'"
+    "textlint": "textlint 'aio-es/**/!(*.en).md'",
+    "textlint:f": "textlint --fix 'aio-es/**/!(*.en).md'"
   },
   "devDependencies": {
     "glob": "^7.1.2",

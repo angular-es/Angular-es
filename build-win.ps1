@@ -1,22 +1,56 @@
+$NG_intro = @"
+                             ,,                             
+                      ,,,,,,,,,,,,,,,,                      
+               ,,,,,,,,,,,,,,,*,,,,,,,,,,,,,,               
+        ,,,,,,,,,,,,,,,,,,,,,@@@,,,,,,,,,,,,,,,,,,,,,       
+        ,,,,,,,,,,,,,,,,,,,,@@@@@,,,,,,,,,,,,,,,,,,,,       
+         ,,,,,,,,,,,,,,,,,,@@@@@@@,,,,,,,,,,,,,,,,,,        
+         ,,,,,,,,,,,,,,,,,@@@@@@@@@,,,,,,,,,,,,,,,,,        
+         ,,,,,,,,,,,,,,,,@@@@#,@@@@@,,,,,,,,,,,,,,,,        
+          ,,,,,,,,,,,,,,@@@@,,,,%@@@@,,,,,,,,,,,,,,         
+          ,,,,,,,,,,,,,@@@@,,,,,,,@@@@,,,,,,,,,,,,,         
+          ,,,,,,,,,,,,@@@@@@@@@@@@@@@@@,,,,,,,,,,,,         
+          ,,,,,,,,,,@@@@@@@@@@@@@@@@@@@@*,,,,,,,,,,         
+           ,,,,,,,,@@@@@,,,,,,,,,,,,,@@@@@,,,,,,,,          
+           ,,,,,,,@@@@@,,,,,,,,,,,,,,,@@@@@,,,,,,,          
+           ,,,,,,@@@@@,,,,,,,,,,,,,,,,,@@@@@,,,,,,          
+            ,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,           
+                 ,,,,,,,,,,,,,,,,,,,,,,,,,,,                
+                     ,,,,,,,,,,,,,,,,,,,                    
+                          ,,,,,,,,,                         
+                              ,                                                                                         
+                             _              _    _ _                             
+     /\                     | |            | |  | (_)                            
+    /  \   _ __   __ _ _   _| | __ _ _ __  | |__| |_ ___ _ __   __ _ _ __   ___  
+   / /\ \ | '_ \ / _`  | | | | |/ _`  | '__| |  __  | / __| '_ \ / _`  | '_ \ / _ \ 
+  / ____ \| | | | (_| | |_| | | (_| | |    | |  | | \__ \ |_) | (_| | | | | (_) |
+ /_/    \_\_| |_|\__, |\__,_|_|\__,_|_|    |_|  |_|_|___/ .__/ \__,_|_| |_|\___/ 
+                  __/ |                                 | |                      
+                 |___/                                  |_|                      
+
+"@
+
+Write-Host $NG_intro
 # copy origin to temporary workspace
-cd origin
+Set-Location origin
 git clean -xdn
-cd ..
+Set-Location ..
 robocopy origin .tmp /e
 
 # overrides files from ja directory
 robocopy aio-es/ .tmp/aio /e
 
 # build angular.io
-cd .tmp
+Set-Location .tmp
 yarn install --frozen-lockfile --non-interactive
-cd aio
+Set-Location aio
 yarn build
 
-cd ../../
+Set-Location ../../
 
 # Copy robots.txt
 robocopy aio-es/src/robots.txt .tmp/aio/dist/ /is
 
 # Modify sitemap
 ((Get-Content -path .tmp/aio/dist/generated/sitemap.xml -Raw) -replace 'angular.io','angular-es.dev') | Set-Content -Path .tmp/aio/dist/generated/sitemap.xml
+msbuild
