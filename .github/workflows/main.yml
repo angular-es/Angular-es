@@ -4,7 +4,6 @@ on:
   push:
     branches:
     - Principal
-    - master/*
 
 jobs:
   firebase-deploy:
@@ -12,15 +11,20 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v2
     - name: Checkout submodules
-      uses: textbook/git-checkout-submodule-action@master
-      with:
-          args: git submodule update --init --recursive
+      shell: bash
+      run: |
+        # If your submodules are configured to use SSH instead of HTTPS please uncomment the following line
+        # git config --global url."https://github.com/".insteadOf "git@github.com:"
+        auth_header="$(git config --local --get http.https://github.com/.extraheader)"
+        git submodule sync --recursive
+        git -c "http.extraheader=$auth_header" -c protocol.version=2 submodule update --init --force --recursive --depth=1
+
     - uses: actions/checkout@master
     - uses: actions/setup-node@master
       with:
         node-version: '12'
-    - run: ./update-origin.sh
     - run: ./build.sh
     - uses: w9jds/firebase-action@master
       with:
